@@ -151,7 +151,6 @@ sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 
 .. toctree::
    :maxdepth: 4
-   :local:
    :glob:
    :caption: Contents:
 

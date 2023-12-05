@@ -40,3 +40,4 @@ source_suffix = {
 html_sidebars = {
    '**': ['globaltoc.html', 'searchbox.html'],
 }
+html_style = 'custom.css'
