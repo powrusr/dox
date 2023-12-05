@@ -16,7 +16,8 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /><link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="awk" href="bash/awk.html" /><link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="_static/py.svg" />
             <script type="text/javascript" src="_static/copybutton.js"></script>
             <script type="text/javascript" src="_static/menu.js"></script>
@@ -65,6 +66,11 @@
 </ul>
 
   </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="bash/awk.html"
+                          title="next chapter">awk</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -92,6 +98,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="bash/awk.html" title="awk"
+             accesskey="N">next</a> |</li>
           <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">
@@ -136,6 +145,121 @@
   <section id="welcome-to-powrusr-docs-s-documentation">
 <h1>Welcome to PowrUsr Docs’s documentation!<a class="headerlink" href="#welcome-to-powrusr-docs-s-documentation" title="Link to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bash/awk.html">awk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/awk.html#basics">basics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#begin-main-end-block">begin-main-end block</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bash/awk.html#main">main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bash/awk.html#begin">begin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bash/awk.html#end">end</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#special-variables">special variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#custom-fs-ofs">custom FS OFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#custom-record-seperator">custom record seperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#printf">printf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#sprintf">sprintf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/awk.html#control-structures">control structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash/awk.html#examples">examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#bash-users-report">bash users report</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#report-users-that-logged-in">report users that logged in</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#extract-ip-from-failed-ssh-login">extract ip from failed ssh login</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/awk.html#convert-passwd-to-yaml">convert passwd to yaml</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/awk.html#use-cli-passed-variable-to-search-in-pattern">use cli passed variable to search in pattern</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/find.html">find</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/find.html#regex-delete">regex &amp; delete</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/scripting.html">scripting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/scripting.html#functions">functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#arguments">arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#returning-values">returning values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#examples">examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/scripting.html#testing">testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#table">table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/scripting.html#math">math</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#arithmetic-expansion">Arithmetic Expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#arithmetic-commands">Arithmetic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/scripting.html#math-contexts">Math Contexts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/sed.html">line selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#first-last">first last</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#range">range</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/sed.html#fetch-blocks">fetch blocks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#include-next-line-in-search">include next line in search</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#append">append</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/sed.html#with-regex">with regex</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#insert">insert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/sed.html#insert-script">insert script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#ignore-case">ignore case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#backreferences">backreferences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#by-semicolon">by semicolon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bash/sed.html#file-scripts">file scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash/sed.html#simple">simple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash/sed.html#advanced">advanced</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bash/sed.html#branching-labels">branching &amp; labels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bash/sed.html#in-place-backups">in-place backups</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bash/sed.html#using-sed-in-a-loop">using sed in a loop</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sphinx.html">sphinx</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sphinx.html#installation">installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#create-requirements-file">create requirements file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#create-environment">create environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#quickstart-sphinx">quickstart sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#more-on-myst-parser">more on myst parser:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sphinx.html#conf-py-configuration">conf.py configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#change-default-html-theme">change default html theme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#define-file-extensions">define file extensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#gitignore-update">gitignore update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sphinx.html#gh-pages-prep">gh-pages prep</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sphinx.html#convert-build-to-docs">convert build to docs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sphinx.html#change-makefile">change Makefile:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sphinx.html#change-make-bat">change make.bat:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 <section id="indices-and-tables">
@@ -161,6 +285,11 @@
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="bash/awk.html"
+                          title="next chapter">awk</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
@@ -189,6 +318,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="bash/awk.html" title="awk"
+             >next</a> |</li>
           <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">

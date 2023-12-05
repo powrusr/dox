@@ -10,7 +10,12 @@ Welcome to PowrUsr Docs's documentation!
    :maxdepth: 4
    :caption: Contents:
 
-   bash
+   bash/awk.md
+   bash/find.md
+   bash/scripting.md
+   bash/sed.md
+   sphinx.md
+
 
 
 

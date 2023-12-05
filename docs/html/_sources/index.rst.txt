@@ -7,10 +7,15 @@ Welcome to PowrUsr Docs's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
-   bash
+   bash/awk.md
+   bash/find.md
+   bash/scripting.md
+   bash/sed.md
+   sphinx.md
+
 
 
 
