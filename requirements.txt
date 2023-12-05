@@ -1,0 +1,3 @@
+myst-parser
+sphinx-autobuild
+python-docs-theme
