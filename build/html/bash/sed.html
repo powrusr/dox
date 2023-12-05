@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>line selection &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">line selection</a><ul>
+<li><a class="reference internal" href="#first-last">first last</a></li>
+<li><a class="reference internal" href="#range">range</a><ul>
+<li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
+<li><a class="reference internal" href="#append">append</a><ul>
+<li><a class="reference internal" href="#with-regex">with regex</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#insert">insert</a><ul>
+<li><a class="reference internal" href="#insert-script">insert script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#substitute">substitute</a><ul>
+<li><a class="reference internal" href="#ignore-case">ignore case</a></li>
+<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
+<li><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
+<li><a class="reference internal" href="#file-scripts">file scripts</a><ul>
+<li><a class="reference internal" href="#simple">simple</a></li>
+<li><a class="reference internal" href="#advanced">advanced</a><ul>
+<li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
+<li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
+<li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/bash/sed.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">line selection</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="line-selection">
+<h1>line selection<a class="headerlink" href="#line-selection" title="Link to this heading">¶</a></h1>
+<section id="first-last">
+<h2>first last<a class="headerlink" href="#first-last" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1p&#39;</span><span class="w"> </span>/etc/passwd
+root:x:0:0:root:/root:/bin/bash
+
+<span class="c1">## last line</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;$p&#39;</span><span class="w"> </span>/etc/passwd
+_flatpak:x:130:139:Flatpak<span class="w"> </span>system-wide<span class="w"> </span>installation<span class="w"> </span>helper,,,:/nonexistent:/usr/sbin/nologin
+</pre></div>
+</div>
+</section>
+<section id="range">
+<h2>range<a class="headerlink" href="#range" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1,3p&#39;</span><span class="w"> </span>/etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;48,$p&#39;</span><span class="w"> </span>/etc/passwd
+duke:x:1000:1000:duke,,,:/home/duke:/bin/bash
+lxc-dnsmasq:x:129:137:LXC<span class="w"> </span>dnsmasq,,,:/var/lib/lxc:/usr/sbin/nologin
+_flatpak:x:130:139:Flatpak<span class="w"> </span>system-wide<span class="w"> </span>installation<span class="w"> </span>helper,,,:/nonexistent:/usr/sbin/nologin
+
+<span class="c1"># last line minus one hack</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;45,</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span>wc<span class="w"> </span>-l<span class="w"> </span>&lt;/etc/ssh/ssh_config<span class="k">)</span><span class="o">-</span><span class="m">1</span><span class="w"> </span><span class="k">))</span><span class="s2">p&quot;</span><span class="w"> </span>&lt;<span class="w"> </span>/etc/ssh/ssh_config
+</pre></div>
+</div>
+<section id="fetch-blocks">
+<h3>fetch blocks<a class="headerlink" href="#fetch-blocks" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;/&lt;Directory/,/&lt;\/Directory/p&#39;</span><span class="w"> </span>/etc/apache2/conf-available/javascript-common.conf<span class="w"> </span>
+&lt;Directory<span class="w"> </span><span class="s2">&quot;/usr/share/javascript/&quot;</span>&gt;
+<span class="w">    </span>Options<span class="w"> </span>FollowSymLinks<span class="w"> </span>MultiViews
+&lt;/Directory&gt;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="include-next-line-in-search">
+<h2>include next line in search<a class="headerlink" href="#include-next-line-in-search" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;N;s/You can adapt/lol/p&quot;</span><span class="w"> </span>source/index.rst
+<span class="w">   </span>lol<span class="w"> </span>this<span class="w"> </span>file<span class="w"> </span>completely<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>liking,<span class="w"> </span>but<span class="w"> </span>it<span class="w"> </span>should<span class="w"> </span>at<span class="w"> </span>least
+<span class="w">   </span>contain<span class="w"> </span>the<span class="w"> </span>root<span class="w"> </span><span class="sb">`</span>toctree<span class="sb">`</span><span class="w"> </span>directive.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="append-insert-delete-actions">
+<h1>append insert delete actions<a class="headerlink" href="#append-insert-delete-actions" title="Link to this heading">¶</a></h1>
+<section id="append">
+<h2>append<a class="headerlink" href="#append" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># doesn&#39;t append yet since no -i inplace flag</span>
+sudo<span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;$a 208.67.222.222 opendns&#39;</span><span class="w"> </span>/etc/hosts
+...
+ff00::0<span class="w"> </span>ip6-mcastprefix
+ff02::1<span class="w"> </span>ip6-allnodes
+ff02::2<span class="w"> </span>ip6-allrouters
+<span class="m">208</span>.67.222.222<span class="w"> </span>opendns
+
+<span class="c1"># append line on each line in range</span>
+sed<span class="w"> </span><span class="s2">&quot;45,</span><span class="k">$((</span><span class="w"> </span><span class="k">$(</span>wc<span class="w"> </span>-l<span class="w"> </span>&lt;/etc/ssh/ssh_config<span class="k">)</span><span class="o">-</span><span class="m">1</span><span class="w"> </span><span class="k">))</span><span class="s2">a # comment above each line in range&quot;</span><span class="w"> </span>&lt;<span class="w"> </span>/etc/ssh/ssh_config
+<span class="c1">#   EscapeChar ~</span>
+<span class="c1">#   Tunnel no</span>
+<span class="c1">#   TunnelDevice any:any</span>
+<span class="c1"># comment above each line in range</span>
+<span class="c1">#   PermitLocalCommand no</span>
+<span class="c1"># comment above each line in range</span>
+<span class="c1">#   VisualHostKey no</span>
+<span class="c1"># comment above each line in range</span>
+<span class="c1">#   ProxyCommand ssh -q -W %h:%p gateway.example.com</span>
+<span class="c1"># comment above each line in range</span>
+<span class="c1">#   RekeyLimit 1G 1h</span>
+<span class="c1"># comment above each line in range</span>
+<span class="c1">#   UserKnownHostsFile ~/.ssh/known_hosts.d/%k</span>
+<span class="c1"># comment above each line in range</span>
+<span class="w">    </span>SendEnv<span class="w"> </span>LANG<span class="w"> </span>LC_*
+<span class="c1"># comment above each line in range</span>
+<span class="w">    </span>HashKnownHosts<span class="w"> </span>yes
+<span class="c1"># comment above each line in range</span>
+<span class="w">    </span>GSSAPIAuthentication<span class="w"> </span>yes
+
+<span class="c1"># append to last line</span>
+sed<span class="w"> </span><span class="s2">&quot;</span>$<span class="s2"> a # last in line&quot;</span><span class="w"> </span>&lt;<span class="w"> </span>/etc/ssh/ssh_config
+
+<span class="w">    </span>HashKnownHosts<span class="w"> </span>yes
+<span class="w">    </span>GSSAPIAuthentication<span class="w"> </span>yes
+<span class="c1"># last in line</span>
+</pre></div>
+</div>
+<section id="with-regex">
+<h3>with regex<a class="headerlink" href="#with-regex" title="Link to this heading">¶</a></h3>
+<p>sed ‘/PATTERN/ a <LINE-TO-BE-ADDED>’ FILE.txt</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;/5/ a #Next line is the 6th line, not this&#39;</span><span class="w"> </span>sedtest.txt
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#1</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#2</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#3</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#4</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#5</span>
+<span class="c1">#Next line is the 6th line, not this</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#6</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="insert">
+<h2>insert<a class="headerlink" href="#insert" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span><span class="s1">&#39;/8/ i #This line is inserted using sed&#39;</span><span class="w"> </span>sedtest.txt
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#1</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#2</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#3</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#5</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#6</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#7</span>
+<span class="c1">#This line is inserted using sed</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#8</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#9</span>
+This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#10</span>
+</pre></div>
+</div>
+<section id="insert-script">
+<h3>insert script<a class="headerlink" href="#insert-script" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w">  </span>~/scripts/*.sh<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span><span class="nv">firstline</span><span class="o">=</span><span class="k">$(</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1p&#39;</span><span class="w"> </span><span class="nv">$f</span><span class="k">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$firstline</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;#!&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;adding shebang to </span><span class="nv">$f</span><span class="s2">&quot;</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;1i #!/bin/bash&#39;</span><span class="w"> </span><span class="nv">$f</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="substitute">
+<h1>substitute<a class="headerlink" href="#substitute" title="Link to this heading">¶</a></h1>
+<section id="ignore-case">
+<h2>ignore case<a class="headerlink" href="#ignore-case" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/something/else/Ig&#39;</span><span class="w"> </span>file.py
+
+<span class="c1"># test with grep -i &quot;something&quot; file.py</span>
+</pre></div>
+</div>
+</section>
+<section id="backreferences">
+<h2>backreferences<a class="headerlink" href="#backreferences" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;one two three&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\(one\) \(two\) \(three\)/\3 \2 \1/&#39;</span>
+three<span class="w"> </span>two<span class="w"> </span>one
+</pre></div>
+</div>
+<p>When using extended regular expressions parenthesis do grouping by default, and dont have to be escaped</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;Hello world!&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/(Hello) world!/\1 sed/&#39;</span>
+Hello<span class="w"> </span>sed
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>Hello<span class="w"> </span><span class="m">123</span><span class="w"> </span>reg_exp<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/(\w+) (\w+) (\w+)/\3 \2 \1/&#39;</span>
+reg_exp<span class="w"> </span><span class="m">123</span><span class="w"> </span>Hello
+<span class="nb">echo</span><span class="w"> </span>Hello<span class="w"> </span><span class="m">123</span><span class="w"> </span>reg_exp<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/([[:alnum:]]+) ([[:alnum:]]+) ([[:alnum:]]+)/\3 \2 \1/&#39;</span>
+reg<span class="w"> </span><span class="m">123</span><span class="w"> </span>Hello_exp<span class="w"> </span><span class="c1"># underscore wasnt matched</span>
+<span class="nb">echo</span><span class="w"> </span>Hello<span class="w"> </span><span class="m">123</span><span class="w"> </span>reg_exp<span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;s/([[:alnum:]]+) ([[:alnum:]]+) ([[:alnum:]_]+)/\3 \2 \1/&#39;</span>
+reg_exp<span class="w"> </span><span class="m">123</span><span class="w"> </span>Hello
+
+<span class="c1"># The sequence \w is equivalent to [[:alnum:]_]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="grouping-expressions">
+<h1>grouping expressions<a class="headerlink" href="#grouping-expressions" title="Link to this heading">¶</a></h1>
+<section id="by-semicolon">
+<h2>by semicolon<a class="headerlink" href="#by-semicolon" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># del empty line, del commented line</span>
+sed<span class="w"> </span><span class="s1">&#39;/^$/d;/^#/d&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="file-scripts">
+<h2>file scripts<a class="headerlink" href="#file-scripts" title="Link to this heading">¶</a></h2>
+<section id="simple">
+<h3>simple<a class="headerlink" href="#simple" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vim<span class="w"> </span>simple.sed
+/^$/d
+/^#/d
+
+sed<span class="w"> </span>-f<span class="w"> </span>simple.sed<span class="w"> </span>ssh_config
+</pre></div>
+</div>
+</section>
+<section id="advanced">
+<h3>advanced<a class="headerlink" href="#advanced" title="Link to this heading">¶</a></h3>
+<section id="branching-labels">
+<h4>branching &amp; labels<a class="headerlink" href="#branching-labels" title="Link to this heading">¶</a></h4>
+<p>keep clients alive</p>
+<p>ClientAliveInterval: how often is a keep alive packet sent to client
+ClientAliveCountMax: intervals that can pass without a client response</p>
+<p>ssh_client.sed:
+t = test</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sed -Ef</span>
+/ClientAliveInterval/<span class="w"> </span><span class="o">{</span><span class="w">                 </span><span class="c1"># string to be searched</span>
+<span class="w">  </span>s/^<span class="o">(</span>ClientAliveInterval<span class="o">)</span>.*$/<span class="se">\1</span><span class="w"> </span><span class="m">90</span>/
+<span class="w">  </span>t<span class="w"> </span>countMax<span class="w">                               </span><span class="c1"># if substitution success goto label countMax</span>
+<span class="w">  </span>s/.*/ClientAliveInterval<span class="w"> </span><span class="m">90</span>/<span class="w">          </span><span class="c1"># eg started w comment = full replacement</span>
+<span class="w">  </span>t<span class="w"> </span>countMax
+<span class="o">}</span>
+
+:countMax
+/ClientAliveCountMax/<span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>s/^<span class="o">(</span>ClientAliveCountMax<span class="o">)</span>.*$/<span class="se">\1</span><span class="w"> </span><span class="m">3</span>/
+<span class="w">  </span>t<span class="w"> </span>del
+<span class="w">  </span>s/.*/ClientAliveCountMax<span class="w"> </span><span class="m">3</span>/
+<span class="w">  </span>t<span class="w"> </span>del
+<span class="o">}</span>
+
+:del
+/^<span class="o">(</span>$<span class="p">|</span><span class="c1">#)/del                             # delete empty lines</span>
+</pre></div>
+</div>
+</section>
+<section id="in-place-backups">
+<h4>in-place backups<a class="headerlink" href="#in-place-backups" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-f<span class="w"> </span>ssh_client.sed<span class="w"> </span>-i.bak<span class="w"> </span>ssh_config
+</pre></div>
+</div>
+</section>
+<section id="using-sed-in-a-loop">
+<h4>using sed in a loop<a class="headerlink" href="#using-sed-in-a-loop" title="Link to this heading">¶</a></h4>
+<p>ssh -n: redirect stdin to /dev/null, allowing remote execution on multiple servers</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>server<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;configuring server: $server&#39;</span>
+<span class="w">    </span>ssh<span class="w"> </span>-n<span class="w"> </span>-C<span class="w"> </span><span class="nv">$server</span><span class="w"> </span><span class="s2">&quot;sudo sed -Ei.</span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span><span class="s2"> &#39;/^(</span>$<span class="s2">|#)/d&#39; /etc/ssh/sshd_config&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;done configuring $server&#39;</span>
+<span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>server_ips.txt
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">line selection</a><ul>
+<li><a class="reference internal" href="#first-last">first last</a></li>
+<li><a class="reference internal" href="#range">range</a><ul>
+<li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
+<li><a class="reference internal" href="#append">append</a><ul>
+<li><a class="reference internal" href="#with-regex">with regex</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#insert">insert</a><ul>
+<li><a class="reference internal" href="#insert-script">insert script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#substitute">substitute</a><ul>
+<li><a class="reference internal" href="#ignore-case">ignore case</a></li>
+<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
+<li><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
+<li><a class="reference internal" href="#file-scripts">file scripts</a><ul>
+<li><a class="reference internal" href="#simple">simple</a></li>
+<li><a class="reference internal" href="#advanced">advanced</a><ul>
+<li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
+<li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
+<li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/bash/sed.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">line selection</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on None.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>
