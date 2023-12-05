@@ -72,6 +72,12 @@
 <li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
 <li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -231,17 +237,49 @@ docs/build/
 sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#&quot;</span><span class="w"> </span>.gitignore
 </pre></div>
 </div>
-<p>create a gh-pages branch and allow the default build dir</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Distribution / packaging</span>
-<span class="o">.</span><span class="n">Python</span>
-<span class="c1"># build/</span>
-</pre></div>
-</div>
 <p>Also ignore the Makefile and make.bat files as they are
 created upon running <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Makefile\nmake.bat\n&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore<span class="w"> </span>
 </pre></div>
 </div>
+</section>
+<section id="gh-pages-prep">
+<h3>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h3>
+<p>create a gh-pages branch</p>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">gh-pages</span></code></p>
+<section id="convert-build-to-docs">
+<h4>convert build to docs<a class="headerlink" href="#convert-build-to-docs" title="Link to this heading">¶</a></h4>
+<p>change make.bat and Makefile builddir variable to docs</p>
+<p><strong>in github you can’t select the build folder, only / or docs</strong>
+so it is best to name build directory as docs to automate things</p>
+<p>The following sed command will detect the two lines that need to change</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;/=\s?build/p&quot;</span><span class="w"> </span>Makefile<span class="w"> </span>make.bat<span class="w"> </span>
+<span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>build
+<span class="nb">set</span><span class="w"> </span><span class="nv">BUILDDIR</span><span class="o">=</span>build
+</pre></div>
+</div>
+</section>
+<section id="change-makefile">
+<h4>change Makefile:<a class="headerlink" href="#change-makefile" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/^(BUILDDIR\s*=\s*)(build)/\1docs/p&quot;</span><span class="w"> </span>Makefile
+<span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>docs
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/^(BUILDDIR\s*=\s*)(build)/\1docs/&quot;</span><span class="w"> </span>Makefile
+</pre></div>
+</div>
+</section>
+<section id="change-make-bat">
+<h4>change make.bat:<a class="headerlink" href="#change-make-bat" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/(set BUILDDIR=)(build)/\1docs/p&quot;</span><span class="w"> </span>make.bat
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/(set BUILDDIR=)(build)/\1docs/&quot;</span><span class="w"> </span>make.bat
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 </section>
@@ -268,6 +306,12 @@ created upon running <code class="docutils literal notranslate"><span class="pre
 <li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
 <li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

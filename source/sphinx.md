@@ -91,15 +91,6 @@ docs/build/
 sed -i "s#docs/_build/#docs/build/#" .gitignore
 ```
 
-create a gh-pages branch and allow the default build dir
-
-```
-# Distribution / packaging
-.Python
-# build/
-```
-
-
 Also ignore the Makefile and make.bat files as they are
 created upon running `sphinx-quickstart`
 
@@ -107,3 +98,45 @@ created upon running `sphinx-quickstart`
 echo -e "Makefile\nmake.bat\n" >> .gitignore 
 ```
 
+### gh-pages prep
+
+create a gh-pages branch
+
+`git branch gh-pages`
+
+#### convert build to docs
+
+change make.bat and Makefile builddir variable to docs
+
+**in github you can't select the build folder, only / or docs**
+so it is best to name build directory as docs to automate things
+
+
+The following sed command will detect the two lines that need to change
+
+```bash
+$ sed -E -n "/=\s?build/p" Makefile make.bat 
+BUILDDIR      = build
+set BUILDDIR=build
+```
+
+#### change Makefile:
+
+```bash
+# test
+sed -E -n "s/^(BUILDDIR\s*=\s*)(build)/\1docs/p" Makefile
+BUILDDIR      = docs
+
+# apply
+sed -E -i "s/^(BUILDDIR\s*=\s*)(build)/\1docs/" Makefile
+```
+
+#### change make.bat:
+
+```bash
+# test
+sed -E -n "s/(set BUILDDIR=)(build)/\1docs/p" make.bat
+
+# apply
+sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
+```
