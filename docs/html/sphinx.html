@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>sphinx &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="_static/pygments_dark.css?v=b20cc3f5" />
+    
+    <script src="_static/documentation_options.js?v=1f169f65"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /><link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="_static/py.svg" />
+            <script type="text/javascript" src="_static/copybutton.js"></script>
+            <script type="text/javascript" src="_static/menu.js"></script>
+            <script type="text/javascript" src="_static/search-focus.js"></script>
+            <script type="text/javascript" src="_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">sphinx</a><ul>
+<li><a class="reference internal" href="#installation">installation</a><ul>
+<li><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
+<li><a class="reference internal" href="#create-environment">create environment</a></li>
+<li><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
+<li><a class="reference internal" href="#more-on-myst-parser">more on myst parser:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
+<li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
+<li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
+<li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sphinx.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+          <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">sphinx</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="sphinx">
+<h1>sphinx<a class="headerlink" href="#sphinx" title="Link to this heading">¶</a></h1>
+<section id="installation">
+<h2>installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<section id="create-requirements-file">
+<h3>create requirements file<a class="headerlink" href="#create-requirements-file" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>requirements.txt<span class="p">;</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;sphinx\nmyst-parser\nsphinx-autobuild\npython-docs-theme&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<p>\nrstcheck</p>
+</section>
+<section id="create-environment">
+<h3>create environment<a class="headerlink" href="#create-environment" title="Link to this heading">¶</a></h3>
+<p>mkvirtualenv dox -r requirements.txt</p>
+<p>verify package installation</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>sphinx-quickstart<span class="w"> </span>
+/home/user/.virtualenvs/dox/bin/sphinx-quickstart
+</pre></div>
+</div>
+</section>
+<section id="quickstart-sphinx">
+<h3>quickstart sphinx<a class="headerlink" href="#quickstart-sphinx" title="Link to this heading">¶</a></h3>
+<p>check <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/quickstart.html">here</a> for all options</p>
+<p>–ext-githubpages creates .nojekyll file on generated HTML directory to publish the document on GitHub Pages
+–extensions EXTENSIONS enable arbitrary extensions
+–project PROJECT project name
+–author AUTHOR  author names
+-v VERSION version of project
+-release VERSION release of project
+–sep if specified, separate source and build dirs</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-quickstart<span class="w"> </span>--project<span class="w"> </span><span class="s2">&quot;PowrUsr Docs&quot;</span><span class="w"> </span>--author<span class="w"> </span><span class="s2">&quot;PowrUsr&quot;</span><span class="w"> </span>--release<span class="w"> </span><span class="s2">&quot;alpha&quot;</span><span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;2023-12-05&quot;</span><span class="w"> </span><span class="se">\</span>
+--ext-githubpages<span class="w"> </span>--extensions<span class="w"> </span><span class="s2">&quot;myst_parser&quot;</span><span class="w"> </span>--sep<span class="w"> </span>--language<span class="w"> </span>en
+</pre></div>
+</div>
+</section>
+<section id="more-on-myst-parser">
+<h3>more on myst parser:<a class="headerlink" href="#more-on-myst-parser" title="Link to this heading">¶</a></h3>
+<p>You can further configure MyST-Parser to allow custom syntax that standard CommonMark doesn’t support.
+Read more in the MyST-Parser <a class="reference external" href="https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html">documentation</a></p>
+</section>
+</section>
+<section id="conf-py-configuration">
+<h2>conf.py configuration<a class="headerlink" href="#conf-py-configuration" title="Link to this heading">¶</a></h2>
+<section id="change-default-html-theme">
+<h3>change default html theme<a class="headerlink" href="#change-default-html-theme" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/alabaster/python_docs_theme/p&quot;</span><span class="w"> </span>source/conf.py
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/alabaster/python_docs_theme/&quot;</span><span class="w"> </span>source/conf.py
+</pre></div>
+</div>
+<p>remove redundant text if you like in index file</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;N;s/You can adapt/lol/p&quot;</span><span class="w"> </span>source/index.rst
+<span class="w">   </span>lol<span class="w"> </span>this<span class="w"> </span>file<span class="w"> </span>completely<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>liking,<span class="w"> </span>but<span class="w"> </span>it<span class="w"> </span>should<span class="w"> </span>at<span class="w"> </span>least
+<span class="w">   </span>contain<span class="w"> </span>the<span class="w"> </span>root<span class="w"> </span><span class="sb">`</span>toctree<span class="sb">`</span><span class="w"> </span>directive.
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;N;s/You can adapt.*//&quot;</span><span class="w"> </span>source/index.rst
+</pre></div>
+</div>
+</section>
+<section id="define-file-extensions">
+<h3>define file extensions<a class="headerlink" href="#define-file-extensions" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;source_suffix = {\n\</span>
+<span class="s2">    &#39;.rst&#39;: &#39;restructuredtext&#39;,\n\</span>
+<span class="s2">    &#39;.txt&#39;: &#39;markdown&#39;,\n\</span>
+<span class="s2">    &#39;.md&#39;: &#39;markdown&#39;,\n\</span>
+<span class="s2">&gt; }&quot;</span>&gt;&gt;<span class="w"> </span>source/conf.py
+</pre></div>
+</div>
+</section>
+<section id="gitignore-update">
+<h3>gitignore update<a class="headerlink" href="#gitignore-update" title="Link to this heading">¶</a></h3>
+<p>ensure correct docs/build exclusion instead of docs/_build in gitignore file</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#p&quot;</span><span class="w"> </span>.gitignore<span class="w"> </span>
+docs/build/
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#&quot;</span><span class="w"> </span>.gitignore
+</pre></div>
+</div>
+<p>Also ignore the Makefile and make.bat files as they are
+created upon running <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Makefile\nmake.bat\n&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore<span class="w"> </span>
+</pre></div>
+</div>
+</section>
+<section id="gh-pages-prep">
+<h3>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h3>
+<p>create a gh-pages branch</p>
+<p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">gh-pages</span></code></p>
+<section id="convert-build-to-docs">
+<h4>convert build to docs<a class="headerlink" href="#convert-build-to-docs" title="Link to this heading">¶</a></h4>
+<p>change make.bat and Makefile builddir variable to docs</p>
+<p><strong>in github you can’t select the build folder, only / or docs</strong>
+so it is best to name build directory as docs to automate things</p>
+<p>The following sed command will detect the two lines that need to change</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;/=\s?build/p&quot;</span><span class="w"> </span>Makefile<span class="w"> </span>make.bat<span class="w"> </span>
+<span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>build
+<span class="nb">set</span><span class="w"> </span><span class="nv">BUILDDIR</span><span class="o">=</span>build
+</pre></div>
+</div>
+</section>
+<section id="change-makefile">
+<h4>change Makefile:<a class="headerlink" href="#change-makefile" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/^(BUILDDIR\s*=\s*)(build)/\1docs/p&quot;</span><span class="w"> </span>Makefile
+<span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>docs
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/^(BUILDDIR\s*=\s*)(build)/\1docs/&quot;</span><span class="w"> </span>Makefile
+</pre></div>
+</div>
+</section>
+<section id="change-make-bat">
+<h4>change make.bat:<a class="headerlink" href="#change-make-bat" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/(set BUILDDIR=)(build)/\1docs/p&quot;</span><span class="w"> </span>make.bat
+
+<span class="c1"># apply</span>
+sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/(set BUILDDIR=)(build)/\1docs/&quot;</span><span class="w"> </span>make.bat
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">sphinx</a><ul>
+<li><a class="reference internal" href="#installation">installation</a><ul>
+<li><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
+<li><a class="reference internal" href="#create-environment">create environment</a></li>
+<li><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
+<li><a class="reference internal" href="#more-on-myst-parser">more on myst parser:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
+<li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
+<li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
+<li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sphinx.md.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+          <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">sphinx</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on None.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>
