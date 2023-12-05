@@ -16,7 +16,8 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="scripting" href="scripting.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -57,42 +58,46 @@
         <option value="dark">Dark</option>
     </select>
 </label>
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">line selection</a><ul>
-<li><a class="reference internal" href="#first-last">first last</a></li>
-<li><a class="reference internal" href="#range">range</a><ul>
-<li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripting.html">scripting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">line selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#first-last">first last</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#range">range</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
-<li><a class="reference internal" href="#append">append</a><ul>
-<li><a class="reference internal" href="#with-regex">with regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#append">append</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-regex">with regex</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#insert">insert</a><ul>
-<li><a class="reference internal" href="#insert-script">insert script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#insert">insert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#insert-script">insert script</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#substitute">substitute</a><ul>
-<li><a class="reference internal" href="#ignore-case">ignore case</a></li>
-<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#substitute">substitute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ignore-case">ignore case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backreferences">backreferences</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
-<li><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
-<li><a class="reference internal" href="#file-scripts">file scripts</a><ul>
-<li><a class="reference internal" href="#simple">simple</a></li>
-<li><a class="reference internal" href="#advanced">advanced</a><ul>
-<li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
-<li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
-<li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-scripts">file scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple">simple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced">advanced</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
 </ul>
 </li>
 </ul>
@@ -101,14 +106,6 @@
 </li>
 </ul>
 
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/bash/sed.md.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -129,6 +126,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="scripting.html" title="scripting"
+             accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">
@@ -417,42 +417,46 @@ t = test</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">line selection</a><ul>
-<li><a class="reference internal" href="#first-last">first last</a></li>
-<li><a class="reference internal" href="#range">range</a><ul>
-<li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripting.html">scripting</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">line selection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#first-last">first last</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#range">range</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#include-next-line-in-search">include next line in search</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
-<li><a class="reference internal" href="#append">append</a><ul>
-<li><a class="reference internal" href="#with-regex">with regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#append">append</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-regex">with regex</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#insert">insert</a><ul>
-<li><a class="reference internal" href="#insert-script">insert script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#insert">insert</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#insert-script">insert script</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#substitute">substitute</a><ul>
-<li><a class="reference internal" href="#ignore-case">ignore case</a></li>
-<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#substitute">substitute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ignore-case">ignore case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backreferences">backreferences</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
-<li><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
-<li><a class="reference internal" href="#file-scripts">file scripts</a><ul>
-<li><a class="reference internal" href="#simple">simple</a></li>
-<li><a class="reference internal" href="#advanced">advanced</a><ul>
-<li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
-<li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
-<li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#by-semicolon">by semicolon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-scripts">file scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple">simple</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced">advanced</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
 </ul>
 </li>
 </ul>
@@ -461,14 +465,6 @@ t = test</p>
 </li>
 </ul>
 
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/bash/sed.md.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -489,6 +485,9 @@ t = test</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="scripting.html" title="scripting"
+             >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">

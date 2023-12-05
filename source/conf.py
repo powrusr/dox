@@ -36,3 +36,7 @@ source_suffix = {
     '.txt': 'markdown',
     '.md': 'markdown',
 }
+
+html_sidebars = {
+   '**': ['globaltoc.html', 'searchbox.html'],
+}
