@@ -72,12 +72,14 @@
 <li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
 <li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
 <li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
 <li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
 <li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
+<li><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
 </ul>
 </li>
 </ul>
@@ -243,12 +245,13 @@ created upon running <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 </section>
+</section>
 <section id="gh-pages-prep">
-<h3>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h3>
+<h2>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h2>
 <p>create a gh-pages branch</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">gh-pages</span></code></p>
 <section id="convert-build-to-docs">
-<h4>convert build to docs<a class="headerlink" href="#convert-build-to-docs" title="Link to this heading">¶</a></h4>
+<h3>convert build to docs<a class="headerlink" href="#convert-build-to-docs" title="Link to this heading">¶</a></h3>
 <p>change make.bat and Makefile builddir variable to docs</p>
 <p><strong>in github you can’t select the build folder, only / or docs</strong>
 so it is best to name build directory as docs to automate things</p>
@@ -260,7 +263,7 @@ so it is best to name build directory as docs to automate things</p>
 </div>
 </section>
 <section id="change-makefile">
-<h4>change Makefile:<a class="headerlink" href="#change-makefile" title="Link to this heading">¶</a></h4>
+<h3>change Makefile:<a class="headerlink" href="#change-makefile" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
 sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/^(BUILDDIR\s*=\s*)(build)/\1docs/p&quot;</span><span class="w"> </span>Makefile
 <span class="nv">BUILDDIR</span><span class="w">      </span><span class="o">=</span><span class="w"> </span>docs
@@ -271,7 +274,7 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 </div>
 </section>
 <section id="change-make-bat">
-<h4>change make.bat:<a class="headerlink" href="#change-make-bat" title="Link to this heading">¶</a></h4>
+<h3>change make.bat:<a class="headerlink" href="#change-make-bat" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
 sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/(set BUILDDIR=)(build)/\1docs/p&quot;</span><span class="w"> </span>make.bat
 
@@ -280,6 +283,22 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 </pre></div>
 </div>
 </section>
+<section id="rename-build-to-docs">
+<h3>rename build to docs<a class="headerlink" href="#rename-build-to-docs" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">mv</span> <span class="pre">build</span> <span class="pre">docs</span></code></p>
+</section>
+<section id="glob-in-source-index-rst">
+<h3>glob in source/index.rst<a class="headerlink" href="#glob-in-source-index-rst" title="Link to this heading">¶</a></h3>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">toctree</span><span class="p">::</span>
+   <span class="nc">:maxdepth:</span> 4
+   <span class="nc">:local:</span>
+   <span class="nc">:glob:</span>
+   <span class="nc">:caption:</span> Contents:
+
+   sphinx
+   bash/*
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -306,12 +325,14 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
 <li><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
 <li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
 <li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
 <li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
+<li><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
 </ul>
 </li>
 </ul>

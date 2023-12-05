@@ -98,13 +98,13 @@ created upon running `sphinx-quickstart`
 echo -e "Makefile\nmake.bat\n" >> .gitignore 
 ```
 
-### gh-pages prep
+## gh-pages prep
 
 create a gh-pages branch
 
 `git branch gh-pages`
 
-#### convert build to docs
+### convert build to docs
 
 change make.bat and Makefile builddir variable to docs
 
@@ -120,7 +120,7 @@ BUILDDIR      = build
 set BUILDDIR=build
 ```
 
-#### change Makefile:
+### change Makefile:
 
 ```bash
 # test
@@ -131,7 +131,7 @@ BUILDDIR      = docs
 sed -E -i "s/^(BUILDDIR\s*=\s*)(build)/\1docs/" Makefile
 ```
 
-#### change make.bat:
+### change make.bat:
 
 ```bash
 # test
@@ -140,3 +140,23 @@ sed -E -n "s/(set BUILDDIR=)(build)/\1docs/p" make.bat
 # apply
 sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 ```
+
+### rename build to docs
+
+`mv build docs`
+
+### glob in source/index.rst
+
+```rst
+
+.. toctree::
+   :maxdepth: 4
+   :local:
+   :glob:
+   :caption: Contents:
+
+   sphinx
+   bash/*
+
+```
+

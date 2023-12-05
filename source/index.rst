@@ -7,6 +7,7 @@ Welcome to PowrUsr Docs's documentation!
 ========================================
 
 .. toctree::
+   :maxdepth: 4
    :glob:
    :caption: Contents:
 
