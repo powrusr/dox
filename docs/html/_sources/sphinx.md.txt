@@ -159,3 +159,27 @@ sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 
 ```
 
+### add custom css
+
+#### create custom.css
+
+press ctrl+d to end text
+
+```bash
+cat << EOF >> source/_static/custom.css
+@import url("basic.css")
+div.document {
+   min-width: 360px;
+   max-width: 90%;
+}
+EOF
+```
+
+#### add custom css to conf.py
+
+```bash
+echo "html_style = 'custom.css'" >> source/conf.py
+```
+
+.. note:: the css will only change with `make html` if you changed a file that's in index.rst
+

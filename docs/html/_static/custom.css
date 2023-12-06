@@ -1,5 +1,5 @@
 @import url("basic.css")
-div.body {
+div.document {
    min-width: 360px;
    max-width: 90%;
 }
