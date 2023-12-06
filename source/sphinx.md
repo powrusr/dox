@@ -181,5 +181,5 @@ EOF
 echo "html_style = 'custom.css'" >> source/conf.py
 ```
 
-.. note:: the css will only change with `make html` if you changed a file that's in index.rst
+.. note:: you may need to do `make clean` to be sure the new css applies after changing it 
 
