@@ -195,8 +195,17 @@ EOF
 #### add custom css to conf.py
 
 ```bash
-echo "html_css_files = ['css/custom.css']" >> source/conf.py
+echo "html_css_files = ['custom.css']" >> source/conf.py
 ```
 
-.. note:: you may need to remove files in docs folder (except docs/index.html) to be sure the new css applies after changing it 
+#### clean html
+remove files in docs folder except docs/index.html and docs/.nojekyll
+
+```bash
+echo 'alias cleanhtml="rm -rf ~/gh/dox/docs/doctrees;rm -rf ~/gh/dox/docs/html"' >> ~/.bash_aliases 
+. ~/.bash_aliases 
+cleanhtml
+# rebuild html files
+make html
+```
 
