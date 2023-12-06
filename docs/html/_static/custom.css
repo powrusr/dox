@@ -1,5 +1,4 @@
 @import url("basic.css")
-div.document {
-   min-width: 360px;
+div[role=main] {
    max-width: 90%;
 }

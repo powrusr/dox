@@ -78,9 +78,16 @@ echo -e "source_suffix = {\n\
 > }">> source/conf.py
 ```
 
-### gitignore update
+### configure last updated
 
-ensure correct docs/build exclusion instead of docs/_build in gitignore file
+```bash
+echo -e "html_last_updated_fmt = '%Y-%m-%d'" >> source/conf.py
+```
+format according to [datetime format](https://docs.python.org/3/library/datetime.html?highlight=strftime#strftime-and-strptime-format-codes)
+
+## gitignore
+
+if you want to exclude build dir (or other name if you so specified)
 
 ```bash
 # test
@@ -91,7 +98,7 @@ docs/build/
 sed -i "s#docs/_build/#docs/build/#" .gitignore
 ```
 
-Also ignore the Makefile and make.bat files as they are
+ignore the Makefile and make.bat files as they are
 created upon running `sphinx-quickstart`
 
 ```bash
@@ -179,8 +186,7 @@ press ctrl+d to end text
 ```bash
 cat << EOF >> source/_static/custom.css
 @import url("basic.css")
-div.document {
-   min-width: 360px;
+div[role=main] {
    max-width: 90%;
 }
 EOF
@@ -193,5 +199,4 @@ echo "html_css_files = ['css/custom.css']" >> source/conf.py
 ```
 
 .. note:: you may need to remove files in docs folder (except docs/index.html) to be sure the new css applies after changing it 
-
 

@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="_static/pydoctheme.css?v=aa5eeaf2" />
     <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="_static/pygments_dark.css?v=b20cc3f5" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=11a6ae8b" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=22da2f76" />
     
     <script src="_static/documentation_options.js?v=1f169f65"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
@@ -74,9 +74,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#gitignore">gitignore</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
@@ -243,9 +244,17 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 </pre></div>
 </div>
 </section>
-<section id="gitignore-update">
-<h3>gitignore update<a class="headerlink" href="#gitignore-update" title="Link to this heading">¶</a></h3>
-<p>ensure correct docs/build exclusion instead of docs/_build in gitignore file</p>
+<section id="configure-last-updated">
+<h3>configure last updated<a class="headerlink" href="#configure-last-updated" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;html_last_updated_fmt = &#39;%Y-%m-%d&#39;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>source/conf.py
+</pre></div>
+</div>
+<p>format according to <a class="reference external" href="https://docs.python.org/3/library/datetime.html?highlight=strftime#strftime-and-strptime-format-codes">datetime format</a></p>
+</section>
+</section>
+<section id="gitignore">
+<h2>gitignore<a class="headerlink" href="#gitignore" title="Link to this heading">¶</a></h2>
+<p>if you want to exclude build dir (or other name if you so specified)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
 sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#p&quot;</span><span class="w"> </span>.gitignore<span class="w"> </span>
 docs/build/
@@ -254,12 +263,11 @@ docs/build/
 sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#&quot;</span><span class="w"> </span>.gitignore
 </pre></div>
 </div>
-<p>Also ignore the Makefile and make.bat files as they are
+<p>ignore the Makefile and make.bat files as they are
 created upon running <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Makefile\nmake.bat\n&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore<span class="w"> </span>
 </pre></div>
 </div>
-</section>
 </section>
 <section id="gh-pages-prep">
 <h2>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h2>
@@ -333,8 +341,7 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <p>press ctrl+d to end text</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; source/_static/custom.css</span>
 <span class="s">@import url(&quot;basic.css&quot;)</span>
-<span class="s">div.document {</span>
-<span class="s">   min-width: 360px;</span>
+<span class="s">div[role=main] {</span>
 <span class="s">   max-width: 90%;</span>
 <span class="s">}</span>
 <span class="s">EOF</span>
@@ -373,9 +380,10 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <li class="toctree-l2"><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#gitignore-update">gitignore update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#gitignore">gitignore</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
@@ -478,7 +486,7 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <br />
     <br />
 
-    Last updated on None.
+    Last updated on 2023-12-06.
     
     <br />
 
