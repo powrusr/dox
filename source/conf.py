@@ -31,6 +31,7 @@ language = 'en'
 
 html_theme = 'python_docs_theme'
 html_static_path = ['_static']
+html_css_files = ['css/custom.css']
 source_suffix = {
     '.rst': 'restructuredtext',
     '.txt': 'markdown',
@@ -40,4 +41,3 @@ source_suffix = {
 html_sidebars = {
    '**': ['globaltoc.html', 'searchbox.html'],
 }
-html_style = 'custom.css'

@@ -186,8 +186,9 @@ EOF
 #### add custom css to conf.py
 
 ```bash
-echo "html_style = 'custom.css'" >> source/conf.py
+echo "html_css_files = ['css/custom.css']" >> source/conf.py
 ```
 
-.. note:: you may need to do `make clean` to be sure the new css applies after changing it 
+.. note:: you may need to remove files in docs folder (except docs/index.html) to be sure the new css applies after changing it 
+
 
