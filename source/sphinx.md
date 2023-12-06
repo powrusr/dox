@@ -164,7 +164,10 @@ sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 ```bash
 echo '<meta http-equiv="refresh" content="0; url=./html/index.html" />' >> docs/index.html
 ```
+### add .nojekyl to docs folder
 
+```bash
+cp docs/html/.nojekyll docs/
 ```
 
 ### add custom css
