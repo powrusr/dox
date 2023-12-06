@@ -82,8 +82,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
 </ul>
 </li>
@@ -311,27 +310,34 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 </pre></div>
 </div>
 </section>
-<section id="add-custom-css">
-<h3>add custom css<a class="headerlink" href="#add-custom-css" title="Link to this heading">¶</a></h3>
-<section id="create-custom-css">
-<h4>create custom.css<a class="headerlink" href="#create-custom-css" title="Link to this heading">¶</a></h4>
-<p>press ctrl+d to end text</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; source/_static/custom.css</span>
-<span class="s">@import url(&quot;basic.css&quot;)</span>
-<span class="s">div.document {</span>
-<span class="s">   min-width: 360px;</span>
-<span class="s">   max-width: 90%;</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
+<section id="redirect-from-docs-index-html-to-docs-html-index-html">
+<h3>redirect from docs/index.html to docs/html/index.html<a class="headerlink" href="#redirect-from-docs-index-html-to-docs-html-index-html" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=./html/index.html&quot; /&gt;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>docs/index.html
 </pre></div>
 </div>
-</section>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+### add custom css
+
+#### create custom.css
+
+press ctrl+d to end text
+
+```bash
+cat &lt;&lt; EOF &gt;&gt; source/_static/custom.css
+@import url(&quot;basic.css&quot;)
+div.document {
+   min-width: 360px;
+   max-width: 90%;
+}
+EOF
+</pre></div>
+</div>
 <section id="add-custom-css-to-conf-py">
 <h4>add custom css to conf.py<a class="headerlink" href="#add-custom-css-to-conf-py" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;html_style = &#39;custom.css&#39;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>source/conf.py
 </pre></div>
 </div>
-<p>.. note:: the css will only change with <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">html</span></code> if you changed a file that’s in index.rst</p>
+<p>.. note:: you may need to do <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> to be sure the new css applies after changing it</p>
 </section>
 </section>
 </section>
@@ -367,8 +373,7 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <li class="toctree-l3"><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
 </ul>
 </li>

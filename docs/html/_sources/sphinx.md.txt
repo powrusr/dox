@@ -159,6 +159,14 @@ sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 
 ```
 
+### redirect from docs/index.html to docs/html/index.html
+
+```bash
+echo '<meta http-equiv="refresh" content="0; url=./html/index.html" />' >> docs/index.html
+```
+
+```
+
 ### add custom css
 
 #### create custom.css
@@ -181,5 +189,5 @@ EOF
 echo "html_style = 'custom.css'" >> source/conf.py
 ```
 
-.. note:: the css will only change with `make html` if you changed a file that's in index.rst
+.. note:: you may need to do `make clean` to be sure the new css applies after changing it 
 

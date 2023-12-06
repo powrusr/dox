@@ -159,6 +159,14 @@ sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
 
 ```
 
+### redirect from docs/index.html to docs/html/index.html
+
+```bash
+echo '<meta http-equiv="refresh" content="0; url=./html/index.html" />' >> docs/index.html
+```
+
+```
+
 ### add custom css
 
 #### create custom.css
