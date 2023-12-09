@@ -1,0 +1,229 @@
+# sphinx
+
+## installation
+
+### create requirements file
+
+```bash
+touch requirements.txt;echo "sphinx\nmyst-parser\nsphinx-autobuild\npython-docs-theme" >> requirements.txt
+```
+
+### create environment
+
+mkvirtualenv dox -r requirements.txt
+
+verify package installation
+
+```bash
+which sphinx-quickstart 
+/home/user/.virtualenvs/dox/bin/sphinx-quickstart
+```
+
+### quickstart sphinx
+
+check [here](https://www.sphinx-doc.org/en/master/usage/quickstart.html) for all options
+
+--ext-githubpages creates .nojekyll file on generated HTML directory to publish the document on GitHub Pages
+--extensions EXTENSIONS enable arbitrary extensions
+--project PROJECT project name
+--author AUTHOR  author names
+-v VERSION version of project
+-release VERSION release of project
+--sep if specified, separate source and build dirs
+
+
+```bash
+sphinx-quickstart --project "PowrUsr Docs" --author "PowrUsr" --release "alpha" -v "2023-12-05" \
+--ext-githubpages --extensions "myst_parser" --sep --language en
+```
+
+### myst parser:
+
+You can further configure MyST-Parser to allow custom syntax that standard CommonMark doesn’t support.
+Read more in the MyST-Parser [documentation](https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html)
+
+## conf.py
+
+### change default html theme
+
+```bash
+# test
+sed -n "s/alabaster/python_docs_theme/p" source/conf.py
+
+# apply
+sed -i "s/alabaster/python_docs_theme/" source/conf.py
+```
+
+remove redundant text if you like in index file
+
+```bash
+# test
+sed -E -n "N;s/You can adapt/lol/p" source/index.rst
+   lol this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+# apply
+sed -E -i "N;s/You can adapt.*//" source/index.rst
+```
+
+### define file extensions
+
+```bash
+echo -e "source_suffix = {\n\
+    '.rst': 'restructuredtext',\n\
+    '.txt': 'markdown',\n\
+    '.md': 'markdown',\n\
+> }">> source/conf.py
+```
+
+### configure last updated
+
+```bash
+echo -e "html_last_updated_fmt = '%Y-%m-%d'" >> source/conf.py
+```
+format according to [datetime format](https://docs.python.org/3/library/datetime.html?highlight=strftime#strftime-and-strptime-format-codes)
+
+
+## gh-pages
+
+create a gh-pages branch
+
+`git branch gh-pages`
+
+### convert build to docs
+
+change make.bat and Makefile builddir variable to docs
+
+**in github you can't select the build folder, only / or docs**
+so it is best to name build directory as docs to automate things
+
+
+The following sed command will detect the two lines that need to change
+
+```bash
+$ sed -E -n "/=\s?build/p" Makefile make.bat 
+BUILDDIR      = build
+set BUILDDIR=build
+```
+
+### change Makefile:
+
+```bash
+# test
+sed -E -n "s/^(BUILDDIR\s*=\s*)(build)/\1docs/p" Makefile
+BUILDDIR      = docs
+
+# apply
+sed -E -i "s/^(BUILDDIR\s*=\s*)(build)/\1docs/" Makefile
+```
+
+### change make.bat:
+
+```bash
+# test
+sed -E -n "s/(set BUILDDIR=)(build)/\1docs/p" make.bat
+
+# apply
+sed -E -i "s/(set BUILDDIR=)(build)/\1docs/" make.bat
+```
+
+### rename build to docs
+
+`mv build docs`
+
+### glob in source/index.rst
+
+```rst
+
+.. toctree::
+   :maxdepth: 4
+   :glob:
+   :caption: Contents:
+
+   sphinx
+   bash/*
+
+```
+
+### redirect from docs/index.html to docs/html/index.html
+
+```bash
+echo '<meta http-equiv="refresh" content="0; url=./html/index.html" />' >> docs/index.html
+```
+### add .nojekyl to docs folder
+
+```bash
+cp docs/html/.nojekyll docs/
+```
+
+### add custom css
+
+#### create custom.css
+
+press ctrl+d to end text
+
+enforce content containers to maximize width
+I dislike wasting web real estate
+
+```bash
+cat << EOF >> source/_static/custom.css
+@import url("basic.css")
+div.body {
+   max-width: 90%;
+}
+div[role=main] {
+   max-width: 90%;
+}
+EOF
+```
+
+### add custom css to conf.py
+
+```bash
+echo "html_css_files = ['custom.css']" >> source/conf.py
+```
+
+### clean html
+remove files in docs folder except docs/index.html and docs/.nojekyll
+
+```bash
+echo 'alias cleanhtml="rm -rf ~/gh/dox/docs/doctrees;rm -rf ~/gh/dox/docs/html"' >> ~/.bash_aliases 
+. ~/.bash_aliases 
+cleanhtml
+# rebuild html files
+make html
+```
+
+## autobuild
+
+```bash
+sphinx-autobuild ~/gh/dox/source/ ~/gh/dox/docs/ --port 8888
+
+[sphinx-autobuild] > sphinx-build /home/duke/gh/dox/source /home/duke/gh/dox/docs
+Running Sphinx v7.2.6
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+copying assets... copying static files... done
+copying extra files... done
+done
+writing output... [100%] sphinx
+generating indices... genindex done
+writing additional pages... search done
+dumping search index in English (code: en)... done
+dumping object inventory... done
+build succeeded, 10 warnings.
+
+The HTML pages are in docs.
+[I 231209 17:52:58 server:335] Serving on http://127.0.0.1:8888
+[I 231209 17:52:58 handlers:62] Start watching changes
+[I 231209 17:52:58 handlers:64] Start detecting changes
+```
+
+### alias
+
+```bash
+echo 'alias doxbuild="workon dox;sphinx-autobuild ~/gh/dox/source/ ~/gh/dox/docs/ --port 8888"' >> ~/.bash_aliases 
+. ~/.bash_aliases 
+```
