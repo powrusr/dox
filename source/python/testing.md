@@ -39,8 +39,8 @@ def test_large_file(phonebook):
 ```
 
 ```python
-@pytest.mark.skipif(sys.version_info < (3, 6)
-reason=“requires python3.6 or higher”)
+
+@pytest.mark.skipif(sys.version_info < (3, 6), reason="requires python3.6 or higher")
 def test_phonebook_contains_names():
     phonebook = PhoneBook()
     assert 'Bob' in phonebook.names()
@@ -60,10 +60,10 @@ Fixture availability is determined from the perspective of the test. A fixture i
 
 ```bash
 pytest --fixtures
-========================================= test session starts =========================================
+=================== test session starts =================================
 platform linux -- Python 3.10.12, pytest-7.4.3, pluggy-1.3.0
 rootdir: /home/duke/gh/docs
-collected 0 items                                                                                     
+collected 0 items                                                                                   
 cache -- .../_pytest/cacheprovider.py:532
     Return a cache object that can persist state between testing sessions.
 
@@ -84,7 +84,7 @@ doctest_namespace [session scope] -- .../_pytest/doctest.py:757
     namespace of doctests.
 
 pytestconfig [session scope] -- .../_pytest/fixtures.py:1353
-    Session-scoped fixture that returns the session's :class:`pytest.Config`
+    Session-scoped fixture that returns the sessions :class:`pytest.Config`
     object.
 
 record_property -- .../_pytest/junitxml.py:282
@@ -103,7 +103,7 @@ tmpdir -- .../_pytest/legacypath.py:309
     Return a temporary directory path object which is unique to each test
     function invocation, created as a sub directory of the base temporary
     directory.
-
+    
 caplog -- .../_pytest/logging.py:570
     Access and control log capturing.
 
@@ -122,6 +122,7 @@ tmp_path -- .../_pytest/tmpdir.py:260
     directory.
 ```
 
+
 ```python
 @pytest.fixture
 def phonebook():
@@ -130,7 +131,7 @@ return PhoneBook()
 # using phonebook fixture
 def test_lookup_by_name(phonebook):
 phonebook.add("Bob", "12345")
-assert "12345" == phonebook.lookup(“Bob")
+assert "12345" == phonebook.lookup("Bob")
 
 # using phonebook fixture
 def test_missing_name_raises_error(phonebook):
@@ -763,7 +764,7 @@ def test_lookup_weather_not_sunny():
     assert scorer.lookup_weather(location_bxl) == False
 ```
 
-```python
+```yaml
 # test_lookup_weather_not_sunny.yaml
 
 interactions:
@@ -801,3 +802,5 @@ interactions:
       code: 200
       message: OK
 version: 1
+```
+

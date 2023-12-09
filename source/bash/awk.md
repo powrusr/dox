@@ -50,6 +50,7 @@ awk 'BEGIN {FS=":"; printf "%3s%12s%6s\n","No: ","Username","UID";COUNT=0} \
 /bin\/bash/{COUNT++; printf "%4s%s%10s%6d\n",COUNT,": ",$1,$3;} \
 END {print "there are " NR " users, of whom " COUNT " use bash"}' /etc/passwd
 ```
+
 ```output
 No:     Username   UID
    1:       root     0
@@ -219,7 +220,7 @@ pattern: variable name of choice
 
 note: switch case is a gawk feature, install gawk first
 
-```awk
+```bash
 #!/bin/awk -f
 BEGIN {
   FS=":";
@@ -253,9 +254,11 @@ $0 ~ pattern {
   }
 }
 ```
+
 ```bash
 awk -v pattern=duke -f bash/files/pwd2yml.awk /etc/passwd
 ```
+
 ```output
 users: 
   - user: duke

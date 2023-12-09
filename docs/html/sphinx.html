@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="awk" href="bash/awk.html" />
-    <link rel="prev" title="Welcome to PowrUsr Docs’s documentation!" href="index.html" /><link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="bash" href="bash/index.html" />
+    <link rel="prev" title="PowrUsr" href="index.html" /><link rel="stylesheet" href="_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="_static/py.svg" />
             <script type="text/javascript" src="_static/copybutton.js"></script>
             <script type="text/javascript" src="_static/menu.js"></script>
@@ -61,70 +61,61 @@
     </select>
 </label>
 <h3><a href="index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sphinx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#create-environment">create environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#more-on-myst-parser">more on myst parser:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conf-py">conf.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gh-pages">gh-pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autobuild">autobuild</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#gitignore">gitignore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-nojekyl-to-docs-folder">add .nojekyl to docs folder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#clean-html">clean html</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash/index.html">bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/index.html">python</a></li>
 </ul>
 
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">sphinx</a><ul>
+<li><a class="reference internal" href="#installation">installation</a><ul>
+<li><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
+<li><a class="reference internal" href="#create-environment">create environment</a></li>
+<li><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
+<li><a class="reference internal" href="#myst-parser">myst parser:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conf-py">conf.py</a><ul>
+<li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
+<li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
+<li><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gh-pages">gh-pages</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+<li><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
+<li><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
+<li><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a></li>
+<li><a class="reference internal" href="#add-nojekyl-to-docs-folder">add .nojekyl to docs folder</a></li>
+<li><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
+<li><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
+<li><a class="reference internal" href="#clean-html">clean html</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#autobuild">autobuild</a><ul>
+<li><a class="reference internal" href="#alias">alias</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -146,10 +137,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="bash/awk.html" title="awk"
+          <a href="bash/index.html" title="bash"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to PowrUsr Docs’s documentation!"
+          <a href="index.html" title="PowrUsr"
              accesskey="P">previous</a> |</li>
           <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -201,7 +192,6 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>requirements.txt<span class="p">;</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;sphinx\nmyst-parser\nsphinx-autobuild\npython-docs-theme&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
-<p>\nrstcheck</p>
 </section>
 <section id="create-environment">
 <h3>create environment<a class="headerlink" href="#create-environment" title="Link to this heading">¶</a></h3>
@@ -227,14 +217,14 @@
 </pre></div>
 </div>
 </section>
-<section id="more-on-myst-parser">
-<h3>more on myst parser:<a class="headerlink" href="#more-on-myst-parser" title="Link to this heading">¶</a></h3>
+<section id="myst-parser">
+<h3>myst parser:<a class="headerlink" href="#myst-parser" title="Link to this heading">¶</a></h3>
 <p>You can further configure MyST-Parser to allow custom syntax that standard CommonMark doesn’t support.
 Read more in the MyST-Parser <a class="reference external" href="https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html">documentation</a></p>
 </section>
 </section>
-<section id="conf-py-configuration">
-<h2>conf.py configuration<a class="headerlink" href="#conf-py-configuration" title="Link to this heading">¶</a></h2>
+<section id="conf-py">
+<h2>conf.py<a class="headerlink" href="#conf-py" title="Link to this heading">¶</a></h2>
 <section id="change-default-html-theme">
 <h3>change default html theme<a class="headerlink" href="#change-default-html-theme" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
@@ -273,25 +263,8 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <p>format according to <a class="reference external" href="https://docs.python.org/3/library/datetime.html?highlight=strftime#strftime-and-strptime-format-codes">datetime format</a></p>
 </section>
 </section>
-<section id="gitignore">
-<h2>gitignore<a class="headerlink" href="#gitignore" title="Link to this heading">¶</a></h2>
-<p>if you want to exclude build dir (or other name if you so specified)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># test</span>
-sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#p&quot;</span><span class="w"> </span>.gitignore<span class="w"> </span>
-docs/build/
-
-<span class="c1"># apply</span>
-sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s#docs/_build/#docs/build/#&quot;</span><span class="w"> </span>.gitignore
-</pre></div>
-</div>
-<p>ignore the Makefile and make.bat files as they are
-created upon running <code class="docutils literal notranslate"><span class="pre">sphinx-quickstart</span></code></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;Makefile\nmake.bat\n&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>.gitignore<span class="w"> </span>
-</pre></div>
-</div>
-</section>
-<section id="gh-pages-prep">
-<h2>gh-pages prep<a class="headerlink" href="#gh-pages-prep" title="Link to this heading">¶</a></h2>
+<section id="gh-pages">
+<h2>gh-pages<a class="headerlink" href="#gh-pages" title="Link to this heading">¶</a></h2>
 <p>create a gh-pages branch</p>
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">gh-pages</span></code></p>
 <section id="convert-build-to-docs">
@@ -374,14 +347,15 @@ I dislike wasting web real estate</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="add-custom-css-to-conf-py">
-<h4>add custom css to conf.py<a class="headerlink" href="#add-custom-css-to-conf-py" title="Link to this heading">¶</a></h4>
+<h3>add custom css to conf.py<a class="headerlink" href="#add-custom-css-to-conf-py" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;html_css_files = [&#39;custom.css&#39;]&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>source/conf.py
 </pre></div>
 </div>
 </section>
 <section id="clean-html">
-<h4>clean html<a class="headerlink" href="#clean-html" title="Link to this heading">¶</a></h4>
+<h3>clean html<a class="headerlink" href="#clean-html" title="Link to this heading">¶</a></h3>
 <p>remove files in docs folder except docs/index.html and docs/.nojekyll</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;alias cleanhtml=&quot;rm -rf ~/gh/dox/docs/doctrees;rm -rf ~/gh/dox/docs/html&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_aliases<span class="w"> </span>
 .<span class="w"> </span>~/.bash_aliases<span class="w"> </span>
@@ -391,6 +365,39 @@ make<span class="w"> </span>html
 </pre></div>
 </div>
 </section>
+</section>
+<section id="autobuild">
+<h2>autobuild<a class="headerlink" href="#autobuild" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-autobuild<span class="w"> </span>~/gh/dox/source/<span class="w"> </span>~/gh/dox/docs/<span class="w"> </span>--port<span class="w"> </span><span class="m">8888</span>
+
+<span class="o">[</span>sphinx-autobuild<span class="o">]</span><span class="w"> </span>&gt;<span class="w"> </span>sphinx-build<span class="w"> </span>/home/duke/gh/dox/source<span class="w"> </span>/home/duke/gh/dox/docs
+Running<span class="w"> </span>Sphinx<span class="w"> </span>v7.2.6
+looking<span class="w"> </span><span class="k">for</span><span class="w"> </span>now-outdated<span class="w"> </span>files...<span class="w"> </span>none<span class="w"> </span>found
+pickling<span class="w"> </span>environment...<span class="w"> </span><span class="k">done</span>
+checking<span class="w"> </span>consistency...<span class="w"> </span><span class="k">done</span>
+preparing<span class="w"> </span>documents...<span class="w"> </span><span class="k">done</span>
+copying<span class="w"> </span>assets...<span class="w"> </span>copying<span class="w"> </span>static<span class="w"> </span>files...<span class="w"> </span><span class="k">done</span>
+copying<span class="w"> </span>extra<span class="w"> </span>files...<span class="w"> </span><span class="k">done</span>
+<span class="k">done</span>
+writing<span class="w"> </span>output...<span class="w"> </span><span class="o">[</span><span class="m">100</span>%<span class="o">]</span><span class="w"> </span>sphinx
+generating<span class="w"> </span>indices...<span class="w"> </span>genindex<span class="w"> </span><span class="k">done</span>
+writing<span class="w"> </span>additional<span class="w"> </span>pages...<span class="w"> </span>search<span class="w"> </span><span class="k">done</span>
+dumping<span class="w"> </span>search<span class="w"> </span>index<span class="w"> </span><span class="k">in</span><span class="w"> </span>English<span class="w"> </span><span class="o">(</span>code:<span class="w"> </span>en<span class="o">)</span>...<span class="w"> </span><span class="k">done</span>
+dumping<span class="w"> </span>object<span class="w"> </span>inventory...<span class="w"> </span><span class="k">done</span>
+build<span class="w"> </span>succeeded,<span class="w"> </span><span class="m">10</span><span class="w"> </span>warnings.
+
+The<span class="w"> </span>HTML<span class="w"> </span>pages<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>docs.
+<span class="o">[</span>I<span class="w"> </span><span class="m">231209</span><span class="w"> </span><span class="m">17</span>:52:58<span class="w"> </span>server:335<span class="o">]</span><span class="w"> </span>Serving<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:8888
+<span class="o">[</span>I<span class="w"> </span><span class="m">231209</span><span class="w"> </span><span class="m">17</span>:52:58<span class="w"> </span>handlers:62<span class="o">]</span><span class="w"> </span>Start<span class="w"> </span>watching<span class="w"> </span>changes
+<span class="o">[</span>I<span class="w"> </span><span class="m">231209</span><span class="w"> </span><span class="m">17</span>:52:58<span class="w"> </span>handlers:64<span class="o">]</span><span class="w"> </span>Start<span class="w"> </span>detecting<span class="w"> </span>changes
+</pre></div>
+</div>
+<section id="alias">
+<h3>alias<a class="headerlink" href="#alias" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;alias doxbuild=&quot;workon dox;sphinx-autobuild ~/gh/dox/source/ ~/gh/dox/docs/ --port 8888&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bash_aliases<span class="w"> </span>
+.<span class="w"> </span>~/.bash_aliases<span class="w"> </span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -403,70 +410,61 @@ make<span class="w"> </span>html
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sphinx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#create-environment">create environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#more-on-myst-parser">more on myst parser:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conf-py">conf.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gh-pages">gh-pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#autobuild">autobuild</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#conf-py-configuration">conf.py configuration</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#gitignore">gitignore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gh-pages-prep">gh-pages prep</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-nojekyl-to-docs-folder">add .nojekyl to docs folder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#clean-html">clean html</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bash/index.html">bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/index.html">python</a></li>
 </ul>
 
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">sphinx</a><ul>
+<li><a class="reference internal" href="#installation">installation</a><ul>
+<li><a class="reference internal" href="#create-requirements-file">create requirements file</a></li>
+<li><a class="reference internal" href="#create-environment">create environment</a></li>
+<li><a class="reference internal" href="#quickstart-sphinx">quickstart sphinx</a></li>
+<li><a class="reference internal" href="#myst-parser">myst parser:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conf-py">conf.py</a><ul>
+<li><a class="reference internal" href="#change-default-html-theme">change default html theme</a></li>
+<li><a class="reference internal" href="#define-file-extensions">define file extensions</a></li>
+<li><a class="reference internal" href="#configure-last-updated">configure last updated</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gh-pages">gh-pages</a><ul>
+<li><a class="reference internal" href="#convert-build-to-docs">convert build to docs</a></li>
+<li><a class="reference internal" href="#change-makefile">change Makefile:</a></li>
+<li><a class="reference internal" href="#change-make-bat">change make.bat:</a></li>
+<li><a class="reference internal" href="#rename-build-to-docs">rename build to docs</a></li>
+<li><a class="reference internal" href="#glob-in-source-index-rst">glob in source/index.rst</a></li>
+<li><a class="reference internal" href="#redirect-from-docs-index-html-to-docs-html-index-html">redirect from docs/index.html to docs/html/index.html</a></li>
+<li><a class="reference internal" href="#add-nojekyl-to-docs-folder">add .nojekyl to docs folder</a></li>
+<li><a class="reference internal" href="#add-custom-css">add custom css</a><ul>
+<li><a class="reference internal" href="#create-custom-css">create custom.css</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-custom-css-to-conf-py">add custom css to conf.py</a></li>
+<li><a class="reference internal" href="#clean-html">clean html</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#autobuild">autobuild</a><ul>
+<li><a class="reference internal" href="#alias">alias</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -488,10 +486,10 @@ make<span class="w"> </span>html
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="bash/awk.html" title="awk"
+          <a href="bash/index.html" title="bash"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Welcome to PowrUsr Docs’s documentation!"
+          <a href="index.html" title="PowrUsr"
              >previous</a> |</li>
           <li><img src="_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>

@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="dataclasses" href="dataclass.html" />
-    <link rel="prev" title="line selection" href="../bash/sed.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="prev" title="python" href="index.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -61,68 +61,62 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">assert python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#list">list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#function">function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#row-count">row count</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#assert-pandas">assert pandas</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#assert-index">assert index</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#index-order">index order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tolerance">tolerance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compare">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-series">assert series</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#diff-data-types">diff data types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-df">assert df</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#check-likeness">check likeness</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-numpy">assert numpy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">assert python</a><ul>
+<li><a class="reference internal" href="#list">list</a></li>
+<li><a class="reference internal" href="#function">function</a></li>
+<li><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
+<li><a class="reference internal" href="#row-count">row count</a></li>
+<li><a class="reference internal" href="#assert-pandas">assert pandas</a></li>
+<li><a class="reference internal" href="#assert-index">assert index</a><ul>
+<li><a class="reference internal" href="#index-order">index order</a></li>
+<li><a class="reference internal" href="#tolerance">tolerance</a></li>
+<li><a class="reference internal" href="#compare">compare</a></li>
+<li><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-series">assert series</a><ul>
+<li><a class="reference internal" href="#diff-data-types">diff data types</a></li>
+<li><a class="reference internal" href="#id1">compare</a></li>
+<li><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-df">assert df</a><ul>
+<li><a class="reference internal" href="#check-likeness">check likeness</a></li>
+<li><a class="reference internal" href="#id2">compare</a></li>
+<li><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-numpy">assert numpy</a><ul>
+<li><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
+<li><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -147,7 +141,7 @@
           <a href="dataclass.html" title="dataclasses"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../bash/sed.html" title="line selection"
+          <a href="index.html" title="python"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -160,6 +154,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">assert python</a></li>
                 <li class="right">
                     
@@ -222,19 +217,19 @@
 <section id="row-count">
 <h2>row count<a class="headerlink" href="#row-count" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
-    <span class="c1"># Check that count is a positive integer</span>
+    <span class="c1">## Check that count is a positive integer</span>
     <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;invalid count: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 </section>
-</section>
 <section id="assert-pandas">
-<h1>assert pandas<a class="headerlink" href="#assert-pandas" title="Link to this heading">¶</a></h1>
+<h2>assert pandas<a class="headerlink" href="#assert-pandas" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/testing.html">testing docs</a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">pandas.testing</span> <span class="k">as</span> <span class="nn">pdt</span>
 </pre></div>
 </div>
+</section>
 <section id="assert-index">
 <h2>assert index<a class="headerlink" href="#assert-index" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
@@ -299,6 +294,7 @@
 <section id="check-idx-with-np-where">
 <h3>check idx with np.where<a class="headerlink" href="#check-idx-with-np-where" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
 <span class="c1"># find indices of rows where pickup and dropoff dates are different</span>
 <span class="n">diff_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -379,8 +375,7 @@
 </div>
 <section id="check-likeness">
 <h3>check likeness<a class="headerlink" href="#check-likeness" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="c1"># different column names but same data and shape</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># different column names but same data and shape</span>
 <span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
 <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
 
@@ -486,9 +481,8 @@
 <span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
 <section id="assert-data-integrity">
-<h2>assert data integrity<a class="headerlink" href="#assert-data-integrity" title="Link to this heading">¶</a></h2>
+<h3>assert data integrity<a class="headerlink" href="#assert-data-integrity" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 
 <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
@@ -527,7 +521,7 @@
 </div>
 </section>
 <section id="assert-data-logic">
-<h2>assert data logic<a class="headerlink" href="#assert-data-logic" title="Link to this heading">¶</a></h2>
+<h3>assert data logic<a class="headerlink" href="#assert-data-logic" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 
 <span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
@@ -554,6 +548,7 @@
 </div>
 </section>
 </section>
+</section>
 
 
             <div class="clearer"></div>
@@ -563,68 +558,62 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">assert python</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#list">list</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#function">function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#row-count">row count</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#assert-pandas">assert pandas</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#assert-index">assert index</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#index-order">index order</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tolerance">tolerance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compare">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-series">assert series</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#diff-data-types">diff data types</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-df">assert df</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#check-likeness">check likeness</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">compare</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-numpy">assert numpy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">assert python</a><ul>
+<li><a class="reference internal" href="#list">list</a></li>
+<li><a class="reference internal" href="#function">function</a></li>
+<li><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
+<li><a class="reference internal" href="#row-count">row count</a></li>
+<li><a class="reference internal" href="#assert-pandas">assert pandas</a></li>
+<li><a class="reference internal" href="#assert-index">assert index</a><ul>
+<li><a class="reference internal" href="#index-order">index order</a></li>
+<li><a class="reference internal" href="#tolerance">tolerance</a></li>
+<li><a class="reference internal" href="#compare">compare</a></li>
+<li><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-series">assert series</a><ul>
+<li><a class="reference internal" href="#diff-data-types">diff data types</a></li>
+<li><a class="reference internal" href="#id1">compare</a></li>
+<li><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-df">assert df</a><ul>
+<li><a class="reference internal" href="#check-likeness">check likeness</a></li>
+<li><a class="reference internal" href="#id2">compare</a></li>
+<li><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#assert-numpy">assert numpy</a><ul>
+<li><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
+<li><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -649,7 +638,7 @@
           <a href="dataclass.html" title="dataclasses"
              >next</a> |</li>
         <li class="right" >
-          <a href="../bash/sed.html" title="line selection"
+          <a href="index.html" title="python"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -662,6 +651,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">assert python</a></li>
                 <li class="right">
                     

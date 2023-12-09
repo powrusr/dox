@@ -1,4 +1,5 @@
 # functional programming
+
 ## map
 
 [map docs](https://docs.python.org/3/library/functions.html#map)
@@ -68,7 +69,7 @@ list(map(len, words))
 
 ## itertools
 
-### itertools functions
+## itertools functions
 
 One type of function it produces is **infinite iterators**
 
@@ -82,7 +83,7 @@ One type of function it produces is **infinite iterators**
 | Accumulate |returns a **running total** of values in an iterable|
 
 
-#### count
+### count
 
 ```python
 from itertools import count
@@ -96,7 +97,7 @@ for i in count(3): # counts up starting from 3
 
 ```
 
-#### accumulate
+### accumulate
 
 ```python
 from itertools import accumulate, takewhile
@@ -108,7 +109,7 @@ print(nums)  # [0,  1,   3,   6,  10,   15,   21, 28]
 
 ```
 
-#### takewhile
+### takewhile
 
 ```python
 print(list(takewhile(lambda x: x<=6, nums)))  # [0, 1, 3, 6]
@@ -120,7 +121,7 @@ print(list(takewhile(lambda x: x%2==0, nums)))
 # [2, 4, 6]
 ```
 
-#### combinatoric functions & permutations
+### combinatoric functions & permutations
 
 ```python
 

@@ -98,12 +98,11 @@ lambda _: 1.0  # don't require argument
 ## list indexing
 
 ```python
-
 x = ["first", "second", "third", "fourth"]
 y = [1, 2, 3, 4]
+```
 
 ```python
-
 x[1:-1]
 ["second", "third"]
 
@@ -154,7 +153,6 @@ z
 if your list has other lists nested in it you may want a **deep copy** (lists are mutable)
 
 ```python
-
 original = [[0], 1]
 # shallow copy just references to original list
 shallow = original[:]
@@ -405,8 +403,11 @@ sum(islice((x for x in count() if is_prime(x)), 1000))
 ```
 
 #### chain
-# syncronize iterations over 2 iterable series
-# eg two  series of temperature data
+
+syncronize iterations over 2 iterable series
+eg two  series of temperature data
+
+```python
 sunday = [12, 14, 15, 15, 17, 21, 22, 22, 23, 22, 20, 18]
 monday = [13, 14, 14, 14, 16, 20, 21, 22, 22, 21, 19, 17]
 # bind them in pairs of corresponding readings
@@ -507,7 +508,7 @@ for x in (p for p in lucas() if is_prime(p)):
 ```
 
 
-```
+```python
 itertools.chain(*iterables)
 Make an iterator that returns elements from the first iterable until it is exhausted, then proceeds to the next iterable, until all of the iterables are exhausted. Used for treating consecutive sequences as a single sequence
 ```
@@ -550,7 +551,7 @@ if __name__ == "__main__":
 ```
 
 
-### any() & all()
+#### any() & all()
 
 using any(or) and all(and) for iterable series of bool values
 
@@ -985,7 +986,7 @@ What specifically happens is that _classname is prepended to the variable name:
 - the global namespace (functions and variables declared at the module level),
 - and the built-in namespace (built-in functions and built-in exceptions). These three namespaces are searched in the following order: local, global, and built-in
 
-![image](..files/img/direct_ns.jpg)
+![image](../files/img/direct_ns.jpg)
 
 You also have access through the **self** variable to:
 - the **instance’s namespace** (instance variables, private instance variables, and superclass instance variables),
@@ -994,7 +995,7 @@ You also have access through the **self** variable to:
 
 These three namespaces are searched in the order instance, class, and then superclass
 
-![image](..files/img/self_ns.jpg)
+![image](../files/img/self_ns.jpg)
 
 note: **Private superclass instance** variables, **private superclass methods**, and **private superclass class** variables can’t be accessed by using self. A class is able to hide these names from its children.
 
@@ -1352,7 +1353,6 @@ def factorial(x):
 print(factorial(5))  # 120
 ```
 
-
 ```python
 
 """fibonacci"""
@@ -1504,7 +1504,6 @@ print(type(json_object))
 
 #### write
 
-
 ```python
 # Python program to write JSON
 # to a file
@@ -1530,7 +1529,6 @@ with open("sample.json", "w") as outfile:
 with open("sample.json", "w") as outfile:
     json.dump(dictionary, outfile)
 ```
-
 
 #### update
 
@@ -1586,7 +1584,6 @@ write_json(y)
 
 
 ### csv
-
 
 ```python
 # importing the csv module

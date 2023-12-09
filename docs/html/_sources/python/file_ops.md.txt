@@ -1,4 +1,4 @@
-## glob
+# glob
 
 https://docs.python.org/3/library/glob.html#module-glob
 

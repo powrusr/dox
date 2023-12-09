@@ -39,7 +39,7 @@ source_suffix = {
 }
 
 html_sidebars = {
-   '**': ['globaltoc.html', 'searchbox.html'],
+   '**': ['globaltoc.html','localtoc.html', 'searchbox.html'],
 }
 
 html_last_updated_fmt = '%Y-%m-%d'

@@ -8,8 +8,6 @@
 touch requirements.txt;echo "sphinx\nmyst-parser\nsphinx-autobuild\npython-docs-theme" >> requirements.txt
 ```
 
-\nrstcheck
-
 ### create environment
 
 mkvirtualenv dox -r requirements.txt
@@ -39,13 +37,12 @@ sphinx-quickstart --project "PowrUsr Docs" --author "PowrUsr" --release "alpha" 
 --ext-githubpages --extensions "myst_parser" --sep --language en
 ```
 
-### more on myst parser:
+### myst parser:
 
 You can further configure MyST-Parser to allow custom syntax that standard CommonMark doesn’t support.
 Read more in the MyST-Parser [documentation](https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html)
 
-## conf.py configuration
-
+## conf.py
 
 ### change default html theme
 
@@ -58,6 +55,7 @@ sed -i "s/alabaster/python_docs_theme/" source/conf.py
 ```
 
 remove redundant text if you like in index file
+
 ```bash
 # test
 sed -E -n "N;s/You can adapt/lol/p" source/index.rst
@@ -85,27 +83,8 @@ echo -e "html_last_updated_fmt = '%Y-%m-%d'" >> source/conf.py
 ```
 format according to [datetime format](https://docs.python.org/3/library/datetime.html?highlight=strftime#strftime-and-strptime-format-codes)
 
-## gitignore
 
-if you want to exclude build dir (or other name if you so specified)
-
-```bash
-# test
-sed -n "s#docs/_build/#docs/build/#p" .gitignore 
-docs/build/
-
-# apply
-sed -i "s#docs/_build/#docs/build/#" .gitignore
-```
-
-ignore the Makefile and make.bat files as they are
-created upon running `sphinx-quickstart`
-
-```bash
-echo -e "Makefile\nmake.bat\n" >> .gitignore 
-```
-
-## gh-pages prep
+## gh-pages
 
 create a gh-pages branch
 
@@ -198,13 +177,13 @@ div[role=main] {
 EOF
 ```
 
-#### add custom css to conf.py
+### add custom css to conf.py
 
 ```bash
 echo "html_css_files = ['custom.css']" >> source/conf.py
 ```
 
-#### clean html
+### clean html
 remove files in docs folder except docs/index.html and docs/.nojekyll
 
 ```bash
@@ -215,3 +194,36 @@ cleanhtml
 make html
 ```
 
+## autobuild
+
+```bash
+sphinx-autobuild ~/gh/dox/source/ ~/gh/dox/docs/ --port 8888
+
+[sphinx-autobuild] > sphinx-build /home/duke/gh/dox/source /home/duke/gh/dox/docs
+Running Sphinx v7.2.6
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... done
+preparing documents... done
+copying assets... copying static files... done
+copying extra files... done
+done
+writing output... [100%] sphinx
+generating indices... genindex done
+writing additional pages... search done
+dumping search index in English (code: en)... done
+dumping object inventory... done
+build succeeded, 10 warnings.
+
+The HTML pages are in docs.
+[I 231209 17:52:58 server:335] Serving on http://127.0.0.1:8888
+[I 231209 17:52:58 handlers:62] Start watching changes
+[I 231209 17:52:58 handlers:64] Start detecting changes
+```
+
+### alias
+
+```bash
+echo 'alias doxbuild="workon dox;sphinx-autobuild ~/gh/dox/source/ ~/gh/dox/docs/ --port 8888"' >> ~/.bash_aliases 
+. ~/.bash_aliases 
+```

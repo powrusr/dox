@@ -61,110 +61,102 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">fundamentals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#range">range</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#underscore-usage">underscore usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-indexing">list indexing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#deep-copy">deep copy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#unpacking">unpacking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dictionaries">dictionaries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#get">get()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setdefault">setdefault()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#iterables">iterables</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sets">sets</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#set-ops">set ops</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#set-algebra">set algebra</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#itertools">itertools</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#islice-and-count">islice and count</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#chain">chain</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#oop">OOP</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#classes">classes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#properties">properties</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#properties-demo">properties demo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope">scope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#static-methods">static methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#class-methods">class methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inheritance">inheritance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#recursion">recursion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#open">open</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#write">write</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zip-files">zip files</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#read-zip-as-panda-df">read zip as panda df</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#json">json</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#read">read</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">write</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#update">update</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#csv">csv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#large-csv">large csv</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#xml">xml</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#load">load</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#lxml">lxml</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#range">range</a><ul>
+<li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#underscore-usage">underscore usage</a></li>
+<li><a class="reference internal" href="#list-indexing">list indexing</a></li>
+<li><a class="reference internal" href="#deep-copy">deep copy</a></li>
+<li><a class="reference internal" href="#unpacking">unpacking</a></li>
+<li><a class="reference internal" href="#dictionaries">dictionaries</a><ul>
+<li><a class="reference internal" href="#get">get()</a></li>
+<li><a class="reference internal" href="#setdefault">setdefault()</a></li>
+<li><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#iterables">iterables</a><ul>
+<li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
+<li><a class="reference internal" href="#sets">sets</a><ul>
+<li><a class="reference internal" href="#set-ops">set ops</a></li>
+<li><a class="reference internal" href="#set-algebra">set algebra</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
+<li><a class="reference internal" href="#itertools">itertools</a><ul>
+<li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
+<li><a class="reference internal" href="#chain">chain</a></li>
+<li><a class="reference internal" href="#take">take</a></li>
+<li><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#oop">OOP</a><ul>
+<li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#properties">properties</a></li>
+<li><a class="reference internal" href="#properties-demo">properties demo</a></li>
+<li><a class="reference internal" href="#scope">scope</a></li>
+<li><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
+<li><a class="reference internal" href="#static-methods">static methods</a></li>
+<li><a class="reference internal" href="#class-methods">class methods</a></li>
+<li><a class="reference internal" href="#inheritance">inheritance</a></li>
+<li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recursion">recursion</a></li>
+<li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
+<li><a class="reference internal" href="#open">open</a></li>
+<li><a class="reference internal" href="#write">write</a></li>
+<li><a class="reference internal" href="#zip-files">zip files</a><ul>
+<li><a class="reference internal" href="#read-zip-as-panda-df">read zip as panda df</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#json">json</a><ul>
+<li><a class="reference internal" href="#read">read</a></li>
+<li><a class="reference internal" href="#id1">write</a></li>
+<li><a class="reference internal" href="#update">update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#csv">csv</a><ul>
+<li><a class="reference internal" href="#large-csv">large csv</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml">xml</a><ul>
+<li><a class="reference internal" href="#load">load</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lxml">lxml</a></li>
+<li><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -202,6 +194,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">fundamentals</a></li>
                 <li class="right">
                     
@@ -332,13 +325,11 @@
 </section>
 <section id="list-indexing">
 <h2>list indexing<a class="headerlink" href="#list-indexing" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span> <span class="s2">&quot;third&quot;</span><span class="p">,</span> <span class="s2">&quot;fourth&quot;</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;first&quot;</span><span class="p">,</span> <span class="s2">&quot;second&quot;</span><span class="p">,</span> <span class="s2">&quot;third&quot;</span><span class="p">,</span> <span class="s2">&quot;fourth&quot;</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-
-<span class="err">```</span><span class="n">python</span>
-
-<span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="p">[</span><span class="s2">&quot;second&quot;</span><span class="p">,</span> <span class="s2">&quot;third&quot;</span><span class="p">]</span>
 
 <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
@@ -387,8 +378,7 @@
 <section id="deep-copy">
 <h2>deep copy<a class="headerlink" href="#deep-copy" title="Link to this heading">¶</a></h2>
 <p>if your list has other lists nested in it you may want a <strong>deep copy</strong> (lists are mutable)</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">original</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">]</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">original</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">]</span>
 <span class="c1"># shallow copy just references to original list</span>
 <span class="n">shallow</span> <span class="o">=</span> <span class="n">original</span><span class="p">[:]</span>
 
@@ -637,162 +627,149 @@ if there are no surplus items it receives an empty list</p>
 </section>
 <section id="chain">
 <h4>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h4>
-</section>
-</section>
-</section>
-</section>
-<section id="syncronize-iterations-over-2-iterable-series">
-<h1>syncronize iterations over 2 iterable series<a class="headerlink" href="#syncronize-iterations-over-2-iterable-series" title="Link to this heading">¶</a></h1>
-</section>
-<section id="eg-two-series-of-temperature-data">
-<h1>eg two  series of temperature data<a class="headerlink" href="#eg-two-series-of-temperature-data" title="Link to this heading">¶</a></h1>
-<p>sunday = [12, 14, 15, 15, 17, 21, 22, 22, 23, 22, 20, 18]
-monday = [13, 14, 14, 14, 16, 20, 21, 22, 22, 21, 19, 17]</p>
-</section>
-<section id="bind-them-in-pairs-of-corresponding-readings">
-<h1>bind them in pairs of corresponding readings<a class="headerlink" href="#bind-them-in-pairs-of-corresponding-readings" title="Link to this heading">¶</a></h1>
-<p>for item in zip(sunday, monday):
-print(item)</p>
-<p>(12, 13)
-(14, 14)
-(15, 14)
-(15, 14)
-(17, 16)
-(21, 20)
-(22, 21)
-(22, 22)
-(23, 22)
-(22, 21)
-(20, 19)
-(18, 17)</p>
-</section>
-<section id="zip-yields-tuples-when-iterated">
-<h1>zip yields tuples when iterated<a class="headerlink" href="#zip-yields-tuples-when-iterated" title="Link to this heading">¶</a></h1>
-</section>
-<section id="we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">
-<h1>we can take advantage of this with tuple unpacking in the for loop<a class="headerlink" href="#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop" title="Link to this heading">¶</a></h1>
-<p>for sun, mon in zip(sunday, monday):
-print(“average =”, (sun + mon) / 2)</p>
-<p>average = 12.5
-average = 14.0
-average = 14.5
-average = 14.5
-average = 16.5
-average = 20.5
-average = 21.5
-average = 22.0
-average = 22.5
-average = 21.5
-average = 19.5
-average = 17.5</p>
-<p>tuesday = [2, 2, 3, 7, 9, 10, 9, 8, 8]</p>
-<p>for temps in zip(sunday, monday, tuesday):
-print(“min={:4.1f}, max={:4.1f}, average={:4.1f}”.format(min(temps), max(temps), sum(temps) / len(temps)))
-“””
-min= 2.0, max=13.0, average= 9.0
-min= 2.0, max=14.0, average=10.0
-min= 3.0, max=15.0, average=10.7
-min= 7.0, max=15.0, average=12.0
-min= 9.0, max=17.0, average=14.0
-min=10.0, max=21.0, average=17.0
-min= 9.0, max=22.0, average=17.3
-min= 8.0, max=22.0, average=17.3
-min= 8.0, max=23.0, average=17.7
-“””</p>
-</section>
-<section id="now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">
-<h1>now we want one long temperature series for sunday monday and thuesday<a class="headerlink" href="#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday" title="Link to this heading">¶</a></h1>
-</section>
-<section id="we-can-then-lazily-concatenate-iterables-using-itertools-chain">
-<h1>we can then lazily concatenate iterables using itertools chain<a class="headerlink" href="#we-can-then-lazily-concatenate-iterables-using-itertools-chain" title="Link to this heading">¶</a></h1>
-</section>
-<section id="this-is-different-from-simply-concatenating-3-lists-into-a-new-list">
-<h1>this is different from simply concatenating 3 lists into a new list<a class="headerlink" href="#this-is-different-from-simply-concatenating-3-lists-into-a-new-list" title="Link to this heading">¶</a></h1>
-</section>
-<section id="we-have-no-memory-impact-of-data-duplication">
-<h1>we have no memory impact of data duplication<a class="headerlink" href="#we-have-no-memory-impact-of-data-duplication" title="Link to this heading">¶</a></h1>
-<p>from itertools import chain
-temperatures = chain(sunday, monday, tuesday)</p>
-<p>all(t &gt; 0 for t in temperatures)
-temperatures = chain(sunday, monday, tuesday)
-True</p>
-</section>
-<section id="following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">
-<h1>following shows generator functions, generator expressions, predicate functions and for loops<a class="headerlink" href="#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops" title="Link to this heading">¶</a></h1>
-<p>def lucas():
-yield 2
-a = 2
-b = 1
-while True: # infinite while loop
-yield b
-a, b = b, a + b</p>
-<p>for x in (p for p in lucas() if is_prime(p)):
-print(x)</p>
-<p>2
-3
-7
-11
-29
-47
-199
-521
-2207
-3571
-9349
-3010349
-54018521
-370248451
-6643838879
-119218851371
-5600748293801
-688846502588399
-32361122672259149</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<p>syncronize iterations over 2 iterable series
+eg two  series of temperature data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sunday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+<span class="n">monday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>
+<span class="c1"># bind them in pairs of corresponding readings</span>
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
+<span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+
+<span class="c1"># zip yields tuples when iterated</span>
+<span class="c1"># we can take advantage of this with tuple unpacking in the for loop</span>
+<span class="k">for</span> <span class="n">sun</span><span class="p">,</span> <span class="n">mon</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;average =&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">sun</span> <span class="o">+</span> <span class="n">mon</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">average</span> <span class="o">=</span> <span class="mf">12.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">14.0</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">14.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">14.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">16.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">20.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">21.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">22.0</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">22.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">21.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">19.5</span>
+<span class="n">average</span> <span class="o">=</span> <span class="mf">17.5</span>
+
+<span class="n">tuesday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">temps</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min=</span><span class="si">{:4.1f}</span><span class="s2">, max=</span><span class="si">{:4.1f}</span><span class="s2">, average=</span><span class="si">{:4.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)))</span>
+<span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">min= 2.0, max=13.0, average= 9.0</span>
+<span class="sd">min= 2.0, max=14.0, average=10.0</span>
+<span class="sd">min= 3.0, max=15.0, average=10.7</span>
+<span class="sd">min= 7.0, max=15.0, average=12.0</span>
+<span class="sd">min= 9.0, max=17.0, average=14.0</span>
+<span class="sd">min=10.0, max=21.0, average=17.0</span>
+<span class="sd">min= 9.0, max=22.0, average=17.3</span>
+<span class="sd">min= 8.0, max=22.0, average=17.3</span>
+<span class="sd">min= 8.0, max=23.0, average=17.7</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># now we want one long temperature series for sunday monday and thuesday </span>
+
+<span class="c1"># we can then lazily concatenate iterables using itertools chain</span>
+
+<span class="c1"># this is different from simply concatenating 3 lists into a new list</span>
+
+<span class="c1"># we have no memory impact of data duplication</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">)</span>
+
+<span class="nb">all</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">)</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="c1"># following shows generator functions, generator expressions, predicate functions and for loops</span>
+<span class="k">def</span> <span class="nf">lucas</span><span class="p">():</span>
+    <span class="k">yield</span> <span class="mi">2</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># infinite while loop</span>
+        <span class="k">yield</span> <span class="n">b</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">lucas</span><span class="p">()</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">7</span>
+<span class="mi">11</span>
+<span class="mi">29</span>
+<span class="mi">47</span>
+<span class="mi">199</span>
+<span class="mi">521</span>
+<span class="mi">2207</span>
+<span class="mi">3571</span>
+<span class="mi">9349</span>
+<span class="mi">3010349</span>
+<span class="mi">54018521</span>
+<span class="mi">370248451</span>
+<span class="mi">6643838879</span>
+<span class="mi">119218851371</span>
+<span class="mi">5600748293801</span>
+<span class="mi">688846502588399</span>
+<span class="mi">32361122672259149</span>
 </pre></div>
 </div>
-<p>itertools.chain(*iterables)
-Make an iterator that returns elements from the first iterable until it is exhausted, then proceeds to the next iterable, until all of the iterables are exhausted. Used for treating consecutive sequences as a single sequence</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-https://docs.python.org/3/library/itertools.html#itertools.chain
-
-#### take
-
-take generator
-
-```python
-def take(count, iterable):
-    &quot;&quot;&quot;Take items from the front of an iterable.
-
-    Args:
-        count: maximum number of items to retrieve
-        iterable: the source series
-
-    Yields:
-         at most &#39;count&#39; items from &#39;iterable&#39;
-    &quot;&quot;&quot;
-
-    counter = 0
-    for item in iterable:
-        if counter == count:
-            return # end sequence when we reach specified count
-            # return raises StopIteration which is caught internally by the for loop in run_take()
-        counter += 1 # how many items have been yielded so far
-        yield item # contains a generator bc it has at least one yield statement
-
-
-def run_take(): # generators are lazy and only generate values on request
-    items = [2, 4, 6, 8, 10]
-    for item in take(3, items):  # take(count, iterable) # return raises StopIteration which is caught by
-        print(item)
-
-
-if __name__ == &quot;__main__&quot;:
-        run_take()
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">)</span>
+<span class="n">Make</span> <span class="n">an</span> <span class="n">iterator</span> <span class="n">that</span> <span class="n">returns</span> <span class="n">elements</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">first</span> <span class="n">iterable</span> <span class="n">until</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">exhausted</span><span class="p">,</span> <span class="n">then</span> <span class="n">proceeds</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">until</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">iterables</span> <span class="n">are</span> <span class="n">exhausted</span><span class="o">.</span> <span class="n">Used</span> <span class="k">for</span> <span class="n">treating</span> <span class="n">consecutive</span> <span class="n">sequences</span> <span class="k">as</span> <span class="n">a</span> <span class="n">single</span> <span class="n">sequence</span>
 </pre></div>
 </div>
+<p>https://docs.python.org/3/library/itertools.html#itertools.chain</p>
+</section>
+<section id="take">
+<h4>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h4>
+<p>take generator</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Take items from the front of an iterable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        count: maximum number of items to retrieve</span>
+<span class="sd">        iterable: the source series</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">         at most &#39;count&#39; items from &#39;iterable&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">counter</span> <span class="o">==</span> <span class="n">count</span><span class="p">:</span>
+            <span class="k">return</span> <span class="c1"># end sequence when we reach specified count</span>
+            <span class="c1"># return raises StopIteration which is caught internally by the for loop in run_take()</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># how many items have been yielded so far</span>
+        <span class="k">yield</span> <span class="n">item</span> <span class="c1"># contains a generator bc it has at least one yield statement</span>
+
+
+<span class="k">def</span> <span class="nf">run_take</span><span class="p">():</span> <span class="c1"># generators are lazy and only generate values on request</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">take</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>  <span class="c1"># take(count, iterable) # return raises StopIteration which is caught by</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+        <span class="n">run_take</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 <section id="any-all">
-<h2>any() &amp; all()<a class="headerlink" href="#any-all" title="Link to this heading">¶</a></h2>
+<h4>any() &amp; all()<a class="headerlink" href="#any-all" title="Link to this heading">¶</a></h4>
 <p>using any(or) and all(and) for iterable series of bool values</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">any</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
 <span class="kc">True</span>
@@ -809,6 +786,8 @@ if __name__ == &quot;__main__&quot;:
 <span class="kc">True</span>
 </pre></div>
 </div>
+</section>
+</section>
 </section>
 <section id="oop">
 <h2>OOP<a class="headerlink" href="#oop" title="Link to this heading">¶</a></h2>
@@ -1207,7 +1186,7 @@ What specifically happens is that _classname is prepended to the variable name:<
 <li><p>the global namespace (functions and variables declared at the module level),</p></li>
 <li><p>and the built-in namespace (built-in functions and built-in exceptions). These three namespaces are searched in the following order: local, global, and built-in</p></li>
 </ul>
-<p><img alt="image" src="python/..files/img/direct_ns.jpg" /></p>
+<p><img alt="image" src="../_images/direct_ns.jpg" /></p>
 <p>You also have access through the <strong>self</strong> variable to:</p>
 <ul class="simple">
 <li><p>the <strong>instance’s namespace</strong> (instance variables, private instance variables, and superclass instance variables),</p></li>
@@ -1215,7 +1194,7 @@ What specifically happens is that _classname is prepended to the variable name:<
 <li><p>its <strong>superclass’s namespace</strong> (superclass methods and superclass class variables).</p></li>
 </ul>
 <p>These three namespaces are searched in the order instance, class, and then superclass</p>
-<p><img alt="image" src="python/..files/img/self_ns.jpg" /></p>
+<p><img alt="image" src="../_images/self_ns.jpg" /></p>
 <p>note: <strong>Private superclass instance</strong> variables, <strong>private superclass methods</strong>, and <strong>private superclass class</strong> variables can’t be accessed by using self. A class is able to hide these names from its children.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;cs module: class scope demonstration module.&quot;&quot;&quot;</span>
 <span class="n">mv</span> <span class="o">=</span><span class="s2">&quot;module variable: mv&quot;</span>
@@ -2001,110 +1980,102 @@ You can define your own dialect using register_dialect method</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
-<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">fundamentals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#range">range</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#underscore-usage">underscore usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-indexing">list indexing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#deep-copy">deep copy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#unpacking">unpacking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dictionaries">dictionaries</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#get">get()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setdefault">setdefault()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#iterables">iterables</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sets">sets</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#set-ops">set ops</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#set-algebra">set algebra</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#itertools">itertools</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#islice-and-count">islice and count</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#chain">chain</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#oop">OOP</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#classes">classes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#properties">properties</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#properties-demo">properties demo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scope">scope</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#static-methods">static methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#class-methods">class methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#inheritance">inheritance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#recursion">recursion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#open">open</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#write">write</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zip-files">zip files</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#read-zip-as-panda-df">read zip as panda df</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#json">json</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#read">read</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">write</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#update">update</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#csv">csv</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#large-csv">large csv</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#xml">xml</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#load">load</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#lxml">lxml</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
-<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
 </ul>
 
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#range">range</a><ul>
+<li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#underscore-usage">underscore usage</a></li>
+<li><a class="reference internal" href="#list-indexing">list indexing</a></li>
+<li><a class="reference internal" href="#deep-copy">deep copy</a></li>
+<li><a class="reference internal" href="#unpacking">unpacking</a></li>
+<li><a class="reference internal" href="#dictionaries">dictionaries</a><ul>
+<li><a class="reference internal" href="#get">get()</a></li>
+<li><a class="reference internal" href="#setdefault">setdefault()</a></li>
+<li><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#iterables">iterables</a><ul>
+<li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
+<li><a class="reference internal" href="#sets">sets</a><ul>
+<li><a class="reference internal" href="#set-ops">set ops</a></li>
+<li><a class="reference internal" href="#set-algebra">set algebra</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
+<li><a class="reference internal" href="#itertools">itertools</a><ul>
+<li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
+<li><a class="reference internal" href="#chain">chain</a></li>
+<li><a class="reference internal" href="#take">take</a></li>
+<li><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#oop">OOP</a><ul>
+<li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#properties">properties</a></li>
+<li><a class="reference internal" href="#properties-demo">properties demo</a></li>
+<li><a class="reference internal" href="#scope">scope</a></li>
+<li><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
+<li><a class="reference internal" href="#static-methods">static methods</a></li>
+<li><a class="reference internal" href="#class-methods">class methods</a></li>
+<li><a class="reference internal" href="#inheritance">inheritance</a></li>
+<li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recursion">recursion</a></li>
+<li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
+<li><a class="reference internal" href="#open">open</a></li>
+<li><a class="reference internal" href="#write">write</a></li>
+<li><a class="reference internal" href="#zip-files">zip files</a><ul>
+<li><a class="reference internal" href="#read-zip-as-panda-df">read zip as panda df</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#json">json</a><ul>
+<li><a class="reference internal" href="#read">read</a></li>
+<li><a class="reference internal" href="#id1">write</a></li>
+<li><a class="reference internal" href="#update">update</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#csv">csv</a><ul>
+<li><a class="reference internal" href="#large-csv">large csv</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml">xml</a><ul>
+<li><a class="reference internal" href="#load">load</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lxml">lxml</a></li>
+<li><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -2142,6 +2113,7 @@ You can define your own dialect using register_dialect method</p>
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">fundamentals</a></li>
                 <li class="right">
                     

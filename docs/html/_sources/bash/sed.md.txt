@@ -1,5 +1,7 @@
 # line selection 
+
 ## first last
+
 ```bash
 sed -n '1p' /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -85,6 +87,7 @@ sed "$ a # last in line" < /etc/ssh/ssh_config
 # last in line
 
 ```
+
 ### with regex
 
 sed '/PATTERN/ a <LINE-TO-BE-ADDED>' FILE.txt
@@ -223,6 +226,7 @@ sed -f ssh_client.sed -i.bak ssh_config
 ```
 
 #### using sed in a loop
+
 ssh -n: redirect stdin to /dev/null, allowing remote execution on multiple servers
 
 ```bash

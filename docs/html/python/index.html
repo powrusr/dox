@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>glob &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>python &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="functional programming" href="functional.html" />
-    <link rel="prev" title="dataclasses" href="dataclass.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="assert python" href="assert.html" />
+    <link rel="prev" title="line selection" href="../bash/sed.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -65,10 +65,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
@@ -100,10 +100,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="functional.html" title="functional programming"
+          <a href="assert.html" title="assert python"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="dataclass.html" title="dataclasses"
+          <a href="../bash/sed.html" title="line selection"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -116,8 +116,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">glob</a></li>
+        <li class="nav-item nav-item-this"><a href="">python</a></li>
                 <li class="right">
                     
 
@@ -147,35 +146,93 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="glob">
-<h1>glob<a class="headerlink" href="#glob" title="Link to this heading">¶</a></h1>
-<p>https://docs.python.org/3/library/glob.html#module-glob</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">dir/1.gif</span>
-<span class="sd">dir/2.txt</span>
-<span class="sd">dir/card.gif</span>
-<span class="sd">dir/sub/3.txt</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;./[0-9].*&#39;</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;./1.gif&#39;</span><span class="p">,</span> <span class="s1">&#39;./2.txt&#39;</span><span class="p">]</span>
-
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.gif&#39;</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;1.gif&#39;</span><span class="p">,</span> <span class="s1">&#39;card.gif&#39;</span><span class="p">]</span>
-
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;?.gif&#39;</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;1.gif&#39;</span><span class="p">]</span>
-
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;**/*.txt&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;sub/3.txt&#39;</span><span class="p">]</span>
-
-<span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;./**/&#39;</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="p">[</span><span class="s1">&#39;./&#39;</span><span class="p">,</span> <span class="s1">&#39;./sub/&#39;</span><span class="p">]</span>
-</pre></div>
+  <section id="python">
+<h1>python<a class="headerlink" href="#python" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">python</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#function">function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#columns-in-csv">columns in csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#row-count">row count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#assert-index">assert index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#assert-series">assert series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#assert-df">assert df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html#assert-numpy">assert numpy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#fields">fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#postinit">postinit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#inheritance">inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#asdict-astuple">asdict, astuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#default-factory-initvar">default_factory &amp; InitVar</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#map">map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#itertools">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#itertools-functions">itertools functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#filter">filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#reduce">reduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#range">range</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#underscore-usage">underscore usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#list-indexing">list indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#deep-copy">deep copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#unpacking">unpacking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#dictionaries">dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#iterables">iterables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#oop">OOP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#recursion">recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#files-and-resource-management">files and resource management</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generator.html#infinite-sequence">infinite sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html#profiling-generator-performance">profiling generator performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html#yield-demo">yield demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html#generator-methods">generator methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html#iterator-for-data-pipeline">iterator for data pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library.html#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#regex-functions">regex functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#metacharacters">metacharacters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#special-sequences-aka-character-classes">special sequences aka character classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#sets">sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#groups">groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#sub-pattern-group">sub pattern group</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#lookarounds">lookarounds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html#examples">examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#installation">installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#pytest-ini">pytest.ini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#skip-slow">skip &amp; slow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#fixtures">fixtures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#assertions-on-expected-exceptions">assertions on expected exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#parametrize">parametrize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#test-doubles">test doubles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#approval-tests">approval tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#coverage">coverage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#monkeypatching">monkeypatching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#vcrpy-pytest-recording">VCRpy &amp; pytest-recording</a></li>
+</ul>
+</li>
+</ul>
 </div>
-<p>If the directory contains files starting with . they won’t be matched by default</p>
 </section>
 
 
@@ -190,10 +247,10 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
@@ -225,10 +282,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="functional.html" title="functional programming"
+          <a href="assert.html" title="assert python"
              >next</a> |</li>
         <li class="right" >
-          <a href="dataclass.html" title="dataclasses"
+          <a href="../bash/sed.html" title="line selection"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -241,8 +298,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
-          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">glob</a></li>
+        <li class="nav-item nav-item-this"><a href="">python</a></li>
                 <li class="right">
                     
 

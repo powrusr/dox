@@ -31,11 +31,11 @@ with open('train.csv') as f:
 
 ```python
 for row in reader:
-    # Check that count is a positive integer
+    ## Check that count is a positive integer
     assert int(row['count']) >= 0, f"invalid count: {row['count']}"
 ```
 
-# assert pandas
+## assert pandas
 
 [testing docs](https://pandas.pydata.org/pandas-docs/stable/reference/testing.html)
 
@@ -110,6 +110,7 @@ except AssertionError:
 
 ```python
 import numpy as np
+
 # find indices of rows where pickup and dropoff dates are different
 diff_indices = np.where(idx1 != idx2)[0]
 
@@ -187,10 +188,10 @@ df2 = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
 
 pdt.assert_frame_equal(df1, df2)
 ```
+
 ### check likeness
 
 ```python
-
 # different column names but same data and shape
 df1 = pd.DataFrame({'B': [3, 3, 3], 'A': [1, 1, 1]})
 df2 = pd.DataFrame({'A': [1, 1, 1], 'B': [3, 3, 3]})
@@ -302,7 +303,7 @@ idx1 = pd.Index(data['pickup_time'].dt.date)
 idx2 = pd.Index(data['dropoff_time'].dt.date)
 ```
 
-## assert data integrity
+### assert data integrity
 
 ```python
 import math
@@ -341,7 +342,7 @@ assert test_data_types(train, num_cols)
 assert test_out_of_range_values(train, num_cols)
 ```
 
-## assert data logic
+### assert data logic
 
 ```python
 import math
