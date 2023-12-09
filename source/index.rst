@@ -13,6 +13,7 @@ Welcome to PowrUsr Docs's documentation!
 
    sphinx
    bash/*
+   python/*
 
 
 
