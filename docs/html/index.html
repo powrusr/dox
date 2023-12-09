@@ -70,6 +70,26 @@
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -264,6 +284,235 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#function">function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#columns-in-csv">columns in csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#row-count">row count</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-index">assert index</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#index-order">index order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#tolerance">tolerance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#compare">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#check-idx-with-np-where">check idx with np.where</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-series">assert series</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#diff-data-types">diff data types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#id1">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#drop-rows-with-diff-index">drop rows with diff index</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-df">assert df</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#check-likeness">check likeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#id2">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/assert.html#drop-mismatched-rows">drop mismatched rows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-numpy">assert numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-data-integrity">assert data integrity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/assert.html#assert-data-logic">assert data logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/dataclass.html#fields">fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/dataclass.html#postinit">postinit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/dataclass.html#inheritance">inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/dataclass.html#asdict-astuple">asdict, astuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/dataclass.html#default-factory-initvar">default_factory &amp; InitVar</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/functional.html#map">map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/functional.html#itertools">itertools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/functional.html#itertools-functions">itertools functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/functional.html#count">count</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/functional.html#accumulate">accumulate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/functional.html#takewhile">takewhile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/functional.html#combinatoric-functions-permutations">combinatoric functions &amp; permutations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/functional.html#filter">filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/functional.html#reduce">reduce</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/functional.html#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#range">range</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#range-number-1">range(number+1)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#underscore-usage">underscore usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#list-indexing">list indexing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#deep-copy">deep copy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#unpacking">unpacking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#dictionaries">dictionaries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#get">get()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#setdefault">setdefault()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#dict-as-cache">dict as cache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#iterables">iterables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#combining-iterables">combining iterables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#sets">sets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#set-ops">set ops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#set-algebra">set algebra</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#generator-comprehensions">generator comprehensions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#itertools">itertools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#islice-and-count">islice and count</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#chain">chain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#any-all">any() &amp; all()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#oop">OOP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#classes">classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#properties">properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#properties-demo">properties demo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#scope">scope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#redefine-getter-setter">redefine getter/setter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#static-methods">static methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#class-methods">class methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#inheritance">inheritance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#oop-summary-example">OOP summary example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#recursion">recursion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/fundamentals.html#files-and-resource-management">files and resource management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#open">open</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#write">write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#zip-files">zip files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#read-zip-as-panda-df">read zip as panda df</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#json">json</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#read">read</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#id1">write</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#update">update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#csv">csv</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#large-csv">large csv</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#xml">xml</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/fundamentals.html#load">load</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#lxml">lxml</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/fundamentals.html#concatenate-files">concatenate files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/generator.html#infinite-sequence">infinite sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/generator.html#profiling-generator-performance">profiling generator performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/generator.html#yield-demo">yield demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/generator.html#generator-methods">generator methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/generator.html#iterator-for-data-pipeline">iterator for data pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/library.html#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#regex-functions">regex functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#metacharacters">metacharacters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#special-sequences-aka-character-classes">special sequences aka character classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#sets">sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#groups">groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#sub-pattern-group">sub pattern group</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/regex.html#with-empty-string">with empty string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/regex.html#non-capturing-group">Non-capturing group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#lookarounds">lookarounds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/regex.html#lookbehind-and">lookbehind ?&lt;= and ?&lt;!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/regex.html#immediately-preceeds">immediately preceeds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/regex.html#not-immediately-preceeds">NOT immediately preceeds</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/regex.html#lookahead-and">lookahead ?= and ?!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/regex.html#immediately-followed">immediately followed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/regex.html#not-immediately-followed">NOT immediately followed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/regex.html#examples">examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#installation">installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#pytest-ini">pytest.ini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#skip-slow">skip &amp; slow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#fixtures">fixtures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#capsys">capsys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#conftest-py">conftest.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#assertions-on-expected-exceptions">assertions on expected exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#parametrize">parametrize</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#parametrize-all-test-in-module">parametrize all test in module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#mark-individual-test-instances-within-parametrize">mark individual test instances within parametrize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#stacking-parametrize-decorators">stacking parametrize decorators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#test-doubles">test doubles</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#stubs">stubs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#fakes">fakes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/testing.html#stringio">StringIO</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#dummies">dummies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#spies">spies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="python/testing.html#manual-spy">manual spy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="python/testing.html#using-unittest-mock-spy">using unittest.mock spy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#mocks">mocks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#approval-tests">approval tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#verify-string">verify string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#best-covering-pairs">best covering pairs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#more-advanced-combination-approvals">more advanced combination approvals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#coverage">coverage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#exclude-branches">exclude branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#pytest-runner-cov-plugin">pytest runner cov plugin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#monkeypatching">monkeypatching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/testing.html#vcrpy-pytest-recording">VCRpy &amp; pytest-recording</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/testing.html#usage-with-pytest">usage with pytest</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -294,6 +543,26 @@
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -369,7 +638,7 @@
 <br />
     <br />
 
-    Last updated on 2023-12-06.
+    Last updated on 2023-12-09.
     
     <br />
 

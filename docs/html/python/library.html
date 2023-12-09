@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>code library &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="regex" href="regex.html" />
+    <link rel="prev" title="generators" href="generator.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">code library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="regex.html" title="regex"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="generator.html" title="generators"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">code library</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="code-library">
+<h1>code library<a class="headerlink" href="#code-library" title="Link to this heading">¶</a></h1>
+<section id="adding-files-to-a-list-compression">
+<h2>adding files to a list &amp; compression<a class="headerlink" href="#adding-files-to-a-list-compression" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">def</span> <span class="nf">file_exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">compress_to_bz2_file</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">compression_lvl</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">bz2</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">compression_lvl</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">tar_bz2_contents</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">compresslevel</span><span class="o">=</span><span class="n">compression_lvl</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;compression level has to be between 1 and 9&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># concatenate_files_in_list(text_files_list, final_file, &#39;latin-1&#39;, True)</span>
+<span class="k">def</span> <span class="nf">concatenate_files_in_list</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">encode_in</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">is_small</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_shutil</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="c1"># don&#39;t forget to specify target folder when opening files!</span>
+    <span class="c1"># todo: check if file was created already</span>
+    <span class="n">encoding_format</span> <span class="o">=</span> <span class="n">encode_in</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;target file -&gt; </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">readmode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">writemode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;wb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">writemode</span><span class="p">)</span> <span class="k">as</span> <span class="n">finaltext</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;currently appending file: </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">readmode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding_format</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_currently_opened</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">use_shutil</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">shutil</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">finaltext</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">is_small</span><span class="p">:</span>
+                    <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_currently_opened</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+                <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_small</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_currently_opened</span><span class="p">:</span>
+                        <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">add_files_from_folder_to_list</span><span class="p">(</span><span class="n">filetype</span><span class="p">,</span> <span class="n">folder_target</span><span class="o">=</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">set_folder</span><span class="p">(</span><span class="n">folder_target</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;getting files from </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2"> of type </span><span class="si">{</span><span class="n">filetype</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+    <span class="n">all_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">):</span>
+                <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">all_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;something went wrong&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_files</span>
+
+
+<span class="k">def</span> <span class="nf">set_folder</span><span class="p">(</span><span class="n">folder_dir</span><span class="p">):</span>
+    <span class="n">isdir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">folder_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;folder you&#39;re trying to set is invalid -&gt; </span><span class="si">{</span><span class="n">folder_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">absolute_path</span> <span class="o">=</span> <span class="n">isdir</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">absolute_path</span>
+
+
+<span class="k">def</span> <span class="nf">test_files_in_list</span><span class="p">(</span><span class="n">file_list</span><span class="p">:</span> <span class="p">[]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;testing files in list... &quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;oops: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> doesn&#39;t seem to exist&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">code library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="regex.html" title="regex"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="generator.html" title="generators"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">code library</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2023-12-09.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

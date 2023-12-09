@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>assert python &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dataclasses" href="dataclass.html" />
+    <link rel="prev" title="line selection" href="../bash/sed.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">assert python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function">function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#row-count">row count</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#assert-pandas">assert pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#assert-index">assert index</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#index-order">index order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tolerance">tolerance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compare">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-series">assert series</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#diff-data-types">diff data types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-df">assert df</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#check-likeness">check likeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-numpy">assert numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dataclass.html" title="dataclasses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../bash/sed.html" title="line selection"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">assert python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="assert-python">
+<h1>assert python<a class="headerlink" href="#assert-python" title="Link to this heading">¶</a></h1>
+<section id="list">
+<h2>list<a class="headerlink" href="#list" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">my_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">my_list</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="function">
+<h2>function<a class="headerlink" href="#function" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">assert</span> <span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</section>
+<section id="columns-in-csv">
+<h2>columns in csv<a class="headerlink" href="#columns-in-csv" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="c1"># Check that the data contains the expected columns</span>
+    <span class="n">expected_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;vendor&#39;</span><span class="p">,</span> <span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;season&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">reader</span><span class="o">.</span><span class="n">fieldnames</span> <span class="o">==</span> <span class="n">expected_columns</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Expected columns: </span><span class="si">{</span><span class="n">expected_columns</span><span class="si">}</span><span class="s2">, but got </span><span class="si">{</span><span class="n">reader</span><span class="o">.</span><span class="n">fieldnames</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="row-count">
+<h2>row count<a class="headerlink" href="#row-count" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span>
+    <span class="c1"># Check that count is a positive integer</span>
+    <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;invalid count: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="assert-pandas">
+<h1>assert pandas<a class="headerlink" href="#assert-pandas" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/testing.html">testing docs</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas.testing</span> <span class="k">as</span> <span class="nn">pdt</span>
+</pre></div>
+</div>
+<section id="assert-index">
+<h2>assert index<a class="headerlink" href="#assert-index" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="index-order">
+<h3>index order<a class="headerlink" href="#index-order" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Indexes are not equal by default&quot;</span><span class="p">)</span>
+
+<span class="c1"># assert indexes are equal when order not checked</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">check_order</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tolerance">
+<h3>tolerance<a class="headerlink" href="#tolerance" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">([</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">2.02</span><span class="p">,</span> <span class="mf">3.03</span><span class="p">])</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;indexes are not equal using default tolerances&quot;</span><span class="p">)</span>
+
+<span class="c1"># assert indexes are equal using tolerance of 0.1 for both rtol and atol</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compare">
+<h3>compare<a class="headerlink" href="#compare" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idx1</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idx2</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># compare idx1 to idx2 using pandas.testing.assert_index_equal</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">assert_index_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">,</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the indexes are equal&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The two indexes are not equal.&quot;</span><span class="p">)</span>
+    <span class="c1"># Find the differences between the two indexes</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of differences: </span><span class="si">{</span><span class="n">diff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">diff_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">][[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_time&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">top 7 rows where idx1 and idx2 are different:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">diff_rows</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="check-idx-with-np-where">
+<h3>check idx with np.where<a class="headerlink" href="#check-idx-with-np-where" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># find indices of rows where pickup and dropoff dates are different</span>
+<span class="n">diff_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># drop rows with these indices from df</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">diff_indices</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># reset index of df</span>
+<span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># reindex idx1 and idx2 to match new df</span>
+<span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="assert-series">
+<h2>assert series<a class="headerlink" href="#assert-series" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;series_1&#39;</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;series_2&#39;</span><span class="p">)</span>
+
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">check_names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="diff-data-types">
+<h3>diff data types<a class="headerlink" href="#diff-data-types" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">])</span>
+
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">)</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">check_dtype</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">check_dtype</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>compare<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">series_1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+<span class="n">series_2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">assert_series_equal</span><span class="p">(</span><span class="n">series_1</span><span class="p">,</span> <span class="n">series_2</span><span class="p">,</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;series are equal&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;series are not equal&quot;</span><span class="p">)</span>
+    <span class="c1"># Find the differences</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">series_1</span> <span class="o">!=</span> <span class="n">series_2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;number of differences: </span><span class="si">{</span><span class="n">diff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">diff_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">series_1</span> <span class="o">!=</span> <span class="n">series_2</span><span class="p">][[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_time&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">diff_rows</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="drop-rows-with-diff-index">
+<h3>drop rows with diff index<a class="headerlink" href="#drop-rows-with-diff-index" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># id indices of rows where series_1 and series_2 diff</span>
+<span class="n">diff_indices</span> <span class="o">=</span> <span class="n">series_1</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">series_1</span> <span class="o">!=</span> <span class="n">series_2</span><span class="p">]</span>
+
+<span class="c1"># drop rows with these indices from df</span>
+<span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">diff_indices</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># reindex series_1 and series_2 to match the new DataFrame</span>
+<span class="n">series_1</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+<span class="n">series_2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="assert-df">
+<h2>assert df<a class="headerlink" href="#assert-df" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]})</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]})</span>
+
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="check-likeness">
+<h3>check likeness<a class="headerlink" href="#check-likeness" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># different column names but same data and shape</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+
+<span class="c1"># assert that dfs are alike, same data/shape but maybe not same column names</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">)</span>
+<span class="n">pdt</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">,</span> <span class="n">check_like</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>compare<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train/train.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_time&#39;</span><span class="p">],</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df1</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pdt</span><span class="o">.</span><span class="n">assert_frame_equal</span><span class="p">(</span><span class="n">df1</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">]],</span> <span class="n">df2</span><span class="p">[[</span><span class="s1">&#39;date&#39;</span><span class="p">]],</span> <span class="n">check_exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">check_names</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dfs are equal&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dfs are not equal&quot;</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_1</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">df_2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">diff_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">df1</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]][[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_time&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">diff_rows</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="drop-mismatched-rows">
+<h3>drop mismatched rows<a class="headerlink" href="#drop-mismatched-rows" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">date_col1</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span>
+<span class="n">date_col2</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span>
+
+<span class="n">mismatched_rows</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">date_col1</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="n">date_col2</span><span class="p">)]</span>
+
+<span class="n">df1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">mismatched_rows</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">mismatched_rows</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="assert-numpy">
+<h2>assert numpy<a class="headerlink" href="#assert-numpy" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy.testing</span> <span class="k">as</span> <span class="nn">npt</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">err_msg</span><span class="o">=</span><span class="s1">&#39;data mismatch&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">string1</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span>
+<span class="n">string2</span> <span class="o">=</span> <span class="s2">&quot;HELLO WORLD&quot;</span>
+
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_string_equal</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.31</span><span class="p">])</span>
+
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># values in a are less than the values in b, so should pass</span>
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_array_less</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_array_less</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train/train.csv&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_time&#39;</span><span class="p">],</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+
+<span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">npt</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;indexes are equal&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;indexes are not equal&quot;</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">diff_rows</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">][[</span><span class="s1">&#39;pickup_datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_datetime&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">diff_rows</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">diff_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">idx1</span> <span class="o">!=</span> <span class="n">idx2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># drop diff rows from df</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">diff_indices</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># reindex</span>
+<span class="n">idx1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+<span class="n">idx2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="assert-data-integrity">
+<h2>assert data integrity<a class="headerlink" href="#assert-data-integrity" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_missing_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># sum up number of null values in df</span>
+    <span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;df contains missing values&#39;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+    
+<span class="k">def</span> <span class="nf">test_data_types</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="c1"># check columns are of numerical data type</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int64&#39;</span> <span class="ow">or</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> has non-numerical data type&#39;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">test_out_of_range_values</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+    <span class="c1"># check numerical columns dont contain infinite or NaN values</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;int64&#39;</span> <span class="ow">or</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> has non-numerical data type&#39;</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> contains infinite values&#39;</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> contains infinite values&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> contains NaN values&#39;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">(),</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1"> contains infinite values&#39;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># columns to test</span>
+<span class="n">num_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;passenger_count&#39;</span><span class="p">,</span> <span class="s1">&#39;pickup_longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;pickup_latitude&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;dropoff_longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;trip_duration&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;pickup_geonumber&#39;</span><span class="p">,</span> <span class="s1">&#39;dropoff_geonumber&#39;</span><span class="p">,</span> <span class="s1">&#39;pickup_hour&#39;</span><span class="p">]</span>
+
+<span class="c1"># test training set</span>
+<span class="k">assert</span> <span class="n">test_missing_data</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">test_data_types</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">test_out_of_range_values</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="assert-data-logic">
+<h2>assert data logic<a class="headerlink" href="#assert-data-logic" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;train.csv&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_logical_errors</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="c1"># dropoff time is after pickup time</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;dropoff_time&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;pickup_time&#39;</span><span class="p">]),</span> <span class="s1">&#39;dropoff time is before pickup time&#39;</span>
+
+    <span class="c1"># no negative trip durations</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;trip_duration&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="s1">&#39;negative trip duration detected&#39;</span>
+
+    <span class="c1"># check pickup and dropoff coordinates are not the same</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pickup_longitude&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dropoff_longitude&#39;</span><span class="p">])</span> \
+	<span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;pickup_latitude&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dropoff_latitude&#39;</span><span class="p">]),</span> \
+	<span class="s1">&#39;pickup and dropoff coordinates are same!&#39;</span>
+
+    <span class="c1"># check passenger count is positive</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;passenger_count&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="s1">&#39;passenger count must be positive&#39;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">assert</span> <span class="n">test_logical_errors</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">assert python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list">list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function">function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#columns-in-csv">columns in csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#row-count">row count</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#assert-pandas">assert pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#assert-index">assert index</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#index-order">index order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tolerance">tolerance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compare">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#check-idx-with-np-where">check idx with np.where</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-series">assert series</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#diff-data-types">diff data types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drop-rows-with-diff-index">drop rows with diff index</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-df">assert df</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#check-likeness">check likeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">compare</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drop-mismatched-rows">drop mismatched rows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-numpy">assert numpy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-data-integrity">assert data integrity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#assert-data-logic">assert data logic</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dataclass.html" title="dataclasses"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../bash/sed.html" title="line selection"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">assert python</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2023-12-09.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

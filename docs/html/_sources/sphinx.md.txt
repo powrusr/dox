@@ -183,9 +183,15 @@ cp docs/html/.nojekyll docs/
 
 press ctrl+d to end text
 
+enforce content containers to maximize width
+I dislike wasting web real estate
+
 ```bash
 cat << EOF >> source/_static/custom.css
 @import url("basic.css")
+div.body {
+   max-width: 90%;
+}
 div[role=main] {
    max-width: 90%;
 }

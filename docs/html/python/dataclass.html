@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>dataclasses &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="glob" href="file_ops.html" />
+    <link rel="prev" title="assert python" href="assert.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dataclasses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fields">fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#postinit">postinit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inheritance">inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asdict-astuple">asdict, astuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-factory-initvar">default_factory &amp; InitVar</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="file_ops.html" title="glob"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="assert.html" title="assert python"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">dataclasses</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="dataclasses">
+<h1>dataclasses<a class="headerlink" href="#dataclasses" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>creates init, repr, eq automatically order=false by default</p></li>
+<li><p>comparing two instances w equal properties will now return true</p></li>
+<li><p>order=True implements (<strong>lt</strong>, _<em>le</em>, <strong>gt</strong>, <strong>ge</strong>) special methods</p></li>
+<li><p>frozen=True implements immutable properties (cannot be changed)</p></li>
+<li><p>unsafe_hash=False (hash(obj) of immutable objects are equal
+setting this to True will put resp w you of hash checking</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="nb">repr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">eq</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">frozen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+	<span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+		
+<span class="c1"># hash(p1) throws TypeError bc of mutable properties, unless unsafehash=True</span>
+<span class="c1"># will work if frozen is set to True</span>
+</pre></div>
+</div>
+<section id="fields">
+<h2>fields<a class="headerlink" href="#fields" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">data class’s fields are required to have type annotations</span>
+<span class="sd">Under the hood, the dataclass decorator generates fields based on the annotations of your class,</span>
+<span class="sd">which can be retrieved using the __annotations__ special method</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Berlin&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">__dataclass_fields__</span>  <span class="c1"># returns all fields</span>
+<span class="n">p</span><span class="o">.</span><span class="n">__dataclass_fields__</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>  <span class="c1"># more info on that field</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="n">field</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span><span class="n">default_factory</span><span class="o">=</span><span class="n">MISSING</span><span class="p">,</span><span class="n">init</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="nb">repr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="nb">hash</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">compare</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">get_default_age</span><span class="p">)</span> <span class="c1"># function with no args!</span>
+	
+<span class="k">def</span> <span class="nf">get_default_age</span><span class="p">():</span>
+	<span class="n">ages</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">56</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">12</span><span class="p">]</span>
+	<span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ages</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">ages</span><span class="p">)</span>  <span class="c1"># 29</span>
+
+<span class="c1"># using init=False</span>
+
+<span class="c1"># don&#39;t initialize city</span>
+<span class="n">city</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;Brugge&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="mi">44</span><span class="p">)</span>
+
+<span class="c1"># don&#39;t include in object representation</span>
+<span class="n">city</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># don&#39;t include property in comparing 2 objects</span>
+<span class="n">city</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># metadata = dictionary w extra info on field</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span><span class="n">field</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span><span class="p">})</span>
+
+<span class="n">p</span><span class="o">.</span><span class="n">__dataclass_fields_</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="c1"># will return metadata info, this can be useful for other functions to know</span>
+<span class="n">p</span><span class="o">.</span><span class="n">__dataclass_fields_</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;format&#39;</span><span class="p">]</span>
+<span class="c1"># returns &#39;year&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="postinit">
+<h2>postinit<a class="headerlink" href="#postinit" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+	<span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">is_senior</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># not passed as param, use logic</span>
+		
+	<span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">60</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_senior</span> <span class="o">=</span> <span class="kc">True</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">is_senior</span> <span class="o">=</span> <span class="kc">False</span>
+			
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;the dude&#39;</span><span class="p">,</span> <span class="s1">&#39;Brugge&#39;</span><span class="p">,</span> <span class="mi">62</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">is_senior</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+</section>
+<section id="inheritance">
+<h2>inheritance<a class="headerlink" href="#inheritance" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">Person</span><span class="p">):</span>
+	<span class="n">grade</span><span class="p">:</span> <span class="nb">int</span>
+	<span class="n">subjects</span><span class="p">:</span> <span class="nb">list</span>
+
+<span class="c1"># what is init signature?</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subjects</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Student</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="s1">&#39;Berlin&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;maths&#39;</span><span class="p">,</span> <span class="s1">&#39;physics&#39;</span><span class="p">])</span>
+<span class="c1"># common params will be overwritten by Student in this example</span>
+</pre></div>
+</div>
+</section>
+<section id="asdict-astuple">
+<h2>asdict, astuple<a class="headerlink" href="#asdict-astuple" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+	<span class="n">lat</span><span class="p">:</span> <span class="nb">float</span>
+	<span class="n">long</span><span class="p">:</span> <span class="nb">float</span>
+	<span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">country</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+	<span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">addr</span><span class="p">:</span> <span class="n">Address</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+		
+<span class="n">a</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="mf">28.75</span><span class="p">,</span> <span class="mf">77.11</span><span class="p">,</span> <span class="s1">&#39;Delhi&#39;</span><span class="p">,</span> <span class="s1">&#39;India&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="mi">29</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="n">Address</span><span class="p">(</span><span class="n">lat28</span><span class="mf">.75</span><span class="p">,</span> <span class="n">long</span><span class="o">=</span><span class="mf">77.11</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s1">&#39;Delhi&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;India&#39;</span><span class="p">),</span> <span class="n">age</span><span class="o">=</span><span class="mi">29</span><span class="p">)</span>
+
+<span class="c1"># convert p to api friendly json by using asdict, astuple..</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">asdict</span>
+<span class="n">asdict</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Joe&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;addr&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">28.75</span><span class="p">,</span> <span class="s1">&#39;long&#39;</span><span class="p">:</span> <span class="mf">77.11</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Delhi&#39;</span><span class="p">,</span> <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="s1">&#39;India&#39;</span><span class="p">},</span>
+ <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">29</span><span class="p">}</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>  <span class="c1"># dumps as string</span>
+<span class="s1">&#39;{&#39;</span><span class="n">name</span><span class="s1">&#39;: &#39;</span><span class="n">Joe</span><span class="s1">&#39;, &#39;</span><span class="n">addr</span><span class="s1">&#39;: {&#39;</span><span class="n">lat</span><span class="s1">&#39;: 28.75, &#39;</span><span class="n">long</span><span class="s1">&#39;: 77.11, &#39;</span><span class="n">city</span><span class="s1">&#39;: &#39;</span><span class="n">Delhi</span><span class="s1">&#39;, &#39;</span><span class="n">country</span><span class="s1">&#39;: &#39;</span><span class="n">India</span><span class="s1">&#39;}, &#39;</span><span class="n">age</span><span class="s1">&#39;: 29}&#39;</span>
+
+</pre></div>
+</div>
+</section>
+<section id="default-factory-initvar">
+<h2>default_factory &amp; InitVar<a class="headerlink" href="#default-factory-initvar" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">default_factory:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">IncorrectBill</span><span class="p">:</span>
+    <span class="n">costs_by_dish</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ValueError: mutable default &lt;class &#39;list&#39;&gt; for field costs_by_dish is not allowed: use default_factory</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">InitVar:</span>
+
+<span class="sd">This lets you specify a field that will be passed to __init__ and then to __post_init__, but won’t be stored in the class instance.</span>
+
+<span class="sd">Setting a field’s type to InitVar (with its subtype being the actual field type) signals to @dataclass to not make that field into a dataclass field, but to pass the data along to __post_init__ as an argument.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">ingredients</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;dow&#39;</span><span class="p">,</span> <span class="s1">&#39;tomatoes&#39;</span><span class="p">])</span>  <span class="c1"># &lt;- wrong!</span>
+<span class="n">ingredients</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;dow&#39;</span><span class="p">,</span> <span class="s1">&#39;tomatoes&#39;</span><span class="p">])</span>  <span class="c1"># correct</span>
+<span class="c1"># error to specify both default and default_factory.</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">InitVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Book</span><span class="p">:</span>
+	<span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+	<span class="n">weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">shelf_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># logic</span>
+	<span class="n">chapters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+	<span class="n">condition</span><span class="p">:</span> <span class="n">InitVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+	<span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="s2">&quot;Discarded&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">shelf_id</span> <span class="o">=</span> <span class="kc">None</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">shelf_id</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">shelf_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Shelf #</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">shelf_id</span><span class="si">}</span><span class="s2">&quot;</span>
+		
+<span class="n">my_book</span> <span class="o">=</span> <span class="n">Book</span><span class="p">(</span><span class="s2">&quot;War And Peace&quot;</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mf">700.0</span><span class="p">,</span> <span class="n">condition</span><span class="o">=</span><span class="s2">&quot;Discarded&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">dataclasses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fields">fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#postinit">postinit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inheritance">inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#asdict-astuple">asdict, astuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-factory-initvar">default_factory &amp; InitVar</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="file_ops.html" title="glob"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="assert.html" title="assert python"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">dataclasses</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2023-12-09.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

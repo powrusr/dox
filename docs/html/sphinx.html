@@ -103,6 +103,26 @@
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -340,8 +360,13 @@ sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><
 <section id="create-custom-css">
 <h4>create custom.css<a class="headerlink" href="#create-custom-css" title="Link to this heading">¶</a></h4>
 <p>press ctrl+d to end text</p>
+<p>enforce content containers to maximize width
+I dislike wasting web real estate</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt;&gt; source/_static/custom.css</span>
 <span class="s">@import url(&quot;basic.css&quot;)</span>
+<span class="s">div.body {</span>
+<span class="s">   max-width: 90%;</span>
+<span class="s">}</span>
 <span class="s">div[role=main] {</span>
 <span class="s">   max-width: 90%;</span>
 <span class="s">}</span>
@@ -420,6 +445,26 @@ make<span class="w"> </span>html
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#substitute">substitute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python/testing.html">pytest</a></li>
 </ul>
 
 <div id="searchbox" style="display: none" role="search">
@@ -498,7 +543,7 @@ make<span class="w"> </span>html
 <br />
     <br />
 
-    Last updated on 2023-12-06.
+    Last updated on 2023-12-09.
     
     <br />
 

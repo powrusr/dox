@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>regex &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pytest" href="testing.html" />
+    <link rel="prev" title="code library" href="library.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">regex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#regex-functions">regex functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metacharacters">metacharacters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#special-sequences-aka-character-classes">special sequences aka character classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sets">sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#groups">groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-pattern-group">sub pattern group</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-empty-string">with empty string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-capturing-group">Non-capturing group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lookbehind-and">lookbehind ?&lt;= and ?&lt;!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immediately-preceeds">immediately preceeds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-immediately-preceeds">NOT immediately preceeds</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lookahead-and">lookahead ?= and ?!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immediately-followed">immediately followed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-immediately-followed">NOT immediately followed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="testing.html" title="pytest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="code library"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">regex</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="regex">
+<h1>regex<a class="headerlink" href="#regex" title="Link to this heading">¶</a></h1>
+<section id="regex-functions">
+<h2>regex functions<a class="headerlink" href="#regex-functions" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>function</p></th>
+<th class="head text-center"><p>desciption</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>re.match</p></td>
+<td class="text-center"><p>determine whether it matches at the <strong>beginning</strong> of a string</p></td>
+</tr>
+<tr class="row-odd"><td><p>re.search</p></td>
+<td class="text-center"><p>finds a match of a pattern <strong>anywhere</strong> in the string</p></td>
+</tr>
+<tr class="row-even"><td><p>re.findall</p></td>
+<td class="text-center"><p>returns a <strong>list</strong> of all substrings that match a pattern</p></td>
+</tr>
+<tr class="row-odd"><td><p>re.iter</p></td>
+<td class="text-center"><p>same as re.findall but returns an <strong>iterator</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>re.sub</p></td>
+<td class="text-center"><p>replace all (or count) occurences of pattern in string</p></td>
+</tr>
+<tr class="row-odd"><td><p>re.split(delim, string)</p></td>
+<td class="text-center"><p>split string into list using delimiter</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;pam&quot;</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;eggspamsausage&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>  <span class="c1"># pam -&gt; returns string matched = pam</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">())</span>  <span class="c1"># 4   -&gt; returns start of first match</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">())</span>    <span class="c1"># 7   -&gt; returns end of first match</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">span</span><span class="p">())</span>   <span class="c1"># (4, 7) -&gt; returns start &amp; end of first match as tuple</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>   <span class="c1"># eggspamsausage -&gt; returns string passed into function</span>
+
+
+<span class="c1"># re.sub</span>
+<span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;My name is David. Hi David.&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;David&quot;</span>
+<span class="n">new_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">new_str</span><span class="p">)</span>  <span class="c1"># My name is James. Hi David.</span>
+</pre></div>
+</div>
+</section>
+<section id="metacharacters">
+<h2>metacharacters<a class="headerlink" href="#metacharacters" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>char</p></th>
+<th class="head"><p>description</p></th>
+<th class="head"><p>example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>[]</p></td>
+<td><p>A set of characters</p></td>
+<td><p>“[a-m]”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>\</p></td>
+<td><p>Signals a special sequence (can also be used to escape special characters)</p></td>
+<td><p>“\d”</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>.</p></td>
+<td><p>Any character (except newline character)</p></td>
+<td><p>“he..o”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>^</p></td>
+<td><p>Starts with</p></td>
+<td><p>“^hello”</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>$</p></td>
+<td><p>Ends with</p></td>
+<td><p>“world$”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>*</p></td>
+<td><p>Zero or more occurrences</p></td>
+<td><p>“aix*”</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>+</p></td>
+<td><p>One or more occurrences</p></td>
+<td><p>“aix+”</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>{}</p></td>
+<td><p>Exactly the specified number of occurrences</p></td>
+<td><p>“al{2}”</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>|</p></td>
+<td><p>Either or</p></td>
+<td><p>“falls</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>()</p></td>
+<td><p>Capture and group</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="special-sequences-aka-character-classes">
+<h2>special sequences aka character classes<a class="headerlink" href="#special-sequences-aka-character-classes" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Character</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>\A</p></td>
+<td><p>Returns a match if the specified characters are at the beginning of the string</p></td>
+<td><p>“\AThe”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\b</p></td>
+<td><p>Returns a match where the specified characters are at the beginning or at the end of a word</p></td>
+<td><p>r”\bain”</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p></p></td>
+<td><p>r”ain\b”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\B</p></td>
+<td><p>Returns a match where the specified characters are present, but NOT at the beginning (or at the end) of a word</p></td>
+<td><p>r”\Bain”</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p></p></td>
+<td><p>r”ain\B”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\d</p></td>
+<td><p>Returns a match where the string contains digits (numbers from 0-9)</p></td>
+<td><p>“\d”</p></td>
+</tr>
+<tr class="row-even"><td><p>\D</p></td>
+<td><p>Returns a match where the string DOES NOT contain digits</p></td>
+<td><p>“\D”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\s</p></td>
+<td><p>Returns a match where the string contains a white space character</p></td>
+<td><p>“\s”</p></td>
+</tr>
+<tr class="row-even"><td><p>\S</p></td>
+<td><p>Returns a match where the string DOES NOT contain a white space character</p></td>
+<td><p>“\S”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\w</p></td>
+<td><p>Returns a match where the string contains any word characters (characters from a to Z, digits from 0-9, and the underscore _ character)</p></td>
+<td><p>“\w”</p></td>
+</tr>
+<tr class="row-even"><td><p>\W</p></td>
+<td><p>Returns a match where the string DOES NOT contain any word characters</p></td>
+<td><p>“\W”</p></td>
+</tr>
+<tr class="row-odd"><td><p>\Z</p></td>
+<td><p>Returns a match if the specified characters are at the end of the string</p></td>
+<td><p>“Spain\Z”</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sets">
+<h2>sets<a class="headerlink" href="#sets" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>set</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[ ]</p></td>
+<td><p>Contains a set of characters to match</p></td>
+</tr>
+<tr class="row-odd"><td><p>[amk]</p></td>
+<td><p>Matches either a, m, or k. It does not match amk</p></td>
+</tr>
+<tr class="row-even"><td><p>[a-z]</p></td>
+<td><p>Matches any alphabet from a to z</p></td>
+</tr>
+<tr class="row-odd"><td><p>[a-z]</p></td>
+<td><p>Matches a, -, or z. It matches - because \ escapes it</p></td>
+</tr>
+<tr class="row-even"><td><p>[a-]</p></td>
+<td><p>Matches a or -, because - is not being used to indicate a series of characters</p></td>
+</tr>
+<tr class="row-odd"><td><p>[-a]</p></td>
+<td><p>As above, matches a or -</p></td>
+</tr>
+<tr class="row-even"><td><p>[a-z0-9]</p></td>
+<td><p>Matches characters from a to z and also from 0 to 9</p></td>
+</tr>
+<tr class="row-odd"><td><p>[(+*)]</p></td>
+<td><p>Special characters become literal inside a set, so this matches (, +, *, and )</p></td>
+</tr>
+<tr class="row-even"><td><p>[^ab5]</p></td>
+<td><p>Adding ^ excludes any character in the set. Here, it matches characters that are not a, b, or 5</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="groups">
+<h2>groups<a class="headerlink" href="#groups" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>group</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>( )</p></td>
+<td><p>Matches the expression inside the parentheses and groups it</p></td>
+</tr>
+<tr class="row-odd"><td><p>(? )</p></td>
+<td><p>Inside parentheses like this, ? acts as an extension notation. Its meaning depends on the character immediately to its right</p></td>
+</tr>
+<tr class="row-even"><td><p>(?PAB)</p></td>
+<td><p>Matches the expression AB, and it can be accessed with the group name</p></td>
+</tr>
+<tr class="row-odd"><td><p>(?aiLmsux)</p></td>
+<td><p>Here, a, i, L, m, s, u, and x are flags:</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>a — Matches ASCII only</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>i — Ignore case</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>L — Locale dependent</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>m — Multi-line</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>s — Matches all</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>u — Matches unicode</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>x — Verbose</p></td>
+</tr>
+<tr class="row-odd"><td><p>(?:A)</p></td>
+<td><p>Matches the expression as represented by A, but unlike (?PAB), it cannot be retrieved afterwards</p></td>
+</tr>
+<tr class="row-even"><td><p>(?#…)</p></td>
+<td><p>A comment. Contents are for us to read, not for matching</p></td>
+</tr>
+<tr class="row-odd"><td><p>A(?=B)</p></td>
+<td><p>Lookahead assertion. This matches the expression A only if it is followed by B</p></td>
+</tr>
+<tr class="row-even"><td><p>A(?!B)</p></td>
+<td><p>Negative lookahead assertion. This matches the expression A only if it is not followed by B</p></td>
+</tr>
+<tr class="row-odd"><td><p>(?&lt;=B)A</p></td>
+<td><p>Positive lookbehind assertion. This matches the expression A only if B is immediately to its left. This can only matched fixed length expressions</p></td>
+</tr>
+<tr class="row-even"><td><p>(?&lt;!B)A</p></td>
+<td><p>Negative lookbehind assertion</p></td>
+</tr>
+<tr class="row-odd"><td><p>(?P=name)</p></td>
+<td><p>Matches the expression matched by an earlier group named “name”</p></td>
+</tr>
+<tr class="row-even"><td><p>(…)\1</p></td>
+<td><p>The number 1 corresponds to the first group to be matched</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(?P&lt;first&gt;abc)(?:def)(ghi)&quot;</span>
+<span class="c1"># named group matching &#39;abc&#39; followed by non-capturing group &#39;def&#39; followed by &#39;ghi&#39;</span>
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s2">&quot;abcdefghi&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;first&quot;</span><span class="p">))</span>  <span class="c1"># abc</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">())</span>  <span class="c1"># (&#39;abc&#39;, &#39;ghi&#39;)</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">\A and \Z match the beginning and end of a string</span>
+<span class="sd">\b matches the empty string between \w and \W characters, or \w characters and -- the beginning or end of the string. Informally, it represents the boundary between words</span>
+<span class="sd">\B matches the empty string anywhere else</span>
+<span class="sd">\b(cat)\b&quot; basically matches the word &quot;cat&quot; surrounded by word boundaries</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Please contact info@learn.com for assistance&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;([\w\.-]+)@([\w\.-]+)(\.[\w\.]+)&quot;</span>
+
+</pre></div>
+</div>
+</section>
+<section id="sub-pattern-group">
+<h2>sub pattern group<a class="headerlink" href="#sub-pattern-group" title="Link to this heading">¶</a></h2>
+<section id="with-empty-string">
+<h3>with empty string<a class="headerlink" href="#with-empty-string" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">re.sub(pattern,repl='')</span></code></p>
+</section>
+<section id="non-capturing-group">
+<h3>Non-capturing group<a class="headerlink" href="#non-capturing-group" title="Link to this heading">¶</a></h3>
+<p>Use non-capturing groups when you want to match something that is not just made up of characters (otherwise you’d just use a set of characters in square brackets) and you don’t need to capture it</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace &quot;foo&quot; when it&#39;s got non-words or line boundaries to the left and to the right</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;(?:\W|^)foo(?:\W|$)&#39;</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s2">&quot; FOO &quot;</span>
+
+<span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;foo bar foo foofoo barfoobar foo&#39;</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">replacement</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+<span class="c1"># &gt;&gt;&gt; &#39; FOO bar FOO foofoo barfoobar FOO &#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lookarounds">
+<h2>lookarounds<a class="headerlink" href="#lookarounds" title="Link to this heading">¶</a></h2>
+<section id="lookbehind-and">
+<h3>lookbehind ?&lt;= and ?&lt;!<a class="headerlink" href="#lookbehind-and" title="Link to this heading">¶</a></h3>
+<section id="immediately-preceeds">
+<h4>immediately preceeds<a class="headerlink" href="#immediately-preceeds" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace &quot;bar&quot; with &quot;BAR&quot; if it IS preceded by &quot;foo&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;(?&lt;=foo)bar&quot;</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s2">&quot;BAR&quot;</span>
+
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;foo bar foobar&quot;</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">replacement</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+<span class="c1"># &#39;foo bar fooBAR&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="not-immediately-preceeds">
+<h4>NOT immediately preceeds<a class="headerlink" href="#not-immediately-preceeds" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace &quot;bar&quot; with BAR if it is NOT preceded by &quot;foo&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;(?&lt;!foo)bar&quot;</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s2">&quot;BAR&quot;</span>
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;foo bar foobar&quot;</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+<span class="c1"># &#39;foo BAR foobar&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lookahead-and">
+<h3>lookahead ?= and ?!<a class="headerlink" href="#lookahead-and" title="Link to this heading">¶</a></h3>
+<section id="immediately-followed">
+<h4>immediately followed<a class="headerlink" href="#immediately-followed" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace &quot;foo&quot; only if it IS followed by &quot;bar&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;foo(?=bar)&quot;</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s2">&quot;FOO&quot;</span>
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;foo bar foobar&quot;</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">replacement</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+<span class="c1"># &#39;foo bar fooBAR&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="not-immediately-followed">
+<h4>NOT immediately followed<a class="headerlink" href="#not-immediately-followed" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace &quot;foo&quot; only if it is NOT followed by &quot;bar&quot;</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="s2">&quot;foo(?!bar)&quot;</span>
+<span class="n">replacement</span> <span class="o">=</span> <span class="s2">&quot;FOO&quot;</span>
+<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;foo bar foobar&quot;</span>
+
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="n">replacement</span><span class="p">,</span><span class="n">string</span><span class="p">)</span>
+<span class="c1"># &#39;FOO bar foobar&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="examples">
+<h2>examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[!?.:;,&quot;()-]&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+
+<span class="n">remove_punctuation</span><span class="p">(</span><span class="s2">&quot;...Python!&quot;</span><span class="p">)</span>
+<span class="c1"># &#39;Python&#39;</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Some people, when confronted with a problem, think</span>
+<span class="s2">&quot;I know, I&#39;ll use regular expressions.&quot;</span>
+<span class="s2">Now they have two problems. Jamie Zawinski&quot;&quot;&quot;</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">words</span>
+<span class="p">[</span><span class="s1">&#39;Some&#39;</span><span class="p">,</span> <span class="s1">&#39;people,&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;confronted&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;problem,&#39;</span><span class="p">,</span> <span class="s1">&#39;think&#39;</span>
+<span class="p">,</span> <span class="s1">&#39;&quot;I&#39;</span><span class="p">,</span> <span class="s1">&#39;know,&#39;</span><span class="p">,</span> <span class="s2">&quot;I&#39;ll&quot;</span><span class="p">,</span> <span class="s1">&#39;use&#39;</span><span class="p">,</span> <span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;expressions.&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;Now&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;have&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;problems.&#39;</span><span class="p">,</span> <span class="s1">&#39;Jamie&#39;</span><span class="p">,</span> <span class="s1">&#39;Zawinski&#39;</span><span class="p">]</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">remove_punctuation</span><span class="p">,</span> <span class="n">words</span><span class="p">))</span>
+
+<span class="p">[</span><span class="s1">&#39;Some&#39;</span><span class="p">,</span> <span class="s1">&#39;people&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;confronted&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;problem&#39;</span><span class="p">,</span> <span class="s1">&#39;think&#39;</span><span class="p">,</span>
+<span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;know&#39;</span><span class="p">,</span> <span class="s2">&quot;I&#39;ll&quot;</span><span class="p">,</span> <span class="s1">&#39;use&#39;</span><span class="p">,</span> <span class="s1">&#39;regular&#39;</span><span class="p">,</span> <span class="s1">&#39;expressions&#39;</span><span class="p">,</span> <span class="s1">&#39;Now&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">,</span> <span class="s1">&#39;have</span>
+<span class="s1">&#39;, &#39;</span><span class="n">two</span><span class="s1">&#39;, &#39;</span><span class="n">problems</span><span class="s1">&#39;, &#39;</span><span class="n">Jamie</span><span class="s1">&#39;, &#39;</span><span class="n">Zawinski</span><span class="s1">&#39;]</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">regex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#regex-functions">regex functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metacharacters">metacharacters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#special-sequences-aka-character-classes">special sequences aka character classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sets">sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#groups">groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-pattern-group">sub pattern group</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#with-empty-string">with empty string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#non-capturing-group">Non-capturing group</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lookbehind-and">lookbehind ?&lt;= and ?&lt;!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immediately-preceeds">immediately preceeds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-immediately-preceeds">NOT immediately preceeds</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lookahead-and">lookahead ?= and ?!</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#immediately-followed">immediately followed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-immediately-followed">NOT immediately followed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="testing.html" title="pytest"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="library.html" title="code library"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">regex</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2023-12-09.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

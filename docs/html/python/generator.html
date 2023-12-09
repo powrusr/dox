@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>generators &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="code library" href="library.html" />
+    <link rel="prev" title="fundamentals" href="fundamentals.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#infinite-sequence">infinite sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profiling-generator-performance">profiling generator performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#yield-demo">yield demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generator-methods">generator methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iterator-for-data-pipeline">iterator for data pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="library.html" title="code library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fundamentals.html" title="fundamentals"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">generators</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="generators">
+<h1>generators<a class="headerlink" href="#generators" title="Link to this heading">¶</a></h1>
+<section id="infinite-sequence">
+<h2>infinite sequence<a class="headerlink" href="#infinite-sequence" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">infinite_sequence</span><span class="p">():</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">num</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+
+<span class="n">gen</span> <span class="o">=</span> <span class="n">infinite_sequence</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">0</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">2</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+<span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+<section id="profiling-generator-performance">
+<h2>profiling generator performance<a class="headerlink" href="#profiling-generator-performance" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nums_squared_lc</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">nums_squared_lc</span><span class="p">)</span>
+<span class="go">87624</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nums_squared_gc</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">nums_squared_gc</span><span class="p">))</span>
+<span class="go">120</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">cProfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;sum([i * 2 for i in range(10000)])&#39;</span><span class="p">)</span>
+<span class="go">         5 function calls in 0.001 seconds</span>
+
+<span class="go">   Ordered by: standard name</span>
+
+<span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+<span class="go">        1    0.001    0.001    0.001    0.001 &lt;string&gt;:1(&lt;listcomp&gt;)</span>
+<span class="go">        1    0.000    0.000    0.001    0.001 &lt;string&gt;:1(&lt;module&gt;)</span>
+<span class="go">        1    0.000    0.000    0.001    0.001 {built-in method builtins.exec}</span>
+<span class="go">        1    0.000    0.000    0.000    0.000 {built-in method builtins.sum}</span>
+<span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;sum((i * 2 for i in range(10000)))&#39;</span><span class="p">)</span>
+<span class="go">         10005 function calls in 0.003 seconds</span>
+<span class="go"> </span>
+<span class="go">   Ordered by: standard name</span>
+
+<span class="go">   ncalls  tottime  percall  cumtime  percall filename:lineno(function)</span>
+<span class="go">    10001    0.002    0.000    0.002    0.000 &lt;string&gt;:1(&lt;genexpr&gt;)</span>
+<span class="go">        1    0.000    0.000    0.003    0.003 &lt;string&gt;:1(&lt;module&gt;)</span>
+<span class="go">        1    0.000    0.000    0.003    0.003 {built-in method builtins.exec}</span>
+<span class="go">        1    0.001    0.001    0.003    0.003 {built-in method builtins.sum}</span>
+<span class="go">        1    0.000    0.000    0.000    0.000 {method &#39;disable&#39; of &#39;_lsprof.Profiler&#39; objects}</span>
+
+</pre></div>
+</div>
+</section>
+<section id="yield-demo">
+<h2>yield demo<a class="headerlink" href="#yield-demo" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">def</span> <span class="nf">multi_yield</span><span class="p">():</span>
+<span class="o">...</span>     <span class="n">yield_str</span> <span class="o">=</span> <span class="s2">&quot;This will print the first string&quot;</span>
+<span class="o">...</span>     <span class="k">yield</span> <span class="n">yield_str</span>
+<span class="o">...</span>     <span class="n">yield_str</span> <span class="o">=</span> <span class="s2">&quot;This will print the second string&quot;</span>
+<span class="o">...</span>     <span class="k">yield</span> <span class="n">yield_str</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">multi_obj</span> <span class="o">=</span> <span class="n">multi_yield</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">multi_obj</span><span class="p">))</span>
+<span class="n">This</span> <span class="n">will</span> <span class="nb">print</span> <span class="n">the</span> <span class="n">first</span> <span class="n">string</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">multi_obj</span><span class="p">))</span>
+<span class="n">This</span> <span class="n">will</span> <span class="nb">print</span> <span class="n">the</span> <span class="n">second</span> <span class="n">string</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">multi_obj</span><span class="p">))</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">StopIteration</span>
+</pre></div>
+</div>
+</section>
+<section id="generator-methods">
+<h2>generator methods<a class="headerlink" href="#generator-methods" title="Link to this heading">¶</a></h2>
+<p>In addition to yield, generator objects can make use of the following methods:</p>
+<ul class="simple">
+<li><p>.send()</p></li>
+<li><p>.throw()</p></li>
+<li><p>.close()</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="c1"># Skip single-digit inputs</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">//</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">num</span>
+    <span class="n">reversed_num</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">temp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">reversed_num</span> <span class="o">=</span> <span class="p">(</span><span class="n">reversed_num</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp</span> <span class="o">%</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">//</span> <span class="mi">10</span>
+
+    <span class="k">if</span> <span class="n">num</span> <span class="o">==</span> <span class="n">reversed_num</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+        
+        
+<span class="k">def</span> <span class="nf">infinite_palindromes</span><span class="p">():</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span> <span class="n">num</span><span class="p">)</span>  <span class="c1"># yield as expression</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">num</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        
+<span class="n">pal_gen</span> <span class="o">=</span> <span class="n">infinite_palindromes</span><span class="p">()</span>  <span class="c1"># create generator object</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pal_gen</span><span class="p">:</span>  <span class="c1"># iterate through generator</span>
+    <span class="n">digits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">digits</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">pal_gen</span><span class="o">.</span><span class="n">throw</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;We don&#39;t like large palindromes&quot;</span><span class="p">))</span>
+        <span class="c1"># pal_gen.close() to stop generator</span>
+    <span class="n">pal_gen</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">digits</span><span class="p">))</span>  <span class="c1"># send value back to generator</span>
+    
+</pre></div>
+</div>
+</section>
+<section id="iterator-for-data-pipeline">
+<h2>iterator for data pipeline<a class="headerlink" href="#iterator-for-data-pipeline" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">permalink,company,numEmps,category,city,state,fundedDate,raisedAmt,raisedCurrency,round</span>
+<span class="sd">digg,Digg,60,web,San Francisco,CA,1-Dec-06,8500000,USD,b</span>
+<span class="sd">digg,Digg,60,web,San Francisco,CA,1-Oct-05,2800000,USD,a</span>
+<span class="sd">facebook,Facebook,450,web,Palo Alto,CA,1-Sep-04,500000,USD,angel</span>
+<span class="sd">facebook,Facebook,450,web,Palo Alto,CA,1-May-05,12700000,USD,a</span>
+<span class="sd">photobucket,Photobucket,60,web,Palo Alto,CA,1-Mar-05,3000000,USD,a</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;techcrunch.csv&quot;</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="p">(</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">))</span>
+<span class="n">list_line</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>  <span class="c1"># split line into values and store in list</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">list_line</span><span class="p">)</span>  <span class="c1"># store column names in list</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">To help you filter and perform operations on the data</span>
+<span class="sd">you create dictionaries where the keys are the column names from the CSV:</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">company_dicts</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span> <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">list_line</span><span class="p">)</span>
+
+<span class="n">funding</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nb">int</span><span class="p">(</span><span class="n">company_dict</span><span class="p">[</span><span class="s2">&quot;raisedAmt&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">company_dict</span> <span class="ow">in</span> <span class="n">company_dicts</span>
+    <span class="k">if</span> <span class="n">company_dict</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+<span class="p">)</span>
+
+<span class="n">total_series_a</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">funding</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/awk.html">awk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/find.html">find</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/scripting.html">scripting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html">line selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#append-insert-delete-actions">append insert delete actions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#substitute">substitute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/sed.html#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assert.html#assert-pandas">assert pandas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#syncronize-iterations-over-2-iterable-series">syncronize iterations over 2 iterable series</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#eg-two-series-of-temperature-data">eg two  series of temperature data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#bind-them-in-pairs-of-corresponding-readings">bind them in pairs of corresponding readings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#zip-yields-tuples-when-iterated">zip yields tuples when iterated</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-take-advantage-of-this-with-tuple-unpacking-in-the-for-loop">we can take advantage of this with tuple unpacking in the for loop</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#now-we-want-one-long-temperature-series-for-sunday-monday-and-thuesday">now we want one long temperature series for sunday monday and thuesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-can-then-lazily-concatenate-iterables-using-itertools-chain">we can then lazily concatenate iterables using itertools chain</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#this-is-different-from-simply-concatenating-3-lists-into-a-new-list">this is different from simply concatenating 3 lists into a new list</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#we-have-no-memory-impact-of-data-duplication">we have no memory impact of data duplication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fundamentals.html#following-shows-generator-functions-generator-expressions-predicate-functions-and-for-loops">following shows generator functions, generator expressions, predicate functions and for loops</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#infinite-sequence">infinite sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#profiling-generator-performance">profiling generator performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#yield-demo">yield demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generator-methods">generator methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iterator-for-data-pipeline">iterator for data pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="library.html" title="code library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fundamentals.html" title="fundamentals"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+        <li class="nav-item nav-item-this"><a href="">generators</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2023-12-09.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>
