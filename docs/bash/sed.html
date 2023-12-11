@@ -102,7 +102,10 @@
 </li>
 <li><a class="reference internal" href="#substitute">substitute</a><ul>
 <li><a class="reference internal" href="#ignore-case">ignore case</a></li>
-<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+<li><a class="reference internal" href="#backreferences">backreferences</a><ul>
+<li><a class="reference internal" href="#reduce-md-titles">reduce md titles</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>
@@ -356,6 +359,29 @@ reg_exp<span class="w"> </span><span class="m">123</span><span class="w"> </span
 <span class="c1"># The sequence \w is equivalent to [[:alnum:]_]</span>
 </pre></div>
 </div>
+<section id="reduce-md-titles">
+<h3>reduce md titles<a class="headerlink" href="#reduce-md-titles" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##### five should become 4</span>
+<span class="c1"># comment should stay comment</span>
+<span class="c1">## two should STAY 2</span>
+<span class="c1">### three should become 2</span>
+<span class="c1">#### four should become 3</span>
+<span class="c1">##### five should become 4</span>
+
+<span class="n">result</span><span class="p">:</span>
+
+<span class="c1">#### five should become 4</span>
+<span class="c1"># comment should stay comment</span>
+<span class="c1">## two should STAY 2</span>
+<span class="c1">## three should become 2</span>
+<span class="c1">### four should become 3</span>
+<span class="c1">#### five should become 4</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;s/^(#)(\##+)(\s)/\2\3/p&quot;</span><span class="w"> </span>assert.md
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="grouping-expressions">
@@ -479,7 +505,10 @@ t = test</p>
 </li>
 <li><a class="reference internal" href="#substitute">substitute</a><ul>
 <li><a class="reference internal" href="#ignore-case">ignore case</a></li>
-<li><a class="reference internal" href="#backreferences">backreferences</a></li>
+<li><a class="reference internal" href="#backreferences">backreferences</a><ul>
+<li><a class="reference internal" href="#reduce-md-titles">reduce md titles</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#grouping-expressions">grouping expressions</a><ul>

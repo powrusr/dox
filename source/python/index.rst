@@ -6,6 +6,7 @@ python
    :caption: python
 
    assert.md
+   collections.md
    dataclass.md
    file_ops.md
    functional.md

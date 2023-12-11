@@ -166,6 +166,31 @@ reg_exp 123 Hello
 
 # The sequence \w is equivalent to [[:alnum:]_]
 ```
+
+### reduce md titles
+
+```
+##### five should become 4
+# comment should stay comment
+## two should STAY 2
+### three should become 2
+#### four should become 3
+##### five should become 4
+
+result:
+
+#### five should become 4
+# comment should stay comment
+## two should STAY 2
+## three should become 2
+### four should become 3
+#### five should become 4
+```
+
+```bash
+sed -E -n "s/^(#)(\##+)(\s)/\2\3/p" assert.md
+```
+
 # grouping expressions
 
 ## by semicolon
