@@ -67,6 +67,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -99,6 +100,8 @@
 </li>
 <li><a class="reference internal" href="#iterables">iterables</a><ul>
 <li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#sets">sets</a><ul>
 <li><a class="reference internal" href="#set-ops">set ops</a></li>
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
@@ -109,9 +112,11 @@
 <li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
 <li><a class="reference internal" href="#chain">chain</a></li>
 <li><a class="reference internal" href="#take">take</a></li>
-<li><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#any-all">any() all()</a></li>
+<li><a class="reference internal" href="#error-handling">error handling</a><ul>
+<li><a class="reference internal" href="#finally">finally</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
@@ -473,10 +478,11 @@ if there are no surplus items it receives an empty list</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="sets">
-<h3>sets<a class="headerlink" href="#sets" title="Link to this heading">¶</a></h3>
+<h2>sets<a class="headerlink" href="#sets" title="Link to this heading">¶</a></h2>
 <section id="set-ops">
-<h4>set ops<a class="headerlink" href="#set-ops" title="Link to this heading">¶</a></h4>
+<h3>set ops<a class="headerlink" href="#set-ops" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="mi">65536</span><span class="p">,</span> <span class="mi">262144</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
 <span class="go">{4096, 64, 2, 65536, 4, 262144, 16}</span>
@@ -518,7 +524,7 @@ if there are no surplus items it receives an empty list</p>
 </div>
 </section>
 <section id="set-algebra">
-<h4>set algebra<a class="headerlink" href="#set-algebra" title="Link to this heading">¶</a></h4>
+<h3>set algebra<a class="headerlink" href="#set-algebra" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set algebra showcase</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">blue_eyes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Olivia&#39;</span><span class="p">,</span> <span class="s1">&#39;Harry&#39;</span><span class="p">,</span> <span class="s1">&#39;Lily&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Amelia&#39;</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">blond_hair</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Harry&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Amelia&#39;</span><span class="p">,</span> <span class="s1">&#39;Mia&#39;</span><span class="p">,</span> <span class="s1">&#39;Joshua&#39;</span><span class="p">}</span>
@@ -573,7 +579,7 @@ if there are no surplus items it receives an empty list</p>
 </section>
 </section>
 <section id="generator-comprehensions">
-<h3>generator comprehensions<a class="headerlink" href="#generator-comprehensions" title="Link to this heading">¶</a></h3>
+<h2>generator comprehensions<a class="headerlink" href="#generator-comprehensions" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>similar syntax to list comprehensions</p></li>
 <li><p>create a generator object</p></li>
@@ -600,10 +606,10 @@ if there are no surplus items it receives an empty list</p>
 <p>note: we didn’t have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability</p>
 </section>
 <section id="itertools">
-<h3>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h3>
+<h2>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h2>
 <p>list of <a class="reference external" href="https://docs.python.org/3/library/itertools.html">iteration tools</a> in python</p>
 <section id="islice-and-count">
-<h4>islice and count<a class="headerlink" href="#islice-and-count" title="Link to this heading">¶</a></h4>
+<h3>islice and count<a class="headerlink" href="#islice-and-count" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">count</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
 
@@ -626,7 +632,7 @@ if there are no surplus items it receives an empty list</p>
 </div>
 </section>
 <section id="chain">
-<h4>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h4>
+<h3>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h3>
 <p>syncronize iterations over 2 iterable series
 eg two  series of temperature data</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sunday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
@@ -735,7 +741,7 @@ eg two  series of temperature data</p>
 <p>https://docs.python.org/3/library/itertools.html#itertools.chain</p>
 </section>
 <section id="take">
-<h4>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h4>
+<h3>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h3>
 <p>take generator</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Take items from the front of an iterable.</span>
@@ -768,8 +774,9 @@ eg two  series of temperature data</p>
 </pre></div>
 </div>
 </section>
+</section>
 <section id="any-all">
-<h4>any() &amp; all()<a class="headerlink" href="#any-all" title="Link to this heading">¶</a></h4>
+<h2>any() all()<a class="headerlink" href="#any-all" title="Link to this heading">¶</a></h2>
 <p>using any(or) and all(and) for iterable series of bool values</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">any</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
 <span class="kc">True</span>
@@ -787,6 +794,20 @@ eg two  series of temperature data</p>
 </pre></div>
 </div>
 </section>
+<section id="error-handling">
+<h2>error handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
+<section id="finally">
+<h3>finally<a class="headerlink" href="#finally" title="Link to this heading">¶</a></h3>
+<p>finally is NOT dead code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run this before returning&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="oop">
@@ -1986,6 +2007,7 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -2018,6 +2040,8 @@ You can define your own dialect using register_dialect method</p>
 </li>
 <li><a class="reference internal" href="#iterables">iterables</a><ul>
 <li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#sets">sets</a><ul>
 <li><a class="reference internal" href="#set-ops">set ops</a></li>
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
@@ -2028,9 +2052,11 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
 <li><a class="reference internal" href="#chain">chain</a></li>
 <li><a class="reference internal" href="#take">take</a></li>
-<li><a class="reference internal" href="#any-all">any() &amp; all()</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#any-all">any() all()</a></li>
+<li><a class="reference internal" href="#error-handling">error handling</a><ul>
+<li><a class="reference internal" href="#finally">finally</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
@@ -2153,7 +2179,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2023-12-09.
+    Last updated on 2023-12-12.
     
     <br />
 

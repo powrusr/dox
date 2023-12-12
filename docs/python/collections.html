@@ -17,7 +17,9 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="dataclasses" href="dataclass.html" />
+    <link rel="prev" title="assert python" href="assert.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -60,18 +62,31 @@
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+</li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">collections</a><ul>
-<li><a class="reference internal" href="#alternative-to-dict-list-set-tuple">alternative to dict list set &amp; tuple</a></li>
+<li><a class="reference internal" href="#definition">definition</a></li>
 <li><a class="reference internal" href="#namedtuple">namedtuple</a></li>
+<li><a class="reference internal" href="#chainmap">chainmap</a></li>
 </ul>
 </li>
 </ul>
@@ -97,6 +112,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dataclass.html" title="dataclasses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="assert.html" title="assert python"
+             accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">
@@ -108,6 +129,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">collections</a></li>
                 <li class="right">
                     
@@ -140,21 +162,79 @@
             
   <section id="collections">
 <h1>collections<a class="headerlink" href="#collections" title="Link to this heading">¶</a></h1>
-<section id="alternative-to-dict-list-set-tuple">
-<h2>alternative to dict list set &amp; tuple<a class="headerlink" href="#alternative-to-dict-list-set-tuple" title="Link to this heading">¶</a></h2>
-<p>This module implements specialized container datatypes providing alternatives to Python’s general purpose built-in containers, :class:<code class="docutils literal notranslate"><span class="pre">dict</span></code>, :class:<code class="docutils literal notranslate"><span class="pre">list</span></code>, :class:<code class="docutils literal notranslate"><span class="pre">set</span></code>, and :class:<code class="docutils literal notranslate"><span class="pre">tuple</span></code>.</p>
-<p>:func:<code class="docutils literal notranslate"><span class="pre">namedtuple</span></code>	factory function for creating tuple subclasses with named fields
-:class:<code class="docutils literal notranslate"><span class="pre">deque</span></code>	list-like container with fast appends and pops on either end
-:class:<code class="docutils literal notranslate"><span class="pre">ChainMap</span></code>	dict-like class for creating a single view of multiple mappings
-:class:<code class="docutils literal notranslate"><span class="pre">Counter</span></code>	dict subclass for counting :term:<code class="docutils literal notranslate"><span class="pre">hashable</span></code> objects
-:class:<code class="docutils literal notranslate"><span class="pre">OrderedDict</span></code>	dict subclass that remembers the order entries were added
-:class:<code class="docutils literal notranslate"><span class="pre">defaultdict</span></code>	dict subclass that calls a factory function to supply missing values
-:class:<code class="docutils literal notranslate"><span class="pre">UserDict</span></code>	wrapper around dictionary objects for easier dict subclassing
-:class:<code class="docutils literal notranslate"><span class="pre">UserList</span></code>	wrapper around list objects for easier list subclassing
-:class:<code class="docutils literal notranslate"><span class="pre">UserString</span></code>	wrapper around string objects for easier string subclassing</p>
+<section id="definition">
+<h2>definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>This module implements specialized container datatypes providing alternatives to Python’s general purpose built-in containers, dict, list, set, and tuple.</p>
+<p>https://docs.python.org/3/library/collections.html</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>collection</p></th>
+<th class="head"><p>description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>namedtuple</p></td>
+<td><p>factory function for creating tuple subclasses with named fields</p></td>
+</tr>
+<tr class="row-odd"><td><p>deque</p></td>
+<td><p>list-like container with fast appends and pops on either end</p></td>
+</tr>
+<tr class="row-even"><td><p>ChainMap</p></td>
+<td><p>dict-like class for creating a single view of multiple mappings</p></td>
+</tr>
+<tr class="row-odd"><td><p>Counter</p></td>
+<td><p>dict subclass for counting hashable objects</p></td>
+</tr>
+<tr class="row-even"><td><p>OrderedDict</p></td>
+<td><p>dict subclass that remembers the order entries were added</p></td>
+</tr>
+<tr class="row-odd"><td><p>defaultdict</p></td>
+<td><p>dict subclass that calls a factory function to supply missing values</p></td>
+</tr>
+<tr class="row-even"><td><p>UserDict</p></td>
+<td><p>wrapper around dictionary objects for easier dict subclassing</p></td>
+</tr>
+<tr class="row-odd"><td><p>UserList</p></td>
+<td><p>wrapper around list objects for easier list subclassing</p></td>
+</tr>
+<tr class="row-even"><td><p>UserString</p></td>
+<td><p>wrapper around string objects for easier string subclassing</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="namedtuple">
 <h2>namedtuple<a class="headerlink" href="#namedtuple" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">statistics</span> <span class="k">as</span> <span class="nn">st</span>
+
+
+<span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">summary</span><span class="p">(</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="n">st</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+    <span class="n">pprint</span><span class="o">.</span><span class="n">pp</span><span class="p">(</span><span class="n">describe</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+
+<span class="n">summary</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mf">6.5</span><span class="p">,</span> <span class="n">median</span><span class="o">=</span><span class="mf">7.0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="chainmap">
+<h2>chainmap<a class="headerlink" href="#chainmap" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">baseline</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;music&#39;</span><span class="p">:</span> <span class="s1">&#39;bach&#39;</span><span class="p">,</span> <span class="s1">&#39;art&#39;</span><span class="p">:</span> <span class="s1">&#39;rembrandt&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adjustments</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;art&#39;</span><span class="p">:</span> <span class="s1">&#39;van gogh&#39;</span><span class="p">,</span> <span class="s1">&#39;opera&#39;</span><span class="p">:</span> <span class="s1">&#39;carmen&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ChainMap</span><span class="p">(</span><span class="n">adjustments</span><span class="p">,</span> <span class="n">baseline</span><span class="p">))</span>
+<span class="go">[&#39;music&#39;, &#39;art&#39;, &#39;opera&#39;]</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -167,18 +247,31 @@
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html">python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+</ul>
+</li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">collections</a><ul>
-<li><a class="reference internal" href="#alternative-to-dict-list-set-tuple">alternative to dict list set &amp; tuple</a></li>
+<li><a class="reference internal" href="#definition">definition</a></li>
 <li><a class="reference internal" href="#namedtuple">namedtuple</a></li>
+<li><a class="reference internal" href="#chainmap">chainmap</a></li>
 </ul>
 </li>
 </ul>
@@ -204,6 +297,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="dataclass.html" title="dataclasses"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="assert.html" title="assert python"
+             >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
           <li class="switchers">
@@ -215,6 +314,7 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">collections</a></li>
                 <li class="right">
                     

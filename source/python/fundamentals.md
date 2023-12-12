@@ -249,9 +249,9 @@ for element in z:
 (3, 'c')
 ```
 
-### sets
+## sets
 
-#### set ops
+### set ops
 
 ```python   
 >>> s = set([2, 4, 16, 64, 4096, 65536, 262144])
@@ -293,7 +293,7 @@ KeyError: 2
 >>> k.discard(2)
 ```
 
-#### set algebra
+### set algebra
 
 ```python
 # set algebra showcase
@@ -347,7 +347,7 @@ True
 True
 ```
 
-### generator comprehensions
+## generator comprehensions
 
 - similar syntax to list comprehensions
 - create a generator object
@@ -375,11 +375,11 @@ sum(x*x for x in range(1, 1000001) if x % 17) # with optional if condition
 
 note: we didn't have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability
 
-### itertools
+## itertools
 
 list of [iteration tools](https://docs.python.org/3/library/itertools.html) in python
 
-#### islice and count
+### islice and count
 
 ```python
 from itertools import islice, count
@@ -402,7 +402,7 @@ sum(islice((x for x in count() if is_prime(x)), 1000))
 3682913
 ```
 
-#### chain
+### chain
 
 syncronize iterations over 2 iterable series
 eg two  series of temperature data
@@ -515,7 +515,7 @@ Make an iterator that returns elements from the first iterable until it is exhau
 
 https://docs.python.org/3/library/itertools.html#itertools.chain
 
-#### take
+### take
 
 take generator
 
@@ -551,7 +551,7 @@ if __name__ == "__main__":
 ```
 
 
-#### any() & all()
+## any() all()
 
 using any(or) and all(and) for iterable series of bool values
 
@@ -569,6 +569,22 @@ False
 # check if all city names have capital letters
 all(name == name.title() for name in ['London', 'New York', 'Sydney'])
 True
+```
+
+## error handling
+
+### finally
+
+finally is NOT dead code
+
+```python
+def func(value):
+    try:
+        return float(value)
+    except ValueError:
+        return str(value)
+    finally:
+        print("Run this before returning")
 ```
 
 ## OOP
