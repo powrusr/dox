@@ -285,13 +285,6 @@
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>df.sort_values(by=”last_updated”,ascending=True)</p>
-<p>market cap = price * circulating supply</p>
-<p>df.current_price.mul(df.circulating_supply).sub(df.market_cap)
-df.market_cap_rank
-df.market_cap.value_counts()</p>
-<p>zero_cap = df.loc[df.market_cap==0, [“current_price”, “circulating_supply”]]
-(zero_cap==0).sum() # true false, then sum</p>
 </section>
 <section id="calculations">
 <h2>calculations<a class="headerlink" href="#calculations" title="Link to this heading">¶</a></h2>

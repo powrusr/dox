@@ -16,19 +16,6 @@ df.max()  # get max for every column
 df["Year"].value_counts()
 ```
 
-df.sort_values(by="last_updated",ascending=True)
-
-market cap = price * circulating supply
-
-df.current_price.mul(df.circulating_supply).sub(df.market_cap)
-df.market_cap_rank
-df.market_cap.value_counts()
-
-zero_cap = df.loc[df.market_cap==0, ["current_price", "circulating_supply"]]
-(zero_cap==0).sum() # true false, then sum
-
-
-
 ## calculations
 ```python
 # mul(tiply) has fill_value for missing data
