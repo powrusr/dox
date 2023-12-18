@@ -1,5 +1,140 @@
 # fundamentals
 
+## enums
+
+1. When and where to use enums?
+
+When you have a variable that takes one of a limited set of possible values.
+For example, the days of the week:
+
+```python
+class Weekday(Enum):
+    MONDAY = 1
+    TUESDAY = 2
+    WEDNESDAY = 3
+    THURSDAY = 4
+    FRIDAY = 5
+    SATURDAY = 6
+    SUNDAY = 7
+```
+ 
+2. Why do we need enum? What are the advantages?
+
+Enums are advantageous because they give a name to a constant, which makes code more readable; and because the individual members cannot be rebound, making Python Enums semi-constant (because the Enum itself could still be rebound).
+
+Besides more readable code, debugging is also easier as you see a name along with the value, not just the value
+
+```python
+from enum import Enum, unique, auto
+
+
+@unique
+class Fruit(Enum):
+    APPLE = 1
+    BANANA = 2
+    ORANGE = 3
+    TOMATO = 4
+    PEAR = auto()
+
+
+def main():
+    # enums have human-readable values and types
+    print(Fruit.APPLE)
+    print(type(Fruit.APPLE))
+    print(repr(Fruit.APPLE))
+
+    # enums have name and value properties
+    print(Fruit.APPLE.name, Fruit.APPLE.value)
+
+    # print the auto-generated value
+    print(Fruit.PEAR.value)
+
+    # enums are hashable - can be used as keys
+    myFruits = {}
+    myFruits[Fruit.BANANA] = "They call me mellow yellow"
+    print(myFruits[Fruit.BANANA])
+
+
+if __name__ == "__main__":
+    main()
+```
+```output
+Fruit.APPLE
+<enum 'Fruit'>
+<Fruit.APPLE: 1>
+APPLE 1
+5
+They call me mellow yellow
+```
+
+## strings
+
+### string operations
+
+```python
+# strings and bytes are not directly interchangeable
+# strings contain unicode, bytes are raw 8-bit values
+
+# define some starting values
+b = bytes([0x41, 0x42, 0x43, 0x44])
+print(b)
+# This is a string
+
+
+s = "This is a string"
+print(s)
+
+# Try combining them. This will cause an error:
+# print(s+b)
+
+# Bytes and strings need to be properly encoded and decoded
+# before you can work on them together
+s2 = b.decode('utf-8')
+print(s+s2)
+# This is a stringABCD
+
+b2 = s.encode('utf-8')
+print(b+b2)
+# b'ABCDThis is a string'
+
+# encode the string as UTF-32
+b3 = s.encode('utf-32')
+print(b3)
+"""
+b'\xff\xfe\x00\x00T\x00\x00\x00h\x00\x00\x00i\x00\x00\x00s\x00\x00\x00
+ \x00\x00\x00i\x00\x00\x00s\x00\x00\x00 \x00\x00\x00a\x00\x00\x00
+  \x00\x00\x00s\x00\x00\x00t\x00\x00\x00r\x00\x00\x00i\x00\x00\x00n\x00\x00\x00g\x00\x00\x00'
+"""
+```
+### string templates
+
+```python
+from string import Template
+
+
+# Usual string formatting with format()
+str1 = "You're watching {0} by {1}".format("Advanced Python", "Batman")
+print(str1)
+""" You're watching Advanced Python by Batman """
+
+# create a template with placeholders
+templ = Template("You're watching ${title} by ${author}")
+
+# use the substitute method with keyword arguments
+str2 = templ.substitute(title="Advanced Python", author="Batman")
+print(str2)
+""" You're watching Advanced Python by Batman """
+
+# use the substitute method with a dictionary
+data = { 
+    "author": "Batman",
+    "title": "Advanced Python"
+}
+str3 = templ.substitute(data)    
+print(str3)
+""" You're watching Advanced Python by Batman """
+```
+
 ## range
 
 ### range(number+1)
@@ -347,7 +482,78 @@ True
 True
 ```
 
-## generator comprehensions
+## comprehensions
+
+### list
+
+```python
+evens = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+odds = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+
+# Perform a mapping and filter function on a list
+evenSquared = list(
+    map(lambda e: e**2, filter(lambda e: e > 4 and e < 16, evens)))
+print(evenSquared)
+# [36, 64, 100, 144, 196]
+
+
+# Derive a new list of numbers from given list
+evenSquared = [e ** 2 for e in evens]
+print(evenSquared)
+# [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+# limit the items operated on with a predicate condition
+oddSquared = [e ** 2 for e in odds if e > 3 and e < 17]
+print(oddSquared)
+# [25, 49, 81, 121, 169, 225]
+``` 
+
+### dictionary
+
+```python
+# define a list of temperature values
+ctemps = [0, 12, 34, 100]
+
+# Use a comprehension to build a dictionary
+tempDict = {t: (t * 9/5) + 32 for t in ctemps if t < 100}
+print(tempDict)
+"""{0: 32.0, 12: 53.6, 34: 93.2}j""""
+print(tempDict[12])
+"""53.6"""
+
+# Merge two dictionaries with a comprehension
+team1 = {"Jones": 24, "Jameson": 18, "Smith": 58, "Burns": 7}
+team2 = {"White": 12, "Macke": 88, "Perce": 4}
+newTeam = {k: v for team in (team1, team2) for k, v in team.items()}
+print(newTeam)
+"""{'Jones': 24, 'Jameson': 18, 'Smith': 58, 'Burns': 7,
+    'White': 12, 'Macke': 88, 'Perce': 4}"""
+```
+
+### set
+
+```python
+ctemps = [5, 10, 12, 14, 10, 23, 41, 30, 12, 24, 12, 18, 29]
+
+# build set of unique fahrenheit temperatures
+ftemps1 = [(t * 9/5) + 32 for t in ctemps]
+ftemps2 = {(t * 9/5) + 32 for t in ctemps}
+
+print(ftemps1)
+# [41.0, 50.0, 53.6, 57.2, 50.0, 73.4, 105.8, 86.0, 53.6, 75.2, 53.6, 64.4, 84.2]
+print(ftemps2)
+# {64.4, 73.4, 41.0, 105.8, 75.2, 50.0, 84.2, 53.6, 86.0, 57.2}
+
+# build a set from an input source
+sTemp = "The quick brown fox jumped over the lazy dog"
+chars = {c.upper() for c in sTemp if not c.isspace()}
+print(chars)
+"""
+{'P', 'R', 'L', 'N', 'U', 'W', 'Y', 'M', 'Z', 'I', 'T', 'G', 'O', 'D', 'Q', 'J', 'F', 'A', 'K', 'X', 'H', 'B', 'E', 'C', 'V'}
+"""
+```
+### generator comprehensions
 
 - similar syntax to list comprehensions
 - create a generator object
@@ -375,185 +581,11 @@ sum(x*x for x in range(1, 1000001) if x % 17) # with optional if condition
 
 note: we didn't have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability
 
-## itertools
-
-list of [iteration tools](https://docs.python.org/3/library/itertools.html) in python
-
-### islice and count
-
-```python
-from itertools import islice, count
-from math import sqrt
-
-
-def is_prime(x):
-    if x < 2:
-        return False
-    for i in range(2, int(sqrt(x)) + 1):
-        if x % i == 0:
-            return False
-    return True
-
-# do this thousand_primes = islice(all_primes, 1000) but how to generate all primes
-# ranges must always be finite, we need an open ended version of range and that is what count() does
-# thousand_primes = islice((x for x in count() if is_prime(x)), 1000) # with islice() like with lists
-
-sum(islice((x for x in count() if is_prime(x)), 1000))
-3682913
-```
-
-### chain
-
-syncronize iterations over 2 iterable series
-eg two  series of temperature data
-
-```python
-sunday = [12, 14, 15, 15, 17, 21, 22, 22, 23, 22, 20, 18]
-monday = [13, 14, 14, 14, 16, 20, 21, 22, 22, 21, 19, 17]
-# bind them in pairs of corresponding readings
-for item in zip(sunday, monday):
-    print(item)
-
-(12, 13)
-(14, 14)
-(15, 14)
-(15, 14)
-(17, 16)
-(21, 20)
-(22, 21)
-(22, 22)
-(23, 22)
-(22, 21)
-(20, 19)
-(18, 17)
-
-# zip yields tuples when iterated
-# we can take advantage of this with tuple unpacking in the for loop
-for sun, mon in zip(sunday, monday):
-    print("average =", (sun + mon) / 2)
-
-average = 12.5
-average = 14.0
-average = 14.5
-average = 14.5
-average = 16.5
-average = 20.5
-average = 21.5
-average = 22.0
-average = 22.5
-average = 21.5
-average = 19.5
-average = 17.5
-
-tuesday = [2, 2, 3, 7, 9, 10, 9, 8, 8]
-
-for temps in zip(sunday, monday, tuesday):
-    print("min={:4.1f}, max={:4.1f}, average={:4.1f}".format(min(temps), max(temps), sum(temps) / len(temps)))
-""" 
-min= 2.0, max=13.0, average= 9.0
-min= 2.0, max=14.0, average=10.0
-min= 3.0, max=15.0, average=10.7
-min= 7.0, max=15.0, average=12.0
-min= 9.0, max=17.0, average=14.0
-min=10.0, max=21.0, average=17.0
-min= 9.0, max=22.0, average=17.3
-min= 8.0, max=22.0, average=17.3
-min= 8.0, max=23.0, average=17.7
-"""
-# now we want one long temperature series for sunday monday and thuesday 
-
-# we can then lazily concatenate iterables using itertools chain
-
-# this is different from simply concatenating 3 lists into a new list
-
-# we have no memory impact of data duplication
-from itertools import chain
-temperatures = chain(sunday, monday, tuesday)
-
-all(t > 0 for t in temperatures)
-temperatures = chain(sunday, monday, tuesday)
-True
-
-# following shows generator functions, generator expressions, predicate functions and for loops
-def lucas():
-    yield 2
-    a = 2
-    b = 1
-    while True: # infinite while loop
-        yield b
-        a, b = b, a + b
-
-for x in (p for p in lucas() if is_prime(p)):
-    print(x)
-
-2
-3
-7
-11
-29
-47
-199
-521
-2207
-3571
-9349
-3010349
-54018521
-370248451
-6643838879
-119218851371
-5600748293801
-688846502588399
-32361122672259149
-```
-
-
-```python
-itertools.chain(*iterables)
-Make an iterator that returns elements from the first iterable until it is exhausted, then proceeds to the next iterable, until all of the iterables are exhausted. Used for treating consecutive sequences as a single sequence
-```
-
-https://docs.python.org/3/library/itertools.html#itertools.chain
-
-### take
-
-take generator
-
-```python
-def take(count, iterable):
-    """Take items from the front of an iterable.
-
-    Args:
-        count: maximum number of items to retrieve
-        iterable: the source series
-
-    Yields:
-         at most 'count' items from 'iterable'
-    """
-
-    counter = 0
-    for item in iterable:
-        if counter == count:
-            return # end sequence when we reach specified count
-            # return raises StopIteration which is caught internally by the for loop in run_take()
-        counter += 1 # how many items have been yielded so far
-        yield item # contains a generator bc it has at least one yield statement
-
-
-def run_take(): # generators are lazy and only generate values on request
-    items = [2, 4, 6, 8, 10]
-    for item in take(3, items):  # take(count, iterable) # return raises StopIteration which is caught by
-        print(item)
-
-
-if __name__ == "__main__":
-        run_take()
-```
-
 
 ## any() all()
 
 using any(or) and all(and) for iterable series of bool values
+
 
 ```python
 any([False, False, True])
@@ -568,6 +600,76 @@ False
 # title() converts first character to uppercase
 # check if all city names have capital letters
 all(name == name.title() for name in ['London', 'New York', 'Sydney'])
+True
+```
+
+### any comprehensions
+
+```python
+>>> cases_per_thousand = [50, 60, 38, 20, 45, 405, 29, 102, 29, 28, 10, 39]
+>>> 
+>>> unsafe_places = [ cases > 300 for cases in cases_per_thousand ]
+>>> 
+>>> unsafe_places
+[False, False, False, False, False, True, False, False, False, False, False, False]
+>>> 
+>>> any(unsafe_places)
+True
+>>> 
+>>> any([ cases > 300 for cases in cases_per_thousand ])
+True
+>>> 
+>>> any( cases > 300 for cases in cases_per_thousand )
+True
+```
+
+none of the items = not any()
+
+`not any( cases > 300 for cases in cases_per_thousand )`
+
+or vs any
+
+```python
+>>> "" or "Hello"
+'Hello'
+>>> 
+>>> any(["", "Hello", ""])
+True
+```
+
+### short circuit with any
+
+```python
+>>> def generate_items(iterable):
+...     for item in iterable:
+...         print(f"Yielding : {item}")
+...         yield item
+... 
+>>> numbers = [1, 2, 3, 4, 5, 6, 7]
+>>> generator = generate_items(numbers)
+>>> 
+>>> for number in generator:
+...     print(number)
+... 
+Yielding : 1
+1
+Yielding : 2
+2
+Yielding : 3
+3
+Yielding : 4
+4
+Yielding : 5
+5
+Yielding : 6
+6
+Yielding : 7
+7
+>>> 
+>>> cases_per_thousand = [50, 60, 38, 20, 45, 405, 29, 102, 29, 28, 350, 39]
+>>> 
+>>> any(generate_items(cases_per_thousand))
+Yielding : 50
 True
 ```
 
@@ -808,6 +910,69 @@ def console_card_printer(passenger, seat, flight_number, aircraft):
       print()
 ```
 
+
+### getattr setattr
+
+```python
+class MyColor:
+    def __init__(self):
+        self.red = 50
+        self.green = 75
+        self.blue = 100
+
+    # use getattr to dynamically return a value
+    def __getattr__(self, attr):
+        if attr == "rgbcolor":
+            return self.red, self.green, self.blue
+        elif attr == "hexcolor":
+            return "#{0:02x}{1:02x}{2:02x}".format(self.red, self.green, self.blue)
+        else:
+            raise AttributeError
+
+    # use setattr to dynamically return a value
+    def __setattr__(self, attr, val):
+        if attr == "rgbcolor":
+            self.red = val[0]
+            self.green = val[1]
+            self.blue = val[2]
+        else:
+            super().__setattr__(attr, val)
+
+    # use dir to list the available properties
+    def __dir__(self):
+        return "rgbolor", "hexcolor"
+
+
+def main():
+    # create an instance of myColor
+    cls1 = MyColor()
+    # print the value of a computed attribute
+    print(cls1.rgbcolor)
+    print(cls1.hexcolor)
+
+    # set the value of a computed attribute
+    cls1.rgbcolor = (125, 200, 86)
+    print(cls1.rgbcolor)
+    print(cls1.hexcolor)
+
+    # access a regular attribute
+    print(cls1.red)
+
+    # list the available attributes
+    print(dir(cls1))
+
+
+if __name__ == '__main__':
+    main()
+```
+```output
+(50, 75, 100)
+#324b64
+(125, 200, 86)
+#7dc856
+125
+['hexcolor', 'rgbolor']
+```
 
 ### properties
 
@@ -1798,32 +1963,5 @@ for user in tree.xpath("/users/user[metier='Veterinaire']/nom"):
     print(user.text)
 # Batman
 # Spiderman
-```
-
-
-### concatenate files
-
-```python
-def concatenate_files_in_list(file_list, output_file, encode_in='utf-8', is_small=False, use_shutil=False):
-    # don't forget to specify target folder when opening files!
-    encoding_format = encode_in
-    print(f"target file -> {output_file}")
-    readmode = ('rb' if use_shutil else 'r')
-    writemode = ('wb' if use_shutil else 'w+')
-    with open(output_file, writemode) as finaltext:
-        for file_name in file_list:
-            print(f"currently appending file: {file_name}")
-            with open(file_name, readmode, encoding=encoding_format) as file_currently_opened:
-                if use_shutil:
-                    import shutil
-                    shutil.copyfileobj(file_name, finaltext)
-                elif is_small:
-                    finaltext.write(file_currently_opened.read())
-                elif not is_small:
-                    for line in file_currently_opened:
-                        finaltext.write(line)
-
-
-concatenate_files_in_list(text_files_list, final_file, 'latin-1', True)
 ```
 

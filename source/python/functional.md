@@ -66,89 +66,6 @@ list(map(len, words))
 
 ```
 
-
-## itertools
-
-## itertools functions
-
-One type of function it produces is **infinite iterators**
-
-| function | description |
-|---|:---|
-| Count | **counts up** infinitely from a value|
-| Cycle | *infinitely iterates through an iterable* (for instance a list or string)|
-| Repeat| **repeats an object**, either infinitely or a specific number of times|
-| Takewhile| takes items from iterable while predicate function remains True |
-| Chain | **combines** iterables |
-| Accumulate |returns a **running total** of values in an iterable|
-
-
-### count
-
-```python
-from itertools import count
-
-for i in count(3): # counts up starting from 3
-	print(i)
-	if i>= 11:
-		break
-
-""" 3  4  5  6  7  8  9  10  11 """
-
-```
-
-### accumulate
-
-```python
-from itertools import accumulate, takewhile
-
-
-nums = list(accumulate(range(8)))
-print(nums)  # [0,  1,   3,   6,  10,   15,   21, 28]
-             # [0, 0+1, 1+2, 3+3, 6+4, 10+5, 15+6, 21+7]
-
-```
-
-### takewhile
-
-```python
-print(list(takewhile(lambda x: x<=6, nums)))  # [0, 1, 3, 6]
-
-# takewhile stops as soon as predicate == FALSE!
-nums = [2, 4, 6, 7, 9, 8]  # will stop returning at hitting value 7
-
-print(list(takewhile(lambda x: x%2==0, nums))) 
-# [2, 4, 6]
-```
-
-### combinatoric functions & permutations
-
-```python
-
-from itertools import product, permutations
-
-letters = ("A", "B")
-
-list(product(letters, range(2)))
-# [('A', 0), ('A', 1), ('B', 0), ('B', 1)]
-
-list(permutations(letters))
-# [('A', 'B'), ('B', 'A')]
-
-
-letters = ("A", "B", "C")
-list(permutations(letters))
-"""
-[('A', 'B', 'C'), ('A', 'C', 'B'), ('B', 'A', 'C'),
- ('B', 'C', 'A'), ('C', 'A', 'B'), ('C', 'B', 'A')]
-"""
-
-a={1, 2}
-len(list(product(range(3), a))) # 6
-list(product(range(3), a))
-# [(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]
-```
-
 ## filter
 
 - apply boolean function to an iterable to generate a new iterable
@@ -168,26 +85,6 @@ def sanitized_sqrt(numbers):
 sanitized_sqrt([25, 9, 81, -16, 0])
 [5.0, 3.0, 9.0, 0.0]
 
-```
-
-## reduce
-
-- apply reduction function to an iterable to produce single cumulative value
-
-reduce() takes two required arguments:
-
-1. function can be any Python callable that accepts two arguments and returns a value.
-2. iterable can be any Python iterable.
-
-```python
-import functools
-import operator
-import os
-
-files = os.listdir(os.path.expanduser("~"))
-
-functools.reduce(operator.add, map(os.path.getsize, files))
-4377381
 ```
 
 ## map vs comprehensions & gen expression
@@ -239,6 +136,104 @@ gen_exp
 list(gen_exp)
 [1, 4, 9, 16, 25, 36]
 ```
+
+## functools
+
+### reduce
+
+- apply reduction function to an iterable to produce single cumulative value
+
+reduce() takes two required arguments:
+
+1. function can be any Python callable that accepts two arguments and returns a value.
+2. iterable can be any Python iterable.
+
+```python
+import functools
+import operator
+import os
+
+files = os.listdir(os.path.expanduser("~"))
+
+functools.reduce(operator.add, map(os.path.getsize, files))
+4377381
+```
+
+### wraps
+
+```python
+import functools
+
+# keep track # times func ran
+def measure_fn(original_function):
+    @functools.wraps(original_function)  # keep docstrings & function name
+    def wrapper_function(*args, **kwargs):
+        print(f"Function {original_function.__name__}
+        return original_function(*args, **kwargs)  # execute
+        # print(f"this code adds functionality & after {original_function.__name__}")
+    return wrapper_function
+```
+
+### lru_cache
+
+```python
+import functools
+
+@functools.lru_cache(maxsize=None)  # least recently used cache -> e.g. no function calls 4 same values
+@measure_fn
+def fibonnaci(n):
+    """Return a number in the Fibonacci sequence."""
+    # todo: im gonna forget this
+    if n<2:
+        return n
+    return fibonnaci(n-1) + fibonnaci(n-2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## closures
 
@@ -309,71 +304,5 @@ def by_factor(factor):
 16
 ```
 
-## decorators
-
-add logic to function without changing it
-
-```python
-import pprint
-import time
-from collections import namedtuple
-import statistics as st
 
 
-def timer(func):
-    def _timer(*args,**kwargs):
-        start = time.time()
-        result = func(*args,**kwargs)
-        end = time.time()
-        print(f"execution time: {end - start}")
-        return result
-    return _timer  # call inner function
-
-
-@timer
-def describe(data):
-    summary = namedtuple("summary", ["mean", "median", "mode"])
-    return summary(
-        st.mean(data),
-        st.median(data),
-        st.mode(data)
-    )
-
-
-if __name__ == '__main__':
-    sample = [10, 2, 4, 7, 9, 3, 9, 8, 6, 7]
-    pprint.pp(describe(sample))
-```
-```output
-execution time: 0.0011296272277832031
-summary(mean=6.5, median=7.0, mode=7)
-```
-
-## factory
-
-allow user input to translate to objects being created
-by coupling the string to the class
-
-select key which has class, call that with extra parentheses to initialize
-a class instance
-
-```python
-dictionary["user_input"](*args,**kwargs) 
-```
-
-
-```python
-class Circle:
-    def __init__(self, radius):
-        self.radius = radius
-    # Class implementation...
-
-class Square:
-    def __init__(self, side):
-        self.side = side
-    # Class implementation...
-
-def shape_factory(shape_name, *args, **kwargs):
-    shapes = {"circle": Circle, "square": Square}
-    return shapes[shape_name](*args, **kwargs)
-```

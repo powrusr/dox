@@ -6,14 +6,18 @@ python
    :caption: python
 
    assert.md
-   collections.md
+   asyncio.md
+   core.md
    dataclass.md
+   decorators.md
+   designpatterns.md
    file_ops.md
    functional.md
    fundamentals.md
    generator.md
-   library.md
+   pandas.md
    regex.md
    testing.md
+   examples.md
 
 

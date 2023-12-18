@@ -67,15 +67,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -164,10 +169,29 @@
 <li class="toctree-l2"><a class="reference internal" href="assert.html#assert-numpy">assert numpy</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="collections.html">collections</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="collections.html#definition">definition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html#namedtuple">namedtuple</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html#chainmap">chainmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="asyncio.html">asyncio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html#async-but-not-concurrent">async but not concurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html#async-concurrent">async &amp; concurrent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html#websockets">websockets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">itertools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#accumulate">accumulate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#count">count</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#islice">islice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#chain">chain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#take">take</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#takewhile-dropwhile">takewhile/dropwhile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#product-permutations">product &amp; permutations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html#collections">collections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#namedtuple">namedtuple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#defaultdict">defaultdict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#ordereddict">ordereddict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#chainmap">chainmap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#counter">counter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#deque">deque</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dataclass.html">dataclasses</a><ul>
@@ -178,20 +202,23 @@
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html#default-factory-initvar">default_factory &amp; InitVar</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="designpatterns.html">design patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html#factory">factory</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#map">map</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#itertools">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#itertools-functions">itertools functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#filter">filter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#reduce">reduce</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#functools">functools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#closures">closures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#decorators">decorators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#factory">factory</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#enums">enums</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#strings">strings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#range">range</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#underscore-usage">underscore usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#list-indexing">list indexing</a></li>
@@ -200,8 +227,7 @@
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#dictionaries">dictionaries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#iterables">iterables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#sets">sets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#generator-comprehensions">generator comprehensions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#itertools">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#comprehensions">comprehensions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#any-all">any() all()</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#error-handling">error handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#oop">OOP</a></li>
@@ -217,8 +243,32 @@
 <li class="toctree-l2"><a class="reference internal" href="generator.html#iterator-for-data-pipeline">iterator for data pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="library.html">code library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="library.html#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas.html">pandas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#get-df-info">get df info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#calculations">calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#plotting">plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#renaming-and-dropping-columns">renaming and dropping columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#sorting">sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#filtering">filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#groupby">groupby</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#merge-concatenate">merge &amp; concatenate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#missing-values">missing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#duplicates">duplicates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#replace">replace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#tresholding-outliers">tresholding (outliers)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#dtype-conversion">dtype conversion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#timeseries">timeseries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#resample">resample</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#apply">apply</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#map-apply-mapapply">map apply mapapply</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#id2">aggregate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#configure-options">configure options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#optimize-memory-usage">optimize memory usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#string-manipulations">string manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#reshaping-pivoting">reshaping &amp; pivoting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#un-stack-melt-explode">(un)stack melt explode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#importing-exporting">importing/exporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html#pyarrow">pyarrow</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="regex.html">regex</a><ul>
@@ -246,6 +296,12 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html#vcrpy-pytest-recording">VCRpy &amp; pytest-recording</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">code library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#card-game">card game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#logging">logging</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
@@ -264,15 +320,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -353,7 +414,7 @@
 <br />
     <br />
 
-    Last updated on 2023-12-12.
+    Last updated on 2023-12-18.
     
     <br />
 

@@ -67,15 +67,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -84,6 +85,12 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#enums">enums</a></li>
+<li><a class="reference internal" href="#strings">strings</a><ul>
+<li><a class="reference internal" href="#string-operations">string operations</a></li>
+<li><a class="reference internal" href="#string-templates">string templates</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
 </ul>
@@ -107,20 +114,25 @@
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#comprehensions">comprehensions</a><ul>
+<li><a class="reference internal" href="#list">list</a></li>
+<li><a class="reference internal" href="#dictionary">dictionary</a></li>
+<li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
-<li><a class="reference internal" href="#itertools">itertools</a><ul>
-<li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
-<li><a class="reference internal" href="#chain">chain</a></li>
-<li><a class="reference internal" href="#take">take</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#any-all">any() all()</a></li>
+<li><a class="reference internal" href="#any-all">any() all()</a><ul>
+<li><a class="reference internal" href="#any-comprehensions">any comprehensions</a></li>
+<li><a class="reference internal" href="#short-circuit-with-any">short circuit with any</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#error-handling">error handling</a><ul>
 <li><a class="reference internal" href="#finally">finally</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
 <li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#getattr-setattr">getattr setattr</a></li>
 <li><a class="reference internal" href="#properties">properties</a></li>
 <li><a class="reference internal" href="#properties-demo">properties demo</a></li>
 <li><a class="reference internal" href="#scope">scope</a></li>
@@ -154,7 +166,6 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#lxml">lxml</a></li>
-<li><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
 </ul>
 </li>
 </ul>
@@ -232,6 +243,141 @@
             
   <section id="fundamentals">
 <h1>fundamentals<a class="headerlink" href="#fundamentals" title="Link to this heading">¶</a></h1>
+<section id="enums">
+<h2>enums<a class="headerlink" href="#enums" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>When and where to use enums?</p></li>
+</ol>
+<p>When you have a variable that takes one of a limited set of possible values.
+For example, the days of the week:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Weekday</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MONDAY</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">TUESDAY</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">WEDNESDAY</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">THURSDAY</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">FRIDAY</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SATURDAY</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">SUNDAY</span> <span class="o">=</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Why do we need enum? What are the advantages?</p></li>
+</ol>
+<p>Enums are advantageous because they give a name to a constant, which makes code more readable; and because the individual members cannot be rebound, making Python Enums semi-constant (because the Enum itself could still be rebound).</p>
+<p>Besides more readable code, debugging is also easier as you see a name along with the value, not just the value</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="nd">@unique</span>
+<span class="k">class</span> <span class="nc">Fruit</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">APPLE</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">BANANA</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ORANGE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">TOMATO</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">PEAR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># enums have human-readable values and types</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Fruit</span><span class="o">.</span><span class="n">APPLE</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Fruit</span><span class="o">.</span><span class="n">APPLE</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">Fruit</span><span class="o">.</span><span class="n">APPLE</span><span class="p">))</span>
+
+    <span class="c1"># enums have name and value properties</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Fruit</span><span class="o">.</span><span class="n">APPLE</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Fruit</span><span class="o">.</span><span class="n">APPLE</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># print the auto-generated value</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Fruit</span><span class="o">.</span><span class="n">PEAR</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># enums are hashable - can be used as keys</span>
+    <span class="n">myFruits</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">myFruits</span><span class="p">[</span><span class="n">Fruit</span><span class="o">.</span><span class="n">BANANA</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;They call me mellow yellow&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">myFruits</span><span class="p">[</span><span class="n">Fruit</span><span class="o">.</span><span class="n">BANANA</span><span class="p">])</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Fruit.APPLE</span>
+<span class="go">&lt;enum &#39;Fruit&#39;&gt;</span>
+<span class="go">&lt;Fruit.APPLE: 1&gt;</span>
+<span class="go">APPLE 1</span>
+<span class="go">5</span>
+<span class="go">They call me mellow yellow</span>
+</pre></div>
+</div>
+</section>
+<section id="strings">
+<h2>strings<a class="headerlink" href="#strings" title="Link to this heading">¶</a></h2>
+<section id="string-operations">
+<h3>string operations<a class="headerlink" href="#string-operations" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># strings and bytes are not directly interchangeable</span>
+<span class="c1"># strings contain unicode, bytes are raw 8-bit values</span>
+
+<span class="c1"># define some starting values</span>
+<span class="n">b</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">([</span><span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x42</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x44</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c1"># This is a string</span>
+
+
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;This is a string&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># Try combining them. This will cause an error:</span>
+<span class="c1"># print(s+b)</span>
+
+<span class="c1"># Bytes and strings need to be properly encoded and decoded</span>
+<span class="c1"># before you can work on them together</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="n">s2</span><span class="p">)</span>
+<span class="c1"># This is a stringABCD</span>
+
+<span class="n">b2</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">+</span><span class="n">b2</span><span class="p">)</span>
+<span class="c1"># b&#39;ABCDThis is a string&#39;</span>
+
+<span class="c1"># encode the string as UTF-32</span>
+<span class="n">b3</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-32&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b3</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">b&#39;\xff\xfe\x00\x00T\x00\x00\x00h\x00\x00\x00i\x00\x00\x00s\x00\x00\x00</span>
+<span class="sd"> \x00\x00\x00i\x00\x00\x00s\x00\x00\x00 \x00\x00\x00a\x00\x00\x00</span>
+<span class="sd">  \x00\x00\x00s\x00\x00\x00t\x00\x00\x00r\x00\x00\x00i\x00\x00\x00n\x00\x00\x00g\x00\x00\x00&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="string-templates">
+<h3>string templates<a class="headerlink" href="#string-templates" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">Template</span>
+
+
+<span class="c1"># Usual string formatting with format()</span>
+<span class="n">str1</span> <span class="o">=</span> <span class="s2">&quot;You&#39;re watching </span><span class="si">{0}</span><span class="s2"> by </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Advanced Python&quot;</span><span class="p">,</span> <span class="s2">&quot;Batman&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str1</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot; You&#39;re watching Advanced Python by Batman &quot;&quot;&quot;</span>
+
+<span class="c1"># create a template with placeholders</span>
+<span class="n">templ</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s2">&quot;You&#39;re watching $</span><span class="si">{title}</span><span class="s2"> by $</span><span class="si">{author}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># use the substitute method with keyword arguments</span>
+<span class="n">str2</span> <span class="o">=</span> <span class="n">templ</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Advanced Python&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Batman&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">str2</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot; You&#39;re watching Advanced Python by Batman &quot;&quot;&quot;</span>
+
+<span class="c1"># use the substitute method with a dictionary</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span> 
+    <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;Batman&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Advanced Python&quot;</span>
+<span class="p">}</span>
+<span class="n">str3</span> <span class="o">=</span> <span class="n">templ</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>    
+<span class="nb">print</span><span class="p">(</span><span class="n">str3</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot; You&#39;re watching Advanced Python by Batman &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="range">
 <h2>range<a class="headerlink" href="#range" title="Link to this heading">¶</a></h2>
 <section id="range-number-1">
@@ -578,8 +724,80 @@ if there are no surplus items it receives an empty list</p>
 </div>
 </section>
 </section>
+<section id="comprehensions">
+<h2>comprehensions<a class="headerlink" href="#comprehensions" title="Link to this heading">¶</a></h2>
+<section id="list">
+<h3>list<a class="headerlink" href="#list" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">evens</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">odds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">]</span>
+
+<span class="c1"># Perform a mapping and filter function on a list</span>
+<span class="n">evenSquared</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+    <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">e</span><span class="p">:</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">,</span> <span class="n">evens</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">evenSquared</span><span class="p">)</span>
+<span class="c1"># [36, 64, 100, 144, 196]</span>
+
+
+<span class="c1"># Derive a new list of numbers from given list</span>
+<span class="n">evenSquared</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">evens</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">evenSquared</span><span class="p">)</span>
+<span class="c1"># [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]</span>
+
+
+<span class="c1"># limit the items operated on with a predicate condition</span>
+<span class="n">oddSquared</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">odds</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">17</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">oddSquared</span><span class="p">)</span>
+<span class="c1"># [25, 49, 81, 121, 169, 225]</span>
+</pre></div>
+</div>
+</section>
+<section id="dictionary">
+<h3>dictionary<a class="headerlink" href="#dictionary" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a list of temperature values</span>
+<span class="n">ctemps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Use a comprehension to build a dictionary</span>
+<span class="n">tempDict</span> <span class="o">=</span> <span class="p">{</span><span class="n">t</span><span class="p">:</span> <span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ctemps</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tempDict</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;{0: 32.0, 12: 53.6, 34: 93.2}j&quot;&quot;&quot;</span><span class="s2">&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tempDict</span><span class="p">[</span><span class="mi">12</span><span class="p">])</span>
+<span class="sd">&quot;&quot;&quot;53.6&quot;&quot;&quot;</span>
+
+<span class="c1"># Merge two dictionaries with a comprehension</span>
+<span class="n">team1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Jones&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s2">&quot;Jameson&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s2">&quot;Smith&quot;</span><span class="p">:</span> <span class="mi">58</span><span class="p">,</span> <span class="s2">&quot;Burns&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="n">team2</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;White&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;Macke&quot;</span><span class="p">:</span> <span class="mi">88</span><span class="p">,</span> <span class="s2">&quot;Perce&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="n">newTeam</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="p">(</span><span class="n">team1</span><span class="p">,</span> <span class="n">team2</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">team</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">newTeam</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;{&#39;Jones&#39;: 24, &#39;Jameson&#39;: 18, &#39;Smith&#39;: 58, &#39;Burns&#39;: 7,</span>
+<span class="sd">    &#39;White&#39;: 12, &#39;Macke&#39;: 88, &#39;Perce&#39;: 4}&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="set">
+<h3>set<a class="headerlink" href="#set" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ctemps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+
+<span class="c1"># build set of unique fahrenheit temperatures</span>
+<span class="n">ftemps1</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ctemps</span><span class="p">]</span>
+<span class="n">ftemps2</span> <span class="o">=</span> <span class="p">{(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ctemps</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ftemps1</span><span class="p">)</span>
+<span class="c1"># [41.0, 50.0, 53.6, 57.2, 50.0, 73.4, 105.8, 86.0, 53.6, 75.2, 53.6, 64.4, 84.2]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ftemps2</span><span class="p">)</span>
+<span class="c1"># {64.4, 73.4, 41.0, 105.8, 75.2, 50.0, 84.2, 53.6, 86.0, 57.2}</span>
+
+<span class="c1"># build a set from an input source</span>
+<span class="n">sTemp</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumped over the lazy dog&quot;</span>
+<span class="n">chars</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sTemp</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">isspace</span><span class="p">()}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{&#39;P&#39;, &#39;R&#39;, &#39;L&#39;, &#39;N&#39;, &#39;U&#39;, &#39;W&#39;, &#39;Y&#39;, &#39;M&#39;, &#39;Z&#39;, &#39;I&#39;, &#39;T&#39;, &#39;G&#39;, &#39;O&#39;, &#39;D&#39;, &#39;Q&#39;, &#39;J&#39;, &#39;F&#39;, &#39;A&#39;, &#39;K&#39;, &#39;X&#39;, &#39;H&#39;, &#39;B&#39;, &#39;E&#39;, &#39;C&#39;, &#39;V&#39;}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
 <section id="generator-comprehensions">
-<h2>generator comprehensions<a class="headerlink" href="#generator-comprehensions" title="Link to this heading">¶</a></h2>
+<h3>generator comprehensions<a class="headerlink" href="#generator-comprehensions" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>similar syntax to list comprehensions</p></li>
 <li><p>create a generator object</p></li>
@@ -605,175 +823,6 @@ if there are no surplus items it receives an empty list</p>
 </div>
 <p>note: we didn’t have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability</p>
 </section>
-<section id="itertools">
-<h2>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h2>
-<p>list of <a class="reference external" href="https://docs.python.org/3/library/itertools.html">iteration tools</a> in python</p>
-<section id="islice-and-count">
-<h3>islice and count<a class="headerlink" href="#islice-and-count" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">count</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
-
-
-<span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
-
-<span class="c1"># do this thousand_primes = islice(all_primes, 1000) but how to generate all primes</span>
-<span class="c1"># ranges must always be finite, we need an open ended version of range and that is what count() does</span>
-<span class="c1"># thousand_primes = islice((x for x in count() if is_prime(x)), 1000) # with islice() like with lists</span>
-
-<span class="nb">sum</span><span class="p">(</span><span class="n">islice</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">count</span><span class="p">()</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="mi">1000</span><span class="p">))</span>
-<span class="mi">3682913</span>
-</pre></div>
-</div>
-</section>
-<section id="chain">
-<h3>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h3>
-<p>syncronize iterations over 2 iterable series
-eg two  series of temperature data</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sunday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
-<span class="n">monday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">17</span><span class="p">]</span>
-<span class="c1"># bind them in pairs of corresponding readings</span>
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-<span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
-
-<span class="c1"># zip yields tuples when iterated</span>
-<span class="c1"># we can take advantage of this with tuple unpacking in the for loop</span>
-<span class="k">for</span> <span class="n">sun</span><span class="p">,</span> <span class="n">mon</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;average =&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">sun</span> <span class="o">+</span> <span class="n">mon</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-
-<span class="n">average</span> <span class="o">=</span> <span class="mf">12.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">14.0</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">14.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">14.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">16.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">20.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">21.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">22.0</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">22.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">21.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">19.5</span>
-<span class="n">average</span> <span class="o">=</span> <span class="mf">17.5</span>
-
-<span class="n">tuesday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">temps</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min=</span><span class="si">{:4.1f}</span><span class="s2">, max=</span><span class="si">{:4.1f}</span><span class="s2">, average=</span><span class="si">{:4.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">temps</span><span class="p">)))</span>
-<span class="sd">&quot;&quot;&quot; </span>
-<span class="sd">min= 2.0, max=13.0, average= 9.0</span>
-<span class="sd">min= 2.0, max=14.0, average=10.0</span>
-<span class="sd">min= 3.0, max=15.0, average=10.7</span>
-<span class="sd">min= 7.0, max=15.0, average=12.0</span>
-<span class="sd">min= 9.0, max=17.0, average=14.0</span>
-<span class="sd">min=10.0, max=21.0, average=17.0</span>
-<span class="sd">min= 9.0, max=22.0, average=17.3</span>
-<span class="sd">min= 8.0, max=22.0, average=17.3</span>
-<span class="sd">min= 8.0, max=23.0, average=17.7</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="c1"># now we want one long temperature series for sunday monday and thuesday </span>
-
-<span class="c1"># we can then lazily concatenate iterables using itertools chain</span>
-
-<span class="c1"># this is different from simply concatenating 3 lists into a new list</span>
-
-<span class="c1"># we have no memory impact of data duplication</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
-<span class="n">temperatures</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">)</span>
-
-<span class="nb">all</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">)</span>
-<span class="n">temperatures</span> <span class="o">=</span> <span class="n">chain</span><span class="p">(</span><span class="n">sunday</span><span class="p">,</span> <span class="n">monday</span><span class="p">,</span> <span class="n">tuesday</span><span class="p">)</span>
-<span class="kc">True</span>
-
-<span class="c1"># following shows generator functions, generator expressions, predicate functions and for loops</span>
-<span class="k">def</span> <span class="nf">lucas</span><span class="p">():</span>
-    <span class="k">yield</span> <span class="mi">2</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span> <span class="c1"># infinite while loop</span>
-        <span class="k">yield</span> <span class="n">b</span>
-        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
-
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">lucas</span><span class="p">()</span> <span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">p</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="mi">2</span>
-<span class="mi">3</span>
-<span class="mi">7</span>
-<span class="mi">11</span>
-<span class="mi">29</span>
-<span class="mi">47</span>
-<span class="mi">199</span>
-<span class="mi">521</span>
-<span class="mi">2207</span>
-<span class="mi">3571</span>
-<span class="mi">9349</span>
-<span class="mi">3010349</span>
-<span class="mi">54018521</span>
-<span class="mi">370248451</span>
-<span class="mi">6643838879</span>
-<span class="mi">119218851371</span>
-<span class="mi">5600748293801</span>
-<span class="mi">688846502588399</span>
-<span class="mi">32361122672259149</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">iterables</span><span class="p">)</span>
-<span class="n">Make</span> <span class="n">an</span> <span class="n">iterator</span> <span class="n">that</span> <span class="n">returns</span> <span class="n">elements</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">first</span> <span class="n">iterable</span> <span class="n">until</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">exhausted</span><span class="p">,</span> <span class="n">then</span> <span class="n">proceeds</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">next</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">until</span> <span class="nb">all</span> <span class="n">of</span> <span class="n">the</span> <span class="n">iterables</span> <span class="n">are</span> <span class="n">exhausted</span><span class="o">.</span> <span class="n">Used</span> <span class="k">for</span> <span class="n">treating</span> <span class="n">consecutive</span> <span class="n">sequences</span> <span class="k">as</span> <span class="n">a</span> <span class="n">single</span> <span class="n">sequence</span>
-</pre></div>
-</div>
-<p>https://docs.python.org/3/library/itertools.html#itertools.chain</p>
-</section>
-<section id="take">
-<h3>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h3>
-<p>take generator</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Take items from the front of an iterable.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        count: maximum number of items to retrieve</span>
-<span class="sd">        iterable: the source series</span>
-
-<span class="sd">    Yields:</span>
-<span class="sd">         at most &#39;count&#39; items from &#39;iterable&#39;</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">counter</span> <span class="o">==</span> <span class="n">count</span><span class="p">:</span>
-            <span class="k">return</span> <span class="c1"># end sequence when we reach specified count</span>
-            <span class="c1"># return raises StopIteration which is caught internally by the for loop in run_take()</span>
-        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># how many items have been yielded so far</span>
-        <span class="k">yield</span> <span class="n">item</span> <span class="c1"># contains a generator bc it has at least one yield statement</span>
-
-
-<span class="k">def</span> <span class="nf">run_take</span><span class="p">():</span> <span class="c1"># generators are lazy and only generate values on request</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">take</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>  <span class="c1"># take(count, iterable) # return raises StopIteration which is caught by</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-        <span class="n">run_take</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
 </section>
 <section id="any-all">
 <h2>any() all()<a class="headerlink" href="#any-all" title="Link to this heading">¶</a></h2>
@@ -793,6 +842,72 @@ eg two  series of temperature data</p>
 <span class="kc">True</span>
 </pre></div>
 </div>
+<section id="any-comprehensions">
+<h3>any comprehensions<a class="headerlink" href="#any-comprehensions" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cases_per_thousand</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">405</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">39</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unsafe_places</span> <span class="o">=</span> <span class="p">[</span> <span class="n">cases</span> <span class="o">&gt;</span> <span class="mi">300</span> <span class="k">for</span> <span class="n">cases</span> <span class="ow">in</span> <span class="n">cases_per_thousand</span> <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unsafe_places</span>
+<span class="go">[False, False, False, False, False, True, False, False, False, False, False, False]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">(</span><span class="n">unsafe_places</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span> <span class="n">cases</span> <span class="o">&gt;</span> <span class="mi">300</span> <span class="k">for</span> <span class="n">cases</span> <span class="ow">in</span> <span class="n">cases_per_thousand</span> <span class="p">])</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">(</span> <span class="n">cases</span> <span class="o">&gt;</span> <span class="mi">300</span> <span class="k">for</span> <span class="n">cases</span> <span class="ow">in</span> <span class="n">cases_per_thousand</span> <span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>none of the items = not any()</p>
+<p><code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">any(</span> <span class="pre">cases</span> <span class="pre">&gt;</span> <span class="pre">300</span> <span class="pre">for</span> <span class="pre">cases</span> <span class="pre">in</span> <span class="pre">cases_per_thousand</span> <span class="pre">)</span></code></p>
+<p>or vs any</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="s2">&quot;Hello&quot;</span>
+<span class="go">&#39;Hello&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">])</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</section>
+<section id="short-circuit-with-any">
+<h3>short circuit with any<a class="headerlink" href="#short-circuit-with-any" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">generate_items</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Yielding : </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="n">item</span>
+<span class="gp">... </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">generator</span> <span class="o">=</span> <span class="n">generate_items</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="gp">... </span>
+<span class="go">Yielding : 1</span>
+<span class="go">1</span>
+<span class="go">Yielding : 2</span>
+<span class="go">2</span>
+<span class="go">Yielding : 3</span>
+<span class="go">3</span>
+<span class="go">Yielding : 4</span>
+<span class="go">4</span>
+<span class="go">Yielding : 5</span>
+<span class="go">5</span>
+<span class="go">Yielding : 6</span>
+<span class="go">6</span>
+<span class="go">Yielding : 7</span>
+<span class="go">7</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cases_per_thousand</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">405</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">39</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">any</span><span class="p">(</span><span class="n">generate_items</span><span class="p">(</span><span class="n">cases_per_thousand</span><span class="p">))</span>
+<span class="go">Yielding : 50</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="error-handling">
 <h2>error handling<a class="headerlink" href="#error-handling" title="Link to this heading">¶</a></h2>
@@ -1025,6 +1140,69 @@ eg two  series of temperature data</p>
       <span class="n">card</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
       <span class="nb">print</span><span class="p">(</span><span class="n">card</span><span class="p">)</span>
       <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="getattr-setattr">
+<h3>getattr setattr<a class="headerlink" href="#getattr-setattr" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyColor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">red</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">green</span> <span class="o">=</span> <span class="mi">75</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blue</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="c1"># use getattr to dynamically return a value</span>
+    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;rgbcolor&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">blue</span>
+        <span class="k">elif</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;hexcolor&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;#</span><span class="si">{0:02x}{1:02x}{2:02x}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">red</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">green</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span>
+
+    <span class="c1"># use setattr to dynamically return a value</span>
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s2">&quot;rgbcolor&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">red</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">green</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">blue</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+
+    <span class="c1"># use dir to list the available properties</span>
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;rgbolor&quot;</span><span class="p">,</span> <span class="s2">&quot;hexcolor&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># create an instance of myColor</span>
+    <span class="n">cls1</span> <span class="o">=</span> <span class="n">MyColor</span><span class="p">()</span>
+    <span class="c1"># print the value of a computed attribute</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cls1</span><span class="o">.</span><span class="n">rgbcolor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cls1</span><span class="o">.</span><span class="n">hexcolor</span><span class="p">)</span>
+
+    <span class="c1"># set the value of a computed attribute</span>
+    <span class="n">cls1</span><span class="o">.</span><span class="n">rgbcolor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">125</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">86</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cls1</span><span class="o">.</span><span class="n">rgbcolor</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cls1</span><span class="o">.</span><span class="n">hexcolor</span><span class="p">)</span>
+
+    <span class="c1"># access a regular attribute</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cls1</span><span class="o">.</span><span class="n">red</span><span class="p">)</span>
+
+    <span class="c1"># list the available attributes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">cls1</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">(50, 75, 100)</span>
+<span class="go">#324b64</span>
+<span class="go">(125, 200, 86)</span>
+<span class="go">#7dc856</span>
+<span class="go">125</span>
+<span class="go">[&#39;hexcolor&#39;, &#39;rgbolor&#39;]</span>
 </pre></div>
 </div>
 </section>
@@ -1964,32 +2142,6 @@ You can define your own dialect using register_dialect method</p>
 </pre></div>
 </div>
 </section>
-<section id="concatenate-files">
-<h3>concatenate files<a class="headerlink" href="#concatenate-files" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">concatenate_files_in_list</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">encode_in</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">is_small</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_shutil</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="c1"># don&#39;t forget to specify target folder when opening files!</span>
-    <span class="n">encoding_format</span> <span class="o">=</span> <span class="n">encode_in</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;target file -&gt; </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">readmode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">writemode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;wb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">writemode</span><span class="p">)</span> <span class="k">as</span> <span class="n">finaltext</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;currently appending file: </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">readmode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding_format</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_currently_opened</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">use_shutil</span><span class="p">:</span>
-                    <span class="kn">import</span> <span class="nn">shutil</span>
-                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">finaltext</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">is_small</span><span class="p">:</span>
-                    <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_currently_opened</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_small</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_currently_opened</span><span class="p">:</span>
-                        <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-
-
-<span class="n">concatenate_files_in_list</span><span class="p">(</span><span class="n">text_files_list</span><span class="p">,</span> <span class="n">final_file</span><span class="p">,</span> <span class="s1">&#39;latin-1&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 </section>
 
@@ -2007,15 +2159,16 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -2024,6 +2177,12 @@ You can define your own dialect using register_dialect method</p>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#enums">enums</a></li>
+<li><a class="reference internal" href="#strings">strings</a><ul>
+<li><a class="reference internal" href="#string-operations">string operations</a></li>
+<li><a class="reference internal" href="#string-templates">string templates</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
 </ul>
@@ -2047,20 +2206,25 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#comprehensions">comprehensions</a><ul>
+<li><a class="reference internal" href="#list">list</a></li>
+<li><a class="reference internal" href="#dictionary">dictionary</a></li>
+<li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
-<li><a class="reference internal" href="#itertools">itertools</a><ul>
-<li><a class="reference internal" href="#islice-and-count">islice and count</a></li>
-<li><a class="reference internal" href="#chain">chain</a></li>
-<li><a class="reference internal" href="#take">take</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#any-all">any() all()</a></li>
+<li><a class="reference internal" href="#any-all">any() all()</a><ul>
+<li><a class="reference internal" href="#any-comprehensions">any comprehensions</a></li>
+<li><a class="reference internal" href="#short-circuit-with-any">short circuit with any</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#error-handling">error handling</a><ul>
 <li><a class="reference internal" href="#finally">finally</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
 <li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#getattr-setattr">getattr setattr</a></li>
 <li><a class="reference internal" href="#properties">properties</a></li>
 <li><a class="reference internal" href="#properties-demo">properties demo</a></li>
 <li><a class="reference internal" href="#scope">scope</a></li>
@@ -2094,7 +2258,6 @@ You can define your own dialect using register_dialect method</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#lxml">lxml</a></li>
-<li><a class="reference internal" href="#concatenate-files">concatenate files</a></li>
 </ul>
 </li>
 </ul>
@@ -2179,7 +2342,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2023-12-12.
+    Last updated on 2023-12-13.
     
     <br />
 

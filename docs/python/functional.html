@@ -67,15 +67,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -85,24 +87,19 @@
     <ul>
 <li><a class="reference internal" href="#">functional programming</a><ul>
 <li><a class="reference internal" href="#map">map</a></li>
-<li><a class="reference internal" href="#itertools">itertools</a></li>
-<li><a class="reference internal" href="#itertools-functions">itertools functions</a><ul>
-<li><a class="reference internal" href="#count">count</a></li>
-<li><a class="reference internal" href="#accumulate">accumulate</a></li>
-<li><a class="reference internal" href="#takewhile">takewhile</a></li>
-<li><a class="reference internal" href="#combinatoric-functions-permutations">combinatoric functions &amp; permutations</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li><a class="reference internal" href="#functools">functools</a><ul>
+<li><a class="reference internal" href="#reduce">reduce</a></li>
+<li><a class="reference internal" href="#wraps">wraps</a></li>
+<li><a class="reference internal" href="#lru-cache">lru_cache</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#filter">filter</a></li>
-<li><a class="reference internal" href="#reduce">reduce</a></li>
-<li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
 <li><a class="reference internal" href="#closures">closures</a><ul>
 <li><a class="reference internal" href="#invoke-outside-scope">invoke outside scope</a></li>
 <li><a class="reference internal" href="#using-lambdas">using lambdas</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#decorators">decorators</a></li>
-<li><a class="reference internal" href="#factory">factory</a></li>
 </ul>
 </li>
 </ul>
@@ -244,106 +241,6 @@
 </pre></div>
 </div>
 </section>
-<section id="itertools">
-<h2>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h2>
-</section>
-<section id="itertools-functions">
-<h2>itertools functions<a class="headerlink" href="#itertools-functions" title="Link to this heading">¶</a></h2>
-<p>One type of function it produces is <strong>infinite iterators</strong></p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>function</p></th>
-<th class="head text-left"><p>description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Count</p></td>
-<td class="text-left"><p><strong>counts up</strong> infinitely from a value</p></td>
-</tr>
-<tr class="row-odd"><td><p>Cycle</p></td>
-<td class="text-left"><p><em>infinitely iterates through an iterable</em> (for instance a list or string)</p></td>
-</tr>
-<tr class="row-even"><td><p>Repeat</p></td>
-<td class="text-left"><p><strong>repeats an object</strong>, either infinitely or a specific number of times</p></td>
-</tr>
-<tr class="row-odd"><td><p>Takewhile</p></td>
-<td class="text-left"><p>takes items from iterable while predicate function remains True</p></td>
-</tr>
-<tr class="row-even"><td><p>Chain</p></td>
-<td class="text-left"><p><strong>combines</strong> iterables</p></td>
-</tr>
-<tr class="row-odd"><td><p>Accumulate</p></td>
-<td class="text-left"><p>returns a <strong>running total</strong> of values in an iterable</p></td>
-</tr>
-</tbody>
-</table>
-<section id="count">
-<h3>count<a class="headerlink" href="#count" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="c1"># counts up starting from 3</span>
-	<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-	<span class="k">if</span> <span class="n">i</span><span class="o">&gt;=</span> <span class="mi">11</span><span class="p">:</span>
-		<span class="k">break</span>
-
-<span class="sd">&quot;&quot;&quot; 3  4  5  6  7  8  9  10  11 &quot;&quot;&quot;</span>
-
-</pre></div>
-</div>
-</section>
-<section id="accumulate">
-<h3>accumulate<a class="headerlink" href="#accumulate" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">takewhile</span>
-
-
-<span class="n">nums</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>  <span class="c1"># [0,  1,   3,   6,  10,   15,   21, 28]</span>
-             <span class="c1"># [0, 0+1, 1+2, 3+3, 6+4, 10+5, 15+6, 21+7]</span>
-
-</pre></div>
-</div>
-</section>
-<section id="takewhile">
-<h3>takewhile<a class="headerlink" href="#takewhile" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&lt;=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nums</span><span class="p">)))</span>  <span class="c1"># [0, 1, 3, 6]</span>
-
-<span class="c1"># takewhile stops as soon as predicate == FALSE!</span>
-<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>  <span class="c1"># will stop returning at hitting value 7</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="n">nums</span><span class="p">)))</span> 
-<span class="c1"># [2, 4, 6]</span>
-</pre></div>
-</div>
-</section>
-<section id="combinatoric-functions-permutations">
-<h3>combinatoric functions &amp; permutations<a class="headerlink" href="#combinatoric-functions-permutations" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
-
-<span class="n">letters</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span>
-
-<span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="n">letters</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
-<span class="c1"># [(&#39;A&#39;, 0), (&#39;A&#39;, 1), (&#39;B&#39;, 0), (&#39;B&#39;, 1)]</span>
-
-<span class="nb">list</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
-<span class="c1"># [(&#39;A&#39;, &#39;B&#39;), (&#39;B&#39;, &#39;A&#39;)]</span>
-
-
-<span class="n">letters</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">permutations</span><span class="p">(</span><span class="n">letters</span><span class="p">))</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">[(&#39;A&#39;, &#39;B&#39;, &#39;C&#39;), (&#39;A&#39;, &#39;C&#39;, &#39;B&#39;), (&#39;B&#39;, &#39;A&#39;, &#39;C&#39;),</span>
-<span class="sd"> (&#39;B&#39;, &#39;C&#39;, &#39;A&#39;), (&#39;C&#39;, &#39;A&#39;, &#39;B&#39;), (&#39;C&#39;, &#39;B&#39;, &#39;A&#39;)]</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="n">a</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span>
-<span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">a</span><span class="p">)))</span> <span class="c1"># 6</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">a</span><span class="p">))</span>
-<span class="c1"># [(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]</span>
-</pre></div>
-</div>
-</section>
-</section>
 <section id="filter">
 <h2>filter<a class="headerlink" href="#filter" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -363,27 +260,6 @@
 <span class="n">sanitized_sqrt</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
 
-</pre></div>
-</div>
-</section>
-<section id="reduce">
-<h2>reduce<a class="headerlink" href="#reduce" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>apply reduction function to an iterable to produce single cumulative value</p></li>
-</ul>
-<p>reduce() takes two required arguments:</p>
-<ol class="arabic simple">
-<li><p>function can be any Python callable that accepts two arguments and returns a value.</p></li>
-<li><p>iterable can be any Python iterable.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
-<span class="kn">import</span> <span class="nn">operator</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">))</span>
-
-<span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">,</span> <span class="n">files</span><span class="p">))</span>
-<span class="mi">4377381</span>
 </pre></div>
 </div>
 </section>
@@ -436,6 +312,60 @@
 <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
 </pre></div>
 </div>
+</section>
+<section id="functools">
+<h2>functools<a class="headerlink" href="#functools" title="Link to this heading">¶</a></h2>
+<section id="reduce">
+<h3>reduce<a class="headerlink" href="#reduce" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>apply reduction function to an iterable to produce single cumulative value</p></li>
+</ul>
+<p>reduce() takes two required arguments:</p>
+<ol class="arabic simple">
+<li><p>function can be any Python callable that accepts two arguments and returns a value.</p></li>
+<li><p>iterable can be any Python iterable.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">))</span>
+
+<span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">,</span> <span class="n">files</span><span class="p">))</span>
+<span class="mi">4377381</span>
+</pre></div>
+</div>
+</section>
+<section id="wraps">
+<h3>wraps<a class="headerlink" href="#wraps" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="c1"># keep track # times func ran</span>
+<span class="k">def</span> <span class="nf">measure_fn</span><span class="p">(</span><span class="n">original_function</span><span class="p">):</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">original_function</span><span class="p">)</span>  <span class="c1"># keep docstrings &amp; function name</span>
+    <span class="k">def</span> <span class="nf">wrapper_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Function </span><span class="si">{</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span>
+        <span class="k">return</span> <span class="n">original_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># execute</span>
+        <span class="c1"># print(f&quot;this code adds functionality &amp; after {original_function.__name__}&quot;)</span>
+    <span class="k">return</span> <span class="n">wrapper_function</span>
+</pre></div>
+</div>
+</section>
+<section id="lru-cache">
+<h3>lru_cache<a class="headerlink" href="#lru-cache" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># least recently used cache -&gt; e.g. no function calls 4 same values</span>
+<span class="nd">@measure_fn</span>
+<span class="k">def</span> <span class="nf">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a number in the Fibonacci sequence.&quot;&quot;&quot;</span>
+    <span class="c1"># todo: im gonna forget this</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonnaci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="closures">
 <h2>closures<a class="headerlink" href="#closures" title="Link to this heading">¶</a></h2>
@@ -506,70 +436,6 @@ INFO:root:Running<span class="w"> </span><span class="s2">&quot;sub&quot;</span>
 </div>
 </section>
 </section>
-<section id="decorators">
-<h2>decorators<a class="headerlink" href="#decorators" title="Link to this heading">¶</a></h2>
-<p>add logic to function without changing it</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
-<span class="kn">import</span> <span class="nn">statistics</span> <span class="k">as</span> <span class="nn">st</span>
-
-
-<span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">_timer</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;execution time: </span><span class="si">{</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-    <span class="k">return</span> <span class="n">_timer</span>  <span class="c1"># call inner function</span>
-
-
-<span class="nd">@timer</span>
-<span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">summary</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;mode&quot;</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">summary</span><span class="p">(</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-        <span class="n">st</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
-    <span class="n">pprint</span><span class="o">.</span><span class="n">pp</span><span class="p">(</span><span class="n">describe</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">execution time: 0.0011296272277832031</span>
-<span class="go">summary(mean=6.5, median=7.0, mode=7)</span>
-</pre></div>
-</div>
-</section>
-<section id="factory">
-<h2>factory<a class="headerlink" href="#factory" title="Link to this heading">¶</a></h2>
-<p>allow user input to translate to objects being created
-by coupling the string to the class</p>
-<p>select key which has class, call that with extra parentheses to initialize
-a class instance</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;user_input&quot;</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Circle</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
-    <span class="c1"># Class implementation...</span>
-
-<span class="k">class</span> <span class="nc">Square</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">=</span> <span class="n">side</span>
-    <span class="c1"># Class implementation...</span>
-
-<span class="k">def</span> <span class="nf">shape_factory</span><span class="p">(</span><span class="n">shape_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">shapes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;circle&quot;</span><span class="p">:</span> <span class="n">Circle</span><span class="p">,</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span> <span class="n">Square</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">shapes</span><span class="p">[</span><span class="n">shape_name</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 </section>
 
 
@@ -586,15 +452,17 @@ a class instance</p>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="collections.html">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -604,24 +472,19 @@ a class instance</p>
     <ul>
 <li><a class="reference internal" href="#">functional programming</a><ul>
 <li><a class="reference internal" href="#map">map</a></li>
-<li><a class="reference internal" href="#itertools">itertools</a></li>
-<li><a class="reference internal" href="#itertools-functions">itertools functions</a><ul>
-<li><a class="reference internal" href="#count">count</a></li>
-<li><a class="reference internal" href="#accumulate">accumulate</a></li>
-<li><a class="reference internal" href="#takewhile">takewhile</a></li>
-<li><a class="reference internal" href="#combinatoric-functions-permutations">combinatoric functions &amp; permutations</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li><a class="reference internal" href="#functools">functools</a><ul>
+<li><a class="reference internal" href="#reduce">reduce</a></li>
+<li><a class="reference internal" href="#wraps">wraps</a></li>
+<li><a class="reference internal" href="#lru-cache">lru_cache</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#filter">filter</a></li>
-<li><a class="reference internal" href="#reduce">reduce</a></li>
-<li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
 <li><a class="reference internal" href="#closures">closures</a><ul>
 <li><a class="reference internal" href="#invoke-outside-scope">invoke outside scope</a></li>
 <li><a class="reference internal" href="#using-lambdas">using lambdas</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#decorators">decorators</a></li>
-<li><a class="reference internal" href="#factory">factory</a></li>
 </ul>
 </li>
 </ul>
@@ -704,7 +567,7 @@ a class instance</p>
 <br />
     <br />
 
-    Last updated on 2023-12-12.
+    Last updated on 2023-12-18.
     
     <br />
 
