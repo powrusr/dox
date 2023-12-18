@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>find &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>networking &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="networking" href="networking.html" />
-    <link rel="prev" title="awk" href="awk.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="scripting" href="scripting.html" />
+    <link rel="prev" title="find" href="find.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -66,8 +66,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">bash</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="awk.html">awk</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">find</a></li>
-<li class="toctree-l2"><a class="reference internal" href="networking.html">networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="find.html">find</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">networking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripting.html">scripting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sed.html">line selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sed.html#append-insert-delete-actions">append insert delete actions</a></li>
@@ -81,8 +81,22 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">find</a><ul>
-<li><a class="reference internal" href="#regex-delete">regex &amp; delete</a></li>
+<li><a class="reference internal" href="#">networking</a><ul>
+<li><a class="reference internal" href="#netcat">netcat</a><ul>
+<li><a class="reference internal" href="#test-port-is-open">test port is open</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nmap">nmap</a><ul>
+<li><a class="reference internal" href="#exclude-hosts">exclude hosts</a></li>
+<li><a class="reference internal" href="#exclude-ports">exclude ports</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bettercap">bettercap</a><ul>
+<li><a class="reference internal" href="#install">install</a></li>
+<li><a class="reference internal" href="#usage">usage</a></li>
+<li><a class="reference internal" href="#spoofing">spoofing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -109,10 +123,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="networking.html" title="networking"
+          <a href="scripting.html" title="scripting"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="awk.html" title="awk"
+          <a href="find.html" title="find"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -126,7 +140,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">bash</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">find</a></li>
+        <li class="nav-item nav-item-this"><a href="">networking</a></li>
                 <li class="right">
                     
 
@@ -156,25 +170,79 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="find">
-<h1>find<a class="headerlink" href="#find" title="Link to this heading">¶</a></h1>
-<section id="regex-delete">
-<h2>regex &amp; delete<a class="headerlink" href="#regex-delete" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://www.gnu.org/software/findutils/manual/html_node/find_html/posix_002dextended-regular-expression-syntax.html">posix extended regex</a></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># check no of affected files first</span>
-find<span class="w"> </span>.<span class="w"> </span>-regex<span class="w"> </span><span class="s1">&#39;.*(1).mp4&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+  <section id="networking">
+<h1>networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h1>
+<section id="netcat">
+<h2>netcat<a class="headerlink" href="#netcat" title="Link to this heading">¶</a></h2>
+<section id="test-port-is-open">
+<h3>test port is open<a class="headerlink" href="#test-port-is-open" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nc<span class="w"> </span>-zv<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">8888</span>
+Connection<span class="w"> </span>to<span class="w"> </span><span class="m">127</span>.0.0.1<span class="w"> </span><span class="m">8888</span><span class="w"> </span>port<span class="w"> </span><span class="o">[</span>tcp/*<span class="o">]</span><span class="w"> </span>succeeded!
 
-<span class="c1"># also catch (2).mp4 etc</span>
-find<span class="w"> </span>.<span class="w"> </span>-regex<span class="w"> </span><span class="s1">&#39;.*([0-9]+).mp4&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
-
-<span class="c1"># also include subtitle files</span>
-find<span class="w"> </span>.<span class="w"> </span>-regex<span class="w"> </span><span class="s1">&#39;.*([0-9]+).mp4\|.*en.srt&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
-find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> </span>sed<span class="w"> </span>-regex<span class="w"> </span><span class="s1">&#39;.*([[:digit:]]\+).mp4\|.*en.srt&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
-
-<span class="c1"># delete with -delete flag, no need for -exec rm &#39;{}&#39; \;</span>
-find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> </span>sed<span class="w"> </span>-regex<span class="w"> </span><span class="s1">&#39;.*([[:digit:]]\+).mp4\|.*en.srt&#39;</span><span class="w"> </span>-delete
+<span class="c1"># you can use that as a test for something else</span>
+<span class="c1"># like ssh when the port is alive</span>
+<span class="k">if</span><span class="w"> </span>nc<span class="w"> </span>-zv<span class="w"> </span><span class="m">192</span>.168.0.101<span class="w"> </span><span class="m">22</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span>ssh<span class="w"> </span>host1<span class="p">;</span><span class="w"> </span><span class="k">fi</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="nmap">
+<h2>nmap<a class="headerlink" href="#nmap" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://nmap.org/book/toc.html">nmap docs</a>
+<a class="reference external" href="https://nmap.org/book/man-briefoptions.html">nmap options</a></p>
+<section id="exclude-hosts">
+<h3>exclude hosts<a class="headerlink" href="#exclude-hosts" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nmap<span class="w"> </span>-O<span class="w"> </span>-A<span class="w"> </span>--max-rate<span class="w"> </span><span class="m">100</span><span class="w"> </span>--exclude<span class="w"> </span><span class="m">192</span>.168.0.129,192.168.0.189,192.168.0.240,192.<span class="w"> </span><span class="m">192</span>.168.0.2-254<span class="w"> </span>-Pn
+</pre></div>
+</div>
+</section>
+<section id="exclude-ports">
+<h3>exclude ports<a class="headerlink" href="#exclude-ports" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nmap<span class="w"> </span><span class="m">24</span>.0.0.1<span class="se">\2</span><span class="m">4</span><span class="w"> </span>--exclude-ports<span class="w"> </span><span class="m">80</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="bettercap">
+<h2>bettercap<a class="headerlink" href="#bettercap" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.bettercap.org/">bettercap</a></p>
+<p>The Swiss Army knife for WiFi, Bluetooth Low Energy, wireless HID hijacking and IPv4 and IPv6 networks reconnaissance and MITM attacks</p>
+<section id="install">
+<h3>install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>golang<span class="w"> </span>git<span class="w"> </span>build-essential<span class="w"> </span>libpcap-dev<span class="w"> </span>libusb-1.0-0-dev<span class="w"> </span>libnetfilter-queue-dev
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h3>usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://www.bettercap.org/usage/interactive/">interactive mode</a></p>
+</section>
+<section id="spoofing">
+<h3>spoofing<a class="headerlink" href="#spoofing" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># launch bettercap</span>
+bettercap
+
+<span class="c1"># enable full duplex arp spoofing</span>
+<span class="c1"># so target thinks you&#39;re the router</span>
+<span class="c1"># and router thinks you&#39;re target</span>
+<span class="nb">set</span><span class="w"> </span>arp.spoof.fullduplex<span class="w"> </span><span class="nb">true</span>
+
+<span class="nb">set</span><span class="w"> </span>arp.spoof.targets<span class="w"> </span><span class="m">192</span>.168.1.111
+arp.spoof<span class="w"> </span>on
+
+or<span class="w"> </span>
+
+sudo<span class="w"> </span>bettercap<span class="w"> </span>-eval<span class="w"> </span><span class="s2">&quot;set arp.spoof.targets 192.168.1.20; arp.spoof on&quot;</span>
+
+<span class="c1"># sniff for traffic</span>
+net.sniff<span class="w"> </span>on
+
+<span class="c1"># may need to enable IP forwarding if target has no internet</span>
+<span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -191,8 +259,8 @@ find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> 
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">bash</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="awk.html">awk</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">find</a></li>
-<li class="toctree-l2"><a class="reference internal" href="networking.html">networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="find.html">find</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">networking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripting.html">scripting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sed.html">line selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sed.html#append-insert-delete-actions">append insert delete actions</a></li>
@@ -206,8 +274,22 @@ find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">find</a><ul>
-<li><a class="reference internal" href="#regex-delete">regex &amp; delete</a></li>
+<li><a class="reference internal" href="#">networking</a><ul>
+<li><a class="reference internal" href="#netcat">netcat</a><ul>
+<li><a class="reference internal" href="#test-port-is-open">test port is open</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nmap">nmap</a><ul>
+<li><a class="reference internal" href="#exclude-hosts">exclude hosts</a></li>
+<li><a class="reference internal" href="#exclude-ports">exclude ports</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bettercap">bettercap</a><ul>
+<li><a class="reference internal" href="#install">install</a></li>
+<li><a class="reference internal" href="#usage">usage</a></li>
+<li><a class="reference internal" href="#spoofing">spoofing</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -234,10 +316,10 @@ find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> 
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="networking.html" title="networking"
+          <a href="scripting.html" title="scripting"
              >next</a> |</li>
         <li class="right" >
-          <a href="awk.html" title="awk"
+          <a href="find.html" title="find"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -251,7 +333,7 @@ find<span class="w"> </span>.<span class="w"> </span>-regextype<span class="w"> 
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" >bash</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">find</a></li>
+        <li class="nav-item nav-item-this"><a href="">networking</a></li>
                 <li class="right">
                     
 

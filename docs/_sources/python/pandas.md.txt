@@ -1,5 +1,18 @@
 # pandas
 
+## slicing
+
+```python
+df.loc[[0,1,2], "Hobbyist"]
+df.loc[0:2, "Hobbyist"] # slicing = NO BRACKETS []
+df.loc[0:2, "Hobbyist":"Employment"] # awesome column slicing
+
+dfp.iloc[[0, 1], 2]
+dfp.iloc[0:3, 1:]
+
+
+```
+
 ## get df info
 ```python
 df.head(10)
@@ -85,18 +98,27 @@ mpg['mpg'].plot(x="weight", y="mpg", kind="scatter")
 ```
 
 ## renaming and dropping columns
+
 ### rename column
+
 ```python
 nba.columns = ["Team", "Position", "DoB", "Pay"]
 nba.rename(columns = { "DoB": "Birthday"})
 nba = nba.rename(columns = { "DoB": "Birthday"})  # to make permanent
+nba.rename(columns = { "DoB": "Birthday"}, inplace=True)
+
+sales.columns = sales.columns.str.lower()
 ```
+
 ### drop column
+
 ```python
 tips.drop("tip_pct", axis="columns", inplace=True)
 tips.columns
 ```
+
 ### rename index
+
 ```python
 # set another column as index of our df
 nba.set_index("Team").head()
@@ -110,6 +132,7 @@ df.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
 ## sorting
 
 ### sort_values
+
 ```python
 # Sort by total bill
 tips.sort_values(by=['total_bill'])
@@ -123,8 +146,11 @@ tips.sort_values(by=['time', 'total_bill'], ascending=[True, False])
 
 # put nan values first when sorting
 battles.sort_values(na_position="first")
+
 # sort index
 pokemon.sort_index(ascending=True)
+
+# largest/smallest
 stocks.nlargest(5)
 stocks.nsmallest(5)
 
@@ -249,6 +275,8 @@ df == "John"
 ```
 
 ## groupby
+
+[groupby docs](# https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html)
 
 ```python
 tips_grouped = tips.groupby('day')
@@ -1052,6 +1080,7 @@ date
 2012-01-05	1.3	8.9	2.8	6.1	rain	January
 '''
 
+# biweekly
 seattle['precipitation'].resample('2W').mean()
 '''
 date
@@ -1297,6 +1326,32 @@ The process of resampling refers to changing the frequency of your data. You hav
 Both methods require you to invent data, since the data points don’t actually exist
 
 ```python
+# biweekly
+seattle['precipitation'].resample('2W').mean()
+'''
+date
+2012-01-01    0.000000
+2012-01-15    3.607143
+2012-01-29    8.385714
+2012-02-12    2.057143
+2012-02-26    4.607143
+Freq: 2W-SUN, Name: precipitation, dtype: float64
+'''
+
+seattle.reset_index(inplace=True)
+seattle.head()
+
+'''
+date	precipitation	temp_max	temp_min	wind	weather	month_name
+0	2012-01-01	0.0	12.8	5.0	4.7	drizzle	January
+1	2012-01-02	10.9	10.6	2.8	4.5	rain	January
+2	2012-01-03	0.8	11.7	7.2	2.3	rain	January
+3	2012-01-04	20.3	12.2	5.6	4.7	rain	January
+4	2012-01-05	1.3	8.9	2.8	6.1	rain	January
+'''
+```
+
+```python
 # Resampling an Entire DataFrame with the Same Method
 df = df.resample('D').mean()
 
@@ -1343,7 +1398,10 @@ def double_if_positive(x):
 dfx.apply(double_if_positive, raw=True)  # raw=False
 # Panda Series so 1 col at a time, raw=True fast on simple calculations
 # ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+country_uses_python = country_grp['LanguageWorkedWith'].apply(lambda x: x.str.contains('Python').sum())
 ```
+
 ## map apply mapapply
 
 - map is defined on Series only
@@ -1550,6 +1608,28 @@ with pd.option_context(
 	display(df)  # notebook function display
 ```
 
+as functions
+
+```python
+def initiate_numpy(console_width=640):
+    # https://numpy.org/doc/stable/reference/generated/numpy.set_printoptions.html
+    try:
+        import numpy as np
+        np.set_printoptions(linewidth=console_width)
+        return np
+    except ImportError:
+        print("numpy not installed")
+
+def initiate_pandas(max_rows=10, max_cols=10, console_width=640):
+    try:
+        import pandas as pd
+        pd.set_option('display.max_columns', max_cols)
+        pd.set_option('display.max_rows', max_rows)
+        pd.set_option('display.width', console_width)  # make output in console wider
+        return pd
+    except ImportError:
+        print("pandas not installed")
+```
 ### ipython
 ```python
 from IPython.display import HTML
@@ -1632,6 +1712,7 @@ neighborhoods.columns.get_level_values("Category")
 
 ## reshaping & pivoting
 
+### pivot table
 ```python
 # use Date column as pivot, calc mean with aggfunc param
 sales.pivot_table(index="Date", aggfunc="mean")
@@ -1672,23 +1753,170 @@ sales.pivot_table(
 	)
 ```
 
-## (un)stack melt explode
+### (un)stack
 
 ```python
 # move date from column axis to row axis
 df.stack()
 # row to col axis
 df.unstack()
+```
 
-# melting = wide data set -> narrow data set
+### melt
+
+melting = wide data set -> narrow data set
+
+```python
 video_game_sales.melt(id_vars="Name", value_vars="NA")
 
 regional_sales_columns = ["NA", "EU", "JP", "Other"]
 video_game_sales.melt(id_vars="Name", value_vars=regional_sales_columns)
+```
 
-# explode a list of walues
+melt columns M R S into column type and score
+
+```python
+test_scores.head()
+'''
+district				M	R	S
+0	Fox Chapel	        473	447	460
+1	Tuscarora	        536	450	493
+2	Sautee Nacoochee	463	439	451
+3	Fort Peck	        559	448	504
+4	North Pole	        489	447	468
+'''
+
+scores_pivot = pd.melt(frame=test_scores, id_vars = 'district', 
+        value_vars=['M', 'R', 'S'], value_name='score', var_name='test_type')
+scores_pivot.head()
+'''
+district		       test_type	score
+0	Fox Chapel	        M			473
+1	Tuscarora	        M       	536
+2	Sautee Nacoochee    M       	463
+3	Fort Peck       	M       	559
+4	North Pole      	M       	489
+'''
+
+scores_pivot['test_type'].unique()
+array(['M', 'R', 'S'], dtype=object)
+
+```
+### mapping
+
+```python
+mapping = {'M':'math','R':'reading', 'S':'science'}
+scores_pivot['test_type'] = scores_pivot['test_type'].map(mapping)
+
+
+scores_pivot['test_type'].unique()
+array(['math', 'reading', 'science'], dtype=object)
+```
+
+### pivot table
+
+melt in reverse, so spread column values into seperate columns
+
+```python
+scores_pivot.pivot_table(index='district', 
+                       columns='test_type', values='score')
+'''
+test_type	    math reading science
+district			
+Aguadilla	    513	 416	 465
+Amalga	        506	 433	 470
+Angier	        444	 411	 428
+Arenzville	    405	 410	 408
+Asheville	    489	 433	 461
+...	...	...	...
+Waldenburg	    500	 451	 476
+Whitley Gardens	423	 395	 409
+Wiley	        626	 465	 546
+Woodlyn	        454	 421	 438
+Worton	        463	 402	 433
+100 rows × 3 columns
+'''
+```
+
+### explode
+
+explode a list of walues
+
+```python
 recipes.explode("Ingredients") # requires a Series of Lists
 ```
+
+## windowing operations
+
+[docs window](https://pandas.pydata.org/pandas-docs/stable/user_guide/window.html)
+
+### shift
+
+shift rows up or down
+
+```python
+seattle.head()
+'''
+	date    	precipitation	temp_max	temp_min	wind	weather
+0	2012-01-01	0.0				12.8	    5.0	        4.7	    drizzle
+1	2012-01-02	10.9			10.6	    2.8	        4.5	    rain
+2	2012-01-03	0.8				11.7	    7.2	        2.3	    rain
+3	2012-01-04	20.3			12.2	    5.6	        4.7	    rain
+4	2012-01-05	1.3				8.9		    2.8	        6.1	    rain
+'''
+
+# first value become NaN as there is no data after +1 shift for first row
+seattle['precip_lag'] = seattle['precipitation'].shift(1)
+
+'''
+	date	    precipitation	temp_max	temp_min	wind	weather	precip_lag
+0	2012-01-01	0.0	            12.8	    5.0	        4.7	    drizzle	NaN
+1	2012-01-02	10.9           	10.6	    2.8	        4.5	    rain	0.0
+2	2012-01-03	0.8	            11.7	    7.2	        2.3	    rain	10.9
+3	2012-01-04	20.3           	12.2	    5.6	        4.7	    rain	0.8
+4	2012-01-05	1.3	            8.9	        2.8	        6.1	    rain	20.3
+'''
+
+# same applies to last values when shifting rows up
+seattle['precip_lead'] = seattle['precipitation'].shift(-2)
+seattle.tail()
+'''
+		date			precipitation	temp_max	temp_min	wind	weather	precip_lag	precip_lead
+1456	2015-12-27	    8.6	            4.4	        1.7	        2.9     fog     0.0     	0.0
+1457	2015-12-28	    1.5	            5.0	        1.7	        1.3    	fog    	8.6     	0.0
+1458	2015-12-29	    0.0	            7.2	        0.6	        2.6    	fog    	1.5     	0.0
+1459	2015-12-30	    0.0	            5.6	        -1.0	    3.4    	sun    	0.0     	NaN
+1460	2015-12-31	    0.0	            5.6	        -2.1	    3.5    	sun    	0.0     	NaN
+'''
+```
+
+### rolling average
+
+rolling average for first 14 rows
+first values are NaN as there isn't enough data yet to calculate average
+
+```python
+seattle['precip_biweekly'] = seattle['precipitation'].rolling(14).mean()
+seattle.head(14)
+'''
+	date	    precipitation  temp_max	temp_min wind weather precip_lag precip_lead precip_biweekly
+0	2012-01-01	0.0	           12.8	    5.0	     4.7  drizzle NaN	     0.8	     NaN
+1	2012-01-02	10.9           10.6	    2.8	     4.5  rain    0.0	     20.3	     NaN
+2	2012-01-03	0.8	           11.7	    7.2	     2.3  rain 	  10.9	     1.3	     NaN
+3	2012-01-04	20.3           12.2	    5.6	     4.7  rain    0.8	     2.5	     NaN
+4	2012-01-05	1.3	           8.9	    2.8	     6.1  rain    20.3	     0.0	     NaN
+5	2012-01-06	2.5	           4.4	    2.2	     2.2  rain    1.3	     0.0	     NaN
+6	2012-01-07	0.0	           7.2	    2.8	     2.3  rain    2.5	     4.3	     NaN
+7	2012-01-08	0.0	           10.0	    2.8	     2.0  sun     0.0	     1.0	     NaN
+8	2012-01-09	4.3	           9.4	    5.0	     3.4  rain    0.0	     0.0	     NaN
+9	2012-01-10	1.0	           6.1	    0.6	     3.4  rain    4.3	     0.0	     NaN
+10	2012-01-11	0.0	           6.1	    -1.1     5.1  sun     1.0	     0.0	     NaN
+11	2012-01-12	0.0	           6.1	    -1.7     1.9  sun     0.0	     4.1	     NaN
+12	2012-01-13	0.0	           5.0	    -2.8     1.3  sun     0.0	     5.3	     NaN
+13	2012-01-14	4.1	           4.4	    0.6	     5.3  snow    0.0	     2.5	     3.228571
+'''
+```
+
 
 ## importing/exporting
 

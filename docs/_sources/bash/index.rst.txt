@@ -7,6 +7,7 @@ bash
 
    awk.md
    find.md
+   networking.md
    scripting.md
    sed.md
 

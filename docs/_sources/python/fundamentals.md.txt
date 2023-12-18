@@ -1,5 +1,54 @@
 # fundamentals
 
+## `__main__`
+
+- to make a file that can be both imported as a module and run as a script
+
+* if python is running module (source file) as main program it sets \_\_name__ = "\_\_main__"
+* if file imported as module \_\_name__ = "that_modules_name"
+    * code in if `__name__ == "__main__":` block won't run
+
+## packaging
+
+- involves use of the modules setuptools and distutils
+- should contain a file called `__init__.py`
+- parent dir has to have: `README.txt LICENSE.txt setup.py`
+
+```python
+# example
+Learn/
+   LICENSE.txt
+   README.txt
+   setup.py
+   learn/
+      __init__.py
+      learn.py
+      learn2.py
+```
+
+### setup.py
+
+- contains information necessary to assemble the package so it can be uploaded to PyPI and installed with pip
+- After creating the setup.py file, upload it to PyPI, or use the command line to create a binary distribution (an executable installer)
+- To build a **source distribution**, use the command line to navigate to the directory containing setup.py, and run the command `python setup.py sdist`
+- Run `python setup.py bdist` or, for Windows, python setup.py bdist_wininst to build a **binary distribution**
+- Use `python setup.py register`, followed by `python setup.py sdist upload` to upload a package
+- Finally, install a package with `python setup.py install`
+
+```python
+# example setup.py
+from distutils.core import setup
+
+setup(
+   name='SoloLearn', 
+   version='0.1dev',
+   packages=['sololearn',],
+   license='MIT', 
+   long_description=open('README.txt').read(),
+)
+
+```
+
 ## enums
 
 1. When and where to use enums?
@@ -65,6 +114,56 @@ Fruit.APPLE
 APPLE 1
 5
 They call me mellow yellow
+```
+
+## Ternary operator
+
+```python
+a = 7
+b = 1 if a >= 5 else 42
+print(b) # b = 1 cuz 7>=5
+
+status = 1
+msg = "logout" if status = 1 else "login"
+
+b = 1 if 2+2 == 5 else 2
+```
+
+## more on else
+
+* With the for or while loop, the code within it is called if the loop finishes normally (when a break statement does not cause an exit from the loop)
+
+```python
+for i in range(10):
+	if i == 999:
+		break
+else:
+	print("this is executed bc i goes from 0 up to 9, not 999")
+	
+
+for i in range(10):
+    if i == 5:
+        break  # -> breaks loop, else block not run
+else:
+    print("this is NOT executed, i = 5 breaks the loop")
+	
+	
+for i in range(10):
+     if i > 5:
+        print(i)
+          break  # will print 6 & break
+else:
+     print("7")
+
+```
+* executed if NO ERROR occurs in TRY statement
+```python
+try:
+    print(5 * 4/0)
+except ZeroDivisionError:
+    print("idiot")  # will print idiot :D
+else:
+    print("yay else ran") # did not run bc error ocurred
 ```
 
 ## strings
@@ -133,6 +232,83 @@ data = {
 str3 = templ.substitute(data)    
 print(str3)
 """ You're watching Advanced Python by Batman """
+```
+
+## sorting
+
+```python
+words = sorted({line.strip().lower() for line in open('words.txt', 'r')})
+
+sorted("aaron")
+['a', 'a', 'n', 'o', 'r']
+
+sorted("elvis") == sorted("lives")
+True
+
+sorted("elvis") == sorted("sings")
+False
+
+'-'.join(sorted("aaron"))
+''.join(sorted("aaron"))
+'a-a-n-o-r'
+
+# compute the signature string for a word
+
+def signature(word):
+    return ''.join(sorted(word))
+
+# brute-force anagram search: compare myword's signature
+# with the signatures of all words in the dictionary
+
+def find_anagram(myword):
+    mysig = signature(myword)
+    
+    for word in words:
+        if mysig == signature(word):
+            print(word)
+
+find_anagram('dictionary')
+# make a dict that maps each signature to the set of words with that signature;
+# each signature will map to at least one word
+
+words_by_sig = collections.defaultdict(set)
+
+for word in words:
+    words_by_sig[signature(word)].add(word)
+words_by_sig
+# keep only the key/value pairs where the set has more than one element;
+# this is now a regular dict
+
+anagrams_by_sig = {sig: wordset for sig, wordset in words_by_sig.items() if len(wordset) > 1}
+anagrams_by_sig
+# smart anagram search: look up myword's signature, return set
+
+def find_anagram_fast(myword):
+    sig = signature(myword)
+    
+    return anagrams_by_sig[sig]
+find_anagram_fast('tops')
+find_anagram_fast('michele')
+# handle case when myword's signature is not found, returning the empty set
+
+def find_anagram_fast(myword):
+    sig = signature(myword)
+
+    try:
+        return anagrams_by_sig[sig]
+    except KeyError:
+        return set()
+
+find_anagram_fast('Michele')
+
+# list of signatures, sorted by length, longest first
+sorted(anagrams_by_sig.keys(), key=len, reverse=True)
+
+# list of anagram sets, sorted by signature length
+[anagrams_by_sig[sig] for sig in sorted(anagrams_by_sig.keys(), key=len, reverse=True)]
+
+# list of anagram sets, sorted by their length, largest first
+sorted(anagrams_by_sig.values(), key=len, reverse=True)
 ```
 
 ## range
@@ -507,9 +683,23 @@ print(evenSquared)
 oddSquared = [e ** 2 for e in odds if e > 3 and e < 17]
 print(oddSquared)
 # [25, 49, 81, 121, 169, 225]
+
+# list of the squares from 1^2 to 10^2, including only those divisible by 4
+squares_by_four = [i**2 for i in range(1, 11) if i**2 % 4 == 0]
 ``` 
 
 ### dictionary
+
+```python
+# dict of the squares from 1^2 to 10^2, where the keys are the unsquared numbers
+squares_dict = {i: i**2 for i in range(1, 11)}
+{1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100}
+
+capitals_by_country = {'United States': 'Washington, DC', 'France': 'Paris', 'Italy': 'Rome'}
+countries_by_capital = {capital: country for country, capital in capitals_by_country.items()}
+countries_by_capital
+{'Washington, DC': 'United States', 'Paris': 'France', 'Rome': 'Italy'}
+```
 
 ```python
 # define a list of temperature values
@@ -553,6 +743,7 @@ print(chars)
 {'P', 'R', 'L', 'N', 'U', 'W', 'Y', 'M', 'Z', 'I', 'T', 'G', 'O', 'D', 'Q', 'J', 'F', 'A', 'K', 'X', 'H', 'B', 'E', 'C', 'V'}
 """
 ```
+
 ### generator comprehensions
 
 - similar syntax to list comprehensions
@@ -581,6 +772,22 @@ sum(x*x for x in range(1, 1000001) if x % 17) # with optional if condition
 
 note: we didn't have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability
 
+
+### nested
+
+```python
+counting = []
+
+for i in range(1, 11):
+    for j in range(1, i+1):
+        counting.append(j)
+
+# nested comprehension
+counting = [j for i in range(1, 11) for j in range(1, i+1)]
+
+print(counting)
+[1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+```
 
 ## any() all()
 
@@ -910,6 +1117,163 @@ def console_card_printer(passenger, seat, flight_number, aircraft):
       print()
 ```
 
+### Superclass
+
+```python
+
+# Superclass
+class Animal:
+	def __init__(self, name, color):
+		self.name = name
+		self.color = color
+
+# Subclass
+# If a class inherits from another with the same attributes or methods, it overrides them
+class Cat(Animal):
+	def purr(self):
+		print("Purrr")
+		
+tiger = Cat("tiger", "black")
+print(tiger.color)
+tiger.purr
+```
+### indirect inheritance
+```python
+class A:
+	def method(self):
+		print("A method")
+		
+class B:
+	def another_method(self):
+		print("B method")
+		
+class C:
+	def third_method(self):
+		print("C method")
+		
+c = C()
+c.method()
+c.another_method()
+c.third_method()
+```
+
+### super function
+```python
+class A: # superclass
+	def spam(self):
+		print(1)
+
+class B(A)
+    def spam(self):
+	    print(2)
+	    super().spam() # calls spam method of superclass
+		
+B().spam()
+```
+### magic methods
+[special method names](https://docs.python.org/3/reference/datamodel.html#special-method-names)
+[nice summary on github](https://github.com/RafeKettler/magicmethods/blob/master/magicmethods.markdown)
+
+* f __ne__ is not implemented, it returns the opposite of __eq__
+There are no other relationships between the other operators
+
+|magic method| operator |
+|------------|:--------:|
+|\_\_sub__| - |
+|\_\_mul__| * |
+|\_\_truediv__| / |
+|\_\_floordiv__| // |
+|\_\_mod__| % |
+|\_\_pow__| ** |
+|\_\_and__| & |
+|\_\_xor__| ^ |
+|\_\_or__| \| |
+
+
+* if x hasn't implemented \_\_add__, and x and y are of different types, then y.\_\_radd__(x) is called. There are equivalent r methods for all magic methods in table
+* If \_\_ne__ is not implemented, it returns the opposite of \_\_eq__
+
+
+### class methods
+
+* are called by a class, which is passed to the cls parameter of the method
+* A common use of these are factory methods, which instantiate an instance of a class, using different parameters than those usually passed to the class constructor
+* @classmethod
+
+- similar to static methods in that they can be invoked before an object of the class has been instantiated or by using an instance of the class.
+- Class methods are implicitly passed the class they belong to as their first parameter, so you can code em more simply
+
+
+```python
+class Rectangle:
+    def __init__(self, width, height):
+		self.width = width
+		self.height = height
+
+    def calculate_area(self):
+        return self.width * self.height
+
+    @classmethod
+    def new_square(cls, side_length):
+        return cls(side_lenght, side_length)
+
+
+square = Rectangle.new_square(5)
+print(square.calculate_area()) # 25
+
+
+
+class Juice:
+    def __init__(self, name, capacity):
+        self.name = name
+        self.capacity = capacity
+
+    def __add__(self, other):
+        combined_cap = self.capacity + other.capacity
+        combined_name = self.name + '&' + other.name
+        return Juice(combined_name, combined_cap)
+
+    def __str__(self):
+        return (self.name + ' ('+str(self.capacity)+'L)')
+
+
+a = Juice('Orange', 1.5)
+b = Juice('Apple', 2.0)
+
+result = a + b
+print(result)
+```
+
+```python
+"""circle_cm module: contains the Circle class."""
+class Circle:
+    """Circle class"""
+    all_circles = []
+    pi = 3.14159
+    def __init__(self, r=1):
+        """Create a Circle with the given radius"""
+        self.radius = r
+        self.__class__.all_circles.append(self)
+    def area(self):
+        """determine the area of the Circle"""
+        return self.__class__.pi * self.radius * self.radius
+
+    @classmethod
+    def total_area(cls):
+        total = 0
+        for c in cls.all_circles:  # use cls instead of self.__class__
+            total = total + c.area()
+        return total
+
+>>> import circle_cm
+>>> c1 = circle_cm.Circle(1)
+>>> c2 = circle_cm.Circle(2)
+>>> circle_cm.Circle.total_area()
+15.70795
+>>> c2.radius = 3
+>>> circle_cm.Circle.total_area()
+31.415899999999997
+```
 
 ### getattr setattr
 
@@ -1131,6 +1495,21 @@ del s.name
 # Prints Deleting name
 ```
 
+```python
+class Pizza:
+    def __init__(self, toppings):
+        self.toppings = toppings
+
+    @property
+    def pineapple_allowed(self):
+        return False
+
+pizza = Pizza(["cheese", "tomato"])
+print(pizza.pinapple_allowed)
+pizza.pineapple_allowed = True
+```
+
+
 ### scope
 
 ```python
@@ -1347,41 +1726,39 @@ class Circle:
 ```
 
 
-### class methods
 
-- similar to static methods in that they can be invoked before an object of the class has been instantiated or by using an instance of the class.
-- Class methods are implicitly passed the class they belong to as their first parameter, so you can code em more simply
 
-```python
-"""circle_cm module: contains the Circle class."""
-class Circle:
-    """Circle class"""
-    all_circles = []
-    pi = 3.14159
-    def __init__(self, r=1):
-        """Create a Circle with the given radius"""
-        self.radius = r
-        self.__class__.all_circles.append(self)
-    def area(self):
-        """determine the area of the Circle"""
-        return self.__class__.pi * self.radius * self.radius
 
-    @classmethod
-    def total_area(cls):
-        total = 0
-        for c in cls.all_circles:  # use cls instead of self.__class__
-            total = total + c.area()
-        return total
 
->>> import circle_cm
->>> c1 = circle_cm.Circle(1)
->>> c2 = circle_cm.Circle(2)
->>> circle_cm.Circle.total_area()
-15.70795
->>> c2.radius = 3
->>> circle_cm.Circle.total_area()
-31.415899999999997
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### inheritance
 
@@ -1511,76 +1888,68 @@ class Circle(Shape):
 3.14159
 ```
 
-## recursion
-
-
-Solve problems that can be broken up into sub-problems of the same type
-
-- 5! (5 factorial) is 5 * 4 * 3 * 2 * 1 (120)
-- `n! = n * (n-1)!`
-- **BASE CASE: 1! = 1** -> can be calculated without performing any more factorial function calls
-
-note: The base case acts as the exit condition of the recursion
-
 ```python
-def factorial(x):
-    # base case
-    if x == 1:
-        return 1
+class Pizza:
+    def __init__(self, toppings):
+		self.toppings = toppings
+		self._pineapple_allowed = False
+
+	@property
+	def pineapple_allowed(self):
+		return self._pineapple_allowed
+	
+	@pineapple_allowed.setter
+	def pineapple_allowed(self, value):
+		if value:
+			password = input("Enter the password: ")
+			if password == "Sw0rdf1sh!":
+				self._pineapple_allowed = value
+			else:
+				raise ValueError("Alert! Intruder!")
+				
+				
+pizza = Pizza(["cheese", "tomato"])
+print(pizza.pineapple_allowed)
+pizza.pineapple_allowed = True
+print(pizza.pineapple_allowed)
+
+
+# simple game
+class Goblin(GameObject):
+    def __init__(self, name):
+        self.class_name = "goblin"
+        self.health = 3
+        self._desc = " A foul creature"
+        super().__init__(name)
+
+    @property
+    def desc(self):
+        if self.health >=3:
+            return self._desc
+        elif self.health == 2:
+            health_line = "It has a wound on its knee."
+        elif self.health == 1:
+            health_line = "Its left arm has been cut off!"
+        elif self.health <= 0:
+            health_line = "It is dead."
+        return self._desc + "\n" + health_line
+
+    @desc.setter
+    def desc(self, value):
+        self._desc = value
+
+def hit(noun):
+    if noun in GameObject.objects:
+        thing = GameObject.objects[noun]
+        if type(thing) == Goblin:
+            thing.health = thing.health - 1
+            if thing.health <= 0:
+                msg = "You killed the goblin!"
+            else: 
+                msg = "You hit the {}".format(thing.class_name)
     else:
-        return x * factorial(x-1)
-
-
-print(factorial(5))  # 120
-```
-
-```python
-
-"""fibonacci"""
-def fibo(n):
-    if n <= 1:
-        return n  # returns 0 & 1's
-    else:
-        return fibo(n-1) + fibo(n-2)
-
-
-number = 6
-for i in range(6):
-    print(fibo(i))
-```
-
-
-```python
-
-def power(x, y):
-    if y == 0:
-        return 1
-    else:
-        return x * power(x, y-1)
-
-
-print(power(2, 3))  # 8
-```
-
-
-note: Recursion can also be indirect. One function can call a second, which calls the first, which calls the second, and so on. This can occur with any number of functions
-
-
-```python
-def is_even(x):
-    if x == 0:
-        return True
-    else:
-        return is_odd(x-1)
-
-
-def is_odd(x):
-    return not is_even(x)  # not! else will also return True when odd
-
-
-is_even(9)  # False
-is_even(12) # True
-is_odd(17)  # True
+        msg ="There is no {} here.".format(noun) 
+    return msg
 ```
 
 ## files and resource management
@@ -1592,27 +1961,19 @@ open(file, mode, encoding)
  - mode: read/write/append, binary/text
  - encoding: text encoding
 
-https://docs.python.org/3/library/functions.html#open
+[docs open](https://docs.python.org/3/library/functions.html#open)
 
-+-----------+-----------------------------------------------------------------+
-| Character | Meaning                                                         |
-+===========+=================================================================+
+| Character | Meaning |
+|--|--|
 | 'r'       | open for reading (default)                                      |
-+-----------+-----------------------------------------------------------------+
 | 'w'       | open for writing, truncating the file first                     |
-+-----------+-----------------------------------------------------------------+
 | 'x'       | open for exclusive creation, failing if the file already exists |
-+-----------+-----------------------------------------------------------------+
 | 'a'       | open for writing, appending to the end of the file if it exists |
-+-----------+-----------------------------------------------------------------+
 | 'b'       | binary mode                                                     |
-+-----------+-----------------------------------------------------------------+
 | 't'       | text mode (default)                                             |
-+-----------+-----------------------------------------------------------------+
 | '+'       | open a disk file for updating (reading and writing)             |
-+-----------+-----------------------------------------------------------------+
 | 'U'       | universal newlines mode (deprecated)                            |
-+-----------+-----------------------------------------------------------------+
+|--|--|
 
 ### write
 

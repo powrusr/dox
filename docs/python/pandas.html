@@ -89,6 +89,7 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">pandas</a><ul>
+<li><a class="reference internal" href="#slicing">slicing</a></li>
 <li><a class="reference internal" href="#get-df-info">get df info</a></li>
 <li><a class="reference internal" href="#calculations">calculations</a></li>
 <li><a class="reference internal" href="#plotting">plotting</a><ul>
@@ -185,8 +186,20 @@
 </li>
 <li><a class="reference internal" href="#optimize-memory-usage">optimize memory usage</a></li>
 <li><a class="reference internal" href="#string-manipulations">string manipulations</a></li>
-<li><a class="reference internal" href="#reshaping-pivoting">reshaping &amp; pivoting</a></li>
-<li><a class="reference internal" href="#un-stack-melt-explode">(un)stack melt explode</a></li>
+<li><a class="reference internal" href="#reshaping-pivoting">reshaping &amp; pivoting</a><ul>
+<li><a class="reference internal" href="#pivot-table">pivot table</a></li>
+<li><a class="reference internal" href="#un-stack">(un)stack</a></li>
+<li><a class="reference internal" href="#melt">melt</a></li>
+<li><a class="reference internal" href="#mapping">mapping</a></li>
+<li><a class="reference internal" href="#id4">pivot table</a></li>
+<li><a class="reference internal" href="#explode">explode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windowing-operations">windowing operations</a><ul>
+<li><a class="reference internal" href="#shift">shift</a></li>
+<li><a class="reference internal" href="#rolling-average">rolling average</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#importing-exporting">importing/exporting</a><ul>
 <li><a class="reference internal" href="#json">json</a></li>
 <li><a class="reference internal" href="#read-excel-workbooks">read excel workbooks</a></li>
@@ -269,6 +282,19 @@
             
   <section id="pandas">
 <h1>pandas<a class="headerlink" href="#pandas" title="Link to this heading">¶</a></h1>
+<section id="slicing">
+<h2>slicing<a class="headerlink" href="#slicing" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;Hobbyist&quot;</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Hobbyist&quot;</span><span class="p">]</span> <span class="c1"># slicing = NO BRACKETS []</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;Hobbyist&quot;</span><span class="p">:</span><span class="s2">&quot;Employment&quot;</span><span class="p">]</span> <span class="c1"># awesome column slicing</span>
+
+<span class="n">dfp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">dfp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+
+
+</pre></div>
+</div>
+</section>
 <section id="get-df-info">
 <h2>get df info<a class="headerlink" href="#get-df-info" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -363,6 +389,9 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nba</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Team&quot;</span><span class="p">,</span> <span class="s2">&quot;Position&quot;</span><span class="p">,</span> <span class="s2">&quot;DoB&quot;</span><span class="p">,</span> <span class="s2">&quot;Pay&quot;</span><span class="p">]</span>
 <span class="n">nba</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;DoB&quot;</span><span class="p">:</span> <span class="s2">&quot;Birthday&quot;</span><span class="p">})</span>
 <span class="n">nba</span> <span class="o">=</span> <span class="n">nba</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;DoB&quot;</span><span class="p">:</span> <span class="s2">&quot;Birthday&quot;</span><span class="p">})</span>  <span class="c1"># to make permanent</span>
+<span class="n">nba</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;DoB&quot;</span><span class="p">:</span> <span class="s2">&quot;Birthday&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sales</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">sales</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -402,8 +431,11 @@
 
 <span class="c1"># put nan values first when sorting</span>
 <span class="n">battles</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">na_position</span><span class="o">=</span><span class="s2">&quot;first&quot;</span><span class="p">)</span>
+
 <span class="c1"># sort index</span>
 <span class="n">pokemon</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># largest/smallest</span>
 <span class="n">stocks</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">stocks</span><span class="o">.</span><span class="n">nsmallest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
@@ -524,6 +556,7 @@
 </section>
 <section id="groupby">
 <h2>groupby<a class="headerlink" href="#groupby" title="Link to this heading">¶</a></h2>
+<p>[groupby docs](# https://pandas.pydata.org/pandas-docs/stable/reference/groupby.html)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tips_grouped</span> <span class="o">=</span> <span class="n">tips</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;day&#39;</span><span class="p">)</span>
 <span class="n">tips_grouped</span>
 <span class="o">&lt;</span><span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">groupby</span><span class="o">.</span><span class="n">generic</span><span class="o">.</span><span class="n">DataFrameGroupBy</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x00000167F284FC40</span><span class="o">&gt;</span>
@@ -1322,6 +1355,7 @@
 <span class="sd">2012-01-05	1.3	8.9	2.8	6.1	rain	January</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
+<span class="c1"># biweekly</span>
 <span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;2W&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">date</span>
@@ -1560,6 +1594,31 @@ The method accepts a periodicity that you want to resample to, such as ‘W’ f
 <p><strong>Upsampling</strong>: increasing the frequency of your data, such as from hours to minutes
 <strong>Downsampling</strong>: decreasing the frequency of your data, such as from hours to days
 Both methods require you to invent data, since the data points don’t actually exist</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># biweekly</span>
+<span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;2W&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">date</span>
+<span class="sd">2012-01-01    0.000000</span>
+<span class="sd">2012-01-15    3.607143</span>
+<span class="sd">2012-01-29    8.385714</span>
+<span class="sd">2012-02-12    2.057143</span>
+<span class="sd">2012-02-26    4.607143</span>
+<span class="sd">Freq: 2W-SUN, Name: precipitation, dtype: float64</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">seattle</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">seattle</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">date	precipitation	temp_max	temp_min	wind	weather	month_name</span>
+<span class="sd">0	2012-01-01	0.0	12.8	5.0	4.7	drizzle	January</span>
+<span class="sd">1	2012-01-02	10.9	10.6	2.8	4.5	rain	January</span>
+<span class="sd">2	2012-01-03	0.8	11.7	7.2	2.3	rain	January</span>
+<span class="sd">3	2012-01-04	20.3	12.2	5.6	4.7	rain	January</span>
+<span class="sd">4	2012-01-05	1.3	8.9	2.8	6.1	rain	January</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resampling an Entire DataFrame with the Same Method</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
@@ -1605,6 +1664,8 @@ Both methods require you to invent data, since the data points don’t actually 
 <span class="n">dfx</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">double_if_positive</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># raw=False</span>
 <span class="c1"># Panda Series so 1 col at a time, raw=True fast on simple calculations</span>
 <span class="c1"># ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().</span>
+
+<span class="n">country_uses_python</span> <span class="o">=</span> <span class="n">country_grp</span><span class="p">[</span><span class="s1">&#39;LanguageWorkedWith&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Python&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
@@ -1808,6 +1869,27 @@ Both methods require you to invent data, since the data points don’t actually 
 	<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>  <span class="c1"># notebook function display</span>
 </pre></div>
 </div>
+<p>as functions</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">initiate_numpy</span><span class="p">(</span><span class="n">console_width</span><span class="o">=</span><span class="mi">640</span><span class="p">):</span>
+    <span class="c1"># https://numpy.org/doc/stable/reference/generated/numpy.set_printoptions.html</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">linewidth</span><span class="o">=</span><span class="n">console_width</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;numpy not installed&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">initiate_pandas</span><span class="p">(</span><span class="n">max_rows</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_cols</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">console_width</span><span class="o">=</span><span class="mi">640</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="n">max_cols</span><span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="n">max_rows</span><span class="p">)</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.width&#39;</span><span class="p">,</span> <span class="n">console_width</span><span class="p">)</span>  <span class="c1"># make output in console wider</span>
+        <span class="k">return</span> <span class="n">pd</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pandas not installed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="ipython">
 <h3>ipython<a class="headerlink" href="#ipython" title="Link to this heading">¶</a></h3>
@@ -1890,6 +1972,8 @@ Both methods require you to invent data, since the data points don’t actually 
 </section>
 <section id="reshaping-pivoting">
 <h2>reshaping &amp; pivoting<a class="headerlink" href="#reshaping-pivoting" title="Link to this heading">¶</a></h2>
+<section id="pivot-table">
+<h3>pivot table<a class="headerlink" href="#pivot-table" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># use Date column as pivot, calc mean with aggfunc param</span>
 <span class="n">sales</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
 
@@ -1930,23 +2014,164 @@ Both methods require you to invent data, since the data points don’t actually 
 </pre></div>
 </div>
 </section>
-<section id="un-stack-melt-explode">
-<h2>(un)stack melt explode<a class="headerlink" href="#un-stack-melt-explode" title="Link to this heading">¶</a></h2>
+<section id="un-stack">
+<h3>(un)stack<a class="headerlink" href="#un-stack" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># move date from column axis to row axis</span>
 <span class="n">df</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span>
 <span class="c1"># row to col axis</span>
 <span class="n">df</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
-
-<span class="c1"># melting = wide data set -&gt; narrow data set</span>
-<span class="n">video_game_sales</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="o">=</span><span class="s2">&quot;NA&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="melt">
+<h3>melt<a class="headerlink" href="#melt" title="Link to this heading">¶</a></h3>
+<p>melting = wide data set -&gt; narrow data set</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video_game_sales</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="o">=</span><span class="s2">&quot;NA&quot;</span><span class="p">)</span>
 
 <span class="n">regional_sales_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;NA&quot;</span><span class="p">,</span> <span class="s2">&quot;EU&quot;</span><span class="p">,</span> <span class="s2">&quot;JP&quot;</span><span class="p">,</span> <span class="s2">&quot;Other&quot;</span><span class="p">]</span>
 <span class="n">video_game_sales</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="o">=</span><span class="n">regional_sales_columns</span><span class="p">)</span>
-
-<span class="c1"># explode a list of walues</span>
-<span class="n">recipes</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s2">&quot;Ingredients&quot;</span><span class="p">)</span> <span class="c1"># requires a Series of Lists</span>
 </pre></div>
 </div>
+<p>melt columns M R S into column type and score</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">test_scores</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">district				M	R	S</span>
+<span class="sd">0	Fox Chapel	        473	447	460</span>
+<span class="sd">1	Tuscarora	        536	450	493</span>
+<span class="sd">2	Sautee Nacoochee	463	439	451</span>
+<span class="sd">3	Fort Peck	        559	448	504</span>
+<span class="sd">4	North Pole	        489	447	468</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">scores_pivot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">frame</span><span class="o">=</span><span class="n">test_scores</span><span class="p">,</span> <span class="n">id_vars</span> <span class="o">=</span> <span class="s1">&#39;district&#39;</span><span class="p">,</span> 
+        <span class="n">value_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">],</span> <span class="n">value_name</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">var_name</span><span class="o">=</span><span class="s1">&#39;test_type&#39;</span><span class="p">)</span>
+<span class="n">scores_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">district		       test_type	score</span>
+<span class="sd">0	Fox Chapel	        M			473</span>
+<span class="sd">1	Tuscarora	        M       	536</span>
+<span class="sd">2	Sautee Nacoochee    M       	463</span>
+<span class="sd">3	Fort Peck       	M       	559</span>
+<span class="sd">4	North Pole      	M       	489</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">scores_pivot</span><span class="p">[</span><span class="s1">&#39;test_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">array</span><span class="p">([</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="mapping">
+<h3>mapping<a class="headerlink" href="#mapping" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="s1">&#39;math&#39;</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">:</span><span class="s1">&#39;reading&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span><span class="s1">&#39;science&#39;</span><span class="p">}</span>
+<span class="n">scores_pivot</span><span class="p">[</span><span class="s1">&#39;test_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scores_pivot</span><span class="p">[</span><span class="s1">&#39;test_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+
+
+<span class="n">scores_pivot</span><span class="p">[</span><span class="s1">&#39;test_type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">array</span><span class="p">([</span><span class="s1">&#39;math&#39;</span><span class="p">,</span> <span class="s1">&#39;reading&#39;</span><span class="p">,</span> <span class="s1">&#39;science&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>pivot table<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>melt in reverse, so spread column values into seperate columns</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scores_pivot</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;district&#39;</span><span class="p">,</span> 
+                       <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;test_type&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;score&#39;</span><span class="p">)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">test_type	    math reading science</span>
+<span class="sd">district			</span>
+<span class="sd">Aguadilla	    513	 416	 465</span>
+<span class="sd">Amalga	        506	 433	 470</span>
+<span class="sd">Angier	        444	 411	 428</span>
+<span class="sd">Arenzville	    405	 410	 408</span>
+<span class="sd">Asheville	    489	 433	 461</span>
+<span class="sd">...	...	...	...</span>
+<span class="sd">Waldenburg	    500	 451	 476</span>
+<span class="sd">Whitley Gardens	423	 395	 409</span>
+<span class="sd">Wiley	        626	 465	 546</span>
+<span class="sd">Woodlyn	        454	 421	 438</span>
+<span class="sd">Worton	        463	 402	 433</span>
+<span class="sd">100 rows × 3 columns</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="explode">
+<h3>explode<a class="headerlink" href="#explode" title="Link to this heading">¶</a></h3>
+<p>explode a list of walues</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recipes</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s2">&quot;Ingredients&quot;</span><span class="p">)</span> <span class="c1"># requires a Series of Lists</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="windowing-operations">
+<h2>windowing operations<a class="headerlink" href="#windowing-operations" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/user_guide/window.html">docs window</a></p>
+<section id="shift">
+<h3>shift<a class="headerlink" href="#shift" title="Link to this heading">¶</a></h3>
+<p>shift rows up or down</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seattle</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	date    	precipitation	temp_max	temp_min	wind	weather</span>
+<span class="sd">0	2012-01-01	0.0				12.8	    5.0	        4.7	    drizzle</span>
+<span class="sd">1	2012-01-02	10.9			10.6	    2.8	        4.5	    rain</span>
+<span class="sd">2	2012-01-03	0.8				11.7	    7.2	        2.3	    rain</span>
+<span class="sd">3	2012-01-04	20.3			12.2	    5.6	        4.7	    rain</span>
+<span class="sd">4	2012-01-05	1.3				8.9		    2.8	        6.1	    rain</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1"># first value become NaN as there is no data after +1 shift for first row</span>
+<span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precip_lag&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	date	    precipitation	temp_max	temp_min	wind	weather	precip_lag</span>
+<span class="sd">0	2012-01-01	0.0	            12.8	    5.0	        4.7	    drizzle	NaN</span>
+<span class="sd">1	2012-01-02	10.9           	10.6	    2.8	        4.5	    rain	0.0</span>
+<span class="sd">2	2012-01-03	0.8	            11.7	    7.2	        2.3	    rain	10.9</span>
+<span class="sd">3	2012-01-04	20.3           	12.2	    5.6	        4.7	    rain	0.8</span>
+<span class="sd">4	2012-01-05	1.3	            8.9	        2.8	        6.1	    rain	20.3</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="c1"># same applies to last values when shifting rows up</span>
+<span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precip_lead&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">seattle</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">		date			precipitation	temp_max	temp_min	wind	weather	precip_lag	precip_lead</span>
+<span class="sd">1456	2015-12-27	    8.6	            4.4	        1.7	        2.9     fog     0.0     	0.0</span>
+<span class="sd">1457	2015-12-28	    1.5	            5.0	        1.7	        1.3    	fog    	8.6     	0.0</span>
+<span class="sd">1458	2015-12-29	    0.0	            7.2	        0.6	        2.6    	fog    	1.5     	0.0</span>
+<span class="sd">1459	2015-12-30	    0.0	            5.6	        -1.0	    3.4    	sun    	0.0     	NaN</span>
+<span class="sd">1460	2015-12-31	    0.0	            5.6	        -2.1	    3.5    	sun    	0.0     	NaN</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="rolling-average">
+<h3>rolling average<a class="headerlink" href="#rolling-average" title="Link to this heading">¶</a></h3>
+<p>rolling average for first 14 rows
+first values are NaN as there isn’t enough data yet to calculate average</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precip_biweekly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">seattle</span><span class="p">[</span><span class="s1">&#39;precipitation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">seattle</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	date	    precipitation  temp_max	temp_min wind weather precip_lag precip_lead precip_biweekly</span>
+<span class="sd">0	2012-01-01	0.0	           12.8	    5.0	     4.7  drizzle NaN	     0.8	     NaN</span>
+<span class="sd">1	2012-01-02	10.9           10.6	    2.8	     4.5  rain    0.0	     20.3	     NaN</span>
+<span class="sd">2	2012-01-03	0.8	           11.7	    7.2	     2.3  rain 	  10.9	     1.3	     NaN</span>
+<span class="sd">3	2012-01-04	20.3           12.2	    5.6	     4.7  rain    0.8	     2.5	     NaN</span>
+<span class="sd">4	2012-01-05	1.3	           8.9	    2.8	     6.1  rain    20.3	     0.0	     NaN</span>
+<span class="sd">5	2012-01-06	2.5	           4.4	    2.2	     2.2  rain    1.3	     0.0	     NaN</span>
+<span class="sd">6	2012-01-07	0.0	           7.2	    2.8	     2.3  rain    2.5	     4.3	     NaN</span>
+<span class="sd">7	2012-01-08	0.0	           10.0	    2.8	     2.0  sun     0.0	     1.0	     NaN</span>
+<span class="sd">8	2012-01-09	4.3	           9.4	    5.0	     3.4  rain    0.0	     0.0	     NaN</span>
+<span class="sd">9	2012-01-10	1.0	           6.1	    0.6	     3.4  rain    4.3	     0.0	     NaN</span>
+<span class="sd">10	2012-01-11	0.0	           6.1	    -1.1     5.1  sun     1.0	     0.0	     NaN</span>
+<span class="sd">11	2012-01-12	0.0	           6.1	    -1.7     1.9  sun     0.0	     4.1	     NaN</span>
+<span class="sd">12	2012-01-13	0.0	           5.0	    -2.8     1.3  sun     0.0	     5.3	     NaN</span>
+<span class="sd">13	2012-01-14	4.1	           4.4	    0.6	     5.3  snow    0.0	     2.5	     3.228571</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="importing-exporting">
 <h2>importing/exporting<a class="headerlink" href="#importing-exporting" title="Link to this heading">¶</a></h2>
@@ -2089,6 +2314,7 @@ Both methods require you to invent data, since the data points don’t actually 
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">pandas</a><ul>
+<li><a class="reference internal" href="#slicing">slicing</a></li>
 <li><a class="reference internal" href="#get-df-info">get df info</a></li>
 <li><a class="reference internal" href="#calculations">calculations</a></li>
 <li><a class="reference internal" href="#plotting">plotting</a><ul>
@@ -2185,8 +2411,20 @@ Both methods require you to invent data, since the data points don’t actually 
 </li>
 <li><a class="reference internal" href="#optimize-memory-usage">optimize memory usage</a></li>
 <li><a class="reference internal" href="#string-manipulations">string manipulations</a></li>
-<li><a class="reference internal" href="#reshaping-pivoting">reshaping &amp; pivoting</a></li>
-<li><a class="reference internal" href="#un-stack-melt-explode">(un)stack melt explode</a></li>
+<li><a class="reference internal" href="#reshaping-pivoting">reshaping &amp; pivoting</a><ul>
+<li><a class="reference internal" href="#pivot-table">pivot table</a></li>
+<li><a class="reference internal" href="#un-stack">(un)stack</a></li>
+<li><a class="reference internal" href="#melt">melt</a></li>
+<li><a class="reference internal" href="#mapping">mapping</a></li>
+<li><a class="reference internal" href="#id4">pivot table</a></li>
+<li><a class="reference internal" href="#explode">explode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windowing-operations">windowing operations</a><ul>
+<li><a class="reference internal" href="#shift">shift</a></li>
+<li><a class="reference internal" href="#rolling-average">rolling average</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#importing-exporting">importing/exporting</a><ul>
 <li><a class="reference internal" href="#json">json</a></li>
 <li><a class="reference internal" href="#read-excel-workbooks">read excel workbooks</a></li>

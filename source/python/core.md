@@ -293,6 +293,46 @@ summary(mean=6.5, median=7.0, mode=7)
 ```
 
 ```python
+people = [("Michele", "Vallisneri", "July 15"),
+          ("Albert", "Einstein", "March 14"),
+          ("John", "Lennon", "October 9"),
+          ("Jocelyn", "Bell Burnell", "July 15")]
+
+people[0][0]
+'Michele'
+people[0][1]
+'Vallisneri'
+
+[person for person in people if person[2] == "July 15"]
+[('Michele', 'Vallisneri', 'July 15'), ('Jocelyn', 'Bell Burnell', 'July 15')]
+
+# defining the namedtuple "person"
+persontype = collections.namedtuple('person', ['firstname', 'lastname', "birthday"])
+michele = persontype("Michele", "Vallisneri", "July 15")
+
+michele = persontype(lastname="Vallisneri", firstname="Michele", birthday="July 15")
+michele
+person(firstname='Michele', lastname='Vallisneri', birthday='July 15')
+
+michele[0], michele[1], michele[2]
+('Michele', 'Vallisneri', 'July 15')
+
+michele.firstname, michele.lastname, michele.birthday
+('Michele', 'Vallisneri', 'July 15')
+
+# use tuple unpacking on people[0] to build a namedtuple
+persontype(*people[0])
+person(firstname='Michele', lastname='Vallisneri', birthday='July 15')
+
+namedpeople = [persontype(*person) for person in people]
+namedpeople
+[person(firstname='Michele', lastname='Vallisneri', birthday='July 15'), person(firstname='Albert', lastname='Einstein', birthday='March 14'), person(firstname='John', lastname='Lennon', birthday='October 9'), person(firstname='Jocelyn', lastname='Bell Burnell', birthday='July 15')]
+
+[person for person in namedpeople if person.birthday == "July 15"]
+[person(firstname='Michele', lastname='Vallisneri', birthday='July 15'), person(firstname='Jocelyn', lastname='Bell Burnell', birthday='July 15')]
+```
+
+```python
 Point = collections.namedtuple("Point", "x y")
 
 p1 = Point(10, 20)
@@ -305,6 +345,53 @@ print(p1.x, p1.y)
 p1 = p1._replace(x=100)
 print(p1)
 ```
+
+```python
+"""
+print(open("goldmedals.txt", "r").readlines()[:10])
+'1896\tThomas Burke\tUSA\t100m men\n',
+'1896\tThomas Curtis\tUSA\t110m hurdles men\n',
+"""
+# tuple named Medal
+Medal = collections.namedtuple('Medal', ['year', 'athlete', 'team', 'event'])
+# medals = [line.split('\t') for line in open("goldmedals.txt", "r")]
+# fill list "medals" with list of Medal namedtuples
+medals = [Medal(*line.strip().split('\t')) for line in open("files/goldmedals.txt", "r")]
+"""
+Medal(year='1896', athlete='Thomas Burke', team='USA', event='100m men'),
+Medal(year='1896', athlete='Thomas Curtis', team='USA', event='110m hurdles men'),
+"""
+teams = collections.Counter(medal.team for medal in medals)
+Counter({'USA': 521,
+         'AUS': 23,
+         'GRE': 7,
+         'GBR': 71,
+         'CAN': 21,
+         'ZZX': 5,
+			..
+         'SWE': 21,
+         'SUI': 1,
+         'COL': 1,
+         'BRN': 1,
+         'TJK': 1,
+         'SVK': 1})
+
+best = collections.Counter(medal.team for medal in medals if medal.year == str(2016)).most_common(5)
+best
+[('USA', 30), ('JAM', 11), ('KEN', 6), ('GBR', 3), ('GER', 2)]
+
+def best_by_year(year):
+    counts = collections.Counter(medal.team for medal in medals if medal.year == str(year))
+    best = counts.most_common(5)
+    # [('USA', 30), ('JAM', 11), ('KEN', 6), ('GBR', 3), ('GER', 2)]
+    return [x[0] for x in best], [y[1] for y in best]
+
+[52]
+
+best_by_year(2016)
+(['USA', 'JAM', 'KEN', 'GBR', 'GER'], [30, 11, 6, 3, 2])
+```
+
 ## defaultdict
 
 if key doesn't exist yet create one instead of throwing an error

@@ -173,3 +173,81 @@ class Book:
 		
 my_book = Book("War And Peace", weight=700.0, condition="Discarded")
 ```
+
+## examples
+
+```python
+import csv
+import json
+import pathlib
+from itertools import chain
+from collections import Counter
+from dataclasses import dataclass, field
+from pycoingecko import CoinGeckoAPI
+import pandas as pd
+
+
+@dataclass()
+class Asset:
+    name: str = "dogecoin"  # must exist in coingecko lib!
+    amount: float = 0.0
+    token_value: dict = field(default_factory=lambda: {'usd': 0.0, 'eur': 0.0, 'btc': 0.0, 'eth': 0.0})
+    token_bag_value: dict = field(default_factory=lambda: {'usd': 0.0, 'eur': 0.0, 'btc': 0.0, 'eth': 0.0})
+    # use InitVar to pass args to post_init
+
+    def __post_init__(self):
+        self.cg = CoinGeckoAPI()
+        if self.asset_known_by_coingecko():
+            self.currencies = ['usd', 'eur', 'btc', 'eth']
+            self.token_price()
+            self.token_bag_value = self.valuation_totals()
+
+    @staticmethod
+    def api_online():
+        api = CoinGeckoAPI()
+        result = api.ping()
+        return result['gecko_says'] == '(V3) To the Moon!'
+
+
+   def asset_known_by_coingecko(self):
+        cg_coins = self.cg.get_coins_list()
+        return [row for row in cg_coins if self.name in row["id"]]
+
+    def token_price(self):
+        """returns a dictionary with token price in 4 major valutas (as defined in self.currencies)
+           :returns {'usd': 0.05202, 'eur': 0.04269368, 'btc': 2.29e-06, 'eth': 8.517e-05}
+        """
+        prices = self.cg.get_price(ids=self.name, vs_currencies=self.currencies)
+        self.token_value = prices[self.name]
+        return self.token_value
+
+    def valuation_totals(self):
+        """calculates token amount X token unit price
+           :returns a dictionary like: {'usd': 0.0, 'eur': 0.0, 'btc': 0.0, 'eth': 0.0}"""
+        coin_value = {}
+        for valuta in self.currencies:
+            total_per_valuta = self.token_value[valuta] * self.amount
+            coin_value[valuta] = total_per_valuta
+        return coin_value  # {'usd': 914.3791207207857, 'eur': 748.5946438995461,
+        # 'btc': 0.0403244757406108, 'eth': 1.5003127905380043}
+
+    def update_token_amount(self, new_amount):
+        self.amount = new_amount
+
+    def __add__(self, other):
+        x = self.valuation_totals()
+        y = other.valuation_totals()
+        for key, val in chain(x.items(), y.items()):
+            self.token_value[key] += val
+        return Asset("sum(" + self.name +" + " + other.name +"): ", self.amount + other.amount, self.token_value)
+
+    # def __radd__(self, other):
+    #     if other == 0:
+    #         return self
+    #     else:
+    #         return self.__add__(other)
+
+    def __str__(self):
+        newline = "\n"
+        return f'{self.name}, {self.amount}, {self.token_price()}'
+```

@@ -1,5 +1,62 @@
 # functional programming
 
+## Higher-order, pure & anon functions
+
+- Higher-order functions take other functions as arguments, or return them as results
+- Pure functions have no side effects, and return a value that depends only on their arguments
+
+```python
+def pure_function(x, y):
+    temp = x + 2*y
+    return temp / (2*x + y)
+
+# pure
+def func(x):
+    y = x**2
+    z = x + y
+    return z
+
+# impure
+some_list = []
+def impure(arg):
+    some_list.append(arg)
+```
+
+Pure functions are:
+- easier to reason about and test.
+- more efficient. Once the function has been evaluated for an input, the result can be stored and referred to the next time the function of that input is needed, reducing the number of times the function is called. This is called memoization.
+- easier to run in parallel. 
+- complicate the otherwise simple task of I/O, more difficult to write
+
+## lambda
+
+```python
+""" lambda land
+
+assign functions to variable = anonymous
+
+pass function as an argument to another function
+They can only do things that require a single expression
+"""
+def some_func(f, arg)
+    return f(arg)
+
+some_func(lambda x: 2*x*x, 5)
+
+a = (lambda x: x*x), (8) # 64
+
+# Lambda functions can be assigned to variables, and used like normal functions
+double = lambda x: x*2
+print(double(7))
+# however, usually better to define function with def instead ...
+
+triple = lambda x: x * 3
+add = lambda x, y: x + y  # using 2 params
+
+print(add(triple(3), 4)) # 13
+```
+
+
 ## map
 
 [map docs](https://docs.python.org/3/library/functions.html#map)
@@ -66,6 +123,18 @@ list(map(len, words))
 
 ```
 
+```python
+def add_five(x):
+	return x+5
+
+nums = [11, 22, 33, 44, 55]
+result = list(map(add_five, nums)) # map(function, iterable)
+# [16, 27, 38, 49, 60]
+
+# using lambda:
+result = list(map(lambda x: x+5, nums)) # [16, 27, 38, 49, 60]
+```
+
 ## filter
 
 - apply boolean function to an iterable to generate a new iterable
@@ -85,6 +154,11 @@ def sanitized_sqrt(numbers):
 sanitized_sqrt([25, 9, 81, -16, 0])
 [5.0, 3.0, 9.0, 0.0]
 
+```
+
+```python
+nums = [11, 22, 33, 44, 55]
+result = list(filter(lambda x: x%2==0, nums)) # [22, 44]
 ```
 
 ## map vs comprehensions & gen expression
@@ -135,6 +209,114 @@ gen_exp
 
 list(gen_exp)
 [1, 4, 9, 16, 25, 36]
+```
+
+## generator
+
+- yield statement is used to define a generator, replacing the return of a function to provide a result to its caller without destroying local variables
+
+```python
+
+def countdown():
+	i=5
+	while i > 0:
+		yield i  # return value i & continue
+		i -= 1
+
+
+for i in countdown():
+    print(i)  # 5 4 3 2 1
+
+	
+# they can be infinite!
+def infinite_sevens():
+    while True:
+        yield 7
+
+
+for i in infinite_sevens():
+	print(i)
+	
+# Finite generators can be converted into lists by passing them as arguments to the list function
+
+def numbers(x):
+	for i in range(x):
+		if i%2 == 0:
+			yield i
+
+
+print(list(numbers(11))) # [0, 2, 4, 6, 8, 10]
+```
+
+*note**
+Using generators results in improved performance, which is the result of the lazy (on demand) generation of values, which translates to lower memory usage.
+Furthermore, we do not need to wait until all the elements have been generated before we start to use them. 
+
+## recursion
+
+- Solve problems that can be broken up into sub-problems of the same type
+- eg: 5! (5 factorial) is 5 * 4 * 3 * 2 * 1 (120)
+- n! = n * (n-1)!
+- BASE CASE: 1! = 1 -> can be calculated without performing any more factorial function calls
+
+**note**
+The base case acts as the exit condition of the recursion
+
+```python
+
+def factorial(x):
+	# base case
+	if x == 1:
+		return 1
+	else:
+		return x * factorial(x-1)
+
+
+print(factorial(5))  # 120
+
+
+"""fibonacci"""
+def fibo(n):
+    if n <= 1:
+        return n  # returns 0 & 1's
+    else:
+        return fibo(n-1) + fibo(n-2)
+
+
+number = 6
+for i in range(6):
+    print(fibo(i))
+		
+
+
+def power(x, y):
+    if y == 0:
+        return 1
+    else:
+        return x * power(x, y-1)
+
+
+print(power(2, 3))  # 8
+
+
+"""Recursion can also be indirect. One function can call a second, which calls the first, which calls the second, and so on. This can occur with any number of functions"""
+
+
+def is_even(x):
+	if x == 0:
+		return True
+	else:
+		return is_odd(x-1)
+
+
+def is_odd(x):
+	return not is_even(x)  # not! else will also return True when odd
+
+
+is_even(9)  # False
+is_even(12) # True
+is_odd(17)  # True
+
 ```
 
 ## functools

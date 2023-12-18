@@ -71,10 +71,13 @@
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -86,9 +89,13 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">functional programming</a><ul>
+<li><a class="reference internal" href="#higher-order-pure-anon-functions">Higher-order, pure &amp; anon functions</a></li>
+<li><a class="reference internal" href="#lambda">lambda</a></li>
 <li><a class="reference internal" href="#map">map</a></li>
 <li><a class="reference internal" href="#filter">filter</a></li>
 <li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li><a class="reference internal" href="#generator">generator</a></li>
+<li><a class="reference internal" href="#recursion">recursion</a></li>
 <li><a class="reference internal" href="#functools">functools</a><ul>
 <li><a class="reference internal" href="#reduce">reduce</a></li>
 <li><a class="reference internal" href="#wraps">wraps</a></li>
@@ -175,6 +182,64 @@
             
   <section id="functional-programming">
 <h1>functional programming<a class="headerlink" href="#functional-programming" title="Link to this heading">¶</a></h1>
+<section id="higher-order-pure-anon-functions">
+<h2>Higher-order, pure &amp; anon functions<a class="headerlink" href="#higher-order-pure-anon-functions" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Higher-order functions take other functions as arguments, or return them as results</p></li>
+<li><p>Pure functions have no side effects, and return a value that depends only on their arguments</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pure_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span>
+    <span class="k">return</span> <span class="n">temp</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># pure</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">z</span>
+
+<span class="c1"># impure</span>
+<span class="n">some_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">def</span> <span class="nf">impure</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+    <span class="n">some_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pure functions are:</p>
+<ul class="simple">
+<li><p>easier to reason about and test.</p></li>
+<li><p>more efficient. Once the function has been evaluated for an input, the result can be stored and referred to the next time the function of that input is needed, reducing the number of times the function is called. This is called memoization.</p></li>
+<li><p>easier to run in parallel.</p></li>
+<li><p>complicate the otherwise simple task of I/O, more difficult to write</p></li>
+</ul>
+</section>
+<section id="lambda">
+<h2>lambda<a class="headerlink" href="#lambda" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot; lambda land</span>
+
+<span class="sd">assign functions to variable = anonymous</span>
+
+<span class="sd">pass function as an argument to another function</span>
+<span class="sd">They can only do things that require a single expression</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">some_func</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+
+<span class="n">some_func</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="c1"># 64</span>
+
+<span class="c1"># Lambda functions can be assigned to variables, and used like normal functions</span>
+<span class="n">double</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">double</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span>
+<span class="c1"># however, usually better to define function with def instead ...</span>
+
+<span class="n">triple</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">add</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>  <span class="c1"># using 2 params</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="n">triple</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># 13</span>
+</pre></div>
+</div>
+</section>
 <section id="map">
 <h2>map<a class="headerlink" href="#map" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="https://docs.python.org/3/library/functions.html#map">map docs</a></p>
@@ -240,6 +305,17 @@
 
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_five</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="mi">5</span>
+
+<span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">add_five</span><span class="p">,</span> <span class="n">nums</span><span class="p">))</span> <span class="c1"># map(function, iterable)</span>
+<span class="c1"># [16, 27, 38, 49, 60]</span>
+
+<span class="c1"># using lambda:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="n">nums</span><span class="p">))</span> <span class="c1"># [16, 27, 38, 49, 60]</span>
+</pre></div>
+</div>
 </section>
 <section id="filter">
 <h2>filter<a class="headerlink" href="#filter" title="Link to this heading">¶</a></h2>
@@ -260,6 +336,10 @@
 <span class="n">sanitized_sqrt</span><span class="p">([</span><span class="mi">25</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
 
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="n">nums</span><span class="p">))</span> <span class="c1"># [22, 44]</span>
 </pre></div>
 </div>
 </section>
@@ -310,6 +390,114 @@
 
 <span class="nb">list</span><span class="p">(</span><span class="n">gen_exp</span><span class="p">)</span>
 <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="generator">
+<h2>generator<a class="headerlink" href="#generator" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>yield statement is used to define a generator, replacing the return of a function to provide a result to its caller without destroying local variables</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">countdown</span><span class="p">():</span>
+	<span class="n">i</span><span class="o">=</span><span class="mi">5</span>
+	<span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">yield</span> <span class="n">i</span>  <span class="c1"># return value i &amp; continue</span>
+		<span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">countdown</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>  <span class="c1"># 5 4 3 2 1</span>
+
+	
+<span class="c1"># they can be infinite!</span>
+<span class="k">def</span> <span class="nf">infinite_sevens</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="mi">7</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">infinite_sevens</span><span class="p">():</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+	
+<span class="c1"># Finite generators can be converted into lists by passing them as arguments to the list function</span>
+
+<span class="k">def</span> <span class="nf">numbers</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">yield</span> <span class="n">i</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">numbers</span><span class="p">(</span><span class="mi">11</span><span class="p">)))</span> <span class="c1"># [0, 2, 4, 6, 8, 10]</span>
+</pre></div>
+</div>
+<p><em>note</em>*
+Using generators results in improved performance, which is the result of the lazy (on demand) generation of values, which translates to lower memory usage.
+Furthermore, we do not need to wait until all the elements have been generated before we start to use them.</p>
+</section>
+<section id="recursion">
+<h2>recursion<a class="headerlink" href="#recursion" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Solve problems that can be broken up into sub-problems of the same type</p></li>
+<li><p>eg: 5! (5 factorial) is 5 * 4 * 3 * 2 * 1 (120)</p></li>
+<li><p>n! = n * (n-1)!</p></li>
+<li><p>BASE CASE: 1! = 1 -&gt; can be calculated without performing any more factorial function calls</p></li>
+</ul>
+<p><strong>note</strong>
+The base case acts as the exit condition of the recursion</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="c1"># base case</span>
+	<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="k">return</span> <span class="mi">1</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 120</span>
+
+
+<span class="sd">&quot;&quot;&quot;fibonacci&quot;&quot;&quot;</span>
+<span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>  <span class="c1"># returns 0 &amp; 1&#39;s</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">number</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fibo</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+		
+
+
+<span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># 8</span>
+
+
+<span class="sd">&quot;&quot;&quot;Recursion can also be indirect. One function can call a second, which calls the first, which calls the second, and so on. This can occur with any number of functions&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">is_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">True</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">is_odd</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+	<span class="k">return</span> <span class="ow">not</span> <span class="n">is_even</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># not! else will also return True when odd</span>
+
+
+<span class="n">is_even</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>  <span class="c1"># False</span>
+<span class="n">is_even</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="c1"># True</span>
+<span class="n">is_odd</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>  <span class="c1"># True</span>
+
 </pre></div>
 </div>
 </section>
@@ -456,10 +644,13 @@ INFO:root:Running<span class="w"> </span><span class="s2">&quot;sub&quot;</span>
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -471,9 +662,13 @@ INFO:root:Running<span class="w"> </span><span class="s2">&quot;sub&quot;</span>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">functional programming</a><ul>
+<li><a class="reference internal" href="#higher-order-pure-anon-functions">Higher-order, pure &amp; anon functions</a></li>
+<li><a class="reference internal" href="#lambda">lambda</a></li>
 <li><a class="reference internal" href="#map">map</a></li>
 <li><a class="reference internal" href="#filter">filter</a></li>
 <li><a class="reference internal" href="#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li><a class="reference internal" href="#generator">generator</a></li>
+<li><a class="reference internal" href="#recursion">recursion</a></li>
 <li><a class="reference internal" href="#functools">functools</a><ul>
 <li><a class="reference internal" href="#reduce">reduce</a></li>
 <li><a class="reference internal" href="#wraps">wraps</a></li>

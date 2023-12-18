@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="glob" href="file_ops.html" />
-    <link rel="prev" title="assert python" href="assert.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="decorators" href="decorators.html" />
+    <link rel="prev" title="itertools" href="core.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -67,14 +67,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -88,6 +94,7 @@
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#asdict-astuple">asdict, astuple</a></li>
 <li><a class="reference internal" href="#default-factory-initvar">default_factory &amp; InitVar</a></li>
+<li><a class="reference internal" href="#examples">examples</a></li>
 </ul>
 </li>
 </ul>
@@ -114,10 +121,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="file_ops.html" title="glob"
+          <a href="decorators.html" title="decorators"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="assert.html" title="assert python"
+          <a href="core.html" title="itertools"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -338,6 +345,84 @@ setting this to True will put resp w you of hash checking</p></li>
 </pre></div>
 </div>
 </section>
+<section id="examples">
+<h2>examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">pycoingecko</span> <span class="kn">import</span> <span class="n">CoinGeckoAPI</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="nd">@dataclass</span><span class="p">()</span>
+<span class="k">class</span> <span class="nc">Asset</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;dogecoin&quot;</span>  <span class="c1"># must exist in coingecko lib!</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">token_value</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;usd&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;eur&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;btc&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;eth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">})</span>
+    <span class="n">token_bag_value</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;usd&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;eur&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;btc&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;eth&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">})</span>
+    <span class="c1"># use InitVar to pass args to post_init</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cg</span> <span class="o">=</span> <span class="n">CoinGeckoAPI</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">asset_known_by_coingecko</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currencies</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;usd&#39;</span><span class="p">,</span> <span class="s1">&#39;eur&#39;</span><span class="p">,</span> <span class="s1">&#39;btc&#39;</span><span class="p">,</span> <span class="s1">&#39;eth&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_price</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_bag_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valuation_totals</span><span class="p">()</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">api_online</span><span class="p">():</span>
+        <span class="n">api</span> <span class="o">=</span> <span class="n">CoinGeckoAPI</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;gecko_says&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;(V3) To the Moon!&#39;</span>
+
+
+   <span class="k">def</span> <span class="nf">asset_known_by_coingecko</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cg_coins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cg</span><span class="o">.</span><span class="n">get_coins_list</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">row</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cg_coins</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="nf">token_price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;returns a dictionary with token price in 4 major valutas (as defined in self.currencies)</span>
+<span class="sd">           :returns {&#39;usd&#39;: 0.05202, &#39;eur&#39;: 0.04269368, &#39;btc&#39;: 2.29e-06, &#39;eth&#39;: 8.517e-05}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cg</span><span class="o">.</span><span class="n">get_price</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">vs_currencies</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">currencies</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_value</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_value</span>
+
+    <span class="k">def</span> <span class="nf">valuation_totals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;calculates token amount X token unit price</span>
+<span class="sd">           :returns a dictionary like: {&#39;usd&#39;: 0.0, &#39;eur&#39;: 0.0, &#39;btc&#39;: 0.0, &#39;eth&#39;: 0.0}&quot;&quot;&quot;</span>
+        <span class="n">coin_value</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">valuta</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">currencies</span><span class="p">:</span>
+            <span class="n">total_per_valuta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_value</span><span class="p">[</span><span class="n">valuta</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span>
+            <span class="n">coin_value</span><span class="p">[</span><span class="n">valuta</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_per_valuta</span>
+        <span class="k">return</span> <span class="n">coin_value</span>  <span class="c1"># {&#39;usd&#39;: 914.3791207207857, &#39;eur&#39;: 748.5946438995461,</span>
+        <span class="c1"># &#39;btc&#39;: 0.0403244757406108, &#39;eth&#39;: 1.5003127905380043}</span>
+
+    <span class="k">def</span> <span class="nf">update_token_amount</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_amount</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">=</span> <span class="n">new_amount</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valuation_totals</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">valuation_totals</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_value</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">val</span>
+        <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="s2">&quot;sum(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span><span class="s2">&quot; + &quot;</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span><span class="s2">&quot;): &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_value</span><span class="p">)</span>
+
+    <span class="c1"># def __radd__(self, other):</span>
+    <span class="c1">#     if other == 0:</span>
+    <span class="c1">#         return self</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         return self.__add__(other)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">newline</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">token_price</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -354,14 +439,20 @@ setting this to True will put resp w you of hash checking</p></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library.html">code library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
 </ul>
@@ -375,6 +466,7 @@ setting this to True will put resp w you of hash checking</p></li>
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#asdict-astuple">asdict, astuple</a></li>
 <li><a class="reference internal" href="#default-factory-initvar">default_factory &amp; InitVar</a></li>
+<li><a class="reference internal" href="#examples">examples</a></li>
 </ul>
 </li>
 </ul>
@@ -401,10 +493,10 @@ setting this to True will put resp w you of hash checking</p></li>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="file_ops.html" title="glob"
+          <a href="decorators.html" title="decorators"
              >next</a> |</li>
         <li class="right" >
-          <a href="assert.html" title="assert python"
+          <a href="core.html" title="itertools"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -457,7 +549,7 @@ setting this to True will put resp w you of hash checking</p></li>
 <br />
     <br />
 
-    Last updated on 2023-12-09.
+    Last updated on 2023-12-18.
     
     <br />
 

@@ -67,13 +67,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -85,12 +89,20 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#main"><code class="docutils literal notranslate"><span class="pre">__main__</span></code></a></li>
+<li><a class="reference internal" href="#packaging">packaging</a><ul>
+<li><a class="reference internal" href="#setup-py">setup.py</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#enums">enums</a></li>
+<li><a class="reference internal" href="#ternary-operator">Ternary operator</a></li>
+<li><a class="reference internal" href="#more-on-else">more on else</a></li>
 <li><a class="reference internal" href="#strings">strings</a><ul>
 <li><a class="reference internal" href="#string-operations">string operations</a></li>
 <li><a class="reference internal" href="#string-templates">string templates</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#sorting">sorting</a></li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
 </ul>
@@ -119,6 +131,7 @@
 <li><a class="reference internal" href="#dictionary">dictionary</a></li>
 <li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
+<li><a class="reference internal" href="#nested">nested</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#any-all">any() all()</a><ul>
@@ -132,18 +145,21 @@
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
 <li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#superclass">Superclass</a></li>
+<li><a class="reference internal" href="#indirect-inheritance">indirect inheritance</a></li>
+<li><a class="reference internal" href="#super-function">super function</a></li>
+<li><a class="reference internal" href="#magic-methods">magic methods</a></li>
+<li><a class="reference internal" href="#class-methods">class methods</a></li>
 <li><a class="reference internal" href="#getattr-setattr">getattr setattr</a></li>
 <li><a class="reference internal" href="#properties">properties</a></li>
 <li><a class="reference internal" href="#properties-demo">properties demo</a></li>
 <li><a class="reference internal" href="#scope">scope</a></li>
 <li><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
 <li><a class="reference internal" href="#static-methods">static methods</a></li>
-<li><a class="reference internal" href="#class-methods">class methods</a></li>
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#recursion">recursion</a></li>
 <li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
 <li><a class="reference internal" href="#open">open</a></li>
 <li><a class="reference internal" href="#write">write</a></li>
@@ -243,6 +259,63 @@
             
   <section id="fundamentals">
 <h1>fundamentals<a class="headerlink" href="#fundamentals" title="Link to this heading">¶</a></h1>
+<section id="main">
+<h2><code class="docutils literal notranslate"><span class="pre">__main__</span></code><a class="headerlink" href="#main" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>to make a file that can be both imported as a module and run as a script</p></li>
+</ul>
+<ul class="simple">
+<li><p>if python is running module (source file) as main program it sets __name__ = “__main__”</p></li>
+<li><p>if file imported as module __name__ = “that_modules_name”</p>
+<ul>
+<li><p>code in if <code class="docutils literal notranslate"><span class="pre">__name__</span> <span class="pre">==</span> <span class="pre">&quot;__main__&quot;:</span></code> block won’t run</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="packaging">
+<h2>packaging<a class="headerlink" href="#packaging" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>involves use of the modules setuptools and distutils</p></li>
+<li><p>should contain a file called <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code></p></li>
+<li><p>parent dir has to have: <code class="docutils literal notranslate"><span class="pre">README.txt</span> <span class="pre">LICENSE.txt</span> <span class="pre">setup.py</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># example</span>
+<span class="n">Learn</span><span class="o">/</span>
+   <span class="n">LICENSE</span><span class="o">.</span><span class="n">txt</span>
+   <span class="n">README</span><span class="o">.</span><span class="n">txt</span>
+   <span class="n">setup</span><span class="o">.</span><span class="n">py</span>
+   <span class="n">learn</span><span class="o">/</span>
+      <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+      <span class="n">learn</span><span class="o">.</span><span class="n">py</span>
+      <span class="n">learn2</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<section id="setup-py">
+<h3>setup.py<a class="headerlink" href="#setup-py" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>contains information necessary to assemble the package so it can be uploaded to PyPI and installed with pip</p></li>
+<li><p>After creating the setup.py file, upload it to PyPI, or use the command line to create a binary distribution (an executable installer)</p></li>
+<li><p>To build a <strong>source distribution</strong>, use the command line to navigate to the directory containing setup.py, and run the command <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">sdist</span></code></p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist</span></code> or, for Windows, python setup.py bdist_wininst to build a <strong>binary distribution</strong></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">register</span></code>, followed by <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">sdist</span> <span class="pre">upload</span></code> to upload a package</p></li>
+<li><p>Finally, install a package with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># example setup.py</span>
+<span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="n">setup</span><span class="p">(</span>
+   <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SoloLearn&#39;</span><span class="p">,</span> 
+   <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.1dev&#39;</span><span class="p">,</span>
+   <span class="n">packages</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sololearn&#39;</span><span class="p">,],</span>
+   <span class="n">license</span><span class="o">=</span><span class="s1">&#39;MIT&#39;</span><span class="p">,</span> 
+   <span class="n">long_description</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;README.txt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span>
+<span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+</section>
 <section id="enums">
 <h2>enums<a class="headerlink" href="#enums" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
@@ -305,6 +378,59 @@ For example, the days of the week:</p>
 <span class="go">APPLE 1</span>
 <span class="go">5</span>
 <span class="go">They call me mellow yellow</span>
+</pre></div>
+</div>
+</section>
+<section id="ternary-operator">
+<h2>Ternary operator<a class="headerlink" href="#ternary-operator" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="mi">42</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># b = 1 cuz 7&gt;=5</span>
+
+<span class="n">status</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;logout&quot;</span> <span class="k">if</span> <span class="n">status</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;login&quot;</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="mi">2</span><span class="o">+</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">5</span> <span class="k">else</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</section>
+<section id="more-on-else">
+<h2>more on else<a class="headerlink" href="#more-on-else" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>With the for or while loop, the code within it is called if the loop finishes normally (when a break statement does not cause an exit from the loop)</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+	<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">999</span><span class="p">:</span>
+		<span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;this is executed bc i goes from 0 up to 9, not 999&quot;</span><span class="p">)</span>
+	
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">break</span>  <span class="c1"># -&gt; breaks loop, else block not run</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;this is NOT executed, i = 5 breaks the loop&quot;</span><span class="p">)</span>
+	
+	
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+          <span class="k">break</span>  <span class="c1"># will print 6 &amp; break</span>
+<span class="k">else</span><span class="p">:</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>executed if NO ERROR occurs in TRY statement</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">4</span><span class="o">/</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;idiot&quot;</span><span class="p">)</span>  <span class="c1"># will print idiot :D</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;yay else ran&quot;</span><span class="p">)</span> <span class="c1"># did not run bc error ocurred</span>
 </pre></div>
 </div>
 </section>
@@ -377,6 +503,83 @@ For example, the days of the week:</p>
 </pre></div>
 </div>
 </section>
+</section>
+<section id="sorting">
+<h2>sorting<a class="headerlink" href="#sorting" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;words.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)})</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;aaron&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;elvis&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;lives&quot;</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;elvis&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;sings&quot;</span><span class="p">)</span>
+<span class="kc">False</span>
+
+<span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;aaron&quot;</span><span class="p">))</span>
+<span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="s2">&quot;aaron&quot;</span><span class="p">))</span>
+<span class="s1">&#39;a-a-n-o-r&#39;</span>
+
+<span class="c1"># compute the signature string for a word</span>
+
+<span class="k">def</span> <span class="nf">signature</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+
+<span class="c1"># brute-force anagram search: compare myword&#39;s signature</span>
+<span class="c1"># with the signatures of all words in the dictionary</span>
+
+<span class="k">def</span> <span class="nf">find_anagram</span><span class="p">(</span><span class="n">myword</span><span class="p">):</span>
+    <span class="n">mysig</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">myword</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mysig</span> <span class="o">==</span> <span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="n">find_anagram</span><span class="p">(</span><span class="s1">&#39;dictionary&#39;</span><span class="p">)</span>
+<span class="c1"># make a dict that maps each signature to the set of words with that signature;</span>
+<span class="c1"># each signature will map to at least one word</span>
+
+<span class="n">words_by_sig</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+    <span class="n">words_by_sig</span><span class="p">[</span><span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="n">words_by_sig</span>
+<span class="c1"># keep only the key/value pairs where the set has more than one element;</span>
+<span class="c1"># this is now a regular dict</span>
+
+<span class="n">anagrams_by_sig</span> <span class="o">=</span> <span class="p">{</span><span class="n">sig</span><span class="p">:</span> <span class="n">wordset</span> <span class="k">for</span> <span class="n">sig</span><span class="p">,</span> <span class="n">wordset</span> <span class="ow">in</span> <span class="n">words_by_sig</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wordset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">anagrams_by_sig</span>
+<span class="c1"># smart anagram search: look up myword&#39;s signature, return set</span>
+
+<span class="k">def</span> <span class="nf">find_anagram_fast</span><span class="p">(</span><span class="n">myword</span><span class="p">):</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">myword</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">anagrams_by_sig</span><span class="p">[</span><span class="n">sig</span><span class="p">]</span>
+<span class="n">find_anagram_fast</span><span class="p">(</span><span class="s1">&#39;tops&#39;</span><span class="p">)</span>
+<span class="n">find_anagram_fast</span><span class="p">(</span><span class="s1">&#39;michele&#39;</span><span class="p">)</span>
+<span class="c1"># handle case when myword&#39;s signature is not found, returning the empty set</span>
+
+<span class="k">def</span> <span class="nf">find_anagram_fast</span><span class="p">(</span><span class="n">myword</span><span class="p">):</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">myword</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">anagrams_by_sig</span><span class="p">[</span><span class="n">sig</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+<span class="n">find_anagram_fast</span><span class="p">(</span><span class="s1">&#39;Michele&#39;</span><span class="p">)</span>
+
+<span class="c1"># list of signatures, sorted by length, longest first</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">anagrams_by_sig</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># list of anagram sets, sorted by signature length</span>
+<span class="p">[</span><span class="n">anagrams_by_sig</span><span class="p">[</span><span class="n">sig</span><span class="p">]</span> <span class="k">for</span> <span class="n">sig</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">anagrams_by_sig</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+
+<span class="c1"># list of anagram sets, sorted by their length, largest first</span>
+<span class="nb">sorted</span><span class="p">(</span><span class="n">anagrams_by_sig</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="range">
 <h2>range<a class="headerlink" href="#range" title="Link to this heading">¶</a></h2>
@@ -748,11 +951,24 @@ if there are no surplus items it receives an empty list</p>
 <span class="n">oddSquared</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">odds</span> <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="mi">17</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">oddSquared</span><span class="p">)</span>
 <span class="c1"># [25, 49, 81, 121, 169, 225]</span>
+
+<span class="c1"># list of the squares from 1^2 to 10^2, including only those divisible by 4</span>
+<span class="n">squares_by_four</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
 <section id="dictionary">
 <h3>dictionary<a class="headerlink" href="#dictionary" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># dict of the squares from 1^2 to 10^2, where the keys are the unsquared numbers</span>
+<span class="n">squares_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)}</span>
+<span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">10</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+
+<span class="n">capitals_by_country</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;United States&#39;</span><span class="p">:</span> <span class="s1">&#39;Washington, DC&#39;</span><span class="p">,</span> <span class="s1">&#39;France&#39;</span><span class="p">:</span> <span class="s1">&#39;Paris&#39;</span><span class="p">,</span> <span class="s1">&#39;Italy&#39;</span><span class="p">:</span> <span class="s1">&#39;Rome&#39;</span><span class="p">}</span>
+<span class="n">countries_by_capital</span> <span class="o">=</span> <span class="p">{</span><span class="n">capital</span><span class="p">:</span> <span class="n">country</span> <span class="k">for</span> <span class="n">country</span><span class="p">,</span> <span class="n">capital</span> <span class="ow">in</span> <span class="n">capitals_by_country</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="n">countries_by_capital</span>
+<span class="p">{</span><span class="s1">&#39;Washington, DC&#39;</span><span class="p">:</span> <span class="s1">&#39;United States&#39;</span><span class="p">,</span> <span class="s1">&#39;Paris&#39;</span><span class="p">:</span> <span class="s1">&#39;France&#39;</span><span class="p">,</span> <span class="s1">&#39;Rome&#39;</span><span class="p">:</span> <span class="s1">&#39;Italy&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a list of temperature values</span>
 <span class="n">ctemps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
 
@@ -822,6 +1038,22 @@ if there are no surplus items it receives an empty list</p>
 </pre></div>
 </div>
 <p>note: we didn’t have to use extra parentheses to put a generator comprehension wihtin sum(), this improves readability</p>
+</section>
+<section id="nested">
+<h3>nested<a class="headerlink" href="#nested" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">counting</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">counting</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c1"># nested comprehension</span>
+<span class="n">counting</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">counting</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="any-all">
@@ -1143,6 +1375,193 @@ if there are no surplus items it receives an empty list</p>
 </pre></div>
 </div>
 </section>
+<section id="superclass">
+<h3>Superclass<a class="headerlink" href="#superclass" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1"># Superclass</span>
+<span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+
+<span class="c1"># Subclass</span>
+<span class="c1"># If a class inherits from another with the same attributes or methods, it overrides them</span>
+<span class="k">class</span> <span class="nc">Cat</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+	<span class="k">def</span> <span class="nf">purr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Purrr&quot;</span><span class="p">)</span>
+		
+<span class="n">tiger</span> <span class="o">=</span> <span class="n">Cat</span><span class="p">(</span><span class="s2">&quot;tiger&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tiger</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+<span class="n">tiger</span><span class="o">.</span><span class="n">purr</span>
+</pre></div>
+</div>
+</section>
+<section id="indirect-inheritance">
+<h3>indirect inheritance<a class="headerlink" href="#indirect-inheritance" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A method&quot;</span><span class="p">)</span>
+		
+<span class="k">class</span> <span class="nc">B</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">another_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;B method&quot;</span><span class="p">)</span>
+		
+<span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">third_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C method&quot;</span><span class="p">)</span>
+		
+<span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">method</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">another_method</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">third_method</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="super-function">
+<h3>super function<a class="headerlink" href="#super-function" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">:</span> <span class="c1"># superclass</span>
+	<span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">spam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	    <span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+	    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">spam</span><span class="p">()</span> <span class="c1"># calls spam method of superclass</span>
+		
+<span class="n">B</span><span class="p">()</span><span class="o">.</span><span class="n">spam</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="magic-methods">
+<h3>magic methods<a class="headerlink" href="#magic-methods" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://docs.python.org/3/reference/datamodel.html#special-method-names">special method names</a>
+<a class="reference external" href="https://github.com/RafeKettler/magicmethods/blob/master/magicmethods.markdown">nice summary on github</a></p>
+<ul class="simple">
+<li><p>f <strong>ne</strong> is not implemented, it returns the opposite of <strong>eq</strong>
+There are no other relationships between the other operators</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>magic method</p></th>
+<th class="head text-center"><p>operator</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>__sub__</p></td>
+<td class="text-center"><p>-</p></td>
+</tr>
+<tr class="row-odd"><td><p>__mul__</p></td>
+<td class="text-center"><p>*</p></td>
+</tr>
+<tr class="row-even"><td><p>__truediv__</p></td>
+<td class="text-center"><p>/</p></td>
+</tr>
+<tr class="row-odd"><td><p>__floordiv__</p></td>
+<td class="text-center"><p>//</p></td>
+</tr>
+<tr class="row-even"><td><p>__mod__</p></td>
+<td class="text-center"><p>%</p></td>
+</tr>
+<tr class="row-odd"><td><p>__pow__</p></td>
+<td class="text-center"><p>**</p></td>
+</tr>
+<tr class="row-even"><td><p>__and__</p></td>
+<td class="text-center"><p>&amp;</p></td>
+</tr>
+<tr class="row-odd"><td><p>__xor__</p></td>
+<td class="text-center"><p>^</p></td>
+</tr>
+<tr class="row-even"><td><p>__or__</p></td>
+<td class="text-center"><p>|</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>if x hasn’t implemented __add__, and x and y are of different types, then y.__radd__(x) is called. There are equivalent r methods for all magic methods in table</p></li>
+<li><p>If __ne__ is not implemented, it returns the opposite of __eq__</p></li>
+</ul>
+</section>
+<section id="class-methods">
+<h3>class methods<a class="headerlink" href="#class-methods" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>are called by a class, which is passed to the cls parameter of the method</p></li>
+<li><p>A common use of these are factory methods, which instantiate an instance of a class, using different parameters than those usually passed to the class constructor</p></li>
+<li><p>&#64;classmethod</p></li>
+</ul>
+<ul class="simple">
+<li><p>similar to static methods in that they can be invoked before an object of the class has been instantiated or by using an instance of the class.</p></li>
+<li><p>Class methods are implicitly passed the class they belong to as their first parameter, so you can code em more simply</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="k">def</span> <span class="nf">calculate_area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new_square</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">side_length</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">side_lenght</span><span class="p">,</span> <span class="n">side_length</span><span class="p">)</span>
+
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="o">.</span><span class="n">new_square</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="o">.</span><span class="n">calculate_area</span><span class="p">())</span> <span class="c1"># 25</span>
+
+
+
+<span class="k">class</span> <span class="nc">Juice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">combined_cap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">capacity</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">capacity</span>
+        <span class="n">combined_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;&amp;&#39;</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="n">Juice</span><span class="p">(</span><span class="n">combined_name</span><span class="p">,</span> <span class="n">combined_cap</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; (&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">capacity</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;L)&#39;</span><span class="p">)</span>
+
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Juice</span><span class="p">(</span><span class="s1">&#39;Orange&#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Juice</span><span class="p">(</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;circle_cm module: contains the Circle class.&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">Circle</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Circle class&quot;&quot;&quot;</span>
+    <span class="n">all_circles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Circle with the given radius&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">all_circles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;determine the area of the Circle&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">total_area</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">all_circles</span><span class="p">:</span>  <span class="c1"># use cls instead of self.__class__</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">total</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">circle_cm</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="o">.</span><span class="n">total_area</span><span class="p">()</span>
+<span class="mf">15.70795</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c2</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="o">.</span><span class="n">total_area</span><span class="p">()</span>
+<span class="mf">31.415899999999997</span>
+</pre></div>
+</div>
+</section>
 <section id="getattr-setattr">
 <h3>getattr setattr<a class="headerlink" href="#getattr-setattr" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyColor</span><span class="p">:</span>
@@ -1352,6 +1771,19 @@ To change the property, you need to add a setter:</p>
 <span class="c1"># Prints Deleting name</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toppings</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toppings</span> <span class="o">=</span> <span class="n">toppings</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pineapple_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">pizza</span> <span class="o">=</span> <span class="n">Pizza</span><span class="p">([</span><span class="s2">&quot;cheese&quot;</span><span class="p">,</span> <span class="s2">&quot;tomato&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">pinapple_allowed</span><span class="p">)</span>
+<span class="n">pizza</span><span class="o">.</span><span class="n">pineapple_allowed</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
 </section>
 <section id="scope">
 <h3>scope<a class="headerlink" href="#scope" title="Link to this heading">¶</a></h3>
@@ -1551,43 +1983,6 @@ All these classes can be directly accessed:</p>
 </pre></div>
 </div>
 </section>
-<section id="class-methods">
-<h3>class methods<a class="headerlink" href="#class-methods" title="Link to this heading">¶</a></h3>
-<ul class="simple">
-<li><p>similar to static methods in that they can be invoked before an object of the class has been instantiated or by using an instance of the class.</p></li>
-<li><p>Class methods are implicitly passed the class they belong to as their first parameter, so you can code em more simply</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;circle_cm module: contains the Circle class.&quot;&quot;&quot;</span>
-<span class="k">class</span> <span class="nc">Circle</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Circle class&quot;&quot;&quot;</span>
-    <span class="n">all_circles</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a Circle with the given radius&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">all_circles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;determine the area of the Circle&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">total_area</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">all_circles</span><span class="p">:</span>  <span class="c1"># use cls instead of self.__class__</span>
-            <span class="n">total</span> <span class="o">=</span> <span class="n">total</span> <span class="o">+</span> <span class="n">c</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">total</span>
-
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">circle_cm</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="o">.</span><span class="n">total_area</span><span class="p">()</span>
-<span class="mf">15.70795</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">c2</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">circle_cm</span><span class="o">.</span><span class="n">Circle</span><span class="o">.</span><span class="n">total_area</span><span class="p">()</span>
-<span class="mf">31.415899999999997</span>
-</pre></div>
-</div>
-</section>
 <section id="inheritance">
 <h3>inheritance<a class="headerlink" href="#inheritance" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Shape</span><span class="p">:</span>
@@ -1706,70 +2101,70 @@ All these classes can be directly accessed:</p>
 <span class="mf">3.14159</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pizza</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">toppings</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">toppings</span> <span class="o">=</span> <span class="n">toppings</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_pineapple_allowed</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">pineapple_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pineapple_allowed</span>
+	
+	<span class="nd">@pineapple_allowed</span><span class="o">.</span><span class="n">setter</span>
+	<span class="k">def</span> <span class="nf">pineapple_allowed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+			<span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the password: &quot;</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">password</span> <span class="o">==</span> <span class="s2">&quot;Sw0rdf1sh!&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_pineapple_allowed</span> <span class="o">=</span> <span class="n">value</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Alert! Intruder!&quot;</span><span class="p">)</span>
+				
+				
+<span class="n">pizza</span> <span class="o">=</span> <span class="n">Pizza</span><span class="p">([</span><span class="s2">&quot;cheese&quot;</span><span class="p">,</span> <span class="s2">&quot;tomato&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">pineapple_allowed</span><span class="p">)</span>
+<span class="n">pizza</span><span class="o">.</span><span class="n">pineapple_allowed</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pizza</span><span class="o">.</span><span class="n">pineapple_allowed</span><span class="p">)</span>
+
+
+<span class="c1"># simple game</span>
+<span class="k">class</span> <span class="nc">Goblin</span><span class="p">(</span><span class="n">GameObject</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;goblin&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span> <span class="o">=</span> <span class="s2">&quot; A foul creature&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&gt;=</span><span class="mi">3</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">health_line</span> <span class="o">=</span> <span class="s2">&quot;It has a wound on its knee.&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">health_line</span> <span class="o">=</span> <span class="s2">&quot;Its left arm has been cut off!&quot;</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">health</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">health_line</span> <span class="o">=</span> <span class="s2">&quot;It is dead.&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">health_line</span>
+
+    <span class="nd">@desc</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">desc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_desc</span> <span class="o">=</span> <span class="n">value</span>
+
+<span class="k">def</span> <span class="nf">hit</span><span class="p">(</span><span class="n">noun</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">noun</span> <span class="ow">in</span> <span class="n">GameObject</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+        <span class="n">thing</span> <span class="o">=</span> <span class="n">GameObject</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="n">noun</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span> <span class="o">==</span> <span class="n">Goblin</span><span class="p">:</span>
+            <span class="n">thing</span><span class="o">.</span><span class="n">health</span> <span class="o">=</span> <span class="n">thing</span><span class="o">.</span><span class="n">health</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">thing</span><span class="o">.</span><span class="n">health</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;You killed the goblin!&quot;</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;You hit the </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thing</span><span class="o">.</span><span class="n">class_name</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span><span class="s2">&quot;There is no </span><span class="si">{}</span><span class="s2"> here.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">noun</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="n">msg</span>
+</pre></div>
+</div>
 </section>
-</section>
-<section id="recursion">
-<h2>recursion<a class="headerlink" href="#recursion" title="Link to this heading">¶</a></h2>
-<p>Solve problems that can be broken up into sub-problems of the same type</p>
-<ul class="simple">
-<li><p>5! (5 factorial) is 5 * 4 * 3 * 2 * 1 (120)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">n!</span> <span class="pre">=</span> <span class="pre">n</span> <span class="pre">*</span> <span class="pre">(n-1)!</span></code></p></li>
-<li><p><strong>BASE CASE: 1! = 1</strong> -&gt; can be calculated without performing any more factorial function calls</p></li>
-</ul>
-<p>note: The base case acts as the exit condition of the recursion</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="c1"># base case</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="nb">print</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 120</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="sd">&quot;&quot;&quot;fibonacci&quot;&quot;&quot;</span>
-<span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">n</span>  <span class="c1"># returns 0 &amp; 1&#39;s</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibo</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-
-
-<span class="n">number</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">fibo</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="nb">print</span><span class="p">(</span><span class="n">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>  <span class="c1"># 8</span>
-</pre></div>
-</div>
-<p>note: Recursion can also be indirect. One function can call a second, which calls the first, which calls the second, and so on. This can occur with any number of functions</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_even</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">is_odd</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">is_odd</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="ow">not</span> <span class="n">is_even</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># not! else will also return True when odd</span>
-
-
-<span class="n">is_even</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>  <span class="c1"># False</span>
-<span class="n">is_even</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="c1"># True</span>
-<span class="n">is_odd</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>  <span class="c1"># True</span>
-</pre></div>
-</div>
 </section>
 <section id="files-and-resource-management">
 <h2>files and resource management<a class="headerlink" href="#files-and-resource-management" title="Link to this heading">¶</a></h2>
@@ -1781,26 +2176,43 @@ All these classes can be directly accessed:</p>
 <li><p>mode: read/write/append, binary/text</p></li>
 <li><p>encoding: text encoding</p></li>
 </ul>
-<p>https://docs.python.org/3/library/functions.html#open</p>
-<p>+———–+—————————————————————–+
-| Character | Meaning                                                         |
-+===========+=================================================================+
-| ‘r’       | open for reading (default)                                      |
-+———–+—————————————————————–+
-| ‘w’       | open for writing, truncating the file first                     |
-+———–+—————————————————————–+
-| ‘x’       | open for exclusive creation, failing if the file already exists |
-+———–+—————————————————————–+
-| ‘a’       | open for writing, appending to the end of the file if it exists |
-+———–+—————————————————————–+
-| ‘b’       | binary mode                                                     |
-+———–+—————————————————————–+
-| ‘t’       | text mode (default)                                             |
-+———–+—————————————————————–+
-| ‘+’       | open a disk file for updating (reading and writing)             |
-+———–+—————————————————————–+
-| ‘U’       | universal newlines mode (deprecated)                            |
-+———–+—————————————————————–+</p>
+<p><a class="reference external" href="https://docs.python.org/3/library/functions.html#open">docs open</a></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Character</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>‘r’</p></td>
+<td><p>open for reading (default)</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘w’</p></td>
+<td><p>open for writing, truncating the file first</p></td>
+</tr>
+<tr class="row-even"><td><p>‘x’</p></td>
+<td><p>open for exclusive creation, failing if the file already exists</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘a’</p></td>
+<td><p>open for writing, appending to the end of the file if it exists</p></td>
+</tr>
+<tr class="row-even"><td><p>‘b’</p></td>
+<td><p>binary mode</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘t’</p></td>
+<td><p>text mode (default)</p></td>
+</tr>
+<tr class="row-even"><td><p>‘+’</p></td>
+<td><p>open a disk file for updating (reading and writing)</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘U’</p></td>
+<td><p>universal newlines mode (deprecated)</p></td>
+</tr>
+<tr class="row-even"><td><p>–</p></td>
+<td><p>–</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="write">
 <h3>write<a class="headerlink" href="#write" title="Link to this heading">¶</a></h3>
@@ -2159,13 +2571,17 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -2177,12 +2593,20 @@ You can define your own dialect using register_dialect method</p>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">fundamentals</a><ul>
+<li><a class="reference internal" href="#main"><code class="docutils literal notranslate"><span class="pre">__main__</span></code></a></li>
+<li><a class="reference internal" href="#packaging">packaging</a><ul>
+<li><a class="reference internal" href="#setup-py">setup.py</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#enums">enums</a></li>
+<li><a class="reference internal" href="#ternary-operator">Ternary operator</a></li>
+<li><a class="reference internal" href="#more-on-else">more on else</a></li>
 <li><a class="reference internal" href="#strings">strings</a><ul>
 <li><a class="reference internal" href="#string-operations">string operations</a></li>
 <li><a class="reference internal" href="#string-templates">string templates</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#sorting">sorting</a></li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#range-number-1">range(number+1)</a></li>
 </ul>
@@ -2211,6 +2635,7 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#dictionary">dictionary</a></li>
 <li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
+<li><a class="reference internal" href="#nested">nested</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#any-all">any() all()</a><ul>
@@ -2224,18 +2649,21 @@ You can define your own dialect using register_dialect method</p>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
 <li><a class="reference internal" href="#classes">classes</a></li>
+<li><a class="reference internal" href="#superclass">Superclass</a></li>
+<li><a class="reference internal" href="#indirect-inheritance">indirect inheritance</a></li>
+<li><a class="reference internal" href="#super-function">super function</a></li>
+<li><a class="reference internal" href="#magic-methods">magic methods</a></li>
+<li><a class="reference internal" href="#class-methods">class methods</a></li>
 <li><a class="reference internal" href="#getattr-setattr">getattr setattr</a></li>
 <li><a class="reference internal" href="#properties">properties</a></li>
 <li><a class="reference internal" href="#properties-demo">properties demo</a></li>
 <li><a class="reference internal" href="#scope">scope</a></li>
 <li><a class="reference internal" href="#redefine-getter-setter">redefine getter/setter</a></li>
 <li><a class="reference internal" href="#static-methods">static methods</a></li>
-<li><a class="reference internal" href="#class-methods">class methods</a></li>
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#recursion">recursion</a></li>
 <li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
 <li><a class="reference internal" href="#open">open</a></li>
 <li><a class="reference internal" href="#write">write</a></li>
@@ -2342,7 +2770,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2023-12-13.
+    Last updated on 2023-12-18.
     
     <br />
 
