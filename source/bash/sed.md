@@ -1,17 +1,19 @@
-# line selection 
+# sed
 
-## first last
+## line selection 
+
+### first last
 
 ```bash
 sed -n '1p' /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 
-## last line
+### last line
 sed -n '$p' /etc/passwd
 _flatpak:x:130:139:Flatpak system-wide installation helper,,,:/nonexistent:/usr/sbin/nologin
 ```
 
-## range
+### range
 
 ```bash
 sed -n '1,3p' /etc/passwd
@@ -28,7 +30,7 @@ _flatpak:x:130:139:Flatpak system-wide installation helper,,,:/nonexistent:/usr/
 sed -n "45,$(( $(wc -l </etc/ssh/ssh_config)-1 ))p" < /etc/ssh/ssh_config
 ```
 
-### fetch blocks
+#### fetch blocks
 
 ```bash
 sed -n '/<Directory/,/<\/Directory/p' /etc/apache2/conf-available/javascript-common.conf 
@@ -37,7 +39,7 @@ sed -n '/<Directory/,/<\/Directory/p' /etc/apache2/conf-available/javascript-com
 </Directory>
 ```
 
-## include next line in search
+### include next line in search
 
 ```bash
 sed -E -n "N;s/You can adapt/lol/p" source/index.rst
@@ -45,9 +47,9 @@ sed -E -n "N;s/You can adapt/lol/p" source/index.rst
    contain the root `toctree` directive.
 ```
 
-# append insert delete actions
+## append insert delete actions
 
-## append
+### append
 ```bash
 # doesn't append yet since no -i inplace flag
 sudo sed '$a 208.67.222.222 opendns' /etc/hosts
@@ -88,7 +90,7 @@ sed "$ a # last in line" < /etc/ssh/ssh_config
 
 ```
 
-### with regex
+#### with regex
 
 sed '/PATTERN/ a <LINE-TO-BE-ADDED>' FILE.txt
 
@@ -103,7 +105,7 @@ This is line #5
 This is line #6
 ```
 
-## insert
+### insert
 
 ```bash
 sed '/8/ i #This line is inserted using sed' sedtest.txt
@@ -119,7 +121,7 @@ This is line #9
 This is line #10
 ```
 
-### insert script
+#### insert script
 
 ```bash
 #!/bin/bash
@@ -132,17 +134,17 @@ for f in  ~/scripts/*.sh; do
 done
 ```
 
-# substitute
+## substitute
 
-## ignore case
+### ignore case
 
 ```bash
 sed -E -i 's/something/else/Ig' file.py
 
-# test with grep -i "something" file.py
+## test with grep -i "something" file.py
 ```
 
-## backreferences
+### backreferences
 
 ```bash
 echo 'one two three' | sed 's/\(one\) \(two\) \(three\)/\3 \2 \1/'
@@ -167,7 +169,7 @@ reg_exp 123 Hello
 # The sequence \w is equivalent to [[:alnum:]_]
 ```
 
-### reduce md titles
+#### reduce md titles
 
 ```
 ##### five should become 4
@@ -191,18 +193,18 @@ result:
 sed -E -n "s/^(#)(\##+)(\s)/\2\3/p" assert.md
 ```
 
-# grouping expressions
+## grouping expressions
 
-## by semicolon
+### by semicolon
 
 ```bash
 # del empty line, del commented line
 sed '/^$/d;/^#/d'
 ```
 
-## file scripts
+### file scripts
 
-### simple
+#### simple
 
 ```bash
 vim simple.sed
@@ -211,9 +213,9 @@ vim simple.sed
 
 sed -f simple.sed ssh_config
 ```
-### advanced
+#### advanced
 
-#### branching & labels
+##### branching & labels
 
 keep clients alive
 
@@ -243,14 +245,14 @@ t = test
 :del
 /^($|#)/del                             # delete empty lines
 ```
-#### in-place backups
+##### in-place backups
 
 ```bash
 sed -f ssh_client.sed -i.bak ssh_config
 
 ```
 
-#### using sed in a loop
+##### using sed in a loop
 
 ssh -n: redirect stdin to /dev/null, allowing remote execution on multiple servers
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>line selection &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sed &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -69,10 +69,7 @@
 <li class="toctree-l2"><a class="reference internal" href="find.html">find</a></li>
 <li class="toctree-l2"><a class="reference internal" href="networking.html">networking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripting.html">scripting</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">line selection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#substitute">substitute</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sed</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
@@ -81,7 +78,8 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">line selection</a><ul>
+<li><a class="reference internal" href="#">sed</a><ul>
+<li><a class="reference internal" href="#line-selection">line selection</a><ul>
 <li><a class="reference internal" href="#first-last">first last</a></li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
@@ -117,6 +115,8 @@
 <li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
 <li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
 <li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -164,7 +164,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">bash</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">line selection</a></li>
+        <li class="nav-item nav-item-this"><a href="">sed</a></li>
                 <li class="right">
                     
 
@@ -194,21 +194,23 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="line-selection">
-<h1>line selection<a class="headerlink" href="#line-selection" title="Link to this heading">¶</a></h1>
+  <section id="sed">
+<h1>sed<a class="headerlink" href="#sed" title="Link to this heading">¶</a></h1>
+<section id="line-selection">
+<h2>line selection<a class="headerlink" href="#line-selection" title="Link to this heading">¶</a></h2>
 <section id="first-last">
-<h2>first last<a class="headerlink" href="#first-last" title="Link to this heading">¶</a></h2>
+<h3>first last<a class="headerlink" href="#first-last" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1p&#39;</span><span class="w"> </span>/etc/passwd
 root:x:0:0:root:/root:/bin/bash
 
-<span class="c1">## last line</span>
+<span class="c1">### last line</span>
 sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;$p&#39;</span><span class="w"> </span>/etc/passwd
 _flatpak:x:130:139:Flatpak<span class="w"> </span>system-wide<span class="w"> </span>installation<span class="w"> </span>helper,,,:/nonexistent:/usr/sbin/nologin
 </pre></div>
 </div>
 </section>
 <section id="range">
-<h2>range<a class="headerlink" href="#range" title="Link to this heading">¶</a></h2>
+<h3>range<a class="headerlink" href="#range" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1,3p&#39;</span><span class="w"> </span>/etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
@@ -224,7 +226,7 @@ sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;45,<
 </pre></div>
 </div>
 <section id="fetch-blocks">
-<h3>fetch blocks<a class="headerlink" href="#fetch-blocks" title="Link to this heading">¶</a></h3>
+<h4>fetch blocks<a class="headerlink" href="#fetch-blocks" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;/&lt;Directory/,/&lt;\/Directory/p&#39;</span><span class="w"> </span>/etc/apache2/conf-available/javascript-common.conf<span class="w"> </span>
 &lt;Directory<span class="w"> </span><span class="s2">&quot;/usr/share/javascript/&quot;</span>&gt;
 <span class="w">    </span>Options<span class="w"> </span>FollowSymLinks<span class="w"> </span>MultiViews
@@ -234,7 +236,7 @@ sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;45,<
 </section>
 </section>
 <section id="include-next-line-in-search">
-<h2>include next line in search<a class="headerlink" href="#include-next-line-in-search" title="Link to this heading">¶</a></h2>
+<h3>include next line in search<a class="headerlink" href="#include-next-line-in-search" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-E<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;N;s/You can adapt/lol/p&quot;</span><span class="w"> </span>source/index.rst
 <span class="w">   </span>lol<span class="w"> </span>this<span class="w"> </span>file<span class="w"> </span>completely<span class="w"> </span>to<span class="w"> </span>your<span class="w"> </span>liking,<span class="w"> </span>but<span class="w"> </span>it<span class="w"> </span>should<span class="w"> </span>at<span class="w"> </span>least
 <span class="w">   </span>contain<span class="w"> </span>the<span class="w"> </span>root<span class="w"> </span><span class="sb">`</span>toctree<span class="sb">`</span><span class="w"> </span>directive.
@@ -243,9 +245,9 @@ sed<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;45,<
 </section>
 </section>
 <section id="append-insert-delete-actions">
-<h1>append insert delete actions<a class="headerlink" href="#append-insert-delete-actions" title="Link to this heading">¶</a></h1>
+<h2>append insert delete actions<a class="headerlink" href="#append-insert-delete-actions" title="Link to this heading">¶</a></h2>
 <section id="append">
-<h2>append<a class="headerlink" href="#append" title="Link to this heading">¶</a></h2>
+<h3>append<a class="headerlink" href="#append" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># doesn&#39;t append yet since no -i inplace flag</span>
 sudo<span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;$a 208.67.222.222 opendns&#39;</span><span class="w"> </span>/etc/hosts
 ...
@@ -285,7 +287,7 @@ sed<span class="w"> </span><span class="s2">&quot;</span>$<span class="s2"> a # 
 </pre></div>
 </div>
 <section id="with-regex">
-<h3>with regex<a class="headerlink" href="#with-regex" title="Link to this heading">¶</a></h3>
+<h4>with regex<a class="headerlink" href="#with-regex" title="Link to this heading">¶</a></h4>
 <p>sed ‘/PATTERN/ a <LINE-TO-BE-ADDED>’ FILE.txt</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;/5/ a #Next line is the 6th line, not this&#39;</span><span class="w"> </span>sedtest.txt
 This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#1</span>
@@ -300,7 +302,7 @@ This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </spa
 </section>
 </section>
 <section id="insert">
-<h2>insert<a class="headerlink" href="#insert" title="Link to this heading">¶</a></h2>
+<h3>insert<a class="headerlink" href="#insert" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span><span class="s1">&#39;/8/ i #This line is inserted using sed&#39;</span><span class="w"> </span>sedtest.txt
 This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#1</span>
 This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </span><span class="c1">#2</span>
@@ -315,7 +317,7 @@ This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </spa
 </pre></div>
 </div>
 <section id="insert-script">
-<h3>insert script<a class="headerlink" href="#insert-script" title="Link to this heading">¶</a></h3>
+<h4>insert script<a class="headerlink" href="#insert-script" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="k">for</span><span class="w"> </span>f<span class="w"> </span><span class="k">in</span><span class="w">  </span>~/scripts/*.sh<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">  </span><span class="nv">firstline</span><span class="o">=</span><span class="k">$(</span>sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;1p&#39;</span><span class="w"> </span><span class="nv">$f</span><span class="k">)</span>
@@ -330,17 +332,17 @@ This<span class="w"> </span>is<span class="w"> </span>line<span class="w"> </spa
 </section>
 </section>
 <section id="substitute">
-<h1>substitute<a class="headerlink" href="#substitute" title="Link to this heading">¶</a></h1>
+<h2>substitute<a class="headerlink" href="#substitute" title="Link to this heading">¶</a></h2>
 <section id="ignore-case">
-<h2>ignore case<a class="headerlink" href="#ignore-case" title="Link to this heading">¶</a></h2>
+<h3>ignore case<a class="headerlink" href="#ignore-case" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-E<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/something/else/Ig&#39;</span><span class="w"> </span>file.py
 
-<span class="c1"># test with grep -i &quot;something&quot; file.py</span>
+<span class="c1">## test with grep -i &quot;something&quot; file.py</span>
 </pre></div>
 </div>
 </section>
 <section id="backreferences">
-<h2>backreferences<a class="headerlink" href="#backreferences" title="Link to this heading">¶</a></h2>
+<h3>backreferences<a class="headerlink" href="#backreferences" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;one two three&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/\(one\) \(two\) \(three\)/\3 \2 \1/&#39;</span>
 three<span class="w"> </span>two<span class="w"> </span>one
 </pre></div>
@@ -361,7 +363,7 @@ reg_exp<span class="w"> </span><span class="m">123</span><span class="w"> </span
 </pre></div>
 </div>
 <section id="reduce-md-titles">
-<h3>reduce md titles<a class="headerlink" href="#reduce-md-titles" title="Link to this heading">¶</a></h3>
+<h4>reduce md titles<a class="headerlink" href="#reduce-md-titles" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##### five should become 4</span>
 <span class="c1"># comment should stay comment</span>
 <span class="c1">## two should STAY 2</span>
@@ -386,18 +388,18 @@ reg_exp<span class="w"> </span><span class="m">123</span><span class="w"> </span
 </section>
 </section>
 <section id="grouping-expressions">
-<h1>grouping expressions<a class="headerlink" href="#grouping-expressions" title="Link to this heading">¶</a></h1>
+<h2>grouping expressions<a class="headerlink" href="#grouping-expressions" title="Link to this heading">¶</a></h2>
 <section id="by-semicolon">
-<h2>by semicolon<a class="headerlink" href="#by-semicolon" title="Link to this heading">¶</a></h2>
+<h3>by semicolon<a class="headerlink" href="#by-semicolon" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># del empty line, del commented line</span>
 sed<span class="w"> </span><span class="s1">&#39;/^$/d;/^#/d&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="file-scripts">
-<h2>file scripts<a class="headerlink" href="#file-scripts" title="Link to this heading">¶</a></h2>
+<h3>file scripts<a class="headerlink" href="#file-scripts" title="Link to this heading">¶</a></h3>
 <section id="simple">
-<h3>simple<a class="headerlink" href="#simple" title="Link to this heading">¶</a></h3>
+<h4>simple<a class="headerlink" href="#simple" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vim<span class="w"> </span>simple.sed
 /^$/d
 /^#/d
@@ -407,9 +409,9 @@ sed<span class="w"> </span>-f<span class="w"> </span>simple.sed<span class="w"> 
 </div>
 </section>
 <section id="advanced">
-<h3>advanced<a class="headerlink" href="#advanced" title="Link to this heading">¶</a></h3>
+<h4>advanced<a class="headerlink" href="#advanced" title="Link to this heading">¶</a></h4>
 <section id="branching-labels">
-<h4>branching &amp; labels<a class="headerlink" href="#branching-labels" title="Link to this heading">¶</a></h4>
+<h5>branching &amp; labels<a class="headerlink" href="#branching-labels" title="Link to this heading">¶</a></h5>
 <p>keep clients alive</p>
 <p>ClientAliveInterval: how often is a keep alive packet sent to client
 ClientAliveCountMax: intervals that can pass without a client response</p>
@@ -437,13 +439,13 @@ t = test</p>
 </div>
 </section>
 <section id="in-place-backups">
-<h4>in-place backups<a class="headerlink" href="#in-place-backups" title="Link to this heading">¶</a></h4>
+<h5>in-place backups<a class="headerlink" href="#in-place-backups" title="Link to this heading">¶</a></h5>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sed<span class="w"> </span>-f<span class="w"> </span>ssh_client.sed<span class="w"> </span>-i.bak<span class="w"> </span>ssh_config
 </pre></div>
 </div>
 </section>
 <section id="using-sed-in-a-loop">
-<h4>using sed in a loop<a class="headerlink" href="#using-sed-in-a-loop" title="Link to this heading">¶</a></h4>
+<h5>using sed in a loop<a class="headerlink" href="#using-sed-in-a-loop" title="Link to this heading">¶</a></h5>
 <p>ssh -n: redirect stdin to /dev/null, allowing remote execution on multiple servers</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>server<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 <span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;configuring server: $server&#39;</span>
@@ -452,6 +454,7 @@ t = test</p>
 <span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>server_ips.txt
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 </section>
@@ -473,10 +476,7 @@ t = test</p>
 <li class="toctree-l2"><a class="reference internal" href="find.html">find</a></li>
 <li class="toctree-l2"><a class="reference internal" href="networking.html">networking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scripting.html">scripting</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">line selection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#append-insert-delete-actions">append insert delete actions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#substitute">substitute</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#grouping-expressions">grouping expressions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sed</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
@@ -485,7 +485,8 @@ t = test</p>
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">line selection</a><ul>
+<li><a class="reference internal" href="#">sed</a><ul>
+<li><a class="reference internal" href="#line-selection">line selection</a><ul>
 <li><a class="reference internal" href="#first-last">first last</a></li>
 <li><a class="reference internal" href="#range">range</a><ul>
 <li><a class="reference internal" href="#fetch-blocks">fetch blocks</a></li>
@@ -521,6 +522,8 @@ t = test</p>
 <li><a class="reference internal" href="#branching-labels">branching &amp; labels</a></li>
 <li><a class="reference internal" href="#in-place-backups">in-place backups</a></li>
 <li><a class="reference internal" href="#using-sed-in-a-loop">using sed in a loop</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -568,7 +571,7 @@ t = test</p>
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" >bash</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">line selection</a></li>
+        <li class="nav-item nav-item-this"><a href="">sed</a></li>
                 <li class="right">
                     
 
@@ -607,7 +610,7 @@ t = test</p>
 <br />
     <br />
 
-    Last updated on 2023-12-18.
+    Last updated on 2023-12-20.
     
     <br />
 
