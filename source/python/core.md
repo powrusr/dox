@@ -250,6 +250,50 @@ list(product(range(3), a))
 # [(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]
 ```
 
+## combinations
+
+```python
+
+import itertools
+
+words = sorted({line.strip().lower() for line in open('/usr/share/dict/words', 'r')})
+
+
+def signature(word):
+    return ''.join(sorted(word))
+
+
+words_by_sig = collections.defaultdict(set)
+
+
+for word in words:
+    words_by_sig[signature(word)].add(word)
+
+    
+anagrams_by_sig = {sig: wordset for sig, wordset in words_by_sig.items() if len(wordset) > 1}
+
+
+# list all combinations of two different elements from the set {1,2,3} 
+list(itertools.combinations({1,2,3}, 2))
+[(1, 2), (1, 3), (2, 3)]
+
+# same as above, using itertools.combinations to generate unique pairs
+
+pairs = []
+
+for wordset in anagrams_by_sig.values():
+    for word1, word2 in itertools.combinations(wordset, 2):
+        if word1[::-1] == word2:
+            pairs.append((word1, word2))
+
+pairs
+[('ba', 'ab'), ('able', 'elba'), ('mba', 'abm'), ('abut', 'tuba'), ('ac', 'ca'), ('ad', 'da'),
+('fa', 'af'), ('ga', 'ag'), ('agar', 'raga'), ('sega', 'ages'), ('ha', 'ah'), ('ia', 'ai'),
+('ila', 'ali'), ('delia', 'ailed'), ('mia', 'aim'), ('iras', 'sari'), ('ajar', 'raja'), ('la', 'al')
+..
+('zeus', 'suez'), ('sway', 'yaws'), ('tort', 'trot'), ('wot', 'tow'), ('vt', 'tv'), ('way', 'yaw')]
+```
+
 # collections
 
 This module implements specialized container datatypes providing alternatives to Python's general purpose built-in containers, dict, list, set, and tuple.

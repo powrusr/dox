@@ -96,6 +96,7 @@
 <li><a class="reference internal" href="#take">take</a></li>
 <li><a class="reference internal" href="#takewhile-dropwhile">takewhile/dropwhile</a></li>
 <li><a class="reference internal" href="#product-permutations">product &amp; permutations</a></li>
+<li><a class="reference internal" href="#combinations">combinations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#collections">collections</a><ul>
@@ -420,6 +421,50 @@ eg two  series of temperature data</p>
 <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">a</span><span class="p">)))</span> <span class="c1"># 6</span>
 <span class="nb">list</span><span class="p">(</span><span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">a</span><span class="p">))</span>
 <span class="c1"># [(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]</span>
+</pre></div>
+</div>
+</section>
+<section id="combinations">
+<h2>combinations<a class="headerlink" href="#combinations" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/usr/share/dict/words&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)})</span>
+
+
+<span class="k">def</span> <span class="nf">signature</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+
+
+<span class="n">words_by_sig</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+    <span class="n">words_by_sig</span><span class="p">[</span><span class="n">signature</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+    
+<span class="n">anagrams_by_sig</span> <span class="o">=</span> <span class="p">{</span><span class="n">sig</span><span class="p">:</span> <span class="n">wordset</span> <span class="k">for</span> <span class="n">sig</span><span class="p">,</span> <span class="n">wordset</span> <span class="ow">in</span> <span class="n">words_by_sig</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wordset</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">}</span>
+
+
+<span class="c1"># list all combinations of two different elements from the set {1,2,3} </span>
+<span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">},</span> <span class="mi">2</span><span class="p">))</span>
+<span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
+
+<span class="c1"># same as above, using itertools.combinations to generate unique pairs</span>
+
+<span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">wordset</span> <span class="ow">in</span> <span class="n">anagrams_by_sig</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">word1</span><span class="p">,</span> <span class="n">word2</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">wordset</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">word1</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">word2</span><span class="p">:</span>
+            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">word1</span><span class="p">,</span> <span class="n">word2</span><span class="p">))</span>
+
+<span class="n">pairs</span>
+<span class="p">[(</span><span class="s1">&#39;ba&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;able&#39;</span><span class="p">,</span> <span class="s1">&#39;elba&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mba&#39;</span><span class="p">,</span> <span class="s1">&#39;abm&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;abut&#39;</span><span class="p">,</span> <span class="s1">&#39;tuba&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ac&#39;</span><span class="p">,</span> <span class="s1">&#39;ca&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ad&#39;</span><span class="p">,</span> <span class="s1">&#39;da&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;fa&#39;</span><span class="p">,</span> <span class="s1">&#39;af&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ga&#39;</span><span class="p">,</span> <span class="s1">&#39;ag&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;agar&#39;</span><span class="p">,</span> <span class="s1">&#39;raga&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sega&#39;</span><span class="p">,</span> <span class="s1">&#39;ages&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ha&#39;</span><span class="p">,</span> <span class="s1">&#39;ah&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ia&#39;</span><span class="p">,</span> <span class="s1">&#39;ai&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;ila&#39;</span><span class="p">,</span> <span class="s1">&#39;ali&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;delia&#39;</span><span class="p">,</span> <span class="s1">&#39;ailed&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mia&#39;</span><span class="p">,</span> <span class="s1">&#39;aim&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;iras&#39;</span><span class="p">,</span> <span class="s1">&#39;sari&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ajar&#39;</span><span class="p">,</span> <span class="s1">&#39;raja&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;la&#39;</span><span class="p">,</span> <span class="s1">&#39;al&#39;</span><span class="p">)</span>
+<span class="o">..</span>
+<span class="p">(</span><span class="s1">&#39;zeus&#39;</span><span class="p">,</span> <span class="s1">&#39;suez&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sway&#39;</span><span class="p">,</span> <span class="s1">&#39;yaws&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;tort&#39;</span><span class="p">,</span> <span class="s1">&#39;trot&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;wot&#39;</span><span class="p">,</span> <span class="s1">&#39;tow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;vt&#39;</span><span class="p">,</span> <span class="s1">&#39;tv&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;way&#39;</span><span class="p">,</span> <span class="s1">&#39;yaw&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
 </section>
@@ -773,6 +818,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <li><a class="reference internal" href="#take">take</a></li>
 <li><a class="reference internal" href="#takewhile-dropwhile">takewhile/dropwhile</a></li>
 <li><a class="reference internal" href="#product-permutations">product &amp; permutations</a></li>
+<li><a class="reference internal" href="#combinations">combinations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#collections">collections</a><ul>

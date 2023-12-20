@@ -237,6 +237,7 @@ print(str3)
 ## sorting
 
 ```python
+# words.txt = /usr/share/dict/words
 words = sorted({line.strip().lower() for line in open('words.txt', 'r')})
 
 sorted("aaron")
