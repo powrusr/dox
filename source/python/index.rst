@@ -9,7 +9,6 @@ python
    asyncio.md
    core.md
    dataclass.md
-   decorators.md
    designpatterns.md
    file_ops.md
    functional.md

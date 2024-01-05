@@ -184,6 +184,11 @@
 <li><a class="reference internal" href="#lxml">lxml</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#persistency">persistency</a><ul>
+<li><a class="reference internal" href="#pickle-vs-shelve">pickle vs shelve</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#timezones">timezones</a></li>
 </ul>
 </li>
 </ul>
@@ -391,6 +396,12 @@ For example, the days of the week:</p>
 <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;logout&quot;</span> <span class="k">if</span> <span class="n">status</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;login&quot;</span>
 
 <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="mi">2</span><span class="o">+</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">5</span> <span class="k">else</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;realtime_start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span><span class="p">}</span> <span class="k">if</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span> <span class="k">else</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span><span class="p">}</span>
+
+<span class="c1"># don&#39;t do this</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;realtime_start&quot;</span><span class="p">:</span> <span class="n">start</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span><span class="p">}</span> <span class="k">if</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="s2">&quot;lin&quot;</span> <span class="k">else</span> <span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;units&quot;</span><span class="p">:</span> <span class="n">series</span><span class="o">.</span><span class="n">unit</span><span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -2556,6 +2567,68 @@ You can define your own dialect using register_dialect method</p>
 </div>
 </section>
 </section>
+<section id="persistency">
+<h2>persistency<a class="headerlink" href="#persistency" title="Link to this heading">¶</a></h2>
+<section id="pickle-vs-shelve">
+<h3>pickle vs shelve<a class="headerlink" href="#pickle-vs-shelve" title="Link to this heading">¶</a></h3>
+<p>pickle is for serializing some object (or objects) as a single bytestream in a file.</p>
+<p>shelve builds on top of pickle and implements a serialization dictionary where objects are pickled, but associated with a key (some string), so you can load your shelved data file and access your pickled objects via keys. This could be more convenient were you to be serializing many objects.</p>
+<p>Here is an example of usage between the two</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">integers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pickle-example.p&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pfile</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">integers</span><span class="p">,</span> <span class="n">pfile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will dump the integers list to a binary file called pickle-example.p.</p>
+<p>Now try reading the pickled file back.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pickle-example.p&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">pfile</span><span class="p">:</span>
+    <span class="n">integers</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">pfile</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">integers</span>
+</pre></div>
+</div>
+<p>The above should output <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5]</span></code></p>
+<p>shelve Example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="n">integers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="c1"># c -&gt; open for reading &amp; writing</span>
+<span class="k">with</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;shelf-example&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">shelf</span><span class="p">:</span>
+    <span class="n">shelf</span><span class="p">[</span><span class="s1">&#39;ints&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">integers</span>
+</pre></div>
+</div>
+<p>Notice how you add objects to the shelf via dictionary-like access.</p>
+<p>Read the object back in with code like the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shelve</span>
+
+<span class="k">with</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;shelf-example&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">shelf</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">shelf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">shelf</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>The output will be <code class="docutils literal notranslate"><span class="pre">'ints',</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5]</span></code></p>
+</section>
+</section>
+<section id="timezones">
+<h2>timezones<a class="headerlink" href="#timezones" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://docs.python.org/3/library/zoneinfo.html#module-zoneinfo">docs zoneinfo</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">pytz</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fred_tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s2">&quot;America/Chicago&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">eu_tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s2">&quot;Europe/Brussels&quot;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">fred_tz</span><span class="p">)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">22222</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">DstTzInfo</span> <span class="s1">&#39;America/Chicago&#39;</span> <span class="n">CST</span><span class="o">-</span><span class="mi">1</span> <span class="n">day</span><span class="p">,</span> <span class="mi">18</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">STD</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">test</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">eu_tz</span><span class="p">)</span>
+<span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">22222</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=&lt;</span><span class="n">DstTzInfo</span> <span class="s1">&#39;Europe/Brussels&#39;</span> <span class="n">CET</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">STD</span><span class="o">&gt;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -2689,6 +2762,11 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#lxml">lxml</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#persistency">persistency</a><ul>
+<li><a class="reference internal" href="#pickle-vs-shelve">pickle vs shelve</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#timezones">timezones</a></li>
 </ul>
 </li>
 </ul>
@@ -2771,7 +2849,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2023-12-18.
+    Last updated on 2024-01-02.
     
     <br />
 

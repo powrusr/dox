@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="assert python" href="assert.html" />
-    <link rel="prev" title="line selection" href="../bash/sed.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="prev" title="sed" href="../bash/sed.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -71,7 +71,6 @@
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -109,7 +108,7 @@
           <a href="assert.html" title="assert python"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../bash/sed.html" title="line selection"
+          <a href="../bash/sed.html" title="sed"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -204,26 +203,31 @@
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html#examples">examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="decorators.html">decorators</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html#timer">timer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html#backoff">backoff</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="designpatterns.html">design patterns</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html#factory">factory</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l1"><a class="reference internal" href="functional.html">functional programming</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="functional.html#higher-order-pure-anon-functions">Higher-order, pure &amp; anon functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#pure-function">pure function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#higher-order">higher order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#lazy-vs-eager-evaluation">lazy vs eager evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#immutability">immutability</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#lambda">lambda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#map">map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#zip">zip</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#filter">filter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#map-vs-comprehensions-gen-expression">map vs comprehensions &amp; gen expression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#any-all">any all</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#comprehensions">comprehensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#set-comprehensions">set comprehensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#dictionary-comprehensions">dictionary comprehensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#iterator">iterator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#generator">generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#recursion">recursion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#functools">functools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html#closures">closures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html#decorators">decorators</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="fundamentals.html">fundamentals</a><ul>
@@ -247,6 +251,8 @@
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#error-handling">error handling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#oop">OOP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html#files-and-resource-management">files and resource management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#persistency">persistency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html#timezones">timezones</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="generator.html">generators</a><ul>
@@ -339,7 +345,6 @@
 <li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -377,7 +382,7 @@
           <a href="assert.html" title="assert python"
              >next</a> |</li>
         <li class="right" >
-          <a href="../bash/sed.html" title="line selection"
+          <a href="../bash/sed.html" title="sed"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -429,7 +434,7 @@
 <br />
     <br />
 
-    Last updated on 2023-12-18.
+    Last updated on 2024-01-05.
     
     <br />
 

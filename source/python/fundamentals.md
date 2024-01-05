@@ -128,6 +128,12 @@ msg = "logout" if status = 1 else "login"
 
 b = 1 if 2+2 == 5 else 2
 ```
+```python
+x = {"realtime_start": start, "units": series.unit} if series.unit == "lin" else {"units": series.unit}
+
+# don't do this
+x = {"realtime_start": start, "units": series.unit} if series.unit == "lin" else x = {"units": series.unit}
+```
 
 ## more on else
 
@@ -2327,3 +2333,77 @@ for user in tree.xpath("/users/user[metier='Veterinaire']/nom"):
 # Spiderman
 ```
 
+## persistency
+
+### pickle vs shelve
+
+pickle is for serializing some object (or objects) as a single bytestream in a file.
+
+shelve builds on top of pickle and implements a serialization dictionary where objects are pickled, but associated with a key (some string), so you can load your shelved data file and access your pickled objects via keys. This could be more convenient were you to be serializing many objects.
+
+Here is an example of usage between the two
+
+```python
+import pickle
+
+integers = [1, 2, 3, 4, 5]
+
+with open('pickle-example.p', 'wb') as pfile:
+    pickle.dump(integers, pfile)
+```
+
+This will dump the integers list to a binary file called pickle-example.p.
+
+Now try reading the pickled file back.
+
+```python
+import pickle
+
+with open('pickle-example.p', 'rb') as pfile:
+    integers = pickle.load(pfile)
+    print integers
+```
+
+The above should output `[1, 2, 3, 4, 5]`
+
+shelve Example
+
+```python
+import shelve
+
+integers = [1, 2, 3, 4, 5]
+
+# c -> open for reading & writing
+with shelve.open('shelf-example', 'c') as shelf:
+    shelf['ints'] = integers
+```
+
+Notice how you add objects to the shelf via dictionary-like access.
+
+Read the object back in with code like the following:
+
+```python
+import shelve
+
+with shelve.open('shelf-example', 'r') as shelf:
+    for key in shelf.keys():
+        print(repr(key), repr(shelf[key]))
+```
+
+The output will be `'ints', [1, 2, 3, 4, 5]`
+
+## timezones
+
+[docs zoneinfo](https://docs.python.org/3/library/zoneinfo.html#module-zoneinfo)
+
+```python
+
+>>> import pytz
+>>> fred_tz = pytz.timezone("America/Chicago")
+>>> eu_tz = pytz.timezone("Europe/Brussels")
+>>> test.astimezone(fred_tz)
+datetime.datetime(2023, 12, 22, 7, 1, 33, 22222, tzinfo=<DstTzInfo 'America/Chicago' CST-1 day, 18:00:00 STD>)
+>>> test.astimezone(eu_tz)
+datetime.datetime(2023, 12, 22, 14, 1, 33, 22222, tzinfo=<DstTzInfo 'Europe/Brussels' CET+1:00:00 STD>)
+
+```
