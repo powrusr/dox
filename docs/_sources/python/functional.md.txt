@@ -2906,3 +2906,589 @@ Your resource is ready at: domain.com/fe7f4096-01cc-47bd-8547-6f6ce609460b
 Your download will start in 32 seconds
 Your resource is ready at: domain.com/8db56f70-5059-42ba-81de-a9f516d17962
 ```
+## memoization
+
+* it is an optimization technique
+* essence: avoid repetitive work
+* it works by caching results
+* cache is ideally accessible in constant time 
+* typically applied via decorators
+* should be used judiciously, rather than all the time
+
+```python
+def ackermann(m, n):
+    if m == 0:
+        return n + 1
+    elif n == 0:
+        return ackermann(m - 1, 1)
+    else:
+        return ackermann(m - 1, ackermann(m, n - 1))
+
+def memoize(func):
+    cache = {}
+    
+    def wrapper(*args):
+        if args in cache:
+            return cache[args]
+        
+        result = func(*args)
+        cache[args] = result
+        return result
+    
+    return wrapper
+# @memoize
+# def target_function:
+#     pass
+```
+```python
+from time import perf_counter
+
+start = perf_counter()
+ackermann(3, 6)
+end = perf_counter()
+no_mem_time = end - start
+print(f"Time taken with no memo: {no_mem_time:.4f} seconds")
+Time taken with no memo: 0.0516 seconds
+
+
+@memoize
+def ackermann(m, n):
+    if m == 0:
+        return n + 1
+    elif n == 0:
+        return ackermann(m - 1, 1)
+    else:
+        return ackermann(m - 1, ackermann(m, n - 1))
+
+start = perf_counter()
+ackermann(3, 6)
+end = perf_counter()
+mem_time = end - start
+print(f"Time taken with memo: {mem_time:.4f} seconds")
+Time taken with memo: 0.0018 seconds
+
+
+mem_speedup = no_mem_time / mem_time
+print(f"Memoization speedup: {mem_speedup:.2f}x")
+Memoization speedup: 28.25x
+```
+
+### cache
+
+* @cache
+* @lru_cache(maxsize=n)
+  * a cache with a memory limit
+  * Least Recently Used (LRU) ejected from cache first
+
+```python
+from functools import cache, lru_cache
+
+# @memoize
+# @cache
+# @lru_cache(maxsize=n)
+
+def fibonacci(n):
+    if n<=1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+start = perf_counter()
+fibonacci(30)
+end = perf_counter()
+no_mem_time = end - start
+print(f"Time taken with no memo: {no_mem_time:.4f} seconds")
+Time taken with no memo: 1.1816 seconds
+
+# @lru_cache(maxsize=None)
+# def fibonacci(n):
+#     if n<=1:
+#         return n
+#     return fibonacci(n-1) + fibonacci(n-2)
+
+cached_fib = lru_cache(maxsize=None)(fibonacci)
+
+start = perf_counter()
+cached_fib(30)
+end = perf_counter()
+mem_time = end - start
+print(f"Time taken with memo: {mem_time:.4f} seconds")
+Time taken with memo: 0.7067 seconds
+```
+
+inline memoization
+
+```python
+def fibonacci(n, memo={}):
+    if n in (0,1):
+        return n
+    
+    if n in memo:
+        return memo[n]
+    
+    memo[n] = fibonacci(n-1, memo) + fibonacci(n-2, memo)    
+    return memo[n]
+
+fibonacci(30)
+832040
+```
+## partials & currying
+
+* convert a function with multiple arguments into some that have fewer
+* allows us to fix a certain subset of arguments and generate a new function
+
+```python
+from functools import partial
+
+# partial(func, *args, **kwargs)
+
+def multiply(x, y):
+    return x * y
+
+double = partial(multiply, 2)
+
+double(5)
+10
+
+triple = partial(multiply, y=3)
+
+triple(2)
+6
+```
+example
+```console
+Starter
+
+def send_email(sender, recipient, subject, message):
+    print(f"From: {sender}")
+    print(f"To: {recipient}")
+    print(f"Subject: {subject}")
+    print(f"Message: {message}", end="\n\n")
+Usage
+
+update_for(recipient="hey@dukenukem.com", message="hey there")
+
+# From: noreply@example.com
+# To: hey@dukenukem.com
+# Subject: Daily Update
+# Message: hey there
+```
+```python
+from functools import partial
+
+def send_email(sender, recipient, subject, message):
+    print(f"From: {sender}")
+    print(f"To: {recipient}")
+    print(f"Subject: {subject}")
+    print(f"Message: {message}", end="\n\n")
+
+update_for = partial(send_email, sender="noreply@example.com", subject="daily dose")
+
+pfa_config = {
+    "sender": "noreply@example.com", 
+    "subject": "daily dose"
+}
+
+update_for = partial(send_email, **pfa_config)
+
+update_for(recipient="hey@dukenukem.com", message="hey there")
+From: noreply@example.com
+To: hey@dukenukem.com
+Subject: daily dose
+Message: hey there
+```
+
+## polymorphic functions
+
+### function overloading
+
+* have the function behave differently depending on what arguments are passed to it
+* python does not support it in the traditional sense, e.g. like C++, or Haskell (w/ Typeclasses)
+* functools.singledispatch fills some of the gap
+
+```python
+from functools import singledispatch
+
+@singledispatch
+def fancy_multiply(a, b):
+    raise NotImplementedError("unsupported types")
+# fancy_multiply(1,2)
+
+# * ints
+# * floats
+# * strings
+
+@fancy_multiply.register(int)
+def _(a,b):
+    print("Fancy multiplying integers")
+    print(a*b)
+
+_(1,2)
+Fancy multiplying integers
+2
+
+fancy_multiply(1,2)
+Fancy multiplying integers
+2
+
+# fancy_multiply("1","2")
+
+@fancy_multiply.register(float)
+def _(a,b):
+    print("Fancy multiplying floats")
+    print(round(a*b, 3))
+
+@fancy_multiply.register(str)
+def _(a,b):
+    print("Fancy multiplying strings")
+    print((a+b) * len(b))
+
+
+fancy_multiply(10, 20)
+fancy_multiply(10.0, 20.12391230912)
+fancy_multiply("a", "bt")
+```
+```console
+Fancy multiplying integers
+200
+Fancy multiplying floats
+201.239
+Fancy multiplying strings
+abtabt
+```
+
+### gotcha
+
+```python
+from functools import singledispatch
+
+@singledispatch
+def multiply(a, b):
+    raise NotImplementedError("Unsupported type")
+
+@multiply.register(int)
+def _(a, b):
+    print("Multiplying integers")
+    print(a * b)
+
+@multiply.register(float)
+def _(a, b):
+    print("Multiplying floats")
+    print(round(a * b, 3))
+
+@multiply.register(str)
+def _(a, b):
+    print("Multiplying strings")
+    print((a+b) * len(b))
+
+multiply(10, 20)
+multiply(10.0, 20.0)
+multiply("a", "bt")
+```
+```console
+Multiplying integers
+200
+Multiplying floats
+200.0
+Multiplying strings
+abtabt
+```
+```python
+multiply("a", 10)
+Multiplying strings
+TypeError: can only concatenate str (not "int") to str
+
+len(10)
+TypeError: object of type 'int' has no len()
+
+
+@multiply.register(str)
+def _(a, b):
+    if not isinstance(b, str):
+        raise NotImplementedError("Both arguments must be of the same type")
+    print("Multiplying strings")
+    print((a+b) * len(b))
+
+multiply("a", 10)
+NotImplementedError: Both arguments must be of the same type
+```
+
+### exercise
+
+serialize different data types into appropriate formats
+function should use singledispatch to handle various data types differently
+Specifically, you should be able to serialize dictionaries to JSON format and lists of tuples to CSV format
+
+Requirements
+
+use singledispatch to create a base function serialize that can be applied to various data types
+the default behavior should be to raise a TypeError for unsupported types.
+register a specialized version of serialize for dictionaries that converts them to JSON strings
+register another version for lists, assuming they contain tuples, to serialize them into CSV format. Hint: use in-memory string manipulation (like StringIO) for CSV serialization.
+
+```python
+# Serializing a dictionary
+serialized_dict = serialize({"name": "John", "age": 30, "city": "New York"})
+print(serialized_dict)
+
+# {
+#   "name": "John",
+#   "age": 30,
+#   "city": "New York"
+# }
+
+# Serializing a list of tuples
+serialized_list = serialize([("John", 30, "New York"), ("Jane", 25, "London")])
+print(serialized_list)
+
+# John,30,New York
+# Jane,25,London
+```
+
+```python
+from functools import singledispatch
+import json, csv
+from io import StringIO
+
+@singledispatch
+def serialize(data):
+    raise TypeError("Type not serializable")
+
+# * dict -> JSON
+# * list[tuples] -> CSV
+
+@serialize.register(dict)
+def _(data: dict):
+    print("Serializing as JSON")
+    return json.dumps(data, indent=2)
+
+@serialize.register(list)
+def _(data: list[tuple]):
+    print("Serializing as CSV")
+    with StringIO() as output: 
+        writer = csv.writer(output)
+        writer.writerows(data)
+        return output.getvalue()
+
+serialized_dict = serialize({"name": "John", "age": 30, "city": "New York"})
+print(serialized_dict)
+
+# {
+#   "name": "John",
+#   "age": 30,
+#   "city": "New York"
+# }
+
+# Serializing a list of tuples
+serialized_list = serialize([("John", 30, "New York"), ("Jane", 25, "London")])
+print(serialized_list)
+
+# John,30,New York
+# Jane,25,London
+```
+```console
+Serializing as JSON
+{
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
+Serializing as CSV
+John,30,New York
+Jane,25,London
+```
+
+## infinite iterators
+
+* iterators that generate items indefinitely
+* the itertools module offers a number of utilities for building such iterators with ease
+* the typical use case pertains to assigning ids in long-running programs where the total number of objects isn't known in advance, e.g.
+  * creating constant streams of data for testing
+  * streaming, real-time data, or monitoring system
+
+### count
+
+```python
+from itertools import count
+
+# count(start=0, step=1)
+
+for number in count():
+    print(number)
+    
+    if number >= 10:
+        break
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+
+for number in count(start=5, step=2):
+    print(number)
+    
+    if number >= 10:
+        break
+5
+7
+9
+11
+
+
+counter = count(100, .7)
+
+next(counter)
+100
+
+next(counter)
+100.7
+
+next(counter)
+101.4
+
+next(counter)
+102.10000000000001
+```
+
+### infinite cycles
+
+indefinitely cycles through a sequence of elements
+* repeat the elements of the same sequence w/o end
+
+```python
+from itertools import cycle
+
+counter = 0
+
+for item in cycle([1, 2, 3]):
+    print(item)
+    
+    counter +=1 
+    
+    if counter == 10:
+        break
+1
+2
+3
+1
+2
+3
+1
+2
+3
+1
+
+import time
+
+for switch in cycle(['on' ,'off']):
+    print(switch)
+    time.sleep(1)
+
+# funcs -> 1st class -> they could treated just like other objects!
+
+def p1():
+    print('p1')
+    
+def p2():
+    print('p2')
+for f in cycle([p1, p2]):
+    f()
+    time.sleep(1)
+```
+
+### finite cycles w repeat
+
+repeat repeats some object indefinitely
+
+* similar to cycle, but with some advantages:
+  * faster with lower memory footprint
+  * parameterized cap, i.e. we could specify how many repeats 
+
+```python
+from itertools import repeat
+
+only_sixes = repeat(6)
+next(only_sixes)
+6
+next(only_sixes)
+6
+next(only_sixes)
+6
+
+only_sixes = cycle([6])
+next(only_sixes)
+6
+next(only_sixes)
+6
+next(only_sixes)
+6
+
+only_sixes = repeat(6, 3)
+next(only_sixes)
+6
+next(only_sixes)
+6
+next(only_sixes)
+6
+next(only_sixes)
+StopIteration:
+
+
+squared = map(lambda x: x**2, range(10))
+
+list(squared)
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# 2**2 -> pow(2,2)
+
+pow(2,2)
+4
+pow(2,3)
+8
+
+list(map(pow, range(10), repeat(2)))
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+### exercise
+
+traffic light should cycle through Red, Green, and Yellow colors, displaying red and green for 2 seconds, and yellow for 1 second.
+
+print out the output indefinitely.
+
+```console
+traffic_light_simulation()
+
+Traffic light is: 🔴 # 2 sec
+Traffic light is: 🟢 # 2 sec
+Traffic light is: 🟡 # 1 sec
+Traffic light is: 🔴 # 2 sec
+Traffic light is: 🟢 # 2 sec
+```
+
+```python
+from itertools import cycle
+import time
+
+def traffic_light_simulation():
+    tl_config = [
+        ('🔴', 2),
+        ('🟢', 2),
+        ('🟡', 1),
+    ]
+    
+    state = cycle(tl_config) 
+    
+    while True:
+        color, duration = next(state)
+        print(f"Traffic light is: {color}")
+        time.sleep(duration)
+
+
+traffic_light_simulation()
+```

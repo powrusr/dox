@@ -170,6 +170,24 @@
 <li><a class="reference internal" href="#practice">practice</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#memoization">memoization</a><ul>
+<li><a class="reference internal" href="#cache">cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#partials-currying">partials &amp; currying</a></li>
+<li><a class="reference internal" href="#polymorphic-functions">polymorphic functions</a><ul>
+<li><a class="reference internal" href="#function-overloading">function overloading</a></li>
+<li><a class="reference internal" href="#gotcha">gotcha</a></li>
+<li><a class="reference internal" href="#id4">exercise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#infinite-iterators">infinite iterators</a><ul>
+<li><a class="reference internal" href="#count">count</a></li>
+<li><a class="reference internal" href="#infinite-cycles">infinite cycles</a></li>
+<li><a class="reference internal" href="#finite-cycles-w-repeat">finite cycles w repeat</a></li>
+<li><a class="reference internal" href="#id5">exercise</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -3161,6 +3179,603 @@ INFO:root:Running<span class="w"> </span><span class="s2">&quot;sub&quot;</span>
 </div>
 </section>
 </section>
+<section id="memoization">
+<h2>memoization<a class="headerlink" href="#memoization" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>it is an optimization technique</p></li>
+<li><p>essence: avoid repetitive work</p></li>
+<li><p>it works by caching results</p></li>
+<li><p>cache is ideally accessible in constant time</p></li>
+<li><p>typically applied via decorators</p></li>
+<li><p>should be used judiciously, rather than all the time</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">args</span><span class="p">]</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">cache</span><span class="p">[</span><span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span>
+    
+    <span class="k">return</span> <span class="n">wrapper</span>
+<span class="c1"># @memoize</span>
+<span class="c1"># def target_function:</span>
+<span class="c1">#     pass</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">perf_counter</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">ackermann</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">no_mem_time</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken with no memo: </span><span class="si">{</span><span class="n">no_mem_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="n">Time</span> <span class="n">taken</span> <span class="k">with</span> <span class="n">no</span> <span class="n">memo</span><span class="p">:</span> <span class="mf">0.0516</span> <span class="n">seconds</span>
+
+
+<span class="nd">@memoize</span>
+<span class="k">def</span> <span class="nf">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ackermann</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">ackermann</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">mem_time</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken with memo: </span><span class="si">{</span><span class="n">mem_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="n">Time</span> <span class="n">taken</span> <span class="k">with</span> <span class="n">memo</span><span class="p">:</span> <span class="mf">0.0018</span> <span class="n">seconds</span>
+
+
+<span class="n">mem_speedup</span> <span class="o">=</span> <span class="n">no_mem_time</span> <span class="o">/</span> <span class="n">mem_time</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Memoization speedup: </span><span class="si">{</span><span class="n">mem_speedup</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x&quot;</span><span class="p">)</span>
+<span class="n">Memoization</span> <span class="n">speedup</span><span class="p">:</span> <span class="mf">28.25</span><span class="n">x</span>
+</pre></div>
+</div>
+<section id="cache">
+<h3>cache<a class="headerlink" href="#cache" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>&#64;cache</p></li>
+<li><p>&#64;lru_cache(maxsize=n)</p>
+<ul>
+<li><p>a cache with a memory limit</p></li>
+<li><p>Least Recently Used (LRU) ejected from cache first</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span><span class="p">,</span> <span class="n">lru_cache</span>
+
+<span class="c1"># @memoize</span>
+<span class="c1"># @cache</span>
+<span class="c1"># @lru_cache(maxsize=n)</span>
+
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">return</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">fibonacci</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">no_mem_time</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken with no memo: </span><span class="si">{</span><span class="n">no_mem_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="n">Time</span> <span class="n">taken</span> <span class="k">with</span> <span class="n">no</span> <span class="n">memo</span><span class="p">:</span> <span class="mf">1.1816</span> <span class="n">seconds</span>
+
+<span class="c1"># @lru_cache(maxsize=None)</span>
+<span class="c1"># def fibonacci(n):</span>
+<span class="c1">#     if n&lt;=1:</span>
+<span class="c1">#         return n</span>
+<span class="c1">#     return fibonacci(n-1) + fibonacci(n-2)</span>
+
+<span class="n">cached_fib</span> <span class="o">=</span> <span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)(</span><span class="n">fibonacci</span><span class="p">)</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">cached_fib</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">mem_time</span> <span class="o">=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken with memo: </span><span class="si">{</span><span class="n">mem_time</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+<span class="n">Time</span> <span class="n">taken</span> <span class="k">with</span> <span class="n">memo</span><span class="p">:</span> <span class="mf">0.7067</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+<p>inline memoization</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">memo</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">n</span>
+    
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    
+    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span> <span class="o">+</span> <span class="n">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>    
+    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+
+<span class="n">fibonacci</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="mi">832040</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="partials-currying">
+<h2>partials &amp; currying<a class="headerlink" href="#partials-currying" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>convert a function with multiple arguments into some that have fewer</p></li>
+<li><p>allows us to fix a certain subset of arguments and generate a new function</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="c1"># partial(func, *args, **kwargs)</span>
+
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+
+<span class="n">double</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">double</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="mi">10</span>
+
+<span class="n">triple</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">multiply</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">triple</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">6</span>
+</pre></div>
+</div>
+<p>example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Starter</span>
+
+<span class="go">def send_email(sender, recipient, subject, message):</span>
+<span class="go">    print(f&quot;From: {sender}&quot;)</span>
+<span class="go">    print(f&quot;To: {recipient}&quot;)</span>
+<span class="go">    print(f&quot;Subject: {subject}&quot;)</span>
+<span class="go">    print(f&quot;Message: {message}&quot;, end=&quot;\n\n&quot;)</span>
+<span class="go">Usage</span>
+
+<span class="go">update_for(recipient=&quot;hey@dukenukem.com&quot;, message=&quot;hey there&quot;)</span>
+
+<span class="gp"># </span>From:<span class="w"> </span>noreply@example.com
+<span class="gp"># </span>To:<span class="w"> </span>hey@dukenukem.com
+<span class="gp"># </span>Subject:<span class="w"> </span>Daily<span class="w"> </span>Update
+<span class="gp"># </span>Message:<span class="w"> </span>hey<span class="w"> </span>there
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">recipient</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;From: </span><span class="si">{</span><span class="n">sender</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To: </span><span class="si">{</span><span class="n">recipient</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Subject: </span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">update_for</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">send_email</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="s2">&quot;noreply@example.com&quot;</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;daily dose&quot;</span><span class="p">)</span>
+
+<span class="n">pfa_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;sender&quot;</span><span class="p">:</span> <span class="s2">&quot;noreply@example.com&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;subject&quot;</span><span class="p">:</span> <span class="s2">&quot;daily dose&quot;</span>
+<span class="p">}</span>
+
+<span class="n">update_for</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">send_email</span><span class="p">,</span> <span class="o">**</span><span class="n">pfa_config</span><span class="p">)</span>
+
+<span class="n">update_for</span><span class="p">(</span><span class="n">recipient</span><span class="o">=</span><span class="s2">&quot;hey@dukenukem.com&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;hey there&quot;</span><span class="p">)</span>
+<span class="n">From</span><span class="p">:</span> <span class="n">noreply</span><span class="nd">@example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">To</span><span class="p">:</span> <span class="n">hey</span><span class="nd">@dukenukem</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Subject</span><span class="p">:</span> <span class="n">daily</span> <span class="n">dose</span>
+<span class="n">Message</span><span class="p">:</span> <span class="n">hey</span> <span class="n">there</span>
+</pre></div>
+</div>
+</section>
+<section id="polymorphic-functions">
+<h2>polymorphic functions<a class="headerlink" href="#polymorphic-functions" title="Link to this heading">¶</a></h2>
+<section id="function-overloading">
+<h3>function overloading<a class="headerlink" href="#function-overloading" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>have the function behave differently depending on what arguments are passed to it</p></li>
+<li><p>python does not support it in the traditional sense, e.g. like C++, or Haskell (w/ Typeclasses)</p></li>
+<li><p>functools.singledispatch fills some of the gap</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+
+<span class="nd">@singledispatch</span>
+<span class="k">def</span> <span class="nf">fancy_multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;unsupported types&quot;</span><span class="p">)</span>
+<span class="c1"># fancy_multiply(1,2)</span>
+
+<span class="c1"># * ints</span>
+<span class="c1"># * floats</span>
+<span class="c1"># * strings</span>
+
+<span class="nd">@fancy_multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fancy multiplying integers&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Fancy</span> <span class="n">multiplying</span> <span class="n">integers</span>
+<span class="mi">2</span>
+
+<span class="n">fancy_multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Fancy</span> <span class="n">multiplying</span> <span class="n">integers</span>
+<span class="mi">2</span>
+
+<span class="c1"># fancy_multiply(&quot;1&quot;,&quot;2&quot;)</span>
+
+<span class="nd">@fancy_multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fancy multiplying floats&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nd">@fancy_multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fancy multiplying strings&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+
+<span class="n">fancy_multiply</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">fancy_multiply</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.12391230912</span><span class="p">)</span>
+<span class="n">fancy_multiply</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;bt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Fancy multiplying integers</span>
+<span class="go">200</span>
+<span class="go">Fancy multiplying floats</span>
+<span class="go">201.239</span>
+<span class="go">Fancy multiplying strings</span>
+<span class="go">abtabt</span>
+</pre></div>
+</div>
+</section>
+<section id="gotcha">
+<h3>gotcha<a class="headerlink" href="#gotcha" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+
+<span class="nd">@singledispatch</span>
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Unsupported type&quot;</span><span class="p">)</span>
+
+<span class="nd">@multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplying integers&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="nd">@multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplying floats&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nd">@multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplying strings&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+<span class="n">multiply</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">multiply</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span>
+<span class="n">multiply</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;bt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Multiplying integers</span>
+<span class="go">200</span>
+<span class="go">Multiplying floats</span>
+<span class="go">200.0</span>
+<span class="go">Multiplying strings</span>
+<span class="go">abtabt</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multiply</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">Multiplying</span> <span class="n">strings</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">can</span> <span class="n">only</span> <span class="n">concatenate</span> <span class="nb">str</span> <span class="p">(</span><span class="ow">not</span> <span class="s2">&quot;int&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="nb">str</span>
+
+<span class="nb">len</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="ne">TypeError</span><span class="p">:</span> <span class="nb">object</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;int&#39;</span> <span class="n">has</span> <span class="n">no</span> <span class="nb">len</span><span class="p">()</span>
+
+
+<span class="nd">@multiply</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Both arguments must be of the same type&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Multiplying strings&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">((</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+
+<span class="n">multiply</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="ne">NotImplementedError</span><span class="p">:</span> <span class="n">Both</span> <span class="n">arguments</span> <span class="n">must</span> <span class="n">be</span> <span class="n">of</span> <span class="n">the</span> <span class="n">same</span> <span class="nb">type</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>exercise<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>serialize different data types into appropriate formats
+function should use singledispatch to handle various data types differently
+Specifically, you should be able to serialize dictionaries to JSON format and lists of tuples to CSV format</p>
+<p>Requirements</p>
+<p>use singledispatch to create a base function serialize that can be applied to various data types
+the default behavior should be to raise a TypeError for unsupported types.
+register a specialized version of serialize for dictionaries that converts them to JSON strings
+register another version for lists, assuming they contain tuples, to serialize them into CSV format. Hint: use in-memory string manipulation (like StringIO) for CSV serialization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Serializing a dictionary</span>
+<span class="n">serialized_dict</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;New York&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">serialized_dict</span><span class="p">)</span>
+
+<span class="c1"># {</span>
+<span class="c1">#   &quot;name&quot;: &quot;John&quot;,</span>
+<span class="c1">#   &quot;age&quot;: 30,</span>
+<span class="c1">#   &quot;city&quot;: &quot;New York&quot;</span>
+<span class="c1"># }</span>
+
+<span class="c1"># Serializing a list of tuples</span>
+<span class="n">serialized_list</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">([(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;New York&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;London&quot;</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">serialized_list</span><span class="p">)</span>
+
+<span class="c1"># John,30,New York</span>
+<span class="c1"># Jane,25,London</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+<span class="kn">import</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="nd">@singledispatch</span>
+<span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Type not serializable&quot;</span><span class="p">)</span>
+
+<span class="c1"># * dict -&gt; JSON</span>
+<span class="c1"># * list[tuples] -&gt; CSV</span>
+
+<span class="nd">@serialize</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Serializing as JSON&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nd">@serialize</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Serializing as CSV&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">StringIO</span><span class="p">()</span> <span class="k">as</span> <span class="n">output</span><span class="p">:</span> 
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerows</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+<span class="n">serialized_dict</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;New York&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">serialized_dict</span><span class="p">)</span>
+
+<span class="c1"># {</span>
+<span class="c1">#   &quot;name&quot;: &quot;John&quot;,</span>
+<span class="c1">#   &quot;age&quot;: 30,</span>
+<span class="c1">#   &quot;city&quot;: &quot;New York&quot;</span>
+<span class="c1"># }</span>
+
+<span class="c1"># Serializing a list of tuples</span>
+<span class="n">serialized_list</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">([(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;New York&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Jane&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;London&quot;</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">serialized_list</span><span class="p">)</span>
+
+<span class="c1"># John,30,New York</span>
+<span class="c1"># Jane,25,London</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Serializing as JSON</span>
+<span class="go">{</span>
+<span class="go">  &quot;name&quot;: &quot;John&quot;,</span>
+<span class="go">  &quot;age&quot;: 30,</span>
+<span class="go">  &quot;city&quot;: &quot;New York&quot;</span>
+<span class="go">}</span>
+<span class="go">Serializing as CSV</span>
+<span class="go">John,30,New York</span>
+<span class="go">Jane,25,London</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="infinite-iterators">
+<h2>infinite iterators<a class="headerlink" href="#infinite-iterators" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>iterators that generate items indefinitely</p></li>
+<li><p>the itertools module offers a number of utilities for building such iterators with ease</p></li>
+<li><p>the typical use case pertains to assigning ids in long-running programs where the total number of objects isn’t known in advance, e.g.</p>
+<ul>
+<li><p>creating constant streams of data for testing</p></li>
+<li><p>streaming, real-time data, or monitoring system</p></li>
+</ul>
+</li>
+</ul>
+<section id="count">
+<h3>count<a class="headerlink" href="#count" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
+
+<span class="c1"># count(start=0, step=1)</span>
+
+<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">count</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="mi">0</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="mi">6</span>
+<span class="mi">7</span>
+<span class="mi">8</span>
+<span class="mi">9</span>
+<span class="mi">10</span>
+
+
+<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">count</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="mi">5</span>
+<span class="mi">7</span>
+<span class="mi">9</span>
+<span class="mi">11</span>
+
+
+<span class="n">counter</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">.7</span><span class="p">)</span>
+
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="mi">100</span>
+
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="mf">100.7</span>
+
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="mf">101.4</span>
+
+<span class="nb">next</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+<span class="mf">102.10000000000001</span>
+</pre></div>
+</div>
+</section>
+<section id="infinite-cycles">
+<h3>infinite cycles<a class="headerlink" href="#infinite-cycles" title="Link to this heading">¶</a></h3>
+<p>indefinitely cycles through a sequence of elements</p>
+<ul class="simple">
+<li><p>repeat the elements of the same sequence w/o end</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
+
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">cycle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    
+    <span class="n">counter</span> <span class="o">+=</span><span class="mi">1</span> 
+    
+    <span class="k">if</span> <span class="n">counter</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">3</span>
+<span class="mi">1</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">cycle</span><span class="p">([</span><span class="s1">&#39;on&#39;</span> <span class="p">,</span><span class="s1">&#39;off&#39;</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># funcs -&gt; 1st class -&gt; they could treated just like other objects!</span>
+
+<span class="k">def</span> <span class="nf">p1</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p1&#39;</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">p2</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p2&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">cycle</span><span class="p">([</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">]):</span>
+    <span class="n">f</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="finite-cycles-w-repeat">
+<h3>finite cycles w repeat<a class="headerlink" href="#finite-cycles-w-repeat" title="Link to this heading">¶</a></h3>
+<p>repeat repeats some object indefinitely</p>
+<ul class="simple">
+<li><p>similar to cycle, but with some advantages:</p>
+<ul>
+<li><p>faster with lower memory footprint</p></li>
+<li><p>parameterized cap, i.e. we could specify how many repeats</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span>
+
+<span class="n">only_sixes</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+
+<span class="n">only_sixes</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">([</span><span class="mi">6</span><span class="p">])</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+
+<span class="n">only_sixes</span> <span class="o">=</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="mi">6</span>
+<span class="nb">next</span><span class="p">(</span><span class="n">only_sixes</span><span class="p">)</span>
+<span class="ne">StopIteration</span><span class="p">:</span>
+
+
+<span class="n">squared</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="n">squared</span><span class="p">)</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+
+<span class="c1"># 2**2 -&gt; pow(2,2)</span>
+
+<span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="mi">4</span>
+<span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="mi">8</span>
+
+<span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">pow</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3>exercise<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>traffic light should cycle through Red, Green, and Yellow colors, displaying red and green for 2 seconds, and yellow for 1 second.</p>
+<p>print out the output indefinitely.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">traffic_light_simulation()</span>
+
+<span class="go">Traffic light is: 🔴 # 2 sec</span>
+<span class="go">Traffic light is: 🟢 # 2 sec</span>
+<span class="go">Traffic light is: 🟡 # 1 sec</span>
+<span class="go">Traffic light is: 🔴 # 2 sec</span>
+<span class="go">Traffic light is: 🟢 # 2 sec</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">cycle</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">traffic_light_simulation</span><span class="p">():</span>
+    <span class="n">tl_config</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;🔴&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;🟢&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;🟡&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">]</span>
+    
+    <span class="n">state</span> <span class="o">=</span> <span class="n">cycle</span><span class="p">(</span><span class="n">tl_config</span><span class="p">)</span> 
+    
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">color</span><span class="p">,</span> <span class="n">duration</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Traffic light is: </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+
+<span class="n">traffic_light_simulation</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -3278,6 +3893,24 @@ INFO:root:Running<span class="w"> </span><span class="s2">&quot;sub&quot;</span>
 <li><a class="reference internal" href="#chaining-decorators">chaining decorators</a></li>
 <li><a class="reference internal" href="#wraps-preserve-id">wraps, preserve id</a></li>
 <li><a class="reference internal" href="#practice">practice</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#memoization">memoization</a><ul>
+<li><a class="reference internal" href="#cache">cache</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#partials-currying">partials &amp; currying</a></li>
+<li><a class="reference internal" href="#polymorphic-functions">polymorphic functions</a><ul>
+<li><a class="reference internal" href="#function-overloading">function overloading</a></li>
+<li><a class="reference internal" href="#gotcha">gotcha</a></li>
+<li><a class="reference internal" href="#id4">exercise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#infinite-iterators">infinite iterators</a><ul>
+<li><a class="reference internal" href="#count">count</a></li>
+<li><a class="reference internal" href="#infinite-cycles">infinite cycles</a></li>
+<li><a class="reference internal" href="#finite-cycles-w-repeat">finite cycles w repeat</a></li>
+<li><a class="reference internal" href="#id5">exercise</a></li>
 </ul>
 </li>
 </ul>
