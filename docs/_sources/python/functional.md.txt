@@ -1262,9 +1262,12 @@ words[0][::-1]
 {w:w[::-1] for w in words if len(w) > 5}
 {'banana': 'ananab', 'cherry': 'yrrehc'}
 
+# if moved left from iterator side to use else
 { w : w[::-1] if len(w) > 5 else w for w in words}
 {'apple': 'apple', 'banana': 'ananab', 'cherry': 'yrrehc'}
-More Use Cases
+
+
+# more examples
 
 original = {'a': 1, 'b': 2, 'c': 3}
 
@@ -1287,6 +1290,7 @@ flattened = {'first_a': 1, 'first_b': 2, 'second_c': 3, 'second_d': 4}
 
 d = {'a': 1, 'b': 2, 'c': 3}
 
+# flip key values
 { v:k for k, v in d.items() }
 {1: 'a', 2: 'b', 3: 'c'}
 ```
@@ -1308,19 +1312,19 @@ d2 = {'b': 3, 'c': 4}
 # ...we want the output to be:
 
 merged = {'a': 1, 'b': 5, 'c': 4}
-[17]
+
 d1.keys()
 dict_keys(['a', 'b'])
-[18]
+
 d2.keys()
 dict_keys(['b', 'c'])
-[19]
+
 d1.keys() | d2.keys()
 {'a', 'b', 'c'}
 # where k shows up in both: sum
 # where k shows up in left: left value
 # where k shows up in right: right value
-[20]
+
 {
     k: d1[k] + d2[k] if (k in d1 and k in d2)
     else d1[k] if k in d1
@@ -1463,7 +1467,7 @@ for num in squares_iterator:
 25
 ```
 
-## generator
+## generators
 
 * an iterable, but of a unique kind
 * indexing is NOT allowed
@@ -1474,11 +1478,10 @@ for num in squares_iterator:
 ```python
 
 def countdown():
-	i=5
-	while i > 0:
-		yield i  # return value i & continue
-		i -= 1
-
+    i=5
+    while i > 0:
+        yield i  # return value i & continue
+        i -= 1
 
 for i in countdown():
     print(i)  # 5 4 3 2 1
@@ -1495,28 +1498,13 @@ for i in infinite_sevens():
 	
 # Finite generators can be converted into lists by passing them as arguments to the list function
 
-def numbers(x):
-	for i in range(x):
-		if i%2 == 0:
-			yield i
+def even_numbers(x):
+    for i in range(x):
+        if i%2 == 0:
+            yield i
 
 
 print(list(numbers(11))) # [0, 2, 4, 6, 8, 10]
-```
-
-```python
-def even_numbers(n):
-    for i in range(n):
-        if i % 2 == 0:
-            yield i
-
-for number in even_numbers(10):
-    print(number) # 0, 2, 4, 6, 8
-0
-2
-4
-6
-8
 
 gen = even_numbers(10)
 
@@ -1526,6 +1514,7 @@ next(gen)
 next(gen)
 2
 ```
+
 ### generator expressions
 
 * generator functions: like regular functions but with yield instead of return
@@ -1633,6 +1622,63 @@ for _ in range(20):
 2584
 4181
 ```
+```python
+>>> def double_number(number):
+...     while True:
+...         number *=2 
+...         yield number
+... 
+>>> c = double_number(4)
+>>> c.send(None)
+8
+>>> c.next()
+16
+>>> c.next()
+32
+>>> c.send(8)
+64
+>>> c.send(8)
+128
+>>> c.send(8)
+256
+```
+
+same type of function using send, so on each iteration you can change the value of number:
+
+```python
+def double_number(number):
+    while True:
+        number *= 2
+        number = yield number
+```
+
+you can see sending a new value for number changes the outcome:
+
+```python
+>>> def double_number(number):
+...     while True:
+...         number *= 2
+...         number = yield number
+...
+>>> c = double_number(4)
+>>> 
+>>> c.send(None)
+8
+>>> c.send(5) #10
+10
+>>> c.send(1500) #3000
+3000
+>>> c.send(3) #6
+6
+```
+you can also put this in a for loop
+
+```python
+for x in range(10):
+    n = c.send(n)
+    print n
+```
+
 ### exercise
 
 Sliding Window Fibonacci With Deque
@@ -1702,8 +1748,51 @@ deque([6, 9, 15], maxlen=3)
 deque([9, 15, 24], maxlen=3)
 deque([15, 24, 39], maxlen=3)
 ```
+palindrome
+
+```python
+def is_palindrome(num):
+    # Skip single-digit inputs
+    if num // 10 == 0:
+        return False
+    temp = num
+    reversed_num = 0
+
+    while temp != 0: 
+        reversed_num = (reversed_num * 10) + (temp % 10)
+        temp = temp // 10
+
+    if num == reversed_num:
+        return True
+    else: 
+        return False
+        
+        
+def infinite_palindromes():
+    num = 0
+    while True:
+        if is_palindrome(num): 
+            i = (yield num)  # yield as expression
+            if i is not None:
+                num = i
+        num += 1
+        
+        
+pal_gen = infinite_palindromes()  # create generator object
+for i in pal_gen:  # iterate through generator
+    digits = len(str(i))
+    if digits == 5:
+        pal_gen.throw(ValueError("We don't like large palindromes"))
+        # pal_gen.close() to stop generator
+    pal_gen.send(10 ** (digits))  # send value back to generator
+
+```
+
+
 
 ### data pipelining
+
+construct efficient parser by pipelining generators that can handle large data streams
 
 ```console
 logfile.log
@@ -1758,6 +1847,77 @@ for log in logs:
 
 - Using generators results in improved performance, which is the result of the lazy (on demand) generation of values, which translates to lower memory usage.
 - do not need to wait until all the elements have been generated before we start to use them
+
+```python
+"""
+permalink,company,numEmps,category,city,state,fundedDate,raisedAmt,raisedCurrency,round
+digg,Digg,60,web,San Francisco,CA,1-Dec-06,8500000,USD,b
+digg,Digg,60,web,San Francisco,CA,1-Oct-05,2800000,USD,a
+facebook,Facebook,450,web,Palo Alto,CA,1-Sep-04,500000,USD,angel
+facebook,Facebook,450,web,Palo Alto,CA,1-May-05,12700000,USD,a
+photobucket,Photobucket,60,web,Palo Alto,CA,1-Mar-05,3000000,USD,a
+"""
+
+file_name = "somefile.csv"
+lines = (line for line in open(file_name))
+list_line = (s.rstrip().split(",") for s in lines)  # split line into values and store in list
+cols = next(list_line)  # store column names in list
+
+"""
+To help you filter and perform operations on the data
+you create dictionaries where the keys are the column names from the CSV:
+"""
+company_dicts = (dict(zip(cols, data)) for data in list_line)
+
+funding = (
+    int(company_dict["raisedAmt"])
+    for company_dict in company_dicts
+    if company_dict["round"] == "a"
+)
+
+total_series_a = sum(funding)
+```
+
+
+### profiling generator
+
+```python
+>>> import sys
+>>> nums_squared_lc = [i ** 2 for i in range(10000)]
+>>> sys.getsizeof(nums_squared_lc)
+87624
+>>> nums_squared_gc = (i ** 2 for i in range(10000))
+>>> print(sys.getsizeof(nums_squared_gc))
+120
+
+>>> import cProfile
+>>> cProfile.run('sum([i * 2 for i in range(10000)])')
+         5 function calls in 0.001 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.001    0.001 <string>:1(<listcomp>)
+        1    0.000    0.000    0.001    0.001 <string>:1(<module>)
+        1    0.000    0.000    0.001    0.001 {built-in method builtins.exec}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.sum}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+
+>>> cProfile.run('sum((i * 2 for i in range(10000)))')
+         10005 function calls in 0.003 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    10001    0.002    0.000    0.002    0.000 <string>:1(<genexpr>)
+        1    0.000    0.000    0.003    0.003 <string>:1(<module>)
+        1    0.000    0.000    0.003    0.003 {built-in method builtins.exec}
+        1    0.001    0.001    0.003    0.003 {built-in method builtins.sum}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+```
+
 
 ## recursion
 
@@ -3492,3 +3652,4 @@ def traffic_light_simulation():
 
 traffic_light_simulation()
 ```
+

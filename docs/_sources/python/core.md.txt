@@ -294,6 +294,34 @@ pairs
 ('zeus', 'suez'), ('sway', 'yaws'), ('tort', 'trot'), ('wot', 'tow'), ('vt', 'tv'), ('way', 'yaw')]
 ```
 
+## batched
+
+```python
+flattened_data = ['roses', 'red', 'violets', 'blue', 'sugar', 'sweet']
+unflattened = list(batched(flattened_data, 2))
+unflattened
+[('roses', 'red'), ('violets', 'blue'), ('sugar', 'sweet')]
+
+for batch in batched('ABCDEFG', 3):
+    print(batch)
+
+('A', 'B', 'C')
+('D', 'E', 'F')
+('G',)
+```
+
+Roughly equivalent to
+
+```python
+def batched(iterable, n):
+    # batched('ABCDEFG', 3) --> ABC DEF G
+    if n < 1:
+        raise ValueError('n must be at least one')
+    it = iter(iterable)
+    while batch := tuple(islice(it, n)):
+        yield batch
+```
+
 # collections
 
 This module implements specialized container datatypes providing alternatives to Python's general purpose built-in containers, dict, list, set, and tuple.

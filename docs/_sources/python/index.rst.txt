@@ -13,7 +13,6 @@ python
    file_ops.md
    functional.md
    fundamentals.md
-   generator.md
    pandas.md
    regex.md
    testing.md
