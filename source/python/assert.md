@@ -1,4 +1,4 @@
-# assert python
+# assert
 
 ## list
 

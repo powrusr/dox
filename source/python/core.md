@@ -1,8 +1,39 @@
-# itertools
+# core
+
+## time & dates
+
+### timezones
+
+example of UTC & Chicago time (CST) usage
+
+```python
+from datetime import datetime, timezone
+import pytz
+
+naive_dt = datetime.now()
+2024-01-12 13:41:11.271064
+    
+naive_utc_dt = datetime.utcnow()
+2024-01-12 12:41:11.271073
+    
+utc_dt = datetime.now(timezone.utc)
+2024-01-12 12:41:11.271077+00:00
+    
+dt = utc_dt.astimezone()  # localtime
+2024-01-12 13:41:11.271077+01:00
+
+tz = pytz.timezone('America/Chicago')  # CST
+America/Chicago
+    
+fed_now = datetime.now(tz)
+2024-01-12 06:41:11.301733-06:00
+```
+
+## itertools
 
 list of [iteration tools](https://docs.python.org/3/library/itertools.html) in python
 
-## accumulate
+### accumulate
 
 ```python
 from itertools import accumulate, takewhile
@@ -11,7 +42,7 @@ nums = list(accumulate(range(8)))
 """[0,  1,   3,   6,  10,   15,   21, 28]"""
 ```
 
-## count
+### count
 
 ```python
 from itertools import count
@@ -24,7 +55,7 @@ for i in count(3): # counts up starting from 3
 """ 3  4  5  6  7  8  9  10  11 """
 ```
 
-## islice
+### islice
 
 ```python
 from itertools import islice, count
@@ -47,7 +78,7 @@ sum(islice((x for x in count() if is_prime(x)), 1000))
 3682913
 ```
 
-## chain
+### chain
 
 syncronize iterations over 2 iterable series
 eg two  series of temperature data
@@ -160,7 +191,7 @@ Make an iterator that returns elements from the first iterable until it is exhau
 
 https://docs.python.org/3/library/itertools.html#itertools.chain
 
-## take
+### take
 
 take generator
 
@@ -195,7 +226,7 @@ if __name__ == "__main__":
         run_take()
 ```
 
-## takewhile/dropwhile
+### takewhile/dropwhile
 
 ```python
 print(list(takewhile(lambda x: x<=6, nums)))  # [0, 1, 3, 6]
@@ -222,7 +253,7 @@ print(list(itertools.takewhile(testFunction, vals)))
 """ [10, 20, 30] """
 ```
 
-## product & permutations
+### product & permutations
 
 ```python
 
@@ -250,7 +281,7 @@ list(product(range(3), a))
 # [(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]
 ```
 
-## combinations
+### combinations
 
 ```python
 
@@ -294,7 +325,7 @@ pairs
 ('zeus', 'suez'), ('sway', 'yaws'), ('tort', 'trot'), ('wot', 'tow'), ('vt', 'tv'), ('way', 'yaw')]
 ```
 
-## batched
+### batched
 
 ```python
 flattened_data = ['roses', 'red', 'violets', 'blue', 'sugar', 'sweet']
@@ -322,7 +353,7 @@ def batched(iterable, n):
         yield batch
 ```
 
-# collections
+## collections
 
 This module implements specialized container datatypes providing alternatives to Python's general purpose built-in containers, dict, list, set, and tuple.
 
@@ -340,7 +371,7 @@ https://docs.python.org/3/library/collections.html
 |UserList|	wrapper around list objects for easier list subclassing|
 |UserString|	wrapper around string objects for easier string subclassing|
 
-## namedtuple
+### namedtuple
 
 ```python
 import pprint
@@ -464,7 +495,7 @@ best_by_year(2016)
 (['USA', 'JAM', 'KEN', 'GBR', 'GER'], [30, 11, 6, 3, 2])
 ```
 
-## defaultdict
+### defaultdict
 
 if key doesn't exist yet create one instead of throwing an error
 takes factory function as argument so can be a custom lambda too
@@ -501,7 +532,7 @@ for (k, v) in fruitCounter.items():
     print(k + ": " + str(v))
 ```
 
-## ordereddict
+### ordereddict
 
 ```python
 from collections import OrderedDict
@@ -535,7 +566,7 @@ b = OrderedDict({"a": 1, "c": 3, "b": 2})
 print("Equality test: ", a == b)
 ```
 
-## chainmap
+### chainmap
 
 ```python
 >>> baseline = {'music': 'bach', 'art': 'rembrandt'}
@@ -544,7 +575,7 @@ print("Equality test: ", a == b)
 ['music', 'art', 'opera']
 ```
 
-## counter
+### counter
 
 ```python
 # list of students in class 1
@@ -580,7 +611,7 @@ print(c1.most_common(1))
 print(c1 & c2)
 ```
 
-## deque
+### deque
 
 double ended queue
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>itertools &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>core &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -66,16 +66,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#collections">collections</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -87,7 +85,12 @@
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">itertools</a><ul>
+<li><a class="reference internal" href="#">core</a><ul>
+<li><a class="reference internal" href="#time-dates">time &amp; dates</a><ul>
+<li><a class="reference internal" href="#timezones">timezones</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#itertools">itertools</a><ul>
 <li><a class="reference internal" href="#accumulate">accumulate</a></li>
 <li><a class="reference internal" href="#count">count</a></li>
 <li><a class="reference internal" href="#islice">islice</a></li>
@@ -106,6 +109,8 @@
 <li><a class="reference internal" href="#chainmap">chainmap</a></li>
 <li><a class="reference internal" href="#counter">counter</a></li>
 <li><a class="reference internal" href="#deque">deque</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -149,7 +154,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">itertools</a></li>
+        <li class="nav-item nav-item-this"><a href="">core</a></li>
                 <li class="right">
                     
 
@@ -179,11 +184,42 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="itertools">
-<h1>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h1>
+  <section id="core">
+<h1>core<a class="headerlink" href="#core" title="Link to this heading">¶</a></h1>
+<section id="time-dates">
+<h2>time &amp; dates<a class="headerlink" href="#time-dates" title="Link to this heading">¶</a></h2>
+<section id="timezones">
+<h3>timezones<a class="headerlink" href="#timezones" title="Link to this heading">¶</a></h3>
+<p>example of UTC &amp; Chicago time (CST) usage</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">import</span> <span class="nn">pytz</span>
+
+<span class="n">naive_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span> <span class="mi">13</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mf">11.271064</span>
+    
+<span class="n">naive_utc_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span>
+<span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span> <span class="mi">12</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mf">11.271073</span>
+    
+<span class="n">utc_dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span> <span class="mi">12</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mf">11.271077</span><span class="o">+</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+    
+<span class="n">dt</span> <span class="o">=</span> <span class="n">utc_dt</span><span class="o">.</span><span class="n">astimezone</span><span class="p">()</span>  <span class="c1"># localtime</span>
+<span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span> <span class="mi">13</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mf">11.271077</span><span class="o">+</span><span class="mi">01</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="n">tz</span> <span class="o">=</span> <span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s1">&#39;America/Chicago&#39;</span><span class="p">)</span>  <span class="c1"># CST</span>
+<span class="n">America</span><span class="o">/</span><span class="n">Chicago</span>
+    
+<span class="n">fed_now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+<span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">12</span> <span class="mi">06</span><span class="p">:</span><span class="mi">41</span><span class="p">:</span><span class="mf">11.301733</span><span class="o">-</span><span class="mi">06</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="itertools">
+<h2>itertools<a class="headerlink" href="#itertools" title="Link to this heading">¶</a></h2>
 <p>list of <a class="reference external" href="https://docs.python.org/3/library/itertools.html">iteration tools</a> in python</p>
 <section id="accumulate">
-<h2>accumulate<a class="headerlink" href="#accumulate" title="Link to this heading">¶</a></h2>
+<h3>accumulate<a class="headerlink" href="#accumulate" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">accumulate</span><span class="p">,</span> <span class="n">takewhile</span>
 
 <span class="n">nums</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accumulate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)))</span>
@@ -192,7 +228,7 @@
 </div>
 </section>
 <section id="count">
-<h2>count<a class="headerlink" href="#count" title="Link to this heading">¶</a></h2>
+<h3>count<a class="headerlink" href="#count" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">count</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span> <span class="c1"># counts up starting from 3</span>
@@ -205,7 +241,7 @@
 </div>
 </section>
 <section id="islice">
-<h2>islice<a class="headerlink" href="#islice" title="Link to this heading">¶</a></h2>
+<h3>islice<a class="headerlink" href="#islice" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">count</span>
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
 
@@ -228,7 +264,7 @@
 </div>
 </section>
 <section id="chain">
-<h2>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h2>
+<h3>chain<a class="headerlink" href="#chain" title="Link to this heading">¶</a></h3>
 <p>syncronize iterations over 2 iterable series
 eg two  series of temperature data</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sunday</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
@@ -337,7 +373,7 @@ eg two  series of temperature data</p>
 <p>https://docs.python.org/3/library/itertools.html#itertools.chain</p>
 </section>
 <section id="take">
-<h2>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h2>
+<h3>take<a class="headerlink" href="#take" title="Link to this heading">¶</a></h3>
 <p>take generator</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">iterable</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Take items from the front of an iterable.</span>
@@ -371,7 +407,7 @@ eg two  series of temperature data</p>
 </div>
 </section>
 <section id="takewhile-dropwhile">
-<h2>takewhile/dropwhile<a class="headerlink" href="#takewhile-dropwhile" title="Link to this heading">¶</a></h2>
+<h3>takewhile/dropwhile<a class="headerlink" href="#takewhile-dropwhile" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">takewhile</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">&lt;=</span><span class="mi">6</span><span class="p">,</span> <span class="n">nums</span><span class="p">)))</span>  <span class="c1"># [0, 1, 3, 6]</span>
 
 <span class="c1"># takewhile stops as soon as predicate == FALSE!</span>
@@ -397,7 +433,7 @@ eg two  series of temperature data</p>
 </div>
 </section>
 <section id="product-permutations">
-<h2>product &amp; permutations<a class="headerlink" href="#product-permutations" title="Link to this heading">¶</a></h2>
+<h3>product &amp; permutations<a class="headerlink" href="#product-permutations" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span><span class="p">,</span> <span class="n">permutations</span>
 
@@ -425,7 +461,7 @@ eg two  series of temperature data</p>
 </div>
 </section>
 <section id="combinations">
-<h2>combinations<a class="headerlink" href="#combinations" title="Link to this heading">¶</a></h2>
+<h3>combinations<a class="headerlink" href="#combinations" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 
@@ -469,7 +505,7 @@ eg two  series of temperature data</p>
 </div>
 </section>
 <section id="batched">
-<h2>batched<a class="headerlink" href="#batched" title="Link to this heading">¶</a></h2>
+<h3>batched<a class="headerlink" href="#batched" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flattened_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;roses&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;violets&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;sugar&#39;</span><span class="p">,</span> <span class="s1">&#39;sweet&#39;</span><span class="p">]</span>
 <span class="n">unflattened</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">batched</span><span class="p">(</span><span class="n">flattened_data</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">unflattened</span>
@@ -496,7 +532,7 @@ eg two  series of temperature data</p>
 </section>
 </section>
 <section id="collections">
-<h1>collections<a class="headerlink" href="#collections" title="Link to this heading">¶</a></h1>
+<h2>collections<a class="headerlink" href="#collections" title="Link to this heading">¶</a></h2>
 <p>This module implements specialized container datatypes providing alternatives to Python’s general purpose built-in containers, dict, list, set, and tuple.</p>
 <p>https://docs.python.org/3/library/collections.html</p>
 <table class="docutils align-default">
@@ -536,7 +572,7 @@ eg two  series of temperature data</p>
 </tbody>
 </table>
 <section id="namedtuple">
-<h2>namedtuple<a class="headerlink" href="#namedtuple" title="Link to this heading">¶</a></h2>
+<h3>namedtuple<a class="headerlink" href="#namedtuple" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">statistics</span> <span class="k">as</span> <span class="nn">st</span>
@@ -657,7 +693,7 @@ eg two  series of temperature data</p>
 </div>
 </section>
 <section id="defaultdict">
-<h2>defaultdict<a class="headerlink" href="#defaultdict" title="Link to this heading">¶</a></h2>
+<h3>defaultdict<a class="headerlink" href="#defaultdict" title="Link to this heading">¶</a></h3>
 <p>if key doesn’t exist yet create one instead of throwing an error
 takes factory function as argument so can be a custom lambda too
 like <code class="docutils literal notranslate"><span class="pre">defaultdict(lambda:</span> <span class="pre">33)</span></code></p>
@@ -691,7 +727,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 <section id="ordereddict">
-<h2>ordereddict<a class="headerlink" href="#ordereddict" title="Link to this heading">¶</a></h2>
+<h3>ordereddict<a class="headerlink" href="#ordereddict" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 <span class="c1"># list of sport teams with wins and losses</span>
@@ -725,7 +761,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 <section id="chainmap">
-<h2>chainmap<a class="headerlink" href="#chainmap" title="Link to this heading">¶</a></h2>
+<h3>chainmap<a class="headerlink" href="#chainmap" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">baseline</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;music&#39;</span><span class="p">:</span> <span class="s1">&#39;bach&#39;</span><span class="p">,</span> <span class="s1">&#39;art&#39;</span><span class="p">:</span> <span class="s1">&#39;rembrandt&#39;</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">adjustments</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;art&#39;</span><span class="p">:</span> <span class="s1">&#39;van gogh&#39;</span><span class="p">,</span> <span class="s1">&#39;opera&#39;</span><span class="p">:</span> <span class="s1">&#39;carmen&#39;</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">ChainMap</span><span class="p">(</span><span class="n">adjustments</span><span class="p">,</span> <span class="n">baseline</span><span class="p">))</span>
@@ -734,7 +770,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 <section id="counter">
-<h2>counter<a class="headerlink" href="#counter" title="Link to this heading">¶</a></h2>
+<h3>counter<a class="headerlink" href="#counter" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of students in class 1</span>
 <span class="n">class1</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Rob&quot;</span><span class="p">,</span> <span class="s2">&quot;Robert&quot;</span><span class="p">,</span> <span class="s2">&quot;Chad&quot;</span><span class="p">,</span> <span class="s2">&quot;Darcy&quot;</span><span class="p">,</span> <span class="s2">&quot;Penny&quot;</span><span class="p">,</span> <span class="s2">&quot;Henry&quot;</span>
           <span class="s2">&quot;Kevin&quot;</span><span class="p">,</span> <span class="s2">&quot;Robert&quot;</span><span class="p">,</span> <span class="s2">&quot;Melissa&quot;</span><span class="p">,</span> <span class="s2">&quot;Becky&quot;</span><span class="p">,</span> <span class="s2">&quot;Steve&quot;</span><span class="p">,</span> <span class="s2">&quot;Flynn&quot;</span><span class="p">]</span>
@@ -770,7 +806,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 <section id="deque">
-<h2>deque<a class="headerlink" href="#deque" title="Link to this heading">¶</a></h2>
+<h3>deque<a class="headerlink" href="#deque" title="Link to this heading">¶</a></h3>
 <p>double ended queue</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">string</span>
@@ -800,6 +836,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 </section>
+</section>
 
 
             <div class="clearer"></div>
@@ -814,16 +851,14 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#collections">collections</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -835,7 +870,12 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">itertools</a><ul>
+<li><a class="reference internal" href="#">core</a><ul>
+<li><a class="reference internal" href="#time-dates">time &amp; dates</a><ul>
+<li><a class="reference internal" href="#timezones">timezones</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#itertools">itertools</a><ul>
 <li><a class="reference internal" href="#accumulate">accumulate</a></li>
 <li><a class="reference internal" href="#count">count</a></li>
 <li><a class="reference internal" href="#islice">islice</a></li>
@@ -854,6 +894,8 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <li><a class="reference internal" href="#chainmap">chainmap</a></li>
 <li><a class="reference internal" href="#counter">counter</a></li>
 <li><a class="reference internal" href="#deque">deque</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -897,7 +939,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">itertools</a></li>
+        <li class="nav-item nav-item-this"><a href="">core</a></li>
                 <li class="right">
                     
 
@@ -936,7 +978,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <br />
     <br />
 
-    Last updated on 2024-01-08.
+    Last updated on 2024-01-12.
     
     <br />
 
