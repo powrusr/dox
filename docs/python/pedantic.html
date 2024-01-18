@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>design patterns &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pedantic &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="glob" href="file_ops.html" />
-    <link rel="prev" title="dataclasses" href="dataclass.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="regex" href="regex.html" />
+    <link rel="prev" title="pandas" href="pandas.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -70,11 +70,12 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -82,17 +83,6 @@
 </li>
 </ul>
 
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">design patterns</a><ul>
-<li><a class="reference internal" href="#guard-clauses">guard clauses</a></li>
-<li><a class="reference internal" href="#factory">factory</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -114,10 +104,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="file_ops.html" title="glob"
+          <a href="regex.html" title="regex"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="dataclass.html" title="dataclasses"
+          <a href="pandas.html" title="pandas"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -131,7 +121,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">design patterns</a></li>
+        <li class="nav-item nav-item-this"><a href="">pedantic</a></li>
                 <li class="right">
                     
 
@@ -161,95 +151,85 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="design-patterns">
-<h1>design patterns<a class="headerlink" href="#design-patterns" title="Link to this heading">¶</a></h1>
-<section id="guard-clauses">
-<h2>guard clauses<a class="headerlink" href="#guard-clauses" title="Link to this heading">¶</a></h2>
-<p>bad</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sorry for the silly example</span>
-<span class="k">def</span> <span class="nf">is_platypus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_mammal</span><span class="p">():</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_fur</span><span class="p">():</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_beak</span><span class="p">():</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_tail</span><span class="p">():</span>
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_swim</span><span class="p">():</span>
-                        <span class="c1"># It&#39;s a platypus!</span>
-                        <span class="k">return</span> <span class="kc">True</span>
-    <span class="c1"># Not a platypus</span>
-    <span class="k">return</span> <span class="kc">False</span>
-</pre></div>
-</div>
-<p>good</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_platypus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="c1"># Not a platypus for everything below</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_mammal</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_fur</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_beak</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_tail</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_swim</span><span class="p">():</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="c1"># Finally, it&#39;s a platypus!</span>
-    <span class="k">return</span> <span class="kc">True</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func_not_guarded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">param</span> <span class="o">==</span> <span class="s1">&#39;something&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">reached_ten</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">has_not_reached_5</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">has_not_reached_5</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">-=</span> <span class="mi">1</span>
+  <section id="pedantic">
+<h1>pedantic<a class="headerlink" href="#pedantic" title="Link to this heading">¶</a></h1>
+<p>https://docs.pydantic.dev/latest/</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PositiveInt</span>
 
 
-<span class="k">def</span> <span class="nf">func_guarded</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">param</span> <span class="o">!=</span> <span class="s1">&#39;something&#39;</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="k">return</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reached_ten</span><span class="p">()</span>
-        <span class="k">return</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">has_not_reached_5</span><span class="p">()</span>
-        <span class="k">return</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">has_not_reached_5</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="factory">
-<h2>factory<a class="headerlink" href="#factory" title="Link to this heading">¶</a></h2>
-<p>allow user input to translate to objects being created
-by coupling the string to the class</p>
-<p>select key which has class, call that with extra parentheses to initialize
-a class instance</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;user_input&quot;</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> 
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Circle</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
-    <span class="c1"># Class implementation...</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>  
+    <span class="n">signup_ts</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span>  
+    <span class="n">tastes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]</span>  
 
-<span class="k">class</span> <span class="nc">Square</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">side</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">side</span> <span class="o">=</span> <span class="n">side</span>
-    <span class="c1"># Class implementation...</span>
 
-<span class="k">def</span> <span class="nf">shape_factory</span><span class="p">(</span><span class="n">shape_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">shapes</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;circle&quot;</span><span class="p">:</span> <span class="n">Circle</span><span class="p">,</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span> <span class="n">Square</span><span class="p">}</span>
-    <span class="k">return</span> <span class="n">shapes</span><span class="p">[</span><span class="n">shape_name</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="n">external_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="s1">&#39;signup_ts&#39;</span><span class="p">:</span> <span class="s1">&#39;2019-06-01 12:22&#39;</span><span class="p">,</span>  
+    <span class="s1">&#39;tastes&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;wine&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+        <span class="sa">b</span><span class="s1">&#39;cheese&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  
+        <span class="s1">&#39;cabbage&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>  
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">external_data</span><span class="p">)</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>  
+<span class="c1">#&gt; 123</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>  
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{</span>
+<span class="sd">    &#39;id&#39;: 123,</span>
+<span class="sd">    &#39;name&#39;: &#39;John Doe&#39;,</span>
+<span class="sd">    &#39;signup_ts&#39;: datetime.datetime(2019, 6, 1, 12, 22),</span>
+<span class="sd">    &#39;tastes&#39;: {&#39;wine&#39;: 9, &#39;cheese&#39;: 7, &#39;cabbage&#39;: 1},</span>
+<span class="sd">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</section>
+<p>If validation fails, Pydantic will raise an error with a breakdown of what was wrong:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># continuing the above example...</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>
+    <span class="n">signup_ts</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">tastes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]</span>
+
+
+<span class="n">external_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;not an int&#39;</span><span class="p">,</span> <span class="s1">&#39;tastes&#39;</span><span class="p">:</span> <span class="p">{}}</span>  
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">external_data</span><span class="p">)</span>  
+<span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;type&#39;: &#39;int_parsing&#39;,</span>
+<span class="sd">            &#39;loc&#39;: (&#39;id&#39;,),</span>
+<span class="sd">            &#39;msg&#39;: &#39;Input should be a valid integer, unable to parse string as an integer&#39;,</span>
+<span class="sd">            &#39;input&#39;: &#39;not an int&#39;,</span>
+<span class="sd">            &#39;url&#39;: &#39;https://errors.pydantic.dev/2/v/int_parsing&#39;,</span>
+<span class="sd">        },</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;type&#39;: &#39;missing&#39;,</span>
+<span class="sd">            &#39;loc&#39;: (&#39;signup_ts&#39;,),</span>
+<span class="sd">            &#39;msg&#39;: &#39;Field required&#39;,</span>
+<span class="sd">            &#39;input&#39;: {&#39;id&#39;: &#39;not an int&#39;, &#39;tastes&#39;: {}},</span>
+<span class="sd">            &#39;url&#39;: &#39;https://errors.pydantic.dev/2/v/missing&#39;,</span>
+<span class="sd">        },</span>
+<span class="sd">    ]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
 </section>
 
 
@@ -269,11 +249,12 @@ a class instance</p>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -281,17 +262,6 @@ a class instance</p>
 </li>
 </ul>
 
-  <div>
-    <h3><a href="../index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">design patterns</a><ul>
-<li><a class="reference internal" href="#guard-clauses">guard clauses</a></li>
-<li><a class="reference internal" href="#factory">factory</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -313,10 +283,10 @@ a class instance</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="file_ops.html" title="glob"
+          <a href="regex.html" title="regex"
              >next</a> |</li>
         <li class="right" >
-          <a href="dataclass.html" title="dataclasses"
+          <a href="pandas.html" title="pandas"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -330,7 +300,7 @@ a class instance</p>
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">design patterns</a></li>
+        <li class="nav-item nav-item-this"><a href="">pedantic</a></li>
                 <li class="right">
                     
 

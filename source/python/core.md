@@ -642,4 +642,82 @@ d.rotate(1)
 print(d)
 ```
 
+## typing
 
+```python
+from typing import Any, Dict, Literal, Union
+
+import pandas as pd
+
+from pyfredapi.utils.enums import ReturnFormat
+
+ApiKeyType = Union[str, None]
+JsonType = Dict[str, Any]
+JsonOrPdType = Union[Dict, pd.DataFrame]
+ReturnFmtType = Union[Literal["json", "pandas"], ReturnFormat]
+KwargsType = Dict[str, Union[int, str, None]]
+
+```
+ReturnFormat class
+
+```python
+from enum import Enum
+
+
+class ReturnFormat(str, Enum):
+    """Defines how to format the data returned from the FRED endpoint."""
+
+    pandas = "pandas"
+    json = "json"
+```
+
+### optional/literal
+
+```python
+class SeriesApiParameters(BaseModel):
+
+    series_id: Optional[str] = None
+    realtime_start: Optional[str] = None
+    realtime_end: Optional[str] = None
+    limit: Optional[int] = None
+    offset: Optional[PositiveInt] = None
+    sort_order: Optional[Literal["acs", "desc"]] = None
+    observation_start: Optional[str] = None
+    observation_end: Optional[str] = None
+    units: Optional[
+        Literal[
+            "lin",
+            "chg",
+            "ch1",
+            "pch",
+            "pc1",
+            "pca",
+            "cch",
+            "cca",
+            "log",
+        ]
+    ] = None
+    frequency: Optional[
+        Literal[
+            "d",
+            "w",
+            "bw",
+            "m",
+            "q",
+            "sa",
+            "a",
+            "wef",
+            "weth",
+            "wew",
+            "wetu",
+            "wem",
+            "wesu",
+            "wesa",
+            "bwew",
+            "bwem",
+        ]
+    ] = None
+    aggregation_method: Optional[Literal["avg", "sum", "eop"]] = None
+    output_type: Optional[Literal["1", "2", "3", "4", 1, 2, 3, 4]] = None
+    vintage_dates: Optional[str] = None
+```

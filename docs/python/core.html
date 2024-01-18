@@ -111,6 +111,10 @@
 <li><a class="reference internal" href="#deque">deque</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#typing">typing</a><ul>
+<li><a class="reference internal" href="#optional-literal">optional/literal</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -836,6 +840,85 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 </div>
 </section>
 </section>
+<section id="typing">
+<h2>typing<a class="headerlink" href="#typing" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">pyfredapi.utils.enums</span> <span class="kn">import</span> <span class="n">ReturnFormat</span>
+
+<span class="n">ApiKeyType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">JsonType</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="n">JsonOrPdType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span>
+<span class="n">ReturnFmtType</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;pandas&quot;</span><span class="p">],</span> <span class="n">ReturnFormat</span><span class="p">]</span>
+<span class="n">KwargsType</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
+
+</pre></div>
+</div>
+<p>ReturnFormat class</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<span class="k">class</span> <span class="nc">ReturnFormat</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Defines how to format the data returned from the FRED endpoint.&quot;&quot;&quot;</span>
+
+    <span class="n">pandas</span> <span class="o">=</span> <span class="s2">&quot;pandas&quot;</span>
+    <span class="n">json</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+</pre></div>
+</div>
+<section id="optional-literal">
+<h3>optional/literal<a class="headerlink" href="#optional-literal" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SeriesApiParameters</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+
+    <span class="n">series_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">realtime_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">realtime_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PositiveInt</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sort_order</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;acs&quot;</span><span class="p">,</span> <span class="s2">&quot;desc&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">observation_start</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">observation_end</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">units</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Literal</span><span class="p">[</span>
+            <span class="s2">&quot;lin&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;chg&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;ch1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pch&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pc1&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;pca&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cch&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;cca&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;log&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">frequency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span>
+        <span class="n">Literal</span><span class="p">[</span>
+            <span class="s2">&quot;d&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;w&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bw&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;m&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;q&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sa&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;a&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wef&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;weth&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wew&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wetu&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wem&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wesu&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;wesa&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bwew&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;bwem&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">aggregation_method</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="s2">&quot;eop&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">output_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">vintage_dates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -894,6 +977,10 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <li><a class="reference internal" href="#chainmap">chainmap</a></li>
 <li><a class="reference internal" href="#counter">counter</a></li>
 <li><a class="reference internal" href="#deque">deque</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#typing">typing</a><ul>
+<li><a class="reference internal" href="#optional-literal">optional/literal</a></li>
 </ul>
 </li>
 </ul>
@@ -978,7 +1065,7 @@ like <code class="docutils literal notranslate"><span class="pre">defaultdict(la
 <br />
     <br />
 
-    Last updated on 2024-01-12.
+    Last updated on 2024-01-15.
     
     <br />
 
