@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>typing &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="code library" href="examples.html" />
+    <link rel="prev" title="pytest" href="testing.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#override">override</a></li>
+<li><a class="reference internal" href="#typeddict-kwargs">TypedDict &amp; **kwargs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
+<li><a class="reference internal" href="#pedantic">pedantic</a><ul>
+<li><a class="reference internal" href="#types">types</a><ul>
+<li><a class="reference internal" href="#annotated">annotated</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">validation</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="examples.html" title="code library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="pytest"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">typing</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="typing">
+<h1>typing<a class="headerlink" href="#typing" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">cheatsheet</a></p>
+<section id="override">
+<h2>override<a class="headerlink" href="#override" title="Link to this heading">¶</a></h2>
+<p>Allows our syntax checker to detect when a base class was altered but child classes using it aren’t aware of the change</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Self</span><span class="p">,</span> <span class="n">override</span>
+
+
+<span class="k">def</span> <span class="nf">generate_account_number</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a random eleven-digit account number&quot;&quot;&quot;</span>
+    <span class="n">account_number</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10_000_000_000</span><span class="p">,</span> <span class="mi">100_000_000_000</span><span class="p">))</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">account_number</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">account_number</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">account_number</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">BankAccount</span><span class="p">:</span>
+    <span class="n">account_number</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_balance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">generate_account_number</span><span class="p">(),</span> <span class="n">balance</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">+=</span> <span class="n">amount</span>
+
+    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="n">amount</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">SavingsAccount</span><span class="p">(</span><span class="n">BankAccount</span><span class="p">):</span>
+    <span class="n">interest</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="k">def</span> <span class="nf">add_interest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">interest</span> <span class="o">/</span> <span class="mi">100</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@override</span>  <span class="c1"># track parent class method for changes</span>
+    <span class="k">def</span> <span class="nf">from_balance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">balance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">interest</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">generate_account_number</span><span class="p">(),</span> <span class="n">balance</span><span class="p">,</span> <span class="n">interest</span><span class="p">)</span>
+
+    <span class="nd">@override</span>
+    <span class="k">def</span> <span class="nf">withdraw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">balance</span> <span class="o">-=</span> <span class="nb">int</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="n">amount</span>
+</pre></div>
+</div>
+</section>
+<section id="typeddict-kwargs">
+<h2>TypedDict &amp; **kwargs<a class="headerlink" href="#typeddict-kwargs" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>    <span class="n">level</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>    <span class="n">propagate</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<p>to use TypedDict on <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> you need to wrap it inside <strong>Unpack</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Unpack</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">show_options</span><span class="p">(</span><span class="n">program_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Unpack</span><span class="p">[</span><span class="n">Options</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">program_name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">option</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You use Unpack to say that the typed dictionary provides different type hints for different keyword arguments. If you use **kwargs: Options, then you’re saying that each keyword argument should be an Options dictionary.</p>
+<p>By default, all fields in a typed dictionary are required.
+That means that you must pass in line_width, level, and propagate and can’t leave any of them out.
+That’s not usually what you intend when using **kwargs.
+You can switch this so that none of the keys are required by specifying <strong>total=False</strong> when you define the typed dictionary:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypedDict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>    <span class="n">level</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>    <span class="n">propagate</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<p>In this case, all the arguments are optional.
+For more fine-grain control, you can also use <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Required">Required</a> and <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NotRequired">NotRequired</a>. For example, to denote that only level is required, you can do the following</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Required</span><span class="p">,</span> <span class="n">TypedDict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>    <span class="n">level</span><span class="p">:</span> <span class="n">Required</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">propagate</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Required</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Unpack</span>
+
+
+<span class="k">class</span> <span class="nc">Options</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">level</span><span class="p">:</span> <span class="n">Required</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">propagate</span><span class="p">:</span> <span class="nb">bool</span>
+
+
+<span class="k">def</span> <span class="nf">show_options</span><span class="p">(</span><span class="n">program_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Unpack</span><span class="p">[</span><span class="n">Options</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">program_name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">option</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">show_options_explicit</span><span class="p">(</span>
+    <span class="n">program_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">propagate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="n">line_width</span><span class="p">,</span>
+        <span class="s2">&quot;level&quot;</span><span class="p">:</span> <span class="n">level</span><span class="p">,</span>
+        <span class="s2">&quot;propagate&quot;</span><span class="p">:</span> <span class="n">propagate</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">program_name</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">option</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">show_options</span><span class="p">(</span><span class="s2">&quot;logger&quot;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="n">propagate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="annotated-typing">
+<h1>annotated typing<a class="headerlink" href="#annotated-typing" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/annotated-types/annotated-types">annotated-types</a></p>
+</section>
+<section id="pedantic">
+<h1>pedantic<a class="headerlink" href="#pedantic" title="Link to this heading">¶</a></h1>
+<p>use pedantic for extra validation &amp; (de)serialization power</p>
+<p><a class="reference external" href="https://docs.pydantic.dev/latest/">pydantic docs</a></p>
+<section id="types">
+<h2>types<a class="headerlink" href="#types" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://docs.pydantic.dev/latest/concepts/types/">more on types on pydantic site</a></p>
+<section id="annotated">
+<h3>annotated<a class="headerlink" href="#annotated" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># or `from typing import Annotated` for Python 3.9+</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span><span class="p">,</span> <span class="n">TypeAdapter</span><span class="p">,</span> <span class="n">ValidationError</span>
+
+<span class="n">PositiveInt</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+
+<span class="n">ta</span> <span class="o">=</span> <span class="n">TypeAdapter</span><span class="p">(</span><span class="n">PositiveInt</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ta</span><span class="o">.</span><span class="n">validate_python</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1">#&gt; 1</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">ta</span><span class="o">.</span><span class="n">validate_python</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    1 validation error for constrained-int</span>
+<span class="sd">      Input should be greater than 0 [type=greater_than, input_value=-1, input_type=int]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="validation">
+<h2>validation<a class="headerlink" href="#validation" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PositiveInt</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>  
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>  
+    <span class="n">signup_ts</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span>  
+    <span class="n">tastes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]</span>  
+
+
+<span class="n">external_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="s1">&#39;signup_ts&#39;</span><span class="p">:</span> <span class="s1">&#39;2019-06-01 12:22&#39;</span><span class="p">,</span>  
+    <span class="s1">&#39;tastes&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;wine&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+        <span class="sa">b</span><span class="s1">&#39;cheese&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>  
+        <span class="s1">&#39;cabbage&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>  
+    <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">external_data</span><span class="p">)</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>  
+<span class="c1">#&gt; 123</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">model_dump</span><span class="p">())</span>  
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">{</span>
+<span class="sd">    &#39;id&#39;: 123,</span>
+<span class="sd">    &#39;name&#39;: &#39;John Doe&#39;,</span>
+<span class="sd">    &#39;signup_ts&#39;: datetime.datetime(2019, 6, 1, 12, 22),</span>
+<span class="sd">    &#39;tastes&#39;: {&#39;wine&#39;: 9, &#39;cheese&#39;: 7, &#39;cabbage&#39;: 1},</span>
+<span class="sd">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>If validation fails, Pydantic will raise an error with a breakdown of what was wrong:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># continuing the above example...</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>
+    <span class="n">signup_ts</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">tastes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PositiveInt</span><span class="p">]</span>
+
+
+<span class="n">external_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;not an int&#39;</span><span class="p">,</span> <span class="s1">&#39;tastes&#39;</span><span class="p">:</span> <span class="p">{}}</span>  
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">User</span><span class="p">(</span><span class="o">**</span><span class="n">external_data</span><span class="p">)</span>  
+<span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;type&#39;: &#39;int_parsing&#39;,</span>
+<span class="sd">            &#39;loc&#39;: (&#39;id&#39;,),</span>
+<span class="sd">            &#39;msg&#39;: &#39;Input should be a valid integer, unable to parse string as an integer&#39;,</span>
+<span class="sd">            &#39;input&#39;: &#39;not an int&#39;,</span>
+<span class="sd">            &#39;url&#39;: &#39;https://errors.pydantic.dev/2/v/int_parsing&#39;,</span>
+<span class="sd">        },</span>
+<span class="sd">        {</span>
+<span class="sd">            &#39;type&#39;: &#39;missing&#39;,</span>
+<span class="sd">            &#39;loc&#39;: (&#39;signup_ts&#39;,),</span>
+<span class="sd">            &#39;msg&#39;: &#39;Field required&#39;,</span>
+<span class="sd">            &#39;input&#39;: {&#39;id&#39;: &#39;not an int&#39;, &#39;tastes&#39;: {}},</span>
+<span class="sd">            &#39;url&#39;: &#39;https://errors.pydantic.dev/2/v/missing&#39;,</span>
+<span class="sd">        },</span>
+<span class="sd">    ]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#override">override</a></li>
+<li><a class="reference internal" href="#typeddict-kwargs">TypedDict &amp; **kwargs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
+<li><a class="reference internal" href="#pedantic">pedantic</a><ul>
+<li><a class="reference internal" href="#types">types</a><ul>
+<li><a class="reference internal" href="#annotated">annotated</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">validation</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="examples.html" title="code library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="testing.html" title="pytest"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">typing</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2024-01-21.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pyenv &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="regex" href="regex.html" />
+    <link rel="prev" title="pedantic" href="pedantic.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedantic.html">pedantic</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">pyenv</a><ul>
+<li><a class="reference internal" href="#install">install</a></li>
+<li><a class="reference internal" href="#use">use</a><ul>
+<li><a class="reference internal" href="#manage-envs">manage envs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="regex.html" title="regex"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pedantic.html" title="pedantic"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pyenv</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="pyenv">
+<h1>pyenv<a class="headerlink" href="#pyenv" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/pyenv/pyenv">pyenv docs</a></p>
+<section id="install">
+<h2>install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h2>
+<p>install dependencies</p>
+<p>for more info:
+https://devguide.python.org/getting-started/setup-building/index.html#build-dependencies</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>build-essential<span class="w"> </span>gdb<span class="w"> </span>lcov<span class="w"> </span>pkg-config<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>libbz2-dev<span class="w"> </span>libffi-dev<span class="w"> </span>libgdbm-dev<span class="w"> </span>libgdbm-compat-dev<span class="w"> </span>liblzma-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>libncurses5-dev<span class="w"> </span>libreadline6-dev<span class="w"> </span>libsqlite3-dev<span class="w"> </span>libssl-dev<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>lzma<span class="w"> </span>lzma-dev<span class="w"> </span>tk-dev<span class="w"> </span>uuid-dev<span class="w"> </span>zlib1g-dev
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>https://pyenv.run<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</pre></div>
+</div>
+<p>add, as printed out after finishing installation, to .bashrc</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load pyenv automatically</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/.pyenv&quot;</span>
+<span class="o">[[</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$PYENV_ROOT</span>/bin<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>pyenv<span class="w"> </span>init<span class="w"> </span>-<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Load pyenv-virtualenv automatically</span>
+<span class="nb">eval</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>pyenv<span class="w"> </span>virtualenv-init<span class="w"> </span>-<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>check if desired python version is available</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyenv<span class="w"> </span>install<span class="w"> </span>--list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">3</span>.12
+<span class="w">  </span><span class="m">3</span>.12.0
+<span class="w">  </span><span class="m">3</span>.12-dev
+<span class="w">  </span><span class="m">3</span>.12.1
+<span class="w">  </span>pypy2.7-7.3.12-src
+<span class="w">  </span>pypy2.7-7.3.12
+<span class="w">  </span>pypy3.9-7.3.12-src
+<span class="w">  </span>pypy3.9-7.3.12
+<span class="w">  </span>pypy3.10-7.3.12-src
+<span class="w">  </span>pypy3.10-7.3.12
+</pre></div>
+</div>
+<p>install it</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pyenv<span class="w"> </span>install<span class="w"> </span>-v<span class="w"> </span><span class="m">3</span>.12.1
+</pre></div>
+</div>
+<p>list your installed versions</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>~/.pyenv/versions/
+<span class="m">3</span>.12.1
+</pre></div>
+</div>
+<p>remove a python version</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>-rf<span class="w"> </span>~/.pyenv/versions/3.12.1/
+<span class="c1"># or</span>
+pyenv<span class="w"> </span>uninstall<span class="w"> </span><span class="m">3</span>.12.1
+</pre></div>
+</div>
+</section>
+<section id="use">
+<h2>use<a class="headerlink" href="#use" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>which<span class="w"> </span>python
+/home/duke/.pyenv/shims/python
+
+pyenv<span class="w"> </span>versions
+*<span class="w"> </span>system<span class="w"> </span><span class="o">(</span><span class="nb">set</span><span class="w"> </span>by<span class="w"> </span>/home/duke/.pyenv/version<span class="o">)</span>
+<span class="w">  </span><span class="m">3</span>.12.1
+
+duke@nukem:~$<span class="w"> </span>python3<span class="w"> </span>-V
+Python<span class="w"> </span><span class="m">3</span>.10.12
+duke@nukem:~$<span class="w"> </span>pyenv<span class="w"> </span>global<span class="w"> </span><span class="m">3</span>.12.1
+duke@nukem:~$<span class="w"> </span>python3<span class="w"> </span>-V
+Python<span class="w"> </span><span class="m">3</span>.12.1
+</pre></div>
+</div>
+<p>if you like you can test your python version</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span><span class="nb">test</span>
+<span class="o">==</span><span class="w"> </span>CPython<span class="w"> </span><span class="m">3</span>.12.1<span class="w"> </span><span class="o">(</span>main,<span class="w"> </span>Jan<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">2024</span>,<span class="w"> </span><span class="m">17</span>:35:07<span class="o">)</span><span class="w"> </span><span class="o">[</span>GCC<span class="w"> </span><span class="m">11</span>.4.0<span class="o">]</span>
+<span class="o">==</span><span class="w"> </span>Linux-6.5.0-14-generic-x86_64-with-glibc2.35<span class="w"> </span>little-endian
+<span class="o">==</span><span class="w"> </span>Python<span class="w"> </span>build:<span class="w"> </span>release<span class="w"> </span><span class="nv">shared</span>
+<span class="o">==</span><span class="w"> </span>cwd:<span class="w"> </span>/tmp/test_python_worker_47203æ
+<span class="o">==</span><span class="w"> </span>CPU<span class="w"> </span>count:<span class="w"> </span><span class="nv">4</span>
+<span class="o">==</span><span class="w"> </span>encodings:<span class="w"> </span><span class="nv">locale</span><span class="o">=</span>UTF-8<span class="w"> </span><span class="nv">FS</span><span class="o">=</span>utf-8
+<span class="o">==</span><span class="w"> </span>resources:<span class="w"> </span>all<span class="w"> </span><span class="nb">test</span><span class="w"> </span>resources<span class="w"> </span>are<span class="w"> </span>disabled,<span class="w"> </span>use<span class="w"> </span>-u<span class="w"> </span>option<span class="w"> </span>to<span class="w"> </span>unskip<span class="w"> </span>tests
+..
+<span class="m">0</span>:13:16<span class="w"> </span>load<span class="w"> </span>avg:<span class="w"> </span><span class="m">1</span>.25<span class="w"> </span><span class="o">[</span><span class="m">467</span>/469<span class="o">]</span><span class="w"> </span>test_zipimport_support
+<span class="m">0</span>:13:17<span class="w"> </span>load<span class="w"> </span>avg:<span class="w"> </span><span class="m">1</span>.23<span class="w"> </span><span class="o">[</span><span class="m">468</span>/469<span class="o">]</span><span class="w"> </span>test_zlib
+<span class="m">0</span>:13:18<span class="w"> </span>load<span class="w"> </span>avg:<span class="w"> </span><span class="m">1</span>.23<span class="w"> </span><span class="o">[</span><span class="m">469</span>/469<span class="o">]</span><span class="w"> </span><span class="nv">test_zoneinfo</span>
+
+<span class="o">==</span><span class="w"> </span>Tests<span class="w"> </span>result:<span class="w"> </span><span class="nv">SUCCESS</span><span class="w"> </span><span class="o">==</span>
+..
+
+<span class="m">12</span><span class="w"> </span>tests<span class="w"> </span>skipped<span class="w"> </span><span class="o">(</span>resource<span class="w"> </span>denied<span class="o">)</span>:
+<span class="w">    </span>test_curses<span class="w"> </span>test_ossaudiodev<span class="w"> </span>test_smtpnet<span class="w"> </span>test_socketserver
+<span class="w">    </span>test_tix<span class="w"> </span>test_tkinter<span class="w"> </span>test_ttk<span class="w"> </span>test_urllib2net<span class="w"> </span>test_urllibnet
+<span class="w">    </span>test_winsound<span class="w"> </span>test_xmlrpc_net<span class="w"> </span>test_zipfile64
+
+<span class="m">440</span><span class="w"> </span>tests<span class="w"> </span>OK.
+
+Total<span class="w"> </span>duration:<span class="w"> </span><span class="m">13</span><span class="w"> </span>min<span class="w"> </span><span class="m">19</span><span class="w"> </span>sec
+Total<span class="w"> </span>tests:<span class="w"> </span><span class="nv">run</span><span class="o">=</span><span class="m">39</span>,148<span class="w"> </span><span class="nv">skipped</span><span class="o">=</span><span class="m">1</span>,259
+Total<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files:<span class="w"> </span><span class="nv">run</span><span class="o">=</span><span class="m">457</span>/469<span class="w"> </span><span class="nv">skipped</span><span class="o">=</span><span class="m">17</span><span class="w"> </span><span class="nv">resource_denied</span><span class="o">=</span><span class="m">12</span>
+Result:<span class="w"> </span>SUCCESS
+</pre></div>
+</div>
+<section id="manage-envs">
+<h3>manage envs<a class="headerlink" href="#manage-envs" title="Link to this heading">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span>--help
+Usage:<span class="w"> </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span><span class="o">[</span>-f<span class="p">|</span>--force<span class="o">]</span><span class="w"> </span><span class="o">[</span>VIRTUALENV_OPTIONS<span class="o">]</span><span class="w"> </span><span class="o">[</span>version<span class="o">]</span><span class="w"> </span>&lt;virtualenv-name&gt;
+<span class="w">       </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span>--version
+<span class="w">       </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span>--help
+
+<span class="w">  </span>-f/--force<span class="w">       </span>Install<span class="w"> </span>even<span class="w"> </span><span class="k">if</span><span class="w"> </span>the<span class="w"> </span>version<span class="w"> </span>appears<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>installed<span class="w"> </span>already.<span class="w"> </span>Skip
+<span class="w">                   </span>prompting<span class="w"> </span><span class="k">for</span><span class="w"> </span>confirmation
+
+Notable<span class="w"> </span>VIRTUALENV_OPTIONS<span class="w"> </span>passed<span class="w"> </span>to<span class="w"> </span>venv-creating<span class="w"> </span>executable,<span class="w"> </span><span class="k">if</span><span class="w"> </span>applicable:
+<span class="w">  </span>-u/--upgrade<span class="w">     </span>Imply<span class="w"> </span>--force
+
+duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>virtualenv<span class="w"> </span><span class="m">3</span>.12.1<span class="w"> </span>projectname
+duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>activate<span class="w"> </span>
+<span class="m">3</span>.12.1/envs/liquidity<span class="w">    </span><span class="m">3</span>.12.1/envs/projectname<span class="w">  </span>--help<span class="w">                   </span>liquidity<span class="w">                </span>projectname<span class="w">              </span>--unset
+duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>activate<span class="w"> </span>projectname<span class="w"> </span>
+<span class="o">(</span>projectname<span class="o">)</span><span class="w"> </span>duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>deactivate
+duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>virtualenv
+virtualenv<span class="w">         </span>virtualenv-delete<span class="w">  </span>virtualenv-init<span class="w">    </span>virtualenv-prefix<span class="w">  </span>virtualenvs<span class="w">        </span>
+duke@nukem:/home$<span class="w"> </span>pyenv<span class="w"> </span>virtualenv-delete<span class="w"> </span>projectname
+pyenv-virtualenv:<span class="w"> </span>remove<span class="w"> </span>/home/duke/.pyenv/versions/3.12.1/envs/projectname?<span class="w"> </span><span class="o">(</span>y/N<span class="o">)</span><span class="w"> </span>y
+
+<span class="c1"># set back to system in local</span>
+<span class="o">(</span>liquidity<span class="o">)</span><span class="w"> </span>duke@nukem:~/.pyenv/versions<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>pyenv<span class="w"> </span><span class="nb">local</span><span class="w"> </span>system
+duke@nukem:~/.pyenv/versions<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>which<span class="w"> </span>python3
+/home/duke/.pyenv/shims/python3
+duke@nukem:~/.pyenv/versions<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>python3<span class="w"> </span>-V
+Python<span class="w"> </span><span class="m">3</span>.10.12
+duke@nukem:~/.pyenv/versions<span class="w"> </span><span class="o">(</span>master<span class="o">)</span>$<span class="w"> </span>pyenv<span class="w"> </span>versions
+*<span class="w"> </span>system<span class="w"> </span><span class="o">(</span><span class="nb">set</span><span class="w"> </span>by<span class="w"> </span>/home/duke/.pyenv/versions/.python-version<span class="o">)</span>
+<span class="w">  </span><span class="m">3</span>.12.1
+<span class="w">  </span><span class="m">3</span>.12.1/envs/liquidity
+<span class="w">  </span>liquidity<span class="w"> </span>--&gt;<span class="w"> </span>/home/duke/.pyenv/versions/3.12.1/envs/liquidity
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedantic.html">pedantic</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">pyenv</a><ul>
+<li><a class="reference internal" href="#install">install</a></li>
+<li><a class="reference internal" href="#use">use</a><ul>
+<li><a class="reference internal" href="#manage-envs">manage envs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="regex.html" title="regex"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pedantic.html" title="pedantic"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">pyenv</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2024-01-21.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

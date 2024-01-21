@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="itertools" href="core.html" />
-    <link rel="prev" title="assert python" href="assert.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="core" href="core.html" />
+    <link rel="prev" title="assert" href="assert.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -66,18 +66,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">asyncio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedantic.html">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -91,6 +89,7 @@
 <li><a class="reference internal" href="#">asyncio</a><ul>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
+<li><a class="reference internal" href="#other-examples">other examples</a></li>
 <li><a class="reference internal" href="#websockets">websockets</a></li>
 </ul>
 </li>
@@ -118,10 +117,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="core.html" title="itertools"
+          <a href="core.html" title="core"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="assert.html" title="assert python"
+          <a href="assert.html" title="assert"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -248,6 +247,61 @@
 </pre></div>
 </div>
 </section>
+<section id="other-examples">
+<h2>other examples<a class="headerlink" href="#other-examples" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] getting </span><span class="si">{}</span><span class="s2"> ...&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] </span><span class="si">{}</span><span class="s2">, status: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] </span><span class="si">{}</span><span class="s2">, len: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">doc</span><span class="p">)))</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://demo.borland.com/Testsite/stadyn_largepagewithimages.html&quot;</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] added </span><span class="si">{}</span><span class="s2"> to event loop&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://stackoverflow.com/questions/46445019/aiohttp-when-is-the-response-status-available&quot;</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] added </span><span class="si">{}</span><span class="s2"> to event loop&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://api.github.com/events&quot;</span>
+    <span class="n">f3</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">get</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[{:%M:%S.</span><span class="si">%f</span><span class="s2">}] added </span><span class="si">{}</span><span class="s2"> to event loop&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlsplit</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hostname</span><span class="p">))</span>
+
+    <span class="k">await</span> <span class="n">f1</span>
+    <span class="k">await</span> <span class="n">f2</span>
+    <span class="k">await</span> <span class="n">f3</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[16:42.415481] added demo.borland.com to event loop</span>
+<span class="go">[16:42.415481] added stackoverflow.com to event loop</span>
+<span class="go">[16:42.415481] added api.github.com to event loop</span>
+<span class="go">[16:42.415481] getting demo.borland.com ...</span>
+<span class="go">[16:42.422481] getting stackoverflow.com ...</span>
+<span class="go">[16:42.682496] getting api.github.com ...</span>
+<span class="go">[16:43.002515] demo.borland.com, status: 200</span>
+<span class="go">[16:43.510544] stackoverflow.com, status: 200</span>
+<span class="go">[16:43.759558] stackoverflow.com, len: 110650</span>
+<span class="go">[16:43.883565] demo.borland.com, len: 239012</span>
+<span class="go">[16:44.089577] api.github.com, status: 200</span>
+<span class="go">[16:44.318590] api.github.com, len: 43055</span>
+</pre></div>
+</div>
+</section>
 <section id="websockets">
 <h2>websockets<a class="headerlink" href="#websockets" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
@@ -269,18 +323,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">asyncio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pedantic.html">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
@@ -294,6 +346,7 @@
 <li><a class="reference internal" href="#">asyncio</a><ul>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
+<li><a class="reference internal" href="#other-examples">other examples</a></li>
 <li><a class="reference internal" href="#websockets">websockets</a></li>
 </ul>
 </li>
@@ -321,10 +374,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="core.html" title="itertools"
+          <a href="core.html" title="core"
              >next</a> |</li>
         <li class="right" >
-          <a href="assert.html" title="assert python"
+          <a href="assert.html" title="assert"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -377,7 +430,7 @@
 <br />
     <br />
 
-    Last updated on 2023-12-18.
+    Last updated on 2024-01-20.
     
     <br />
 

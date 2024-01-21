@@ -14,9 +14,11 @@ python
    functional.md
    fundamentals.md
    pandas.md
-   pedantic.md
+   performance.md
+   pyenv.md
    regex.md
    testing.md
+   typing.md
    examples.md
 
 

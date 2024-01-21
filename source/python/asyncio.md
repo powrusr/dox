@@ -81,6 +81,62 @@ dragonite
 mewtwo
 --- 3.4634764194488525 seconds ---
 ```
+## other examples
+
+```python
+import aiohttp
+import asyncio
+import urllib.parse
+import datetime
+
+async def get(session, url):
+    print("[{:%M:%S.%f}] getting {} ...".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname))
+    async with session.get(url) as resp:
+        print("[{:%M:%S.%f}] {}, status: {}".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname, resp.status))
+        doc = await resp.text()
+        print("[{:%M:%S.%f}] {}, len: {}".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname, len(doc)))
+
+async def main():
+    session = aiohttp.ClientSession()
+
+    url = "http://demo.borland.com/Testsite/stadyn_largepagewithimages.html"
+    f1 = asyncio.ensure_future(get(session, url))
+    print("[{:%M:%S.%f}] added {} to event loop".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname))
+
+    url = "https://stackoverflow.com/questions/46445019/aiohttp-when-is-the-response-status-available"
+    f2 = asyncio.ensure_future(get(session, url))
+    print("[{:%M:%S.%f}] added {} to event loop".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname))
+
+    url = "https://api.github.com/events"
+    f3 = asyncio.ensure_future(get(session, url))
+    print("[{:%M:%S.%f}] added {} to event loop".format(datetime.datetime.now(), urllib.parse.urlsplit(url).hostname))
+
+    await f1
+    await f2
+    await f3
+
+    session.close()
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+```
+
+```console
+[16:42.415481] added demo.borland.com to event loop
+[16:42.415481] added stackoverflow.com to event loop
+[16:42.415481] added api.github.com to event loop
+[16:42.415481] getting demo.borland.com ...
+[16:42.422481] getting stackoverflow.com ...
+[16:42.682496] getting api.github.com ...
+[16:43.002515] demo.borland.com, status: 200
+[16:43.510544] stackoverflow.com, status: 200
+[16:43.759558] stackoverflow.com, len: 110650
+[16:43.883565] demo.borland.com, len: 239012
+[16:44.089577] api.github.com, status: 200
+[16:44.318590] api.github.com, len: 43055
+```
+
 
 ## websockets
 
