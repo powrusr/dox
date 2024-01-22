@@ -12,4 +12,5 @@ PowrUsr
    sphinx
    bash/index
    python/index
+   vim/index
 

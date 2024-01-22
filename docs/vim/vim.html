@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>vim &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="vim" href="index.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">vim</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">vim</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#magical">magical</a></li>
+<li><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
+<li><a class="reference internal" href="#preceeded-by">preceeded by</a></li>
+<li><a class="reference internal" href="#followed-by">followed by</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#patterns">patterns</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="vim"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">vim</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">vim</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="vim">
+<h1>vim<a class="headerlink" href="#vim" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://vimdoc.sourceforge.net/">vim docs</a></p>
+<section id="magical">
+<h2>magical<a class="headerlink" href="#magical" title="Link to this heading">¶</a></h2>
+<p>from <code class="docutils literal notranslate"><span class="pre">:help</span> <span class="pre">pattern</span></code></p>
+<ul class="simple">
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">\m</span></code> makes the pattern after it be interpreted as if ‘magic’ is set,  ignoring the actual value of the ‘magic’ option</p></li>
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">\M</span></code> makes the pattern after it be interpreted as if ‘nomagic’ is used.</p></li>
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">\v</span></code> means that in the pattern after it all ASCII characters except <code class="docutils literal notranslate"><span class="pre">0-9</span></code>, <code class="docutils literal notranslate"><span class="pre">a-z</span></code>, <code class="docutils literal notranslate"><span class="pre">A-Z</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> have a special meaning. “very magic”</p></li>
+<li><p>Use of <code class="docutils literal notranslate"><span class="pre">\V</span></code> means that in the pattern after it only the backslash and the terminating character (/ or ?) has a special meaning. “very nomagic”</p></li>
+</ul>
+<p>eg match word followed by a comma without having to escape special characters with <code class="docutils literal notranslate"><span class="pre">\v</span></code> at beginning of pattern:</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="p">:</span>%s#\<span class="k">v</span>\<span class="k">w</span><span class="p">+,</span>##gc
+</pre></div>
+</div>
+</section>
+<section id="lookarounds">
+<h2>lookarounds<a class="headerlink" href="#lookarounds" title="Link to this heading">¶</a></h2>
+<section id="preceeded-by">
+<h3>preceeded by<a class="headerlink" href="#preceeded-by" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>don’t match if preceeded by with <code class="docutils literal notranslate"><span class="pre">&#64;&lt;!</span></code></p></li>
+<li><p>match if preceeded by with <code class="docutils literal notranslate"><span class="pre">&#64;&lt;=</span></code></p></li>
+</ul>
+</section>
+<section id="followed-by">
+<h3>followed by<a class="headerlink" href="#followed-by" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>don’t match if followed by with <code class="docutils literal notranslate"><span class="pre">&#64;!</span></code></p></li>
+<li><p>match if followed by with <code class="docutils literal notranslate"><span class="pre">&#64;=</span></code> or <code class="docutils literal notranslate"><span class="pre">&amp;</span></code></p></li>
+</ul>
+<p>eg don’t match if a word is preceeded by a pipe symbol</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="p">:</span>%s#\<span class="k">v</span><span class="p">(|)</span>@<span class="p">&lt;!(</span>__\<span class="k">w</span><span class="p">+</span>__<span class="p">)</span>#`\<span class="m">2</span>`#gc
+</pre></div>
+</div>
+<p>eg match if followed by a pipe symbol</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="p">:</span>%s#\<span class="k">v</span><span class="p">(</span>__\<span class="k">w</span><span class="p">+</span>__<span class="p">)(</span>\<span class="p">|)</span>@<span class="p">=</span>#`\<span class="m">2</span>`#gc
+</pre></div>
+</div>
+<p>see help in vim <code class="docutils literal notranslate"><span class="pre">:h</span> <span class="pre">perl-patterns</span></code></p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span>Capability                      <span class="k">in</span> Vimspeak     <span class="k">in</span> Perlspeak <span class="p">~</span>
+<span class="p">----------------------------------------------------------------</span>
+force case insensitivity        \<span class="k">c</span>              <span class="p">(</span>?<span class="k">i</span><span class="p">)</span>
+force case sensitivity          \C              <span class="p">(</span>?<span class="p">-</span><span class="k">i</span><span class="p">)</span>
+backref<span class="p">-</span>less grouping           \%<span class="p">(</span>atom\<span class="p">)</span>       <span class="p">(</span>?:atom<span class="p">)</span>
+conservative quantifiers        \{<span class="p">-</span><span class="k">n</span><span class="p">,</span><span class="k">m</span>}         *?<span class="p">,</span> <span class="p">+</span>?<span class="p">,</span> ??<span class="p">,</span> {}?
+<span class="m">0</span><span class="p">-</span>width <span class="k">match</span>                   atom\@<span class="p">=</span>         <span class="p">(</span>?<span class="p">=</span>atom<span class="p">)</span>
+<span class="m">0</span><span class="p">-</span>width non<span class="p">-</span><span class="k">match</span>               atom\@<span class="p">!</span>         <span class="p">(</span>?<span class="p">!</span>atom<span class="p">)</span>
+<span class="m">0</span><span class="p">-</span>width preceding <span class="k">match</span>         atom\@<span class="p">&lt;=</span>        <span class="p">(</span>?<span class="p">&lt;=</span>atom<span class="p">)</span>
+<span class="m">0</span><span class="p">-</span>width preceding non<span class="p">-</span><span class="k">match</span>     atom\@<span class="p">&lt;!</span>        <span class="p">(</span>?<span class="p">&lt;!</span>atom<span class="p">)</span>
+<span class="k">match</span> without retry             atom\@<span class="p">&gt;</span>         <span class="p">(</span>?<span class="p">&gt;</span>atom<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="patterns">
+<h2>patterns<a class="headerlink" href="#patterns" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://vimdoc.sourceforge.net/htmldoc/pattern.html#pattern">pattern docs</a></p>
+<ul class="simple">
+<li><p>word begin: &lt;</p></li>
+<li><p>word end: &gt;</p></li>
+<li><p>use second match as replacement: \2</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">|`Mapping`</span>&#160; <span class="pre">|`Collection`</span>&#160;&#160; <span class="pre">__getitem__,</span> <span class="pre">_</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:%s#<span class="se">\(</span><span class="sb">`</span><span class="se">\)\(\&lt;\w\+\&gt;\)\(</span><span class="sb">`</span><span class="se">\)</span><span class="c1">#\2#gc</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">vim</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">vim</a></li>
+</ul>
+</li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#magical">magical</a></li>
+<li><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
+<li><a class="reference internal" href="#preceeded-by">preceeded by</a></li>
+<li><a class="reference internal" href="#followed-by">followed by</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#patterns">patterns</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="vim"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >vim</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">vim</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2024-01-22.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

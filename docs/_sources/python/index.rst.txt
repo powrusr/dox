@@ -3,7 +3,6 @@ python
 
 .. toctree::
    :maxdepth: 2
-   :caption: python
 
    assert.md
    asyncio.md

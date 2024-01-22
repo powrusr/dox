@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="regex" href="regex.html" />
-    <link rel="prev" title="generators" href="generator.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="performance testing" href="performance.html" />
+    <link rel="prev" title="fundamentals" href="fundamentals.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -61,28 +61,31 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<p class="caption" role="heading"><span class="caption-text">test</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
 </ul>
 
   <div>
@@ -233,10 +236,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="regex.html" title="regex"
+          <a href="performance.html" title="performance testing"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="generator.html" title="generators"
+          <a href="fundamentals.html" title="fundamentals"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -2286,28 +2289,31 @@ first values are NaN as there isn’t enough data yet to calculate average</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<p class="caption" role="heading"><span class="caption-text">test</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="assert.html">assert python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html">itertools</a></li>
-<li class="toctree-l2"><a class="reference internal" href="core.html#collections">collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="decorators.html">decorators</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generator.html">generators</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
 </ul>
 
   <div>
@@ -2458,10 +2464,10 @@ first values are NaN as there isn’t enough data yet to calculate average</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="regex.html" title="regex"
+          <a href="performance.html" title="performance testing"
              >next</a> |</li>
         <li class="right" >
-          <a href="generator.html" title="generators"
+          <a href="fundamentals.html" title="fundamentals"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -2514,7 +2520,7 @@ first values are NaN as there isn’t enough data yet to calculate average</p>
 <br />
     <br />
 
-    Last updated on 2023-12-18.
+    Last updated on 2024-01-21.
     
     <br />
 

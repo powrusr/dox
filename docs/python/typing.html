@@ -85,12 +85,21 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#type-aliases">type aliases</a></li>
+<li><a class="reference internal" href="#newtype">NewType</a></li>
+<li><a class="reference internal" href="#annotating-callables">annotating callables</a><ul>
+<li><a class="reference internal" href="#ellepsis">ellepsis …</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#abcs">ABCs</a></li>
+<li><a class="reference internal" href="#generics">generics</a></li>
 <li><a class="reference internal" href="#override">override</a></li>
 <li><a class="reference internal" href="#typeddict-kwargs">TypedDict &amp; **kwargs</a></li>
 </ul>
@@ -177,7 +186,275 @@
             
   <section id="typing">
 <h1>typing<a class="headerlink" href="#typing" title="Link to this heading">¶</a></h1>
-<p><a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">cheatsheet</a></p>
+<p><a class="reference external" href="https://docs.python.org/3/library/typing.html">official docs</a>
+<a class="reference external" href="https://typing.readthedocs.io/en/latest/">community docs</a>
+<a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">cheatsheet</a></p>
+<section id="type-aliases">
+<h2>type aliases<a class="headerlink" href="#type-aliases" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+
+<span class="nb">type</span> <span class="n">ConnectionOptions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+<span class="nb">type</span> <span class="n">Address</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+<span class="nb">type</span> <span class="n">Server</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Address</span><span class="p">,</span> <span class="n">ConnectionOptions</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">broadcast_message</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">servers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Server</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>
+
+<span class="c1"># The static type checker will treat the previous type signature as</span>
+<span class="c1"># being exactly equivalent to this one.</span>
+<span class="k">def</span> <span class="nf">broadcast_message</span><span class="p">(</span>
+        <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">servers</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>The type statement is new in Python 3.12. For backwards compatibility, type aliases can also be created through simple assignment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Vector</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">Or</span> <span class="n">marked</span> <span class="k">with</span> <span class="n">TypeAlias</span> <span class="n">to</span> <span class="n">make</span> <span class="n">it</span> <span class="n">explicit</span> <span class="n">that</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">a</span> <span class="nb">type</span> <span class="n">alias</span><span class="p">,</span> <span class="ow">not</span> <span class="n">a</span> <span class="n">normal</span> <span class="n">variable</span> <span class="n">assignment</span><span class="p">:</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeAlias</span>
+
+<span class="n">Vector</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="newtype">
+<h2>NewType<a class="headerlink" href="#newtype" title="Link to this heading">¶</a></h2>
+<p>Use the NewType helper to create distinct types:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NewType</span>
+
+<span class="n">UserId</span> <span class="o">=</span> <span class="n">NewType</span><span class="p">(</span><span class="s1">&#39;UserId&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+<span class="n">some_id</span> <span class="o">=</span> <span class="n">UserId</span><span class="p">(</span><span class="mi">524313</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The static type checker will treat the new type as if it were a subclass of the original type. This is useful in helping catch logical errors:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_user_name</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="n">UserId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="o">...</span>
+
+<span class="c1"># passes type checking</span>
+<span class="n">user_a</span> <span class="o">=</span> <span class="n">get_user_name</span><span class="p">(</span><span class="n">UserId</span><span class="p">(</span><span class="mi">42351</span><span class="p">))</span>
+
+<span class="c1"># fails type checking; an int is not a UserId</span>
+<span class="n">user_b</span> <span class="o">=</span> <span class="n">get_user_name</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You may still perform all int operations on a variable of type UserId, but the result will always be of type int. This lets you pass in a UserId wherever an int might be expected, but will prevent you from accidentally creating a UserId in an invalid way:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;output&#39; is of type &#39;int&#39;, not &#39;UserId&#39;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">UserId</span><span class="p">(</span><span class="mi">23413</span><span class="p">)</span> <span class="o">+</span> <span class="n">UserId</span><span class="p">(</span><span class="mi">54341</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="annotating-callables">
+<h2>annotating callables<a class="headerlink" href="#annotating-callables" title="Link to this heading">¶</a></h2>
+<p>Callable[[int], str] signifies a function that takes a single parameter of type int and returns a str.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Awaitable</span>
+
+<span class="k">def</span> <span class="nf">feeder</span><span class="p">(</span><span class="n">get_next_item</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>  <span class="c1"># Body</span>
+
+<span class="k">def</span> <span class="nf">async_query</span><span class="p">(</span><span class="n">on_success</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+                <span class="n">on_error</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">],</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>  <span class="c1"># Body</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_update</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>  <span class="c1"># Body</span>
+
+<span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Awaitable</span><span class="p">[</span><span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="n">on_update</span>
+</pre></div>
+</div>
+<section id="ellepsis">
+<h3>ellepsis …<a class="headerlink" href="#ellepsis" title="Link to this heading">¶</a></h3>
+<p>… means any parameter list is acceptable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="n">x</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">str</span>     <span class="c1"># OK</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">concat</span>  <span class="c1"># Also OK</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="abcs">
+<h2>ABCs<a class="headerlink" href="#abcs" title="Link to this heading">¶</a></h2>
+<p>Used in typing so good to have an overview
+<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html">abc docs</a></p>
+<p>table of collections abstract base classes</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ABC</p></th>
+<th class="head"><p>Inherits from</p></th>
+<th class="head"><p>Abstract Methods</p></th>
+<th class="head"><p>Mixin Methods</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Container</p></td>
+<td><p></p></td>
+<td><p><strong>contains</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Hashable</p></td>
+<td><p></p></td>
+<td><p><strong>hash</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Iterable</p></td>
+<td><p></p></td>
+<td><p><strong>iter</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Iterator</p></td>
+<td><p>Iterable</p></td>
+<td><p><strong>next</strong></p></td>
+<td><p><strong>iter</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Reversible</p></td>
+<td><p>Iterable</p></td>
+<td><p><strong>reversed</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Generator</p></td>
+<td><p>Iterator</p></td>
+<td><p>send, throw</p></td>
+<td><p>close, <strong>iter</strong>, <strong>next</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Sized</p></td>
+<td><p><strong>len</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>Callable</p></td>
+<td><p><strong>call</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Collection</p></td>
+<td><p>Sized,<br></p></td>
+<td><p>Iterable,<br></p></td>
+<td><p>Container</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sequence</p></td>
+<td><p>Reversible,<br></p></td>
+<td><p>Collection<br></p></td>
+<td><p><strong>getitem</strong>, <strong>len</strong>	<strong>contains</strong>, <strong>iter</strong>, <strong>reversed</strong>, index, and count</p></td>
+</tr>
+<tr class="row-even"><td><p>MutableSequence</p></td>
+<td><p>Sequence	<strong>getitem</strong>, <strong>setitem</strong>, <strong>delitem</strong>, <strong>len</strong>, insert	Inherited</p></td>
+<td><p>Sequence methods and append, reverse, extend, pop, remove, and <strong>iadd</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>ByteString</p></td>
+<td><p>Sequence	<strong>getitem</strong>, <strong>len</strong>	Inherited</p></td>
+<td><p>Sequence methods</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>Set</p></td>
+<td><p>Collection	<strong>contains</strong>, <strong>iter</strong>, <strong>len</strong>	<strong>le</strong>, <strong>lt</strong>, <strong>eq</strong>, <strong>ne</strong>, <strong>gt</strong>, <strong>ge</strong>, <strong>and</strong>, <strong>or</strong>, <strong>sub</strong>, <strong>xor</strong>, and isdisjoint</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>MutableSet</p></td>
+<td><p>Set	<strong>contains</strong>, <strong>iter</strong>, <strong>len</strong>, add, discard	Inherited</p></td>
+<td><p>Set methods and clear, pop, remove, <strong>ior</strong>, <strong>iand</strong>, <strong>ixor</strong>, and <strong>isub</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	<strong>getitem</strong>, <strong>iter</strong>, <strong>len</strong>	<strong>contains</strong>, keys, items, values, get, <strong>eq</strong>, and <strong>ne</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code>	<strong>getitem</strong>, <strong>setitem</strong>, <strong>delitem</strong>, <strong>iter</strong>, <strong>len</strong>	Inherited</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code> methods and pop, popitem, clear, update, and setdefault</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Sized</span></code>	 	<strong>len</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ItemsView</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">KeysView</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValuesView</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Awaitable</span></code></p></td>
+<td><p><strong>await</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Coroutine</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Awaitable</span></code>	send, throw	close</p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code></p></td>
+<td><p><strong>aiter</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code>	<strong>anext</strong>	<strong>aiter</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncGenerator</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code>	asend, athrow	aclose, <strong>aiter</strong>, <strong>anext</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Buffer</span></code></p></td>
+<td><p><strong>buffer</strong></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="generics">
+<h2>generics<a class="headerlink" href="#generics" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Sequence</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span> <span class="o">...</span>
+
+<span class="c1"># Sequence[Employee] indicates that all elements in the sequence</span>
+<span class="c1"># must be instances of &quot;Employee&quot;.</span>
+<span class="c1"># Mapping[str, str] indicates that all keys and all values in the mapping</span>
+<span class="c1"># must be strings.</span>
+<span class="k">def</span> <span class="nf">notify_by_email</span><span class="p">(</span><span class="n">employees</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Employee</span><span class="p">],</span>
+                    <span class="n">overrides</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Generic functions and classes can be parameterized by using type parameter syntax:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+
+<span class="k">def</span> <span class="nf">first</span><span class="p">[</span><span class="n">T</span><span class="p">](</span><span class="n">l</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>  <span class="c1"># Function is generic over the TypeVar &quot;T&quot;</span>
+    <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Or by using the TypeVar factory directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="n">U</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;U&#39;</span><span class="p">)</span>                  <span class="c1"># Declare type variable &quot;U&quot;</span>
+
+<span class="k">def</span> <span class="nf">second</span><span class="p">(</span><span class="n">l</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">:</span>  <span class="c1"># Function is generic over the TypeVar &quot;U&quot;</span>
+    <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
 <section id="override">
 <h2>override<a class="headerlink" href="#override" title="Link to this heading">¶</a></h2>
 <p>Allows our syntax checker to detect when a base class was altered but child classes using it aren’t aware of the change</p>
@@ -454,12 +731,21 @@ For more fine-grain control, you can also use <a class="reference external" href
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#type-aliases">type aliases</a></li>
+<li><a class="reference internal" href="#newtype">NewType</a></li>
+<li><a class="reference internal" href="#annotating-callables">annotating callables</a><ul>
+<li><a class="reference internal" href="#ellepsis">ellepsis …</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#abcs">ABCs</a></li>
+<li><a class="reference internal" href="#generics">generics</a></li>
 <li><a class="reference internal" href="#override">override</a></li>
 <li><a class="reference internal" href="#typeddict-kwargs">TypedDict &amp; **kwargs</a></li>
 </ul>
@@ -553,7 +839,7 @@ For more fine-grain control, you can also use <a class="reference external" href
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-01-22.
     
     <br />
 

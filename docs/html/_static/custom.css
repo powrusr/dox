@@ -1,7 +1,0 @@
-@import url("basic.css")
-div.body {
-   max-width: 90%;
-}
-div[role=main] {
-   max-width: 90%;
-}

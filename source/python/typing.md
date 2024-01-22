@@ -1,6 +1,173 @@
 # typing
 
+[official docs](https://docs.python.org/3/library/typing.html)
+[community docs](https://typing.readthedocs.io/en/latest/)
 [cheatsheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
+## type aliases
+
+```python
+from collections.abc import Sequence
+
+type ConnectionOptions = dict[str, str]
+type Address = tuple[str, int]
+type Server = tuple[Address, ConnectionOptions]
+
+def broadcast_message(message: str, servers: Sequence[Server]) -> None:
+    ...
+
+# The static type checker will treat the previous type signature as
+# being exactly equivalent to this one.
+def broadcast_message(
+        message: str,
+        servers: Sequence[tuple[tuple[str, int], dict[str, str]]]) -> None:
+    ...
+```
+
+The type statement is new in Python 3.12. For backwards compatibility, type aliases can also be created through simple assignment:
+
+```python
+Vector = list[float]
+Or marked with TypeAlias to make it explicit that this is a type alias, not a normal variable assignment:
+```
+
+```python
+from typing import TypeAlias
+
+Vector: TypeAlias = list[float]
+```
+
+## NewType
+
+Use the NewType helper to create distinct types:
+
+```python
+from typing import NewType
+
+UserId = NewType('UserId', int)
+some_id = UserId(524313)
+```
+
+The static type checker will treat the new type as if it were a subclass of the original type. This is useful in helping catch logical errors:
+
+```python
+def get_user_name(user_id: UserId) -> str:
+    ...
+
+# passes type checking
+user_a = get_user_name(UserId(42351))
+
+# fails type checking; an int is not a UserId
+user_b = get_user_name(-1)
+```
+
+You may still perform all int operations on a variable of type UserId, but the result will always be of type int. This lets you pass in a UserId wherever an int might be expected, but will prevent you from accidentally creating a UserId in an invalid way:
+
+```python
+# 'output' is of type 'int', not 'UserId'
+output = UserId(23413) + UserId(54341)
+```
+
+## annotating callables
+
+Callable[[int], str] signifies a function that takes a single parameter of type int and returns a str.
+
+```python
+from collections.abc import Callable, Awaitable
+
+def feeder(get_next_item: Callable[[], str]) -> None:
+    ...  # Body
+
+def async_query(on_success: Callable[[int], None],
+                on_error: Callable[[int, Exception], None]) -> None:
+    ...  # Body
+
+async def on_update(value: str) -> None:
+    ...  # Body
+
+callback: Callable[[str], Awaitable[None]] = on_update
+```
+
+### ellepsis ...
+
+... means any parameter list is acceptable
+
+```python
+def concat(x: str, y: str) -> str:
+    return x + y
+
+x: Callable[..., str]
+x = str     # OK
+x = concat  # Also OK
+```
+## ABCs
+
+Used in typing so good to have an overview
+[abc docs](https://docs.python.org/3/library/collections.abc.html)
+
+table of collections abstract base classes
+
+|ABC|Inherits from|Abstract Methods|Mixin Methods|
+|--|--|--|--|
+|Container ||__contains__||
+|Hashable ||__hash__||
+|Iterable ||__iter__||	 
+|Iterator |Iterable|__next__|__iter__|
+|Reversible |Iterable|	__reversed__	 
+|Generator 	|Iterator|send, throw|close, __iter__, __next__|
+|Sized |	 	__len__	 
+|Callable |	 	__call__	 
+|Collection 	|Sized,<br> |Iterable,<br>|Container|	__contains__, __iter__, __len__	 
+|Sequence	|Reversible,<br> |Collection<br>|	__getitem__, __len__	__contains__, __iter__, __reversed__, index, and count
+|MutableSequence	|Sequence	__getitem__, __setitem__, __delitem__, __len__, insert	Inherited |Sequence methods and append, reverse, extend, pop, remove, and __iadd__
+|ByteString	|Sequence	__getitem__, __len__	Inherited |Sequence methods
+|Set	|Collection	__contains__, __iter__, __len__	__le__, __lt__, __eq__, __ne__, __gt__, __ge__, __and__, __or__, __sub__, __xor__, and isdisjoint
+|MutableSet	|Set	__contains__, __iter__, __len__, add, discard	Inherited |Set methods and clear, pop, remove, __ior__, __iand__, __ixor__, and __isub__
+|`Mapping`	|`Collection`	__getitem__, __iter__, __len__	__contains__, keys, items, values, get, __eq__, and __ne__
+|`MutableMapping`	|`Mapping`	__getitem__, __setitem__, __delitem__, __iter__, __len__	Inherited |`Mapping` methods and pop, popitem, clear, update, and setdefault
+|`MappingView`	|`Sized`	 	__len__
+|`ItemsView`	|`MappingView`, |`Set`	 	__contains__, __iter__
+|`KeysView`	|`MappingView`, |`Set`	 	__contains__, __iter__
+|`ValuesView`	|`MappingView`, |`Collection`	 	__contains__, __iter__
+|`Awaitable` |	 	__await__	 
+|`Coroutine` 	|`Awaitable`	send, throw	close
+|`AsyncIterable` |	 	__aiter__	 
+|`AsyncIterator` 	|`AsyncIterable`	__anext__	__aiter__
+|`AsyncGenerator` 	|`AsyncIterator`	asend, athrow	aclose, __aiter__, __anext__
+|`Buffer` |	 	__buffer__	 
+
+## generics
+
+```python
+from collections.abc import Mapping, Sequence
+
+class Employee: ...
+
+# Sequence[Employee] indicates that all elements in the sequence
+# must be instances of "Employee".
+# Mapping[str, str] indicates that all keys and all values in the mapping
+# must be strings.
+def notify_by_email(employees: Sequence[Employee],
+                    overrides: Mapping[str, str]) -> None: ...
+```
+Generic functions and classes can be parameterized by using type parameter syntax:
+
+```python
+from collections.abc import Sequence
+
+def first[T](l: Sequence[T]) -> T:  # Function is generic over the TypeVar "T"
+    return l[0]
+```
+Or by using the TypeVar factory directly:
+
+```python
+from collections.abc import Sequence
+from typing import TypeVar
+
+U = TypeVar('U')                  # Declare type variable "U"
+
+def second(l: Sequence[U]) -> U:  # Function is generic over the TypeVar "U"
+    return l[1]
+```
 
 ## override
 
