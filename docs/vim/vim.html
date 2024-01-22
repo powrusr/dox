@@ -62,6 +62,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
@@ -75,6 +76,10 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#plugins">plugins</a><ul>
+<li><a class="reference internal" href="#surround">surround</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#magical">magical</a></li>
 <li><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
 <li><a class="reference internal" href="#preceeded-by">preceeded by</a></li>
@@ -155,6 +160,82 @@
   <section id="vim">
 <h1>vim<a class="headerlink" href="#vim" title="Link to this heading">¶</a></h1>
 <p><a class="reference external" href="https://vimdoc.sourceforge.net/">vim docs</a></p>
+<section id="plugins">
+<h2>plugins<a class="headerlink" href="#plugins" title="Link to this heading">¶</a></h2>
+<p>since version 8 you can install packages inside <code class="docutils literal notranslate"><span class="pre">~/.vim/pack</span></code></p>
+<p>A package can hold plugins in two different directories, <strong>start</strong> and <strong>opt</strong>. The plugins under start/ folder are loaded on startup, while the plugins under opt/ folder are loaded manually by the user with the command <code class="docutils literal notranslate"><span class="pre">:packadd</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plugin auto loaded on startup</span>
+~/.vim/pack/*/start/<span class="o">{</span>name<span class="o">}</span>
+
+<span class="c1"># Plugin loaded manually, with :packadd {name}</span>
+~/.vim/pack/*/opt/<span class="o">{</span>name<span class="o">}</span>
+</pre></div>
+</div>
+<p>git clone into these directories directly</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>~/.vim/pack/tpope/start
+<span class="nb">cd</span><span class="w"> </span>~/.vim/pack/tpope/start
+git<span class="w"> </span>clone<span class="w"> </span>https://tpope.io/vim/surround.git
+vim<span class="w"> </span>-u<span class="w"> </span>NONE<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;helptags surround/doc&quot;</span><span class="w"> </span>-c<span class="w"> </span>q
+</pre></div>
+</div>
+<section id="surround">
+<h3>surround<a class="headerlink" href="#surround" title="Link to this heading">¶</a></h3>
+<ul>
+<li><p>change surrounding <code class="docutils literal notranslate"><span class="pre">'word'</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;word&quot;</span></code>:  <code class="docutils literal notranslate"><span class="pre">cs'&quot;</span></code></p>
+<blockquote>
+<div><p>mnemonic: change surrounding to ‘</p>
+</div></blockquote>
+</li>
+<li><p>change surrounding <code class="docutils literal notranslate"><span class="pre">&quot;word&quot;</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;word&lt;/p&gt;</span></code>:  <code class="docutils literal notranslate"><span class="pre">cs&quot;&lt;p&gt;</span></code></p>
+<blockquote>
+<div><p>mnemonic: change surrounding “ to typed tag</p>
+</div></blockquote>
+</li>
+<li><p>change surrounding <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;word&lt;/p&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">&quot;word&quot;:</span></code> <code class="docutils literal notranslate"><span class="pre">cst&quot;</span></code></p>
+<blockquote>
+<div><p>mnemonic: change surrounding tag to “</p>
+</div></blockquote>
+</li>
+<li><p>remove surrounding <code class="docutils literal notranslate"><span class="pre">'word'</span></code> to <code class="docutils literal notranslate"><span class="pre">word:</span></code> <code class="docutils literal notranslate"><span class="pre">ds'</span></code></p>
+<blockquote>
+<div><p>mnemonic: delete surrounding ‘</p>
+</div></blockquote>
+</li>
+<li><p>change surrounding <code class="docutils literal notranslate"><span class="pre">word</span></code> to <code class="docutils literal notranslate"><span class="pre">[word]:</span></code>  <code class="docutils literal notranslate"><span class="pre">ysiw]</span></code> iw = text object</p>
+<blockquote>
+<div><p>mnemonic: yield surounding ] to text object</p>
+</div></blockquote>
+</li>
+<li><p>surround entire line with parentheses:  <code class="docutils literal notranslate"><span class="pre">yss)</span></code></p>
+<blockquote>
+<div><p>mnemonic: yield supersurround )</p>
+</div></blockquote>
+</li>
+<li><p>remove surroundings on <code class="docutils literal notranslate"><span class="pre">({</span> <span class="pre">Hello</span> <span class="pre">}</span> <span class="pre">world!)</span></code>:  <code class="docutils literal notranslate"><span class="pre">ds)ds}</span></code></p>
+<blockquote>
+<div><p>mnemonic: delete surrounding ) delete surrounding }</p>
+</div></blockquote>
+</li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">word</span></code> to <code class="docutils literal notranslate"><span class="pre">&lt;em&gt;word&lt;/em&gt;</span></code>:  <code class="docutils literal notranslate"><span class="pre">ysiw&lt;em&gt;</span></code></p>
+<blockquote>
+<div><p>mnemonic: yields surrounding iw (text object) <em></p>
+</div></blockquote>
+</li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;word&lt;/p&gt;</span></code> to <code class="docutils literal notranslate"><span class="pre">`&lt;p&gt;word&lt;/p&gt;`</span></code>:  <code class="docutils literal notranslate"><span class="pre">ysat`</span></code> at=a tag block</p>
+<blockquote>
+<div><p>mnemonic: yield surround a tag with <code class="docutils literal notranslate"> <span class="pre">see</span></code>:h at`</p>
+</div></blockquote>
+</li>
+<li><p>change <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">any|selectionO</span></code> to <code class="docutils literal notranslate"><span class="pre">some</span> <span class="pre">&quot;any|selectionO&quot;</span></code>: <code class="docutils literal notranslate"><span class="pre">vt</span> <span class="pre">c&quot;&quot;&lt;ESC&gt;&lt;P&gt;</span></code></p>
+<blockquote>
+<div><p>mnemonic: visually select till space change (selection is copied to buffer) “” escape paste selection before character</p>
+</div></blockquote>
+</li>
+</ul>
+<p>How do I surround without adding a space?</p>
+<p>Only the opening brackets <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">{</span> <span class="pre">(</span></code> add a space. Use a closing bracket, or the <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">(()</span></code> and <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">({)</span></code> aliases</p>
+</section>
+</section>
 <section id="magical">
 <h2>magical<a class="headerlink" href="#magical" title="Link to this heading">¶</a></h2>
 <p>from <code class="docutils literal notranslate"><span class="pre">:help</span> <span class="pre">pattern</span></code></p>
@@ -220,6 +301,20 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>:%s#<span class="se">\(</span><span class="sb">`</span><span class="se">\)\(\&lt;\w\+\&gt;\)\(</span><span class="sb">`</span><span class="se">\)</span><span class="c1">#\2#gc</span>
 </pre></div>
 </div>
+<p>use</p>
+<div class="highlight-vim notranslate"><div class="highlight"><pre><span></span><span class="p">:</span>%s#\<span class="k">v</span><span class="p">(</span>__\<span class="k">w</span><span class="p">+</span>__<span class="p">)(</span>`<span class="p">)</span>@<span class="p">!</span>#`\<span class="m">1</span>`#<span class="k">g</span>
+</pre></div>
+</div>
+<p>to turn</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span><span class="n">Iterator</span> <span class="o">|</span><span class="n">Iterable</span><span class="o">|</span><span class="fm">__next__</span><span class="o">|</span><span class="fm">__iter__</span><span class="o">|</span>
+<span class="o">|</span><span class="n">Generator</span>  <span class="o">|</span><span class="n">Iterator</span><span class="o">|</span><span class="n">send</span><span class="p">,</span> <span class="n">throw</span><span class="o">|</span><span class="n">close</span><span class="p">,</span> <span class="fm">__iter__</span><span class="p">,</span><span class="fm">__iter__</span><span class="p">,</span> <span class="fm">__next__</span><span class="o">|</span>
+</pre></div>
+</div>
+<p>into</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>|Iterator |Iterable|__next__|__iter__|
+|Generator  |Iterator|send, throw|close, `__iter__`,`__iter__`, `__next__`|
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -233,6 +328,7 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
@@ -246,6 +342,10 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#plugins">plugins</a><ul>
+<li><a class="reference internal" href="#surround">surround</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#magical">magical</a></li>
 <li><a class="reference internal" href="#lookarounds">lookarounds</a><ul>
 <li><a class="reference internal" href="#preceeded-by">preceeded by</a></li>
@@ -332,7 +432,7 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
 <br />
     <br />
 
-    Last updated on 2024-01-22.
+    Last updated on 2024-01-23.
     
     <br />
 

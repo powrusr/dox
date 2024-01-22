@@ -292,106 +292,106 @@
 <tbody>
 <tr class="row-even"><td><p>Container</p></td>
 <td><p></p></td>
-<td><p><strong>contains</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>Hashable</p></td>
 <td><p></p></td>
-<td><p><strong>hash</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__hash__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>Iterable</p></td>
 <td><p></p></td>
-<td><p><strong>iter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>Iterator</p></td>
 <td><p>Iterable</p></td>
-<td><p><strong>next</strong></p></td>
-<td><p><strong>iter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__next__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>Reversible</p></td>
 <td><p>Iterable</p></td>
-<td><p><strong>reversed</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__reversed__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>Generator</p></td>
 <td><p>Iterator</p></td>
 <td><p>send, throw</p></td>
-<td><p>close, <strong>iter</strong>, <strong>next</strong></p></td>
+<td><p>close, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__next__</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>Sized</p></td>
-<td><p><strong>len</strong></p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>Callable</p></td>
-<td><p><strong>call</strong></p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__call__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>Collection</p></td>
-<td><p>Sized,<br></p></td>
-<td><p>Iterable,<br></p></td>
-<td><p>Container</p></td>
-</tr>
-<tr class="row-odd"><td><p>Sequence</p></td>
-<td><p>Reversible,<br></p></td>
-<td><p>Collection<br></p></td>
-<td><p><strong>getitem</strong>, <strong>len</strong>	<strong>contains</strong>, <strong>iter</strong>, <strong>reversed</strong>, index, and count</p></td>
-</tr>
-<tr class="row-even"><td><p>MutableSequence</p></td>
-<td><p>Sequence	<strong>getitem</strong>, <strong>setitem</strong>, <strong>delitem</strong>, <strong>len</strong>, insert	Inherited</p></td>
-<td><p>Sequence methods and append, reverse, extend, pop, remove, and <strong>iadd</strong></p></td>
+<td><p>Sized, Iterable,<br>Container</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__iter__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-odd"><td><p>Sequence</p></td>
+<td><p>Reversible,<br> Collection<br></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__reversed__</span></code>, <code class="docutils literal notranslate"><span class="pre">index</span></code>, and <code class="docutils literal notranslate"><span class="pre">count</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>MutableSequence</p></td>
+<td><p>Sequence</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__setitem__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__len__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">insert</span></code></p></td>
+<td><p>Inherited Sequence methods and append, reverse, extend, pop, remove, and <code class="docutils literal notranslate"><span class="pre">__iadd__</span></code></p></td>
+</tr>
 <tr class="row-odd"><td><p>ByteString</p></td>
-<td><p>Sequence	<strong>getitem</strong>, <strong>len</strong>	Inherited</p></td>
+<td><p>Sequence	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	Inherited</p></td>
 <td><p>Sequence methods</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p>Set</p></td>
-<td><p>Collection	<strong>contains</strong>, <strong>iter</strong>, <strong>len</strong>	<strong>le</strong>, <strong>lt</strong>, <strong>eq</strong>, <strong>ne</strong>, <strong>gt</strong>, <strong>ge</strong>, <strong>and</strong>, <strong>or</strong>, <strong>sub</strong>, <strong>xor</strong>, and isdisjoint</p></td>
+<td><p>Collection	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	<code class="docutils literal notranslate"><span class="pre">__le__</span></code>, <code class="docutils literal notranslate"><span class="pre">__lt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ne__</span></code>, <code class="docutils literal notranslate"><span class="pre">__gt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ge__</span></code>, <code class="docutils literal notranslate"><span class="pre">__and__</span></code>, <code class="docutils literal notranslate"><span class="pre">__or__</span></code>, <code class="docutils literal notranslate"><span class="pre">__sub__</span></code>, <code class="docutils literal notranslate"><span class="pre">__xor__</span></code>, and isdisjoint</p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p>MutableSet</p></td>
-<td><p>Set	<strong>contains</strong>, <strong>iter</strong>, <strong>len</strong>, add, discard	Inherited</p></td>
-<td><p>Set methods and clear, pop, remove, <strong>ior</strong>, <strong>iand</strong>, <strong>ixor</strong>, and <strong>isub</strong></p></td>
+<td><p>Set	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>, add, discard	Inherited</p></td>
+<td><p>Set methods and clear, pop, remove, <code class="docutils literal notranslate"><span class="pre">__ior__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iand__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ixor__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__isub__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	<strong>getitem</strong>, <strong>iter</strong>, <strong>len</strong>	<strong>contains</strong>, keys, items, values, get, <strong>eq</strong>, and <strong>ne</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, keys, items, values, get, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__ne__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code>	<strong>getitem</strong>, <strong>setitem</strong>, <strong>delitem</strong>, <strong>iter</strong>, <strong>len</strong>	Inherited</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code>	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	Inherited</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code> methods and pop, popitem, clear, update, and setdefault</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Sized</span></code>	 	<strong>len</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Sized</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ItemsView</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">KeysView</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValuesView</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	 	<strong>contains</strong>, <strong>iter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Awaitable</span></code></p></td>
-<td><p><strong>await</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__await__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
@@ -401,22 +401,22 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code></p></td>
-<td><p><strong>aiter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code>	<strong>anext</strong>	<strong>aiter</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code>	<code class="docutils literal notranslate"><span class="pre">__anext__</span></code>	<code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncGenerator</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code>	asend, athrow	aclose, <strong>aiter</strong>, <strong>anext</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code>	asend, athrow	aclose, <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__anext__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Buffer</span></code></p></td>
-<td><p><strong>buffer</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__buffer__</span></code></p></td>
 <td><p></p></td>
 <td><p></p></td>
 </tr>

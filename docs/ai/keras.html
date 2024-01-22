@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>vim &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>keras &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="vim" href="vim.html" />
-    <link rel="prev" title="code library" href="../python/examples.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="next" title="sphinx" href="../sphinx.html" />
+    <link rel="prev" title="ai" href="index.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
             <script type="text/javascript" src="../_static/menu.js"></script>
@@ -63,16 +63,35 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ai</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">keras</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">vim</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">keras</a><ul>
+<li><a class="reference internal" href="#keras-rl">keras-rl</a><ul>
+<li><a class="reference internal" href="#deep-q-learning-dqn">Deep Q Learning (DQN)</a></li>
+<li><a class="reference internal" href="#double-dqn">Double DQN</a></li>
+<li><a class="reference internal" href="#deep-deterministic-policy-gradient-ddpg">Deep Deterministic Policy Gradient (DDPG)</a></li>
+<li><a class="reference internal" href="#continuous-dqn-cdqn-or-naf">Continuous DQN (CDQN or NAF)</a></li>
+<li><a class="reference internal" href="#cross-entropy-method-cem">Cross-Entropy Method (CEM)</a></li>
+<li><a class="reference internal" href="#dueling-dqn">Dueling DQN</a></li>
+<li><a class="reference internal" href="#sarsa">SARSA</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -94,10 +113,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="vim.html" title="vim"
+          <a href="../sphinx.html" title="sphinx"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../python/examples.html" title="code library"
+          <a href="index.html" title="ai"
              accesskey="P">previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -110,7 +129,8 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
-        <li class="nav-item nav-item-this"><a href="">vim</a></li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">ai</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">keras</a></li>
                 <li class="right">
                     
 
@@ -140,19 +160,36 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="vim">
-<h1>vim<a class="headerlink" href="#vim" title="Link to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="vim.html">vim</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="vim.html#plugins">plugins</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vim.html#magical">magical</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vim.html#lookarounds">lookarounds</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vim.html#patterns">patterns</a></li>
+  <section id="keras">
+<h1>keras<a class="headerlink" href="#keras" title="Link to this heading">¶</a></h1>
+<section id="keras-rl">
+<h2>keras-rl<a class="headerlink" href="#keras-rl" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://keras-rl.readthedocs.io/en/latest/">keras-rl github</a></p></li>
+<li><p><a class="reference external" href="https://keras.io/examples/rl/">keras-rl examples</a></p></li>
 </ul>
-</li>
-</ul>
-</div>
+<section id="deep-q-learning-dqn">
+<h3>Deep Q Learning (DQN)<a class="headerlink" href="#deep-q-learning-dqn" title="Link to this heading">¶</a></h3>
+</section>
+<section id="double-dqn">
+<h3>Double DQN<a class="headerlink" href="#double-dqn" title="Link to this heading">¶</a></h3>
+</section>
+<section id="deep-deterministic-policy-gradient-ddpg">
+<h3>Deep Deterministic Policy Gradient (DDPG)<a class="headerlink" href="#deep-deterministic-policy-gradient-ddpg" title="Link to this heading">¶</a></h3>
+</section>
+<section id="continuous-dqn-cdqn-or-naf">
+<h3>Continuous DQN (CDQN or NAF)<a class="headerlink" href="#continuous-dqn-cdqn-or-naf" title="Link to this heading">¶</a></h3>
+</section>
+<section id="cross-entropy-method-cem">
+<h3>Cross-Entropy Method (CEM)<a class="headerlink" href="#cross-entropy-method-cem" title="Link to this heading">¶</a></h3>
+</section>
+<section id="dueling-dqn">
+<h3>Dueling DQN<a class="headerlink" href="#dueling-dqn" title="Link to this heading">¶</a></h3>
+</section>
+<section id="sarsa">
+<h3>SARSA<a class="headerlink" href="#sarsa" title="Link to this heading">¶</a></h3>
+</section>
+</section>
 </section>
 
 
@@ -165,16 +202,35 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ai</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">keras</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">vim</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">keras</a><ul>
+<li><a class="reference internal" href="#keras-rl">keras-rl</a><ul>
+<li><a class="reference internal" href="#deep-q-learning-dqn">Deep Q Learning (DQN)</a></li>
+<li><a class="reference internal" href="#double-dqn">Double DQN</a></li>
+<li><a class="reference internal" href="#deep-deterministic-policy-gradient-ddpg">Deep Deterministic Policy Gradient (DDPG)</a></li>
+<li><a class="reference internal" href="#continuous-dqn-cdqn-or-naf">Continuous DQN (CDQN or NAF)</a></li>
+<li><a class="reference internal" href="#cross-entropy-method-cem">Cross-Entropy Method (CEM)</a></li>
+<li><a class="reference internal" href="#dueling-dqn">Dueling DQN</a></li>
+<li><a class="reference internal" href="#sarsa">SARSA</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
+  </div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -196,10 +252,10 @@
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="vim.html" title="vim"
+          <a href="../sphinx.html" title="sphinx"
              >next</a> |</li>
         <li class="right" >
-          <a href="../python/examples.html" title="code library"
+          <a href="index.html" title="ai"
              >previous</a> |</li>
           <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
           <li><a href="https://www.python.org/">Python</a> &#187;</li>
@@ -212,7 +268,8 @@
               <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
               
           </li>
-        <li class="nav-item nav-item-this"><a href="">vim</a></li>
+          <li class="nav-item nav-item-1"><a href="index.html" >ai</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">keras</a></li>
                 <li class="right">
                     
 
@@ -251,7 +308,7 @@
 <br />
     <br />
 
-    Last updated on 2024-01-23.
+    Last updated on 2024-01-22.
     
     <br />
 

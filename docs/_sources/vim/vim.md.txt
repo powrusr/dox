@@ -1,6 +1,58 @@
 # vim
 [vim docs](https://vimdoc.sourceforge.net/)
 
+## plugins
+
+since version 8 you can install packages inside `~/.vim/pack`
+
+A package can hold plugins in two different directories, **start** and **opt**. The plugins under start/ folder are loaded on startup, while the plugins under opt/ folder are loaded manually by the user with the command `:packadd`
+
+```bash
+# Plugin auto loaded on startup
+~/.vim/pack/*/start/{name}
+
+# Plugin loaded manually, with :packadd {name}
+~/.vim/pack/*/opt/{name}
+```
+
+git clone into these directories directly
+
+```bash
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/surround.git
+vim -u NONE -c "helptags surround/doc" -c q
+```
+
+### surround
+
+- change surrounding `'word'` to `"word"`:  `cs'"`  
+  > mnemonic: change surrounding to '
+- change surrounding `"word"` to `<p>word</p>`:  `cs"<p>`  
+  > mnemonic: change surrounding " to typed tag   
+- change surrounding `<p>word</p>` to `"word":` `cst"`  
+  > mnemonic: change surrounding tag to "   
+- remove surrounding `'word'` to `word:` `ds'`  
+  > mnemonic: delete surrounding '   
+- change surrounding `word` to `[word]:`  `ysiw]` iw = text object  
+  > mnemonic: yield surounding ] to text object   
+- surround entire line with parentheses:  `yss)`  
+  > mnemonic: yield supersurround )   
+- remove surroundings on `({ Hello } world!)`:  `ds)ds}`  
+  > mnemonic: delete surrounding ) delete surrounding }   
+- change `word` to `<em>word</em>`:  `ysiw<em>`  
+  > mnemonic: yields surrounding iw (text object) <em>   
+- change `<p>word</p>` to `` `<p>word</p>` ``:  `` ysat` `` at=a tag block   
+  > mnemonic: yield surround a tag with `  see `:h at`   
+- change `some any|selectionO` to `some "any|selectionO"`: `vt c""<ESC><P>`  
+  > mnemonic: visually select till space change (selection is copied to buffer) "" escape paste selection before character   
+
+  
+How do I surround without adding a space?
+
+Only the opening brackets `[ { (` add a space. Use a closing bracket, or the `b (()` and `B ({)` aliases
+
+
 ## magical
 
 from `:help pattern`
@@ -66,4 +118,18 @@ match without retry             atom\@>         (?>atom)
 
 ```bash
 :%s#\(`\)\(\<\w\+\>\)\(`\)#\2#gc
+```
+use
+```vim
+:%s#\v(__\w+__)(`)@!#`\1`#g
+```
+to turn 
+```
+|Iterator |Iterable|__next__|__iter__|
+|Generator  |Iterator|send, throw|close, __iter__,__iter__, __next__|
+```
+into
+```
+|Iterator |Iterable|__next__|__iter__|
+|Generator  |Iterator|send, throw|close, `__iter__`,`__iter__`, `__next__`|
 ```

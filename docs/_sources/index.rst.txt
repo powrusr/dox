@@ -9,6 +9,7 @@ PowrUsr
    :maxdepth: 2
    :caption: main
 
+   ai/index
    sphinx
    bash/index
    python/index
