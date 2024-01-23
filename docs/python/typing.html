@@ -63,6 +63,7 @@
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -110,7 +111,30 @@
 <li><a class="reference internal" href="#annotated">annotated</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#validation">validation</a></li>
+<li><a class="reference internal" href="#deserialize">deserialize</a><ul>
+<li><a class="reference internal" href="#from-dict">from dict</a></li>
+<li><a class="reference internal" href="#from-json">from json</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#serialize">serialize</a><ul>
+<li><a class="reference internal" href="#custom-serializer">custom serializer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field">field</a><ul>
+<li><a class="reference internal" href="#alias">alias</a></li>
+<li><a class="reference internal" href="#allow-not-using-alias">allow not using alias</a></li>
+<li><a class="reference internal" href="#defaults">defaults</a><ul>
+<li><a class="reference internal" href="#mutable-defaults">mutable defaults</a></li>
+<li><a class="reference internal" href="#default-factory">default factory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">validation</a><ul>
+<li><a class="reference internal" href="#custom-validators">custom validators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nested-models">nested models</a></li>
 </ul>
 </li>
 </ul>
@@ -346,78 +370,78 @@
 <td><p>Inherited Sequence methods and append, reverse, extend, pop, remove, and <code class="docutils literal notranslate"><span class="pre">__iadd__</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>ByteString</p></td>
-<td><p>Sequence	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	Inherited</p></td>
-<td><p>Sequence methods</p></td>
-<td><p></p></td>
+<td><p>Sequence</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>,<br><code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
+<td><p>Inherited Sequence methods</p></td>
 </tr>
 <tr class="row-even"><td><p>Set</p></td>
-<td><p>Collection	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	<code class="docutils literal notranslate"><span class="pre">__le__</span></code>, <code class="docutils literal notranslate"><span class="pre">__lt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ne__</span></code>, <code class="docutils literal notranslate"><span class="pre">__gt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ge__</span></code>, <code class="docutils literal notranslate"><span class="pre">__and__</span></code>, <code class="docutils literal notranslate"><span class="pre">__or__</span></code>, <code class="docutils literal notranslate"><span class="pre">__sub__</span></code>, <code class="docutils literal notranslate"><span class="pre">__xor__</span></code>, and isdisjoint</p></td>
-<td><p></p></td>
-<td><p></p></td>
+<td><p>Collection</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>,<br> <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>,<br> <code class="docutils literal notranslate"><span class="pre">__len__</span></code><br></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__le__</span></code>, <code class="docutils literal notranslate"><span class="pre">__lt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ne__</span></code>, <code class="docutils literal notranslate"><span class="pre">__gt__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ge__</span></code>, <code class="docutils literal notranslate"><span class="pre">__and__</span></code>, <code class="docutils literal notranslate"><span class="pre">__or__</span></code>, <code class="docutils literal notranslate"><span class="pre">__sub__</span></code>, <code class="docutils literal notranslate"><span class="pre">__xor__</span></code>, and <code class="docutils literal notranslate"><span class="pre">isdisjoint</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>MutableSet</p></td>
-<td><p>Set	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>, add, discard	Inherited</p></td>
-<td><p>Set methods and clear, pop, remove, <code class="docutils literal notranslate"><span class="pre">__ior__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iand__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ixor__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__isub__</span></code></p></td>
-<td><p></p></td>
+<td><p>Set</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>, add, discard	Inherited</p></td>
+<td><p>Set methods and <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">pop</span></code>, <code class="docutils literal notranslate"><span class="pre">remove</span></code>, <code class="docutils literal notranslate"><span class="pre">__ior__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iand__</span></code>, <code class="docutils literal notranslate"><span class="pre">__ixor__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__isub__</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, keys, items, values, get, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__ne__</span></code></p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p>Mapping</p></td>
+<td><p>Collection</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">keys</span></code>, <code class="docutils literal notranslate"><span class="pre">items</span></code>, <code class="docutils literal notranslate"><span class="pre">values</span></code>, <code class="docutils literal notranslate"><span class="pre">get</span></code>, <code class="docutils literal notranslate"><span class="pre">__eq__</span></code>, and <code class="docutils literal notranslate"><span class="pre">__ne__</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code>	<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code>	Inherited</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Mapping</span></code> methods and pop, popitem, clear, update, and setdefault</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p>MutableMapping</p></td>
+<td><p>Mapping</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
+<td><p>Inherited Mapping methods and <code class="docutils literal notranslate"><span class="pre">pop</span></code>, <code class="docutils literal notranslate"><span class="pre">popitem</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">update</span></code>, and <code class="docutils literal notranslate"><span class="pre">setdefault</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Sized</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
+<tr class="row-even"><td><p>MappingView</p></td>
+<td><p>Sized</p></td>
 <td><p></p></td>
-<td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__len__</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ItemsView</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
+<tr class="row-odd"><td><p>ItemsView</p></td>
+<td><p>MappingView, Set</p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">KeysView</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Set</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
+<tr class="row-even"><td><p>KeysView</p></td>
+<td><p>MappingView, Set</p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">ValuesView</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">MappingView</span></code>,</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Collection</span></code>	 	<code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
+<tr class="row-odd"><td><p>ValuesView</p></td>
+<td><p>MappingView, Collection</p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__contains__</span></code>, <code class="docutils literal notranslate"><span class="pre">__iter__</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Awaitable</span></code></p></td>
+<tr class="row-even"><td><p>Awaitable</p></td>
+<td><p></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">__await__</span></code></p></td>
 <td><p></p></td>
-<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Coroutine</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">Awaitable</span></code>	send, throw	close</p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p>Coroutine</p></td>
+<td><p>Awaitable</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">send</span></code>, <code class="docutils literal notranslate"><span class="pre">throw</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">close</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code></p></td>
+<tr class="row-even"><td><p>AsyncIterable</p></td>
+<td><p></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
 <td><p></p></td>
-<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterable</span></code>	<code class="docutils literal notranslate"><span class="pre">__anext__</span></code>	<code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p>AsyncIterator</p></td>
+<td><p>AsyncIterable</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__anext__</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__aiter__</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AsyncGenerator</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">AsyncIterator</span></code>	asend, athrow	aclose, <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__anext__</span></code></p></td>
-<td><p></p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p>AsyncGenerator</p></td>
+<td><p>AsyncIterator</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">asend</span></code>, <code class="docutils literal notranslate"><span class="pre">athrow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">aclose</span></code>, <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code>, <code class="docutils literal notranslate"><span class="pre">__anext__</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Buffer</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">__buffer__</span></code></p></td>
 <td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">__buffer__</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -618,8 +642,269 @@ For more fine-grain control, you can also use <a class="reference external" href
 </div>
 </section>
 </section>
+<section id="deserialize">
+<h2>deserialize<a class="headerlink" href="#deserialize" title="Link to this heading">¶</a></h2>
+<section id="from-dict">
+<h3>from dict<a class="headerlink" href="#from-dict" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">42</span>
+<span class="p">}</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="from-json">
+<h3>from json<a class="headerlink" href="#from-json" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_json</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">{</span>
+<span class="s1">    &quot;first_name&quot;: &quot;John&quot;,</span>
+<span class="s1">    &quot;last_name&quot;: &quot;Smith&quot;,</span>
+<span class="s1">    &quot;age&quot;: 42</span>
+<span class="s1">}</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate_json</span><span class="p">(</span><span class="n">data_json</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can inspect the model’s fields this way, to see how they are currently defined:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Person</span><span class="o">.</span><span class="n">model_fields</span>
+<span class="p">{</span><span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="n">FieldInfo</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+ <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="n">FieldInfo</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+ <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">FieldInfo</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="serialize">
+<h2>serialize<a class="headerlink" href="#serialize" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;id_&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Smith&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>
+<span class="s1">&#39;{&quot;id_&quot;:100,&quot;first_name&quot;:&quot;John&quot;,&quot;last_name&quot;:&quot;Smith&quot;,&quot;age&quot;:42}&#39;</span>
+</pre></div>
+</div>
+<p>As you can see, serialization uses the field names, not the aliases to serialize.</p>
+<p>Since we have aliases, we could, if we wanted to, also serialize using the aliases instead of the field names:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="n">by_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;First Name&#39;</span><span class="p">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="s1">&#39;LASTNAME&#39;</span><span class="p">:</span> <span class="s1">&#39;Smith&#39;</span><span class="p">,</span> <span class="s1">&#39;age in years&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">(</span><span class="n">by_alias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="s1">&#39;{&quot;id&quot;:100,&quot;First Name&quot;:&quot;John&quot;,&quot;LASTNAME&quot;:&quot;Smith&quot;,&quot;age in years&quot;:42}&#39;</span>
+</pre></div>
+</div>
+<section id="custom-serializer">
+<h3>custom serializer<a class="headerlink" href="#custom-serializer" title="Link to this heading">¶</a></h3>
+<p>eg:</p>
+<ul class="simple">
+<li><p>specify how many digits of a float after decimal point</p></li>
+<li><p>specify how datetime objects are serialized from json</p></li>
+</ul>
+<p>default:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">float</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">}</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mf">0.3333333333333333</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>custom:
+careful since we actually have tow modes of serialization: to a Python dictionary (so Python objects), and to JSON (so strings).
+to customize the float serialization to rounding to 2 decimal places, in both dictionary and JSON serialization</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">field_serializer</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="nd">@field_serializer</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">serialize_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mf">0.33</span><span class="p">}</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>
+<span class="s1">&#39;{&quot;number&quot;:0.33}&#39;</span>
+</pre></div>
+</div>
+<p>datetimes get serialized to JSON using the isoformat() method of datetimes:</p>
+<p>default:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<span class="s1">&#39;2023-12-06T14:33:05.667170+00:00&#39;</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>
+<span class="s1">&#39;{&quot;dt&quot;:&quot;2023-12-06T14:33:05.672674Z&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>custom:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">number</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+
+    <span class="nd">@field_serializer</span><span class="p">(</span><span class="s2">&quot;number&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">serialize_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@field_serializer</span><span class="p">(</span><span class="s2">&quot;dt&quot;</span><span class="p">,</span> <span class="n">when_used</span><span class="o">=</span><span class="s2">&quot;json-unless-none&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">serialize_datetime_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y/%-m/</span><span class="si">%-d</span><span class="s2"> %I:%M %p&quot;</span><span class="p">)</span>
+
+        
+<span class="n">m</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">m</span>
+<span class="n">Model</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="mf">0.3333333333333333</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">692861</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+<span class="p">{</span><span class="s1">&#39;number&#39;</span><span class="p">:</span> <span class="mf">0.33</span><span class="p">,</span>
+ <span class="s1">&#39;dt&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">692861</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)}</span>
+
+<span class="n">m</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>
+<span class="s1">&#39;{&quot;number&quot;:0.33,&quot;dt&quot;:&quot;2023/12/6 02:33 PM&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>dt serialization remained unaffacted, but when we serialize to JSON, our custom serializer is used</p>
+</section>
+</section>
+<section id="field">
+<h2>field<a class="headerlink" href="#field" title="Link to this heading">¶</a></h2>
+<section id="alias">
+<h3>alias<a class="headerlink" href="#alias" title="Link to this heading">¶</a></h3>
+<p>Sometimes the data we are attempting to deserialize uses names that we simply do not, or cannot use in our model.</p>
+<p>For example consider this data we would like to model using Pydantic:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;First Name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LASTNAME&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;age in years&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Pydantic has a way to define an alternative name to our field names, called aliases.
+Note the spaces</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
+
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">id_</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;First Name&quot;</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;LASTNAME&quot;</span><span class="p">)</span>
+    <span class="n">age</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;age in years&quot;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">id_</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="allow-not-using-alias">
+<h3>allow not using alias<a class="headerlink" href="#allow-not-using-alias" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">ConfigDict</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">populate_by_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;firstName&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And now we can deserialize using either the alias or the field name:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="n">lastName</span><span class="o">=</span><span class="s2">&quot;Smith&quot;</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span>
+<span class="p">}</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="defaults">
+<h3>defaults<a class="headerlink" href="#defaults" title="Link to this heading">¶</a></h3>
+<p>When we used the Field object to define an alias, we lost the ability to set our fields to some default value.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;firstName&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="s2">&quot;Smith&quot;</span>
+<span class="p">}</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">p</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Smith&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="mutable-defaults">
+<h4>mutable defaults<a class="headerlink" href="#mutable-defaults" title="Link to this heading">¶</a></h4>
+<p>Pydantic can handle is setting default values to mutable objects<br />
+something that is usually problematic in Python, and disallowed (by default) in dataclasses</p>
+<p>defining defaults this way is aok in Pydantic (Pydantic basically identifies mutable defaults, and creates a deepcopy of the default when creating new instances of the model):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">m1</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+
+<span class="n">m1</span><span class="o">.</span><span class="n">numbers</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">m1</span>
+<span class="n">Model</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="n">m2</span>
+<span class="n">Model</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="p">[])</span>
+</pre></div>
+</div>
+</section>
+<section id="default-factory">
+<h4>default factory<a class="headerlink" href="#default-factory" title="Link to this heading">¶</a></h4>
+<p>to generate a default not as a static value, but rather as a value that should be calculated each time an instance is created that needs the default.</p>
+<p>We can do that using a default factory. Basically, we provide a function that Pydantic will call to generate the default value each time a model instance is created that requires that default.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+
+<span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">log1</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;message 1&quot;</span><span class="p">)</span>
+<span class="n">log2</span> <span class="o">=</span> <span class="n">Log</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;message 2&quot;</span><span class="p">)</span>
+
+<span class="n">log1</span>
+<span class="n">Log</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">648812</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">),</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;message 1&#39;</span><span class="p">)</span>
+
+<span class="n">log2</span>
+<span class="n">Log</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">650873</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">),</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;message 2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 <section id="validation">
 <h2>validation<a class="headerlink" href="#validation" title="Link to this heading">¶</a></h2>
+<p>Validators are not just validation functions, they are also transformation functions<br />
+Pydantic’s validators can modify the type of the data being deserialized to coerce it into the proper type</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">PositiveInt</span>
@@ -696,6 +981,146 @@ For more fine-grain control, you can also use <a class="reference external" href
 <span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
+<section id="custom-validators">
+<h3>custom validators<a class="headerlink" href="#custom-validators" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>before validator<br />
+run before Pydantic has a chance to validate and coerce the data according to our field definition</p></li>
+</ul>
+<blockquote>
+<div><p>can be very handy to provide custom parsing of data that Pydantic would otherwise be unable to do. For example deserializing a date provided in a format that Python does not recognize (e.g. 2024/1/1 3:15pm)</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>after validator<br />
+after Pydantic has already processed the raw data, validated it and coerced it to the proper type, as defined by the field definition</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">field_validator</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">absolute</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;absolute&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">make_absolute</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>NOTE that our custom validator, being an after validator, will get called once Pydantic tried to parse the input data to an int. If that validation fails, our custom validator will not even get called.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">absolute</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;absolute&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">make_absolute</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running custom validator: </span><span class="si">{</span><span class="n">value</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">running</span> <span class="n">custom</span> <span class="n">validator</span><span class="p">:</span> <span class="n">value</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">=&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">int</span><span class="s1">&#39;&gt;</span>
+
+<span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s pass something that is not an integer, but can be coerced to an integer:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="s2">&quot;-10&quot;</span><span class="p">)</span>
+<span class="n">running</span> <span class="n">custom</span> <span class="n">validator</span><span class="p">:</span> <span class="n">value</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">=&lt;</span><span class="k">class</span> <span class="err">&#39;</span><span class="nc">int</span><span class="s1">&#39;&gt;</span>
+<span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see, our validator received an integer, not a string</p>
+<p>And if Pydantic’s validation fails, our validator is not called:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">Model</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="s2">&quot;abc&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="n">validation</span> <span class="n">error</span> <span class="k">for</span> <span class="n">Model</span>
+<span class="n">absolute</span>
+  <span class="n">Input</span> <span class="n">should</span> <span class="n">be</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">integer</span><span class="p">,</span> <span class="n">unable</span> <span class="n">to</span> <span class="n">parse</span> <span class="n">string</span> <span class="k">as</span> <span class="n">an</span> <span class="n">integer</span> <span class="p">[</span><span class="nb">type</span><span class="o">=</span><span class="n">int_parsing</span><span class="p">,</span> <span class="n">input_value</span><span class="o">=</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">For</span> <span class="n">further</span> <span class="n">information</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">errors</span><span class="o">.</span><span class="n">pydantic</span><span class="o">.</span><span class="n">dev</span><span class="o">/</span><span class="mf">2.4</span><span class="o">/</span><span class="n">v</span><span class="o">/</span><span class="n">int_parsing</span>
+</pre></div>
+</div>
+<p>Notice our custom validator’s print statement never executed.
+We can of course, also use custom validators to perform validation.</p>
+<p>Let’s say we want to define a field that should be a list of unique integers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">numbers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;numbers&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">ensure_unique</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">numbers</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;elements must be unique&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numbers</span>
+
+<span class="n">Model</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">Model</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="n">validation</span> <span class="n">error</span> <span class="k">for</span> <span class="n">Model</span>
+<span class="n">numbers</span>
+  <span class="n">Value</span> <span class="n">error</span><span class="p">,</span> <span class="n">elements</span> <span class="n">must</span> <span class="n">be</span> <span class="n">unique</span> <span class="p">[</span><span class="nb">type</span><span class="o">=</span><span class="n">value_error</span><span class="p">,</span> <span class="n">input_value</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">input_type</span><span class="o">=</span><span class="nb">list</span><span class="p">]</span>
+    <span class="n">For</span> <span class="n">further</span> <span class="n">information</span> <span class="n">visit</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">errors</span><span class="o">.</span><span class="n">pydantic</span><span class="o">.</span><span class="n">dev</span><span class="o">/</span><span class="mf">2.4</span><span class="o">/</span><span class="n">v</span><span class="o">/</span><span class="n">value_error</span>
+</pre></div>
+</div>
+<p>Notice how I raised a ValueError error.<br />
+If you want to raise a Pydantic ValidationException, you should raise a ValueError<br />
+Most of the other exception types (such as TypeError, KeyError, etc) will bubble up as those exceptions, not a ValidationError exception)<br />
+There are a few other errors you can raise that will result in a ValidationError exception, but by far ValueError is the easiest and safest way to do so</p>
+</section>
+</section>
+<section id="nested-models">
+<h2>nested models<a class="headerlink" href="#nested-models" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;firstName&quot;</span><span class="p">:</span> <span class="s2">&quot;Arthur&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="s2">&quot;Bourne&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;born&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;place&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;country&quot;</span><span class="p">:</span> <span class="s2">&quot;Mars Colony&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;Central City&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;3001-01-01&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As you can see we have three levels of nested dictionaries - which we can model this way:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+
+<span class="k">class</span> <span class="nc">Place</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">country</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">city</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Born</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">place</span><span class="p">:</span> <span class="n">Place</span>
+    <span class="n">dt</span><span class="p">:</span> <span class="n">date</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="p">)</span>
+    
+<span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;firstName&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;lastName&quot;</span><span class="p">)</span>
+    <span class="n">born</span><span class="p">:</span> <span class="n">Born</span>
+
+
+<span class="n">arthur</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">arthur</span>
+<span class="n">Person</span><span class="p">(</span><span class="n">first_name</span><span class="o">=</span><span class="s1">&#39;Arthur&#39;</span><span class="p">,</span> <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Bourne&#39;</span><span class="p">,</span> <span class="n">born</span><span class="o">=</span><span class="n">Born</span><span class="p">(</span><span class="n">place</span><span class="o">=</span><span class="n">Place</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="s1">&#39;Mars Colony&#39;</span><span class="p">,</span> <span class="n">city</span><span class="o">=</span><span class="s1">&#39;Central City&#39;</span><span class="p">),</span> <span class="n">dt</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">3001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+
+<span class="c1"># access all these fields using object dot notation:</span>
+<span class="n">arthur</span><span class="o">.</span><span class="n">born</span><span class="o">.</span><span class="n">place</span><span class="o">.</span><span class="n">country</span>
+<span class="s1">&#39;Mars Colony&#39;</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -709,6 +1134,7 @@ For more fine-grain control, you can also use <a class="reference external" href
 <h3><a href="../index.html">Table of Contents</a></h3>
 <p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -756,7 +1182,30 @@ For more fine-grain control, you can also use <a class="reference external" href
 <li><a class="reference internal" href="#annotated">annotated</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#validation">validation</a></li>
+<li><a class="reference internal" href="#deserialize">deserialize</a><ul>
+<li><a class="reference internal" href="#from-dict">from dict</a></li>
+<li><a class="reference internal" href="#from-json">from json</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#serialize">serialize</a><ul>
+<li><a class="reference internal" href="#custom-serializer">custom serializer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field">field</a><ul>
+<li><a class="reference internal" href="#alias">alias</a></li>
+<li><a class="reference internal" href="#allow-not-using-alias">allow not using alias</a></li>
+<li><a class="reference internal" href="#defaults">defaults</a><ul>
+<li><a class="reference internal" href="#mutable-defaults">mutable defaults</a></li>
+<li><a class="reference internal" href="#default-factory">default factory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">validation</a><ul>
+<li><a class="reference internal" href="#custom-validators">custom validators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nested-models">nested models</a></li>
 </ul>
 </li>
 </ul>
@@ -839,7 +1288,7 @@ For more fine-grain control, you can also use <a class="reference external" href
 <br />
     <br />
 
-    Last updated on 2024-01-22.
+    Last updated on 2024-01-23.
     
     <br />
 

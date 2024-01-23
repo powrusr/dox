@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>performance testing &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>performance &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
     <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
@@ -61,8 +61,9 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -75,7 +76,7 @@
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">performance testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -85,14 +86,24 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">performance testing</a><ul>
+<li><a class="reference internal" href="#">performance</a><ul>
 <li><a class="reference internal" href="#timeit">timeit</a></li>
+<li><a class="reference internal" href="#least-recently-used">Least Recently Used</a><ul>
+<li><a class="reference internal" href="#unbounded-cache">unbounded cache</a></li>
+<li><a class="reference internal" href="#cached-property">cached property</a><ul>
+<li><a class="reference internal" href="#make-property-mutable">make property mutable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#caching-class-methods">caching class methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cachetools">cachetools</a></li>
 </ul>
 </li>
 </ul>
@@ -136,7 +147,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">performance testing</a></li>
+        <li class="nav-item nav-item-this"><a href="">performance</a></li>
                 <li class="right">
                     
 
@@ -166,8 +177,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="performance-testing">
-<h1>performance testing<a class="headerlink" href="#performance-testing" title="Link to this heading">¶</a></h1>
+  <section id="performance">
+<h1>performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h1>
 <section id="timeit">
 <h2>timeit<a class="headerlink" href="#timeit" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
@@ -238,6 +249,215 @@
 </pre></div>
 </div>
 </section>
+<section id="least-recently-used">
+<h2>Least Recently Used<a class="headerlink" href="#least-recently-used" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="nd">@lru_cache</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">40</span><span class="p">):</span>
+    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fib(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">elapsed</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span> <span class="o">-</span> <span class="mf">1.2166041415184736e-05</span> <span class="n">s</span>
+<span class="mi">26</span> <span class="o">-</span> <span class="mf">4.169996827840805e-07</span> <span class="n">s</span>
+<span class="mi">27</span> <span class="o">-</span> <span class="mf">2.92027834802866e-07</span> <span class="n">s</span>
+<span class="mi">28</span> <span class="o">-</span> <span class="mf">2.919696271419525e-07</span> <span class="n">s</span>
+<span class="mi">29</span> <span class="o">-</span> <span class="mf">2.9103830456733704e-07</span> <span class="n">s</span>
+<span class="mi">30</span> <span class="o">-</span> <span class="mf">2.500019036233425e-07</span> <span class="n">s</span>
+<span class="mi">31</span> <span class="o">-</span> <span class="mf">2.500019036233425e-07</span> <span class="n">s</span>
+<span class="mi">32</span> <span class="o">-</span> <span class="mf">2.0797597244381905e-07</span> <span class="n">s</span>
+<span class="mi">33</span> <span class="o">-</span> <span class="mf">2.500019036233425e-07</span> <span class="n">s</span>
+<span class="mi">34</span> <span class="o">-</span> <span class="mf">2.500019036233425e-07</span> <span class="n">s</span>
+<span class="mi">35</span> <span class="o">-</span> <span class="mf">2.9098009690642357e-07</span> <span class="n">s</span>
+<span class="mi">36</span> <span class="o">-</span> <span class="mf">2.0803418010473251e-07</span> <span class="n">s</span>
+<span class="mi">37</span> <span class="o">-</span> <span class="mf">2.0902371034026146e-07</span> <span class="n">s</span>
+<span class="mi">38</span> <span class="o">-</span> <span class="mf">2.500019036233425e-07</span> <span class="n">s</span>
+<span class="mi">39</span> <span class="o">-</span> <span class="mf">2.0797597244381905e-07</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>unlimited</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>limited</p>
+<p>if you look at the code closely, and the trace outputs we had earlier, you’ll realize that in fact we only need to ever cache the last 2 calls - so we could limit our LRU cache to just two elements, without losing the speedup benefits:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>  
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">40</span><span class="p">):</span>
+    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;fib(</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">elapsed</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span> <span class="o">-</span> <span class="mf">0.000801375019364059</span> <span class="n">s</span>
+<span class="mi">26</span> <span class="o">-</span> <span class="mf">0.00030200002947822213</span> <span class="n">s</span>
+<span class="mi">27</span> <span class="o">-</span> <span class="mf">0.0004160410026088357</span> <span class="n">s</span>
+<span class="mi">28</span> <span class="o">-</span> <span class="mf">0.0005925829755142331</span> <span class="n">s</span>
+<span class="mi">29</span> <span class="o">-</span> <span class="mf">0.00079158297739923</span> <span class="n">s</span>
+<span class="mi">30</span> <span class="o">-</span> <span class="mf">0.0010942919761873782</span> <span class="n">s</span>
+<span class="mi">31</span> <span class="o">-</span> <span class="mf">0.0016196249634958804</span> <span class="n">s</span>
+<span class="mi">32</span> <span class="o">-</span> <span class="mf">0.002049707982223481</span> <span class="n">s</span>
+<span class="mi">33</span> <span class="o">-</span> <span class="mf">0.0027969160000793636</span> <span class="n">s</span>
+<span class="mi">34</span> <span class="o">-</span> <span class="mf">0.00412495800992474</span> <span class="n">s</span>
+<span class="mi">35</span> <span class="o">-</span> <span class="mf">0.005773082957603037</span> <span class="n">s</span>
+<span class="mi">36</span> <span class="o">-</span> <span class="mf">0.007761000015307218</span> <span class="n">s</span>
+<span class="mi">37</span> <span class="o">-</span> <span class="mf">0.01030524994712323</span> <span class="n">s</span>
+<span class="mi">38</span> <span class="o">-</span> <span class="mf">0.013624083949252963</span> <span class="n">s</span>
+<span class="mi">39</span> <span class="o">-</span> <span class="mf">0.018959375040140003</span> <span class="n">s</span>
+</pre></div>
+</div>
+<section id="unbounded-cache">
+<h3>unbounded cache<a class="headerlink" href="#unbounded-cache" title="Link to this heading">¶</a></h3>
+<p>instead of using <code class="docutils literal notranslate"><span class="pre">&#64;lru_cache(maxsize=None)</span></code> you can use <code class="docutils literal notranslate"><span class="pre">&#64;cache</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span>
+
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="cached-property">
+<h3>cached property<a class="headerlink" href="#cached-property" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">=</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_area</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">timeit</span><span class="p">(</span><span class="s2">&quot;c.area&quot;</span><span class="p">,</span> <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span> <span class="n">number</span><span class="o">=</span><span class="mi">1_000_000</span><span class="p">)</span>
+<span class="mf">0.024079292023088783</span>
+</pre></div>
+</div>
+<p>Caveats of Cached Properties and Mutability</p>
+<blockquote>
+<div><p>Now, this approach here works because our Circle class is immutable (by convention). We assume that since we have set our radius to be private (by convention, using that leading underscore), that the radius will never change over the lifetime of our Circle(3) instance</p>
+</div></blockquote>
+<blockquote>
+<div><p>If the radius does change for some reason, we’ll run into issues (both with our own approach, and with the cached_property approach.</p>
+</div></blockquote>
+<section id="make-property-mutable">
+<h4>make property mutable<a class="headerlink" href="#make-property-mutable" title="Link to this heading">¶</a></h4>
+<p>This was our original implementation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Circle</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s add the radius property and invalidate the cache as needed in the radius setter, just like we did in our first principle example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Circle</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">=</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_area</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radius</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span>
+
+    <span class="nd">@radius</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">area</span>
+<span class="mf">3.141592653589793</span>
+
+<span class="n">c</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">c</span><span class="o">.</span><span class="n">area</span>
+<span class="mf">12.566370614359172</span>
+</pre></div>
+</div>
+<p>As you can see, we get the same effect now</p>
+</section>
+</section>
+<section id="caching-class-methods">
+<h3>caching class methods<a class="headerlink" href="#caching-class-methods" title="Link to this heading">¶</a></h3>
+<p>cached_property establishes a cache at the instance level, caching a method using cache or lru_cache establishes a cache at the class level</p>
+<p>Make sure cache picks up on objects no longer being equal with <code class="docutils literal notranslate"><span class="pre">__eq__</span></code> and <code class="docutils literal notranslate"><span class="pre">__hash__</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Circle</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="nd">@cache</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;calculating area for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">r</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+
+<span class="n">c1</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">c1</span> <span class="o">==</span> <span class="n">c2</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cachetools">
+<h2>cachetools<a class="headerlink" href="#cachetools" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tkem/cachetools/">cache tools github</a></p></li>
+<li><p><a class="reference external" href="https://cachetools.readthedocs.io/en/latest/">cache tools docs</a></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cachetools</span> <span class="kn">import</span> <span class="n">cached</span><span class="p">,</span> <span class="n">LRUCache</span><span class="p">,</span> <span class="n">TTLCache</span>
+
+<span class="c1"># speed up calculating Fibonacci numbers with dynamic programming</span>
+<span class="nd">@cached</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="p">{})</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># cache least recently used Python Enhancement Proposals</span>
+<span class="nd">@cached</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">LRUCache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">get_pep</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://www.python.org/dev/peps/pep-</span><span class="si">%04d</span><span class="s1">/&#39;</span> <span class="o">%</span> <span class="n">num</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># cache weather data for no longer than ten minutes</span>
+<span class="nd">@cached</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">TTLCache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">600</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">get_weather</span><span class="p">(</span><span class="n">place</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">owm</span><span class="o">.</span><span class="n">weather_at_place</span><span class="p">(</span><span class="n">place</span><span class="p">)</span><span class="o">.</span><span class="n">get_weather</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -248,8 +468,9 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -262,7 +483,7 @@
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">performance testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -272,14 +493,24 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">performance testing</a><ul>
+<li><a class="reference internal" href="#">performance</a><ul>
 <li><a class="reference internal" href="#timeit">timeit</a></li>
+<li><a class="reference internal" href="#least-recently-used">Least Recently Used</a><ul>
+<li><a class="reference internal" href="#unbounded-cache">unbounded cache</a></li>
+<li><a class="reference internal" href="#cached-property">cached property</a><ul>
+<li><a class="reference internal" href="#make-property-mutable">make property mutable</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#caching-class-methods">caching class methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cachetools">cachetools</a></li>
 </ul>
 </li>
 </ul>
@@ -323,7 +554,7 @@
               
           </li>
           <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">performance testing</a></li>
+        <li class="nav-item nav-item-this"><a href="">performance</a></li>
                 <li class="right">
                     
 
@@ -362,7 +593,7 @@
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-01-23.
     
     <br />
 
