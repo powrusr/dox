@@ -12,6 +12,7 @@ python
    file_ops.md
    functional.md
    fundamentals.md
+   logging.md
    pandas.md
    performance.md
    pyenv.md

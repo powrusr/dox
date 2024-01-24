@@ -4,6 +4,256 @@
 [community docs](https://typing.readthedocs.io/en/latest/)
 [cheatsheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
 
+## functions
+
+```python
+from typing import Callable, Iterator, Union, Optional
+
+# This is how you annotate a function definition
+def stringify(num: int) -> str:
+    return str(num)
+
+# And here's how you specify multiple arguments
+def plus(num1: int, num2: int) -> int:
+    return num1 + num2
+
+# If a function does not return a value, use None as the return type
+# Default value for an argument goes after the type annotation
+def show(value: str, excitement: int = 10) -> None:
+    print(value + "!" * excitement)
+
+# Note that arguments without a type are dynamically typed (treated as Any)
+# and that functions without any annotations are not checked
+def untyped(x):
+    x.anything() + 1 + "string"  # no errors
+
+# This is how you annotate a callable (function) value
+x: Callable[[int, float], float] = f
+def register(callback: Callable[[str], int]) -> None: ...
+
+# A generator function that yields ints is secretly just a function that
+# returns an iterator of ints, so that's how we annotate it
+def gen(n: int) -> Iterator[int]:
+    i = 0
+    while i < n:
+        yield i
+        i += 1
+
+# You can of course split a function annotation over multiple lines
+def send_email(address: Union[str, list[str]],
+               sender: str,
+               cc: Optional[list[str]],
+               bcc: Optional[list[str]],
+               subject: str = '',
+               body: Optional[list[str]] = None
+               ) -> bool:
+    ...
+
+# Mypy understands positional-only and keyword-only arguments
+# Positional-only arguments can also be marked by using a name starting with
+# two underscores
+def quux(x: int, /, *, y: int) -> None:
+    pass
+
+quux(3, y=5)  # Ok
+quux(3, 5)  # error: Too many positional arguments for "quux"
+quux(x=3, y=5)  # error: Unexpected keyword argument "x" for "quux"
+
+# This says each positional arg and each keyword arg is a "str"
+def call(self, *args: str, **kwargs: str) -> str:
+    reveal_type(args)  # Revealed type is "tuple[str, ...]"
+    reveal_type(kwargs)  # Revealed type is "dict[str, str]"
+    request = make_request(*args, **kwargs)
+    return self.do_api_query(request)
+```
+
+## classes
+
+```python
+class BankAccount:
+    # The "__init__" method doesn't return anything, so it gets return
+    # type "None" just like any other method that doesn't return anything
+    def __init__(self, account_name: str, initial_balance: int = 0) -> None:
+        # mypy will infer the correct types for these instance variables
+        # based on the types of the parameters.
+        self.account_name = account_name
+        self.balance = initial_balance
+
+    # For instance methods, omit type for "self"
+    def deposit(self, amount: int) -> None:
+        self.balance += amount
+
+    def withdraw(self, amount: int) -> None:
+        self.balance -= amount
+
+# User-defined classes are valid as types in annotations
+account: BankAccount = BankAccount("Alice", 400)
+def transfer(src: BankAccount, dst: BankAccount, amount: int) -> None:
+    src.withdraw(amount)
+    dst.deposit(amount)
+
+# Functions that accept BankAccount also accept any subclass of BankAccount!
+class AuditedBankAccount(BankAccount):
+    # You can optionally declare instance variables in the class body
+    audit_log: list[str]
+
+    def __init__(self, account_name: str, initial_balance: int = 0) -> None:
+        super().__init__(account_name, initial_balance)
+        self.audit_log: list[str] = []
+
+    def deposit(self, amount: int) -> None:
+        self.audit_log.append(f"Deposited {amount}")
+        self.balance += amount
+
+    def withdraw(self, amount: int) -> None:
+        self.audit_log.append(f"Withdrew {amount}")
+        self.balance -= amount
+
+audited = AuditedBankAccount("Bob", 300)
+transfer(audited, account, 100)  # type checks!
+
+# You can use the ClassVar annotation to declare a class variable
+class Car:
+    seats: ClassVar[int] = 4
+    passengers: ClassVar[list[str]]
+
+# If you want dynamic attributes on your class, have it
+# override "__setattr__" or "__getattr__"
+class A:
+    # This will allow assignment to any A.x, if x is the same type as "value"
+    # (use "value: Any" to allow arbitrary types)
+    def __setattr__(self, name: str, value: int) -> None: ...
+
+    # This will allow access to any A.x, if x is compatible with the return type
+    def __getattr__(self, name: str) -> int: ...
+
+a.foo = 42  # Works
+a.bar = 'Ex-parrot'  # Fails type checking
+```
+
+## duck types
+
+```python
+from typing import Mapping, MutableMapping, Sequence, Iterable
+
+# Use Iterable for generic iterables (anything usable in "for"),
+# and Sequence where a sequence (supporting "len" and "__getitem__") is
+# required
+def f(ints: Iterable[int]) -> list[str]:
+    return [str(x) for x in ints]
+
+f(range(1, 3))
+
+# Mapping describes a dict-like object (with "__getitem__") that we won't
+# mutate, and MutableMapping one (with "__setitem__") that we might
+def f(my_mapping: Mapping[int, str]) -> list[int]:
+    my_mapping[5] = 'maybe'  # mypy will complain about this line...
+    return list(my_mapping.keys())
+
+f({3: 'yes', 4: 'no'})
+
+def f(my_mapping: MutableMapping[int, str]) -> set[str]:
+    my_mapping[5] = 'maybe'  # ...but mypy is OK with this.
+    return set(my_mapping.values())
+
+f({3: 'yes', 4: 'no'})
+
+import sys
+from typing import IO
+
+# Use IO[str] or IO[bytes] for functions that should accept or return
+# objects that come from an open() call (note that IO does not
+# distinguish between reading, writing or other modes)
+def get_sys_IO(mode: str = 'w') -> IO[str]:
+    if mode == 'w':
+        return sys.stdout
+    elif mode == 'r':
+        return sys.stdin
+    else:
+        return sys.stdout
+```
+
+## asyncs
+
+[asyncs typing](https://mypy.readthedocs.io/en/stable/more_types.html#async-and-await)
+
+### async iterators
+
+Asynchronous iterators
+```python
+from typing import Optional, AsyncIterator
+import asyncio
+
+class arange:
+    def __init__(self, start: int, stop: int, step: int) -> None:
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.count = start - step
+
+    def __aiter__(self) -> AsyncIterator[int]:
+        return self
+
+    async def __anext__(self) -> int:
+        self.count += self.step
+        if self.count == self.stop:
+            raise StopAsyncIteration
+        else:
+            return self.count
+
+async def run_countdown(tag: str, countdown: AsyncIterator[int]) -> str:
+    async for i in countdown:
+        print(f'T-minus {i} ({tag})')
+        await asyncio.sleep(0.1)
+    return "Blastoff!"
+
+asyncio.run(run_countdown("Serenity", arange(5, 0, -1)))
+```
+
+### async generators
+
+```python
+from typing import AsyncGenerator, Optional
+import asyncio
+
+# Could also type this as returning AsyncIterator[int]
+async def arange(start: int, stop: int, step: int) -> AsyncGenerator[int, None]:
+    current = start
+    while (step > 0 and current < stop) or (step < 0 and current > stop):
+        yield current
+        current += step
+
+asyncio.run(run_countdown("Battlestar Galactica", arange(5, 0, -1)))
+```
+
+### gotchas
+
+One common confusion is that the presence of a yield statement in an async def function has an effect on the type of the function:
+
+```python
+from typing import AsyncIterator
+
+async def arange(stop: int) -> AsyncIterator[int]:
+    # When called, arange gives you an async iterator
+    # Equivalent to Callable[[int], AsyncIterator[int]]
+    i = 0
+    while i < stop:
+        yield i
+        i += 1
+
+async def coroutine(stop: int) -> AsyncIterator[int]:
+    # When called, coroutine gives you something you can await to get an async iterator
+    # Equivalent to Callable[[int], Coroutine[Any, Any, AsyncIterator[int]]]
+    return arange(stop)
+
+async def main() -> None:
+    reveal_type(arange(5))  # Revealed type is "typing.AsyncIterator[builtins.int]"
+    reveal_type(coroutine(5))  # Revealed type is "typing.Coroutine[Any, Any, typing.AsyncIterator[builtins.int]]"
+
+    await arange(5)  # Error: Incompatible types in "await" (actual type "AsyncIterator[int]", expected type "Awaitable[Any]")
+    reveal_type(await coroutine(5))  # Revealed type is "typing.AsyncIterator[builtins.int]"
+```
+
 ## type aliases
 
 ```python
@@ -44,7 +294,7 @@ Use the NewType helper to create distinct types:
 ```python
 from typing import NewType
 
-UserId = NewType('UserId', int)
+UserId = NewType("UserId", int)
 some_id = UserId(524313)
 ```
 
@@ -488,7 +738,9 @@ m.model_dump_json()
 ```
 dt serialization remained unaffacted, but when we serialize to JSON, our custom serializer is used
 
-## field
+## fields
+
+- [fields docs](https://docs.pydantic.dev/latest/concepts/fields/)
 
 ### alias
 
@@ -703,7 +955,8 @@ run before Pydantic has a chance to validate and coerce the data according to ou
 
 
 - after validator  
-after Pydantic has already processed the raw data, validated it and coerced it to the proper type, as defined by the field definition
+> after Pydantic has already processed the raw data, validated it and coerced it to the proper type, as defined by the field definition
+
 
 ```python
 from pydantic import field_validator
@@ -735,7 +988,7 @@ class Model(BaseModel):
 
 
 Model(absolute=-10)
-running custom validator: value=-10, type(value)=<class 'int'>
+# running custom validator: value=-10, type(value)=<class 'int'>
 
 Model(absolute=10)
 ```
@@ -744,7 +997,7 @@ Let's pass something that is not an integer, but can be coerced to an integer:
 
 ```python
 Model(absolute="-10")
-running custom validator: value=-10, type(value)=<class 'int'>
+# running custom validator: value=-10, type(value)=<class 'int'>
 Model(absolute=10)
 ```
 As you can see, our validator received an integer, not a string
@@ -842,3 +1095,105 @@ arthur.born.place.country
 'Mars Colony'
 ```
 
+## validate call
+
+[docs on validate call](https://docs.pydantic.dev/latest/concepts/validation_decorator/)
+
+`@validate_call` can also be used on async functions:
+
+```python
+class Connection:
+    async def execute(self, sql, *args):
+        return "testing@example.com"
+
+
+conn = Connection()
+# ignore-above
+import asyncio
+
+from pydantic import PositiveInt, ValidationError, validate_call
+
+
+@validate_call
+async def get_user_email(user_id: PositiveInt):
+    # `conn` is some fictional connection to a database
+    email = await conn.execute("select email from users where id=$1", user_id)
+    if email is None:
+        raise RuntimeError("user not found")
+    else:
+        return email
+
+
+async def main():
+    email = await get_user_email(123)
+    print(email)
+    #> testing@example.com
+    try:
+        await get_user_email(-4)
+    except ValidationError as exc:
+        print(exc.errors())
+        """
+        [
+            {
+                'type': 'greater_than',
+                'loc': (0,),
+                'msg': 'Input should be greater than 0',
+                'input': -4,
+                'ctx': {'gt': 0},
+                'url': 'https://errors.pydantic.dev/2/v/greater_than',
+            }
+        ]
+        """
+
+
+asyncio.run(main())
+# requires: `conn.execute()` that will return `'testing@example.com'`
+```
+
+The model behind @validate_call can be customised using a config setting, which is equivalent to setting the ConfigDict sub-class in normal models
+
+```python
+from pydantic import ValidationError, validate_call
+
+
+class Foobar:
+    def __init__(self, v: str):
+        self.v = v
+
+    def __add__(self, other: "Foobar") -> str:
+        return f"{self} + {other}"
+
+    def __str__(self) -> str:
+        return f"Foobar({self.v})"
+
+
+@validate_call(config=dict(arbitrary_types_allowed=True))
+def add_foobars(a: Foobar, b: Foobar):
+    return a + b
+
+
+c = add_foobars(Foobar("a"), Foobar("b"))
+print(c)
+#> Foobar(a) + Foobar(b)
+
+try:
+    add_foobars(1, 2)
+except ValidationError as e:
+    print(e)
+    """
+    2 validation errors for add_foobars
+    0
+      Input should be an instance of Foobar [type=is_instance_of, input_value=1, input_type=int]
+    1
+      Input should be an instance of Foobar [type=is_instance_of, input_value=2, input_type=int]
+    """
+```
+
+pandas example
+
+```python
+@validate_call(config=dict(arbitrary_types_allowed=True))
+def some_function(params: pd.DataFrame, var_name: str) -> dict:
+    # do something
+    return my_dict
+```

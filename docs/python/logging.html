@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>logging &#8212; PowrUsr Docs alpha documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../_static/pydoctheme.css?v=aa5eeaf2" />
+    <link id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css" href="../_static/pygments_dark.css?v=b20cc3f5" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c6eb1e0f" />
+    
+    <script src="../_static/documentation_options.js?v=1f169f65"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pandas" href="pandas.html" />
+    <link rel="prev" title="fundamentals" href="fundamentals.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
+    <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
+            <script type="text/javascript" src="../_static/copybutton.js"></script>
+            <script type="text/javascript" src="../_static/menu.js"></script>
+            <script type="text/javascript" src="../_static/search-focus.js"></script>
+            <script type="text/javascript" src="../_static/themetoggle.js"></script> 
+  </head>
+<body>
+<div class="mobile-nav">
+    <input type="checkbox" id="menuToggler" class="toggler__input" aria-controls="navigation"
+           aria-pressed="false" aria-expanded="false" role="button" aria-label="Menu" />
+    <nav class="nav-content" role="navigation">
+        <label for="menuToggler" class="toggler__label">
+            <span></span>
+        </label>
+        <span class="nav-items-wrapper">
+            <a href="https://www.python.org/" class="nav-logo">
+                <img src="../_static/py.svg" alt="Logo"/>
+            </a>
+            <span class="version_switcher_placeholder"></span>
+            <form role="search" class="search" action="../search.html" method="get">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" class="search-icon">
+                    <path fill-rule="nonzero" fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                </svg>
+                <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" />
+                <input type="submit" value="Go"/>
+            </form>
+        </span>
+    </nav>
+    <div class="menu-wrapper">
+        <nav class="menu" role="navigation" aria-label="main navigation">
+            <div class="language_switcher_placeholder"></div>
+            
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">logging</a><ul>
+<li><a class="reference internal" href="#formatters">formatters</a><ul>
+<li><a class="reference internal" href="#custom">custom</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logrecord-attributes">logrecord attributes</a></li>
+<li><a class="reference internal" href="#levels">levels</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#handler">handler</a><ul>
+<li><a class="reference internal" href="#useful-handlers">useful handlers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#formatter">formatter</a></li>
+<li><a class="reference internal" href="#custom-logger">custom logger</a><ul>
+<li><a class="reference internal" href="#logs">logs</a><ul>
+<li><a class="reference internal" href="#text">text</a></li>
+<li><a class="reference internal" href="#json-lines-jsonl">json lines (jsonl)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#main-py">main.py</a></li>
+<li><a class="reference internal" href="#mylogger-py">mylogger.py</a></li>
+<li><a class="reference internal" href="#json-configs">json configs</a><ul>
+<li><a class="reference internal" href="#stdout">stdout</a></li>
+<li><a class="reference internal" href="#stderr">stderr</a></li>
+<li><a class="reference internal" href="#stderror-custom-json">stderror custom json</a></li>
+<li><a class="reference internal" href="#filtered-stdout-stderr">filtered stdout &amp; stderr</a></li>
+<li><a class="reference internal" href="#queuehandler">queuehandler</a><ul>
+<li><a class="reference internal" href="#id1">stderr</a></li>
+<li><a class="reference internal" href="#stderr-json-lines">stderr json lines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </nav>
+    </div>
+</div>
+  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pandas.html" title="pandas"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fundamentals.html" title="fundamentals"
+             accesskey="P">previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">logging</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>    
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="logging">
+<h1>logging<a class="headerlink" href="#logging" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>don’t use the root logger directly bruh</p></li>
+<li><p>use your own: <code class="docutils literal notranslate"><span class="pre">logger</span> <span class="pre">=</span> <span class="pre">logging.getLogger(&quot;__name__&quot;)</span></code></p></li>
+<li><p>in a big app <strong>create 1 logger per major component</strong> (not for every file)</p></li>
+<li><p>use dictConfig! <code class="docutils literal notranslate"><span class="pre">logging.config.dictConfig(config)</span></code></p></li>
+<li><p>use ISO-8601 timestamps and include the timezone! eg <code class="docutils literal notranslate"><span class="pre">&quot;datefmt&quot;:</span> <span class="pre">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span></code></p></li>
+<li><p>create custom json formatter, so you don’t have to parse weird traceback messages in your text logs</p></li>
+<li><p>use extra `mylogger.debug(“debug message”, extra={“well”: “hello there”}), it will be added to the logrecord</p></li>
+<li><p>logging calls are synchronous and blocking so use a <a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#queuehandler">QueueHandler</a>/<a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#queuelistener">QueueListener</a></p></li>
+<li><p>don’t <strong>configure</strong> logging on library code</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial">advanced howto</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/atexit.html">exit handlers</a></p></li>
+</ul>
+<section id="formatters">
+<h2>formatters<a class="headerlink" href="#formatters" title="Link to this heading">¶</a></h2>
+<section id="custom">
+<h3>custom<a class="headerlink" href="#custom" title="Link to this heading">¶</a></h3>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;()&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mylogger.MyJSONFormatter&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;fmt_keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;levelname&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;other_keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;here&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;threadName&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>writing your own formatter class</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyJSONFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fmt_keys</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,):</span>
+	    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmt_keys</span> <span class="o">=</span> <span class="n">fmt_keys</span> <span class="k">if</span> <span class="n">fmt_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+<span class="o">...</span>    
+</pre></div>
+</div>
+</section>
+</section>
+<section id="logrecord-attributes">
+<h2>logrecord attributes<a class="headerlink" href="#logrecord-attributes" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.html#logrecord-attributes">logrecord attributes docs</a></p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Attribute name</strong></p></th>
+<th class="head"><p><strong>Format</strong></p></th>
+<th class="head"><p><strong>Description</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>args</p></td>
+<td><p>You shouldn’t need to format this yourself.</p></td>
+<td><p>The tuple of arguments merged into msg to produce message, or a dict whose values are used for the merge (when there is only one argument, and it is a dictionary).</p></td>
+</tr>
+<tr class="row-odd"><td><p>asctime</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(asctime)s</span></code></p></td>
+<td><p>Human-readable time when the <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.LogRecord">LogRecord</a> was created.  By default this is of the form ‘2003-07-08 16:49:45,896’ (the numbers after the comma are millisecond portion of the time).</p></td>
+</tr>
+<tr class="row-even"><td><p>created</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(created)f</span></code></p></td>
+<td><p>Time when the LogRecord was created (as returned by <a class="reference external" href="https://docs.python.org/3/library/time.html#time.time">time.time()</a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>exc_info</p></td>
+<td><p>You shouldn’t need to format this yourself.</p></td>
+<td><p>Exception tuple (à la <code class="docutils literal notranslate"><span class="pre">sys.exc_info</span></code>) or, if no exception has occurred, None.</p></td>
+</tr>
+<tr class="row-even"><td><p>filename</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(filename)s</span></code></p></td>
+<td><p>Filename portion of <code class="docutils literal notranslate"><span class="pre">pathname</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>funcName</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(funcName)s</span></code></p></td>
+<td><p>Name of function containing the logging call.</p></td>
+</tr>
+<tr class="row-even"><td><p>levelname</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(levelname)s</span></code></p></td>
+<td><p>Text logging level for the message (<code class="docutils literal notranslate"><span class="pre">'DEBUG'</span></code>, <code class="docutils literal notranslate"><span class="pre">'INFO'</span></code>, <code class="docutils literal notranslate"><span class="pre">'WARNING'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ERROR'</span></code>, <code class="docutils literal notranslate"><span class="pre">'CRITICAL'</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>levelno</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(levelno)s</span></code></p></td>
+<td><p>Numeric logging level for the message (DEBUG, INFO, WARNING, ERROR, CRITICAL).</p></td>
+</tr>
+<tr class="row-even"><td><p>lineno</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(lineno)d</span></code></p></td>
+<td><p>Source line number where the logging call was issued (if available).</p></td>
+</tr>
+<tr class="row-odd"><td><p>message</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(message)s</span></code></p></td>
+<td><p>The logged message, computed as <code class="docutils literal notranslate"><span class="pre">msg</span> <span class="pre">%</span> <span class="pre">args</span></code>. This is set when <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter.format">Formatter.format()</a> is invoked.</p></td>
+</tr>
+<tr class="row-even"><td><p>module</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(module)s</span></code></p></td>
+<td><p>Module (name portion of <code class="docutils literal notranslate"><span class="pre">filename</span></code>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>msecs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(msecs)d</span></code></p></td>
+<td><p>Millisecond portion of the time when the LogRecord was created.</p></td>
+</tr>
+<tr class="row-even"><td><p>msg</p></td>
+<td><p>You shouldn’t need to format this yourself.</p></td>
+<td><p>The format string passed in the original logging call. Merged with <code class="docutils literal notranslate"><span class="pre">args</span></code> to produce <code class="docutils literal notranslate"><span class="pre">message</span></code>, or an arbitrary object (see <a class="reference external" href="https://docs.python.org/3/howto/logging.html#arbitrary-object-messages">Using arbitrary objects as messages</a>).</p></td>
+</tr>
+<tr class="row-odd"><td><p>name</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(name)s</span></code></p></td>
+<td><p>Name of the logger used to log the call.</p></td>
+</tr>
+<tr class="row-even"><td><p>pathname</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(pathname)s</span></code></p></td>
+<td><p>Full pathname of the source file where the logging call was issued (if available).</p></td>
+</tr>
+<tr class="row-odd"><td><p>process</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(process)d</span></code></p></td>
+<td><p>Process ID (if available).</p></td>
+</tr>
+<tr class="row-even"><td><p>processName</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(processName)s</span></code></p></td>
+<td><p>Process name (if available).</p></td>
+</tr>
+<tr class="row-odd"><td><p>relativeCreated</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(relativeCreated)d</span></code></p></td>
+<td><p>Time in milliseconds when the LogRecord was created, relative to the time the logging module was loaded.</p></td>
+</tr>
+<tr class="row-even"><td><p>stack_info</p></td>
+<td><p>You shouldn’t need to format this yourself.</p></td>
+<td><p>Stack frame information (where available) from the bottom of the stack in the current thread, up to and including the stack frame of the logging call which resulted in the creation of this record.</p></td>
+</tr>
+<tr class="row-odd"><td><p>thread</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(thread)d</span></code></p></td>
+<td><p>Thread ID (if available).</p></td>
+</tr>
+<tr class="row-even"><td><p>threadName</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(threadName)s</span></code></p></td>
+<td><p>Thread name (if available).</p></td>
+</tr>
+<tr class="row-odd"><td><p>taskName</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%(taskName)s</span></code></p></td>
+<td><p><a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html#asyncio.Task">asyncio.Task</a> name (if available).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="levels">
+<h2>levels<a class="headerlink" href="#levels" title="Link to this heading">¶</a></h2>
+<div style="margin-left: 50;
+            margin-right: auto;
+            width: 30%">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Level</p></th>
+<th class="head"><p>Numeric value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CRITICAL</p></td>
+<td><p>50</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERROR</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-even"><td><p>WARNING</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>INFO</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>DEBUG</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>NOTSET</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="filter">
+<h2>filter<a class="headerlink" href="#filter" title="Link to this heading">¶</a></h2>
+<p>logger filter: drop or alter log record</p>
+<ul class="simple">
+<li><p>drop records that begin with some regex pattern</p></li>
+<li><p>eg sensor sensitive data</p></li>
+</ul>
+<p>handler filter: specific to handler</p>
+<blockquote>
+<div><p><strong><strong>note</strong></strong>: keep all filters on the logger to avoid complexity, but leave on propagation so that all messages bubble up to the root logger
+<strong><strong>note</strong></strong>: this also ensure log messages generated from 3rd parties are formatted like own app log
+messages</p>
+</div></blockquote>
+</section>
+<section id="handler">
+<h2>handler<a class="headerlink" href="#handler" title="Link to this heading">¶</a></h2>
+<p>tells you to pass it on to eg</p>
+<ul class="simple">
+<li><p>stdout</p></li>
+<li><p>a file</p></li>
+<li><p>e-mail</p></li>
+<li><p>log service</p></li>
+</ul>
+<p>like logger you can specify log level in <strong>each handler</strong></p>
+<p>if handler drops log record, it moves on to the next handler
+if main logger drops log record, its gone</p>
+<blockquote>
+<div><p><strong><strong>note</strong></strong>: same as with filter keep all handlers on your logger</p>
+</div></blockquote>
+<section id="useful-handlers">
+<h3>useful handlers<a class="headerlink" href="#useful-handlers" title="Link to this heading">¶</a></h3>
+<p>In addition to the base Handler class, many useful subclasses are provided:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.StreamHandler">StreamHandler</a> instances send messages to streams (file-like objects).</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.FileHandler">FileHandler</a> instances send messages to disk files.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/4/library/logging.handlers.html#logging.handlers.BaseRotatingHandler">BaseRotatingHandler</a> is the base class for handlers that rotate log files at a certain point. It is not meant to be instantiated directly. Instead, use RotatingFileHandler or TimedRotatingFileHandler.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.RotatingFileHandler">RotatingFileHandler</a> instances send messages to disk files, with support for maximum log file sizes and log file rotation.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.TimedRotatingFileHandler">TimedRotatingFileHandler</a> instances send messages to disk files, rotating the log file at certain timed intervals.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.SocketHandler">SocketHandler</a> instances send messages to TCP/IP sockets. Since 3.4, Unix domain sockets are also supported.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.DatagramHandler">DatagramHandler</a> instances send messages to UDP sockets. Since 3.4, Unix domain sockets are also supported.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.SMTPHandler">SMTPHandler</a> instances send messages to a designated email address.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.SysLogHandler">SysLogHandler</a> instances send messages to a Unix syslog daemon, possibly on a remote machine.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.NTEventLogHandler">NTEventLogHandler</a> instances send messages to a Windows NT/2000/XP event log.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.MemoryHandler">MemoryHandler</a> instances send messages to a buffer in memory, which is flushed whenever specific criteria are met.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.HTTPHandler">HTTPHandler</a> instances send messages to an HTTP server using either GET or POST semantics.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.WatchedFileHandler">WatchedFileHandler</a> instances watch the file they are logging to. If the file changes, it is closed and reopened using the file name. This handler is only useful on Unix-like systems; Windows does not support the underlying mechanism used.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.handlers.QueueHandler">QueueHandler</a> instances send messages to a queue, such as those implemented in the queue or multiprocessing modules.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#logging.NullHandler">NullHandler</a> instances do nothing with error messages. They are used by library developers who want to use logging, but want to avoid the ‘No handlers could be found for logger XXX’ message which can be displayed if the library user has not configured logging. See <a class="reference external" href="https://docs.python.org/3/howto/logging.html#library-config">Configuring Logging for a Library</a> for more information.</p></li>
+</ol>
+</section>
+</section>
+<section id="formatter">
+<h2>formatter<a class="headerlink" href="#formatter" title="Link to this heading">¶</a></h2>
+<p>Once handler dealt with the python object it needs to convert that to</p>
+<ul class="simple">
+<li><p>log text</p></li>
+<li><p>custom json lines etc</p></li>
+</ul>
+<p>its the formatter that determines what your log looks like
+see log record attributes link</p>
+</section>
+<section id="custom-logger">
+<h2>custom logger<a class="headerlink" href="#custom-logger" title="Link to this heading">¶</a></h2>
+<section id="logs">
+<h3>logs<a class="headerlink" href="#logs" title="Link to this heading">¶</a></h3>
+<section id="text">
+<h4>text<a class="headerlink" href="#text" title="Link to this heading">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEBUG</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L25</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">debug</span> <span class="n">message</span>
+<span class="p">[</span><span class="n">INFO</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L26</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">info</span> <span class="n">message</span>
+<span class="p">[</span><span class="n">WARNING</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L27</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">warning</span> <span class="n">message</span>
+<span class="p">[</span><span class="n">ERROR</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L28</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">error</span> <span class="n">message</span>
+<span class="p">[</span><span class="n">CRITICAL</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L29</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">critical</span> <span class="n">message</span>
+<span class="p">[</span><span class="n">ERROR</span><span class="o">|</span><span class="n">main</span><span class="o">|</span><span class="n">L33</span><span class="p">]</span> <span class="mi">2024</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0600</span><span class="p">:</span> <span class="n">exception</span> <span class="n">message</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+  <span class="n">File</span> <span class="s1">&#39;/home/dukenukem/PycharmProjects/custom_logging/main.py&#39;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">31</span><span class="p">,</span> <span class="ow">in</span> <span class="n">main</span>
+    <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="o">~~^~~</span>
+<span class="ne">ZeroDivisionError</span><span class="p">:</span> <span class="n">division</span> <span class="n">by</span> <span class="n">zero</span>
+</pre></div>
+</div>
+</section>
+<section id="json-lines-jsonl">
+<h4>json lines (jsonl)<a class="headerlink" href="#json-lines-jsonl" title="Link to this heading">¶</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warning message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.152735+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;critical message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.152735+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exception message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.152735+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">33</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;exc_info&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Traceback (most recent call last):\n  File &#39;/home/dukenukem/PycharmProjects/custom_logging/main.py&#39;, line 31, in main\n    1 / 0\n    ~~^~~\nZeroDivisionError: division by zero&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="main-py">
+<h3>main.py<a class="headerlink" href="#main-py" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/atexit.html">atexit info</a></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>  
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;my_app&quot;</span><span class="p">)</span>  <span class="c1"># __name__ is a common choice</span>
+
+
+<span class="k">def</span> <span class="nf">setup_logging</span><span class="p">():</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;configs/stderr.json&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f_in</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="n">queue_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getHandlerByName</span><span class="p">(</span><span class="s2">&quot;queue_handler&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">queue_handler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">queue_handler</span><span class="o">.</span><span class="n">listener</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">atexit</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">queue_handler</span><span class="o">.</span><span class="n">listener</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">setup_logging</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;debug message&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">})</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;info message&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;warning message&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;error message&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;critical message&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="mi">1</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;exception message&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="mylogger-py">
+<h3>mylogger.py<a class="headerlink" href="#mylogger-py" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">override</span>
+
+<span class="n">LOG_RECORD_BUILTIN_ATTRS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;args&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;asctime&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;created&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exc_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exc_text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;funcName&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;levelname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;levelno&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lineno&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;module&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;msecs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;msg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pathname&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;process&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;processName&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;relativeCreated&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;stack_info&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;thread&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;threadName&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;taskName&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">MyJSONFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">fmt_keys</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fmt_keys</span> <span class="o">=</span> <span class="n">fmt_keys</span> <span class="k">if</span> <span class="n">fmt_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+    <span class="nd">@override</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_log_dict</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_log_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
+        <span class="n">always_fields</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">(),</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span>
+                <span class="n">record</span><span class="o">.</span><span class="n">created</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">dt</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">:</span>
+            <span class="n">always_fields</span><span class="p">[</span><span class="s2">&quot;exc_info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatException</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">stack_info</span><span class="p">:</span>
+            <span class="n">always_fields</span><span class="p">[</span><span class="s2">&quot;stack_info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatStack</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">stack_info</span><span class="p">)</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">msg_val</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">msg_val</span> <span class="o">:=</span> <span class="n">always_fields</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_keys</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">always_fields</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">LOG_RECORD_BUILTIN_ATTRS</span><span class="p">:</span>
+                <span class="n">message</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">message</span>
+
+<span class="c1"># keep only info and debug</span>
+<span class="c1"># bool = process record or not</span>
+<span class="k">class</span> <span class="nc">NonErrorFilter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Filter</span><span class="p">):</span>
+    <span class="nd">@override</span>
+    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">&lt;=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+</pre></div>
+</div>
+</section>
+<section id="json-configs">
+<h3>json configs<a class="headerlink" href="#json-configs" title="Link to this heading">¶</a></h3>
+<p>json is preferred over yaml as json can be imported natively in python and yaml is also prone to errors</p>
+<section id="stdout">
+<h4>stdout<a class="headerlink" href="#stdout" title="Link to this heading">¶</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;simple&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%(levelname)s: %(message)s&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stdout&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stdout&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stdout&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="stderr">
+<h4>stderr<a class="headerlink" href="#stderr" title="Link to this heading">¶</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;simple&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%(levelname)s: %(message)s&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;detailed&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;datefmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stderr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stderr&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.handlers.RotatingFileHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;detailed&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;filename&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logs/my_app.log&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maxBytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;backupCount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;file&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="stderror-custom-json">
+<h4>stderror custom json<a class="headerlink" href="#stderror-custom-json" title="Link to this heading">¶</a></h4>
+<p>parsing json logs that consist of json lines:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;debug message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INFO&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;info message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;warning message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.151737+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;error message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.152735+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+<span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;critical message&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-23T15:20:53.152735+00:00&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_app&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;main&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">29</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MainThread&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;simple&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%(levelname)s: %(message)s&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;datefmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;()&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mylogger.MyJSONFormatter&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;fmt_keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;levelname&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;module&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;funcName&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lineno&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;threadName&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stderr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stderr&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;file&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.handlers.RotatingFileHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;filename&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logs/my_app.log.jsonl&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maxBytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;backupCount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;file&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="filtered-stdout-stderr">
+<h4>filtered stdout &amp; stderr<a class="headerlink" href="#filtered-stdout-stderr" title="Link to this heading">¶</a></h4>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;simple&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%(levelname)s: %(message)s&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;datefmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;filters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;no_errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;()&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mylogger.NonErrorFilter&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stdout&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stdout&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;filters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;no_errors&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;stderr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stderr&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stdout&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;stderr&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="queuehandler">
+<h4>queuehandler<a class="headerlink" href="#queuehandler" title="Link to this heading">¶</a></h4>
+<p>non-blocking</p>
+<section id="id1">
+<h5>stderr<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h5>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;()&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mylogger.MyJSONFormatter&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;fmt_keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;levelname&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;module&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;funcName&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lineno&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;threadName&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stderr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stderr&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;queue_handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.handlers.QueueHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stderr&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;respect_handler_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;queue_handler&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="stderr-json-lines">
+<h5>stderr json lines<a class="headerlink" href="#stderr-json-lines" title="Link to this heading">¶</a></h5>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;disable_existing_loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;formatters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;simple&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;datefmt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;%Y-%m-%dT%H:%M:%S%z&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;()&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mylogger.MyJSONFormatter&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;fmt_keys&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;levelname&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;message&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;timestamp&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;module&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;module&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;funcName&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;line&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lineno&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;thread_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;threadName&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;stderr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.StreamHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simple&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ext://sys.stderr&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;file_json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.handlers.RotatingFileHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;formatter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;json&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;filename&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logs/my_app.log.jsonl&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;maxBytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;backupCount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;queue_handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;class&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;logging.handlers.QueueHandler&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;file_json&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;respect_handler_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;loggers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;root&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;handlers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;queue_handler&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h3><a href="../index.html">Table of Contents</a></h3>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="assert.html">assert</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
+</ul>
+
+  <div>
+    <h3><a href="../index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">logging</a><ul>
+<li><a class="reference internal" href="#formatters">formatters</a><ul>
+<li><a class="reference internal" href="#custom">custom</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logrecord-attributes">logrecord attributes</a></li>
+<li><a class="reference internal" href="#levels">levels</a></li>
+<li><a class="reference internal" href="#filter">filter</a></li>
+<li><a class="reference internal" href="#handler">handler</a><ul>
+<li><a class="reference internal" href="#useful-handlers">useful handlers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#formatter">formatter</a></li>
+<li><a class="reference internal" href="#custom-logger">custom logger</a><ul>
+<li><a class="reference internal" href="#logs">logs</a><ul>
+<li><a class="reference internal" href="#text">text</a></li>
+<li><a class="reference internal" href="#json-lines-jsonl">json lines (jsonl)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#main-py">main.py</a></li>
+<li><a class="reference internal" href="#mylogger-py">mylogger.py</a></li>
+<li><a class="reference internal" href="#json-configs">json configs</a><ul>
+<li><a class="reference internal" href="#stdout">stdout</a></li>
+<li><a class="reference internal" href="#stderr">stderr</a></li>
+<li><a class="reference internal" href="#stderror-custom-json">stderror custom json</a></li>
+<li><a class="reference internal" href="#filtered-stdout-stderr">filtered stdout &amp; stderr</a></li>
+<li><a class="reference internal" href="#queuehandler">queuehandler</a><ul>
+<li><a class="reference internal" href="#id1">stderr</a></li>
+<li><a class="reference internal" href="#stderr-json-lines">stderr json lines</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pandas.html" title="pandas"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fundamentals.html" title="fundamentals"
+             >previous</a> |</li>
+          <li><img src="../_static/py.svg" alt="python logo" style="vertical-align: middle; margin-top: -1px"/></li>
+          <li><a href="https://www.python.org/">Python</a> &#187;</li>
+          <li class="switchers">
+            <div class="language_switcher_placeholder"></div>
+            <div class="version_switcher_placeholder"></div>
+          </li>
+          <li>
+              
+              <a href="../index.html">PowrUsr Docs alpha documentation</a> &#187;
+              
+          </li>
+          <li class="nav-item nav-item-1"><a href="index.html" >python</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">logging</a></li>
+                <li class="right">
+                    
+
+    <div class="inline-search" role="search">
+        <form class="inline-search" action="../search.html" method="get">
+          <input placeholder="Quick search" aria-label="Quick search" type="search" name="q" id="search-box" />
+          <input type="submit" value="Go" />
+        </form>
+    </div>
+                     |
+                </li>
+            <li class="right">
+<label class="theme-selector-label">
+    Theme
+    <select class="theme-selector" oninput="activateTheme(this.value)">
+        <option value="auto" selected>Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label> |</li>
+            
+      </ul>
+    </div>  
+    <div class="footer">
+    &copy; Copyright 2023, PowrUsr.
+    <br />
+    This page is licensed under the Python Software Foundation License Version 2.
+    <br />
+    Examples, recipes, and other code in the documentation are additionally licensed under the Zero Clause BSD License.
+    <br />
+    
+    <br />
+
+    The Python Software Foundation is a non-profit corporation.
+<a href="https://www.python.org/psf/donations/">Please donate.</a>
+<br />
+    <br />
+
+    Last updated on 2024-01-24.
+    
+    <br />
+
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+
+  </body>
+</html>

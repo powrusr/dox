@@ -3214,7 +3214,20 @@ triple = partial(multiply, y=3)
 triple(2)
 6
 ```
-example
+examples
+```python
+from functools import partial
+import pandas_datareader.data as web
+
+
+def get_stock_data(ticker, start, end):
+    return web.DataReader(name=ticker, data_source='yahoo', start=start, end=end)
+
+
+get_stock_data('GOOG', '2020-01-01', '2020-12-31')
+
+get_goog_data = partial(get_stock_data, 'GOOG')
+```
 ```console
 Starter
 
