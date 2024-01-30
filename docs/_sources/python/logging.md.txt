@@ -10,8 +10,6 @@
 - logging calls are synchronous and blocking so use a [QueueHandler](https://docs.python.org/3/library/logging.handlers.html#queuehandler)/[QueueListener](https://docs.python.org/3/library/logging.handlers.html#queuelistener)
 - don't **configure** logging on library code
 
-- [advanced howto](https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial)
-- [exit handlers](https://docs.python.org/3/library/atexit.html)
 
 ## formatters
 
@@ -178,7 +176,7 @@ ZeroDivisionError: division by zero
 
 ### main.py
 
-- [atexit info](https://docs.python.org/3/library/atexit.html)
+- [atexit (exit handler)](https://docs.python.org/3/library/atexit.html)
 
 ```python
 import atexit  

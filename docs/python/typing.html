@@ -75,6 +75,7 @@
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -93,6 +94,13 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#enums">enums</a><ul>
+<li><a class="reference internal" href="#auto">auto</a><ul>
+<li><a class="reference internal" href="#overriding-auto">overriding auto</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#functions">functions</a></li>
 <li><a class="reference internal" href="#classes">classes</a></li>
 <li><a class="reference internal" href="#duck-types">duck types</a></li>
@@ -223,6 +231,79 @@
 <p><a class="reference external" href="https://docs.python.org/3/library/typing.html">official docs</a>
 <a class="reference external" href="https://typing.readthedocs.io/en/latest/">community docs</a>
 <a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">cheatsheet</a></p>
+<section id="enums">
+<h2>enums<a class="headerlink" href="#enums" title="Link to this heading">¶</a></h2>
+<section id="auto">
+<h3>auto<a class="headerlink" href="#auto" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">PENDING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULFILLED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REJECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">State</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">PENDING 1</span>
+<span class="go">FULFILLED 2</span>
+<span class="go">REJECTED 3</span>
+</pre></div>
+</div>
+<p>an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">MessageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">SWITCH_ON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CHANGE_COLOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLAY_SONG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+    <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">msg_type</span><span class="p">:</span> <span class="n">MessageType</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<section id="overriding-auto">
+<h4>overriding auto<a class="headerlink" href="#overriding-auto" title="Link to this heading">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">_generate_next_value_(name,</span> <span class="pre">start,</span> <span class="pre">count,</span> <span class="pre">last_values)</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_generate_next_value_</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">last_values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="n">PENDING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULFILLED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REJECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">State</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">PENDING pending</span>
+<span class="go">FULFILLED fulfilled</span>
+<span class="go">REJECTED rejected</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 <section id="functions">
 <h2>functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
@@ -1507,6 +1588,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -1525,6 +1607,13 @@ There are a few other errors you can raise that will result in a ValidationError
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#enums">enums</a><ul>
+<li><a class="reference internal" href="#auto">auto</a><ul>
+<li><a class="reference internal" href="#overriding-auto">overriding auto</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#functions">functions</a></li>
 <li><a class="reference internal" href="#classes">classes</a></li>
 <li><a class="reference internal" href="#duck-types">duck types</a></li>
@@ -1659,7 +1748,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <br />
     <br />
 
-    Last updated on 2024-01-23.
+    Last updated on 2024-01-30.
     
     <br />
 

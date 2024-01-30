@@ -61,8 +61,9 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -74,8 +75,9 @@
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -85,7 +87,7 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -93,6 +95,17 @@
     <ul>
 <li><a class="reference internal" href="#">design patterns</a><ul>
 <li><a class="reference internal" href="#guard-clauses">guard clauses</a></li>
+<li><a class="reference internal" href="#interfaces">interfaces</a><ul>
+<li><a class="reference internal" href="#abc">ABC</a></li>
+<li><a class="reference internal" href="#protocol">protocol</a></li>
+<li><a class="reference internal" href="#summary">summary</a></li>
+<li><a class="reference internal" href="#abc-to-protocol-example">ABC to protocol example</a><ul>
+<li><a class="reference internal" href="#id1">ABC</a></li>
+<li><a class="reference internal" href="#id2">protocol</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#factory">factory</a></li>
 </ul>
 </li>
@@ -231,6 +244,404 @@
 </pre></div>
 </div>
 </section>
+<section id="interfaces">
+<h2>interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">¶</a></h2>
+<section id="abc">
+<h3>ABC<a class="headerlink" href="#abc" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>an ABC is a way to define a template or a blueprint for a class and to ensure that any derived class adheres to a specific interface</p></li>
+<li><p>define common functionality across multiple classes and provide a way to check that a class has implemented all the necessary methods before it is used</p></li>
+<li><p>this makes ABCs useful when you need to define a strict interface for a set of related classes, ensuring that they all share a common set of behaviors</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="k">class</span> <span class="nc">Shape</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Shape is an ABC that defines two abstract methods: area() and perimeter(). Any class that inherits from Shape must implement these methods</p>
+</section>
+<section id="protocol">
+<h3>protocol<a class="headerlink" href="#protocol" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>a protocol is simply a set of methods and/or attributes that a class must implement in order to be considered compatible with the protocol</p></li>
+<li><p>used to define the expected behavior of objects in a specific context, without requiring the overhead of a full class hierarchy</p></li>
+<li><p>the focus is on what an object can do, rather than what it is</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+<span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>Any class that implements these methods can be considered compatible with the Device Protocol</p>
+</section>
+<section id="summary">
+<h3>summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>ABCs are useful when you need to define a strict interface for a set of related classes, ensuring that they all share a common set of behaviors</p></li>
+<li><p>Protocols are useful when you need to define a more flexible interface that can be implemented by any class that provides the necessary methods and attributes</p></li>
+</ul>
+</section>
+<section id="abc-to-protocol-example">
+<h3>ABC to protocol example<a class="headerlink" href="#abc-to-protocol-example" title="Link to this heading">¶</a></h3>
+<section id="id1">
+<h4>ABC<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<p>device.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">MessageType</span>
+
+
+<span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>devices.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iot.device</span> <span class="kn">import</span> <span class="n">Device</span>
+<span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">MessageType</span>
+
+
+<span class="k">class</span> <span class="nc">HueLight</span><span class="p">(</span><span class="n">Device</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting Hue light.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Hue light.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Hue light handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;hue_light_status_ok&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">SmartSpeaker</span><span class="p">(</span><span class="n">Device</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to Smart Speaker.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Smart Speaker.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Smart Speaker handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;smart_speaker_status_ok&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">Curtains</span><span class="p">(</span><span class="n">Device</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to Curtains.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Curtains.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Curtains handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;curtains_status_ok&quot;</span>
+</pre></div>
+</div>
+<p>diagnostics.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iot.device</span> <span class="kn">import</span> <span class="n">Device</span>
+
+
+<span class="k">def</span> <span class="nf">collect_diagnostics</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to diagnostics server.&quot;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">status_update</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sending status update [</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">] to server.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>message.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+
+<span class="k">class</span> <span class="nc">MessageType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">SWITCH_ON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CHANGE_COLOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLAY_SONG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+    <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">msg_type</span><span class="p">:</span> <span class="n">MessageType</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<p>service.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="kn">from</span> <span class="nn">iot.device</span> <span class="kn">import</span> <span class="n">Device</span>
+<span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">Message</span>
+
+
+<span class="k">def</span> <span class="nf">generate_id</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">length</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">IOTService</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Device</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">register_device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="n">Device</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="n">device_id</span> <span class="o">=</span> <span class="n">generate_id</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="k">return</span> <span class="n">device_id</span>
+
+    <span class="k">def</span> <span class="nf">unregister_device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device_id</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">run_program</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Message</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=====RUNNING PROGRAM======&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">program</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">device_id</span><span class="p">]</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">msg_type</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=====END OF PROGRAM======&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>main.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iot.devices</span> <span class="kn">import</span> <span class="n">Curtains</span><span class="p">,</span> <span class="n">HueLight</span><span class="p">,</span> <span class="n">SmartSpeaker</span>
+<span class="kn">from</span> <span class="nn">iot.diagnostics</span> <span class="kn">import</span> <span class="n">collect_diagnostics</span>
+<span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">MessageType</span>
+<span class="kn">from</span> <span class="nn">iot.service</span> <span class="kn">import</span> <span class="n">IOTService</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># create a IOT service</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">IOTService</span><span class="p">()</span>
+
+    <span class="c1"># create and register a few devices</span>
+    <span class="n">hue_light</span> <span class="o">=</span> <span class="n">HueLight</span><span class="p">()</span>
+    <span class="n">speaker</span> <span class="o">=</span> <span class="n">SmartSpeaker</span><span class="p">()</span>
+    <span class="n">curtains</span> <span class="o">=</span> <span class="n">Curtains</span><span class="p">()</span>
+    <span class="n">hue_light_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">hue_light</span><span class="p">)</span>
+    <span class="n">speaker_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">speaker</span><span class="p">)</span>
+    <span class="n">curtains_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">curtains</span><span class="p">)</span>
+
+    <span class="c1"># create a few programs</span>
+    <span class="n">wake_up_program</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">hue_light_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_ON</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_ON</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">PLAY_SONG</span><span class="p">,</span> <span class="s2">&quot;Miles Davis - Kind of Blue&quot;</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">curtains_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">OPEN</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">sleep_program</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">hue_light_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_OFF</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_OFF</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">curtains_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">CLOSE</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="c1"># run the programs</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">run_program</span><span class="p">(</span><span class="n">wake_up_program</span><span class="p">)</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">run_program</span><span class="p">(</span><span class="n">sleep_program</span><span class="p">)</span>
+
+    <span class="c1"># collect some diagnostics</span>
+    <span class="n">collect_diagnostics</span><span class="p">(</span><span class="n">hue_light</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>protocol<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p>devices.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">MessageType</span>
+
+
+<span class="k">class</span> <span class="nc">HueLightDevice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting Hue light.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Hue light.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Hue light handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;hue_light_status_ok&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">SmartSpeakerDevice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to Smart Speaker.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Smart Speaker.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Smart Speaker handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;smart_speaker_status_ok&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">CurtainsDevice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to Curtains.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Disconnecting Curtains.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_type</span><span class="p">:</span> <span class="n">MessageType</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Curtains handling message of type </span><span class="si">{</span><span class="n">message_type</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> with data [</span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">].&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;curtains_status_ok&quot;</span>
+</pre></div>
+</div>
+<p>diagnostics.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+
+<span class="k">class</span> <span class="nc">DiagnosticsSource</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="o">...</span>
+
+
+<span class="k">def</span> <span class="nf">collect_diagnostics</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">DiagnosticsSource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to diagnostics server.&quot;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">status_update</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sending status update [</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">] to server.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>message.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+
+<span class="k">class</span> <span class="nc">DiagnosticsSource</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="o">...</span>
+
+
+<span class="k">def</span> <span class="nf">collect_diagnostics</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">DiagnosticsSource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to diagnostics server.&quot;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">status_update</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sending status update [</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">] to server.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>service.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Protocol</span>
+
+
+<span class="k">class</span> <span class="nc">DiagnosticsSource</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="o">...</span>
+
+
+<span class="k">def</span> <span class="nf">collect_diagnostics</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">DiagnosticsSource</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connecting to diagnostics server.&quot;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">status_update</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sending status update [</span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">] to server.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>main.py</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">iot.devices</span> <span class="kn">import</span> <span class="n">CurtainsDevice</span><span class="p">,</span> <span class="n">HueLightDevice</span><span class="p">,</span> <span class="n">SmartSpeakerDevice</span>
+<span class="kn">from</span> <span class="nn">iot.diagnostics</span> <span class="kn">import</span> <span class="n">collect_diagnostics</span>
+<span class="kn">from</span> <span class="nn">iot.message</span> <span class="kn">import</span> <span class="n">Message</span><span class="p">,</span> <span class="n">MessageType</span>
+<span class="kn">from</span> <span class="nn">iot.service</span> <span class="kn">import</span> <span class="n">IOTService</span>
+
+
+<span class="k">class</span> <span class="nc">TestingDevice</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">status_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;test_status_ok&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># create a IOT service</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">IOTService</span><span class="p">()</span>
+
+    <span class="c1"># create and register a few devices</span>
+    <span class="n">hue_light</span> <span class="o">=</span> <span class="n">HueLightDevice</span><span class="p">()</span>
+    <span class="n">speaker</span> <span class="o">=</span> <span class="n">SmartSpeakerDevice</span><span class="p">()</span>
+    <span class="n">curtains</span> <span class="o">=</span> <span class="n">CurtainsDevice</span><span class="p">()</span>
+    <span class="n">hue_light_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">hue_light</span><span class="p">)</span>
+    <span class="n">speaker_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">speaker</span><span class="p">)</span>
+    <span class="n">curtains_id</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="n">register_device</span><span class="p">(</span><span class="n">curtains</span><span class="p">)</span>
+
+    <span class="c1"># create a few programs</span>
+    <span class="n">wake_up_program</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">hue_light_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_ON</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_ON</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">PLAY_SONG</span><span class="p">,</span> <span class="s2">&quot;Miles Davis - Kind of Blue&quot;</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">curtains_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">OPEN</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">sleep_program</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">hue_light_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_OFF</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">speaker_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">SWITCH_OFF</span><span class="p">),</span>
+        <span class="n">Message</span><span class="p">(</span><span class="n">curtains_id</span><span class="p">,</span> <span class="n">MessageType</span><span class="o">.</span><span class="n">CLOSE</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="c1"># run the programs</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">run_program</span><span class="p">(</span><span class="n">wake_up_program</span><span class="p">)</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">run_program</span><span class="p">(</span><span class="n">sleep_program</span><span class="p">)</span>
+
+    <span class="c1"># collect some diagnostics</span>
+    <span class="n">testing_device</span> <span class="o">=</span> <span class="n">TestingDevice</span><span class="p">()</span>
+    <span class="n">collect_diagnostics</span><span class="p">(</span><span class="n">testing_device</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 <section id="factory">
 <h2>factory<a class="headerlink" href="#factory" title="Link to this heading">¶</a></h2>
 <p>allow user input to translate to objects being created
@@ -266,8 +677,9 @@ a class instance</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -279,8 +691,9 @@ a class instance</p>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -290,7 +703,7 @@ a class instance</p>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -298,6 +711,17 @@ a class instance</p>
     <ul>
 <li><a class="reference internal" href="#">design patterns</a><ul>
 <li><a class="reference internal" href="#guard-clauses">guard clauses</a></li>
+<li><a class="reference internal" href="#interfaces">interfaces</a><ul>
+<li><a class="reference internal" href="#abc">ABC</a></li>
+<li><a class="reference internal" href="#protocol">protocol</a></li>
+<li><a class="reference internal" href="#summary">summary</a></li>
+<li><a class="reference internal" href="#abc-to-protocol-example">ABC to protocol example</a><ul>
+<li><a class="reference internal" href="#id1">ABC</a></li>
+<li><a class="reference internal" href="#id2">protocol</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#factory">factory</a></li>
 </ul>
 </li>
@@ -381,7 +805,7 @@ a class instance</p>
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-01-30.
     
     <br />
 

@@ -213,8 +213,6 @@
 <li><p>use extra `mylogger.debug(“debug message”, extra={“well”: “hello there”}), it will be added to the logrecord</p></li>
 <li><p>logging calls are synchronous and blocking so use a <a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#queuehandler">QueueHandler</a>/<a class="reference external" href="https://docs.python.org/3/library/logging.handlers.html#queuelistener">QueueListener</a></p></li>
 <li><p>don’t <strong>configure</strong> logging on library code</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/howto/logging.html#logging-advanced-tutorial">advanced howto</a></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/atexit.html">exit handlers</a></p></li>
 </ul>
 <section id="formatters">
 <h2>formatters<a class="headerlink" href="#formatters" title="Link to this heading">¶</a></h2>
@@ -477,7 +475,7 @@ see log record attributes link</p>
 <section id="main-py">
 <h3>main.py<a class="headerlink" href="#main-py" title="Link to this heading">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/atexit.html">atexit info</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/atexit.html">atexit (exit handler)</a></p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">atexit</span>  
 <span class="kn">import</span> <span class="nn">json</span>

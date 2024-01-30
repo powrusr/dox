@@ -373,6 +373,25 @@ https://docs.python.org/3/library/collections.html
 
 ### namedtuple
 
+_NOTE_: **typing module namedtuple is more readable, use that**
+
+this
+```python
+class Point(typing.NamedTuple):
+    x: float
+    y: float
+    z: float
+
+
+p = Point(1, 2, 3)
+```
+instead of 
+```python
+Point = collections.namedtuple("Point", ["x", "y", "z"])
+
+p = Point(1, 2, 3)
+```
+
 ```python
 import pprint
 from collections import namedtuple

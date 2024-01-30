@@ -4,6 +4,80 @@
 [community docs](https://typing.readthedocs.io/en/latest/)
 [cheatsheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
 
+## enums
+
+### auto
+
+```python
+from enum import Enum, auto
+
+
+class State(Enum):
+    PENDING = auto()
+    FULFILLED = auto()
+    REJECTED = auto()
+
+    def __str__(self):
+        return f'{self.name(self.value)}'
+```
+```python
+for state in State:
+    print(state.name, state.value)
+```
+```output
+PENDING 1
+FULFILLED 2
+REJECTED 3
+```
+an example:
+
+```python
+from dataclasses import dataclass
+from enum import Enum, auto
+
+
+class MessageType(Enum):
+    SWITCH_ON = auto()
+    SWITCH_OFF = auto()
+    CHANGE_COLOR = auto()
+    PLAY_SONG = auto()
+    OPEN = auto()
+    CLOSE = auto()
+
+
+@dataclass
+class Message:
+    device_id: str
+    msg_type: MessageType
+    data: str = ""
+```
+
+#### overriding auto
+
+`_generate_next_value_(name, start, count, last_values)`
+
+```python
+from enum import Enum, auto
+
+
+class State(Enum):
+    def _generate_next_value_(name, start, count, last_values):
+        return name.lower()
+
+    PENDING = auto()
+    FULFILLED = auto()
+    REJECTED = auto()
+
+
+for state in State:
+    print(state.name, state.value)
+```
+```output
+PENDING pending
+FULFILLED fulfilled
+REJECTED rejected
+```
+
 ## functions
 
 ```python
