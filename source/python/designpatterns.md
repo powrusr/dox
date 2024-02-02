@@ -384,35 +384,74 @@ def collect_diagnostics(device: DiagnosticsSource) -> None:
 
 message.py
 ```python
-from typing import Protocol
+from dataclasses import dataclass
+from enum import Enum, auto
 
 
-class DiagnosticsSource(Protocol):
-    def status_update(self) -> str:
-        ...
+class MessageType(Enum):
+    SWITCH_ON = auto()
+    SWITCH_OFF = auto()
+    CHANGE_COLOR = auto()
+    PLAY_SONG = auto()
+    OPEN = auto()
+    CLOSE = auto()
 
 
-def collect_diagnostics(device: DiagnosticsSource) -> None:
-    print("Connecting to diagnostics server.")
-    status = device.status_update()
-    print(f"Sending status update [{status}] to server.")
+@dataclass
+class Message:
+    device_id: str
+    msg_type: MessageType
+    data: str = ""
 ```
 
 service.py
 ```python
+import random
+import string
 from typing import Protocol
 
+from iot.message import Message, MessageType
 
-class DiagnosticsSource(Protocol):
-    def status_update(self) -> str:
+
+def generate_id(length: int = 8):
+    return "".join(random.choices(string.ascii_uppercase, k=length))
+
+
+class Device(Protocol):
+    def connect(self) -> None:
+        ...
+
+    def disconnect(self) -> None:
+        ...
+
+    def send_message(self, message_type: MessageType, data: str) -> None:
         ...
 
 
-def collect_diagnostics(device: DiagnosticsSource) -> None:
-    print("Connecting to diagnostics server.")
-    status = device.status_update()
-    print(f"Sending status update [{status}] to server.")
+class IOTService:
+    def __init__(self):
+        self.devices: dict[str, Device] = {}
+
+    def register_device(self, device: Device) -> str:
+        device.connect()
+        device_id = generate_id()
+        self.devices[device_id] = device
+        return device_id
+
+    def unregister_device(self, device_id: str) -> None:
+        self.devices[device_id].disconnect()
+        del self.devices[device_id]
+
+    def get_device(self, device_id: str) -> Device:
+        return self.devices[device_id]
+
+    def run_program(self, program: list[Message]) -> None:
+        print("=====RUNNING PROGRAM======")
+        for msg in program:
+            self.devices[msg.device_id].send_message(msg.msg_type, msg.data)
+        print("=====END OF PROGRAM======")
 ```
+
 main.py
 ```python
 from iot.devices import CurtainsDevice, HueLightDevice, SmartSpeakerDevice

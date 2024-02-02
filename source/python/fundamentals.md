@@ -163,6 +163,7 @@ else:
 
 ```
 * executed if NO ERROR occurs in TRY statement
+
 ```python
 try:
     print(5 * 4/0)
@@ -552,66 +553,7 @@ def calculation(x, y, z):
         return result
 ```
 
-## iterables
-
-### combining iterables
-
-```python
-x = [1, 2, 3, 4]
-y = ['a', 'b', 'c']
-z = zip(x, y)
-for element in z:
-    print(element)
-(1, 'a')
-(2, 'b')
-(3, 'c')
-```
-
-## sets
-
-### set ops
-
-```python   
->>> s = set([2, 4, 16, 64, 4096, 65536, 262144])
->>> s
-{4096, 64, 2, 65536, 4, 262144, 16}
->>> for x in s: # order is arbitrary
-...     print(x)
-... 
-4096
-64
-2
-65536
-4
-262144
-16
-
-# duplicates are discarded!
-# so often used to remove duplicates - not order preserving
-
->>> s.add(3)
->>> s
-{4096, 64, 2, 65536, 4, 262144, 3, 16}
->>> s.add(4)
->>> s
-{4096, 64, 2, 65536, 4, 262144, 3, 16}
->>> s.update([5, 55, 555])
->>> s
-{4096, 64, 2, 65536, 4, 262144, 3, 5, 555, 16, 55}
-
->>> s.remove(2)
->>> s
-{4096, 64, 65536, 4, 262144, 3, 5, 555, 16, 55}
->>> s.remove(2)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-KeyError: 2
-
-# discard doesn't throw an error if item not present and so always succeeds
->>> k.discard(2)
-```
-
-### set algebra
+## set algebra
 
 ```python
 # set algebra showcase
@@ -726,29 +668,6 @@ newTeam = {k: v for team in (team1, team2) for k, v in team.items()}
 print(newTeam)
 """{'Jones': 24, 'Jameson': 18, 'Smith': 58, 'Burns': 7,
     'White': 12, 'Macke': 88, 'Perce': 4}"""
-```
-
-### set
-
-```python
-ctemps = [5, 10, 12, 14, 10, 23, 41, 30, 12, 24, 12, 18, 29]
-
-# build set of unique fahrenheit temperatures
-ftemps1 = [(t * 9/5) + 32 for t in ctemps]
-ftemps2 = {(t * 9/5) + 32 for t in ctemps}
-
-print(ftemps1)
-# [41.0, 50.0, 53.6, 57.2, 50.0, 73.4, 105.8, 86.0, 53.6, 75.2, 53.6, 64.4, 84.2]
-print(ftemps2)
-# {64.4, 73.4, 41.0, 105.8, 75.2, 50.0, 84.2, 53.6, 86.0, 57.2}
-
-# build a set from an input source
-sTemp = "The quick brown fox jumped over the lazy dog"
-chars = {c.upper() for c in sTemp if not c.isspace()}
-print(chars)
-"""
-{'P', 'R', 'L', 'N', 'U', 'W', 'Y', 'M', 'Z', 'I', 'T', 'G', 'O', 'D', 'Q', 'J', 'F', 'A', 'K', 'X', 'H', 'B', 'E', 'C', 'V'}
-"""
 ```
 
 ### generator comprehensions
@@ -901,6 +820,258 @@ def func(value):
         return str(value)
     finally:
         print("Run this before returning")
+```
+
+## walrus operator
+
+aka *assignment expressions*
+
+```python
+a = (b := 2 * 3) % 5
+a
+1
+
+b
+6
+```
+
+```python
+l = ["a", "aa", "aaa", "ab", "aab", "aabb"]
+result = [set(el) for el in l if len(set(el)) > 1]
+
+result
+[{'a', 'b'}, {'a', 'b'}, {'a', 'b'}]
+```
+becomes
+```python
+result = [chars for el in l if len(chars := set(el)) > 1]
+result
+
+[{'a', 'b'}, {'a', 'b'}, {'a', 'b'}]
+```
+
+```python
+import time
+
+def transform(x):
+    time.sleep(0.2)
+    sign = 1 if x % 2 == 0 else -1
+    return sign *  x ** 2
+
+l = [1, 2, 3, 4, 5, 6, 7, 8, 10]
+
+start = time.perf_counter()
+result = [transform(x) for x in l if transform(x) > 0]
+end = time.perf_counter()
+print(result)
+print(f"elapsed: {end - start:.1f} seconds")
+
+[4, 16, 36, 64, 100]
+elapsed: 2.9 seconds
+```
+becomes
+```python
+start = time.perf_counter()
+result = [val for x in l if (val := transform(x)) > 0]
+end = time.perf_counter()
+print(result)
+print(f"elapsed: {end - start:.1f} seconds")
+
+[4, 16, 36, 64, 100]
+elapsed: 1.8 seconds
+```
+
+building lists, dicts:
+```python
+# lists
+l = [
+    (start := 10),
+    (intermediate := start + 10),
+    start + intermediate
+]
+l
+
+[10, 20, 30]
+
+# dictionaries
+d = {
+    "start": (start := 10),
+    "intermediate": (intermediate := start + 10),
+    "last": start + intermediate
+}
+d
+
+{'start': 10, 'intermediate': 20, 'last': 30}
+```
+
+### deck of cards
+
+```python
+from collections import defaultdict
+
+def suit_counts(hand):
+    result = defaultdict(int)
+    for face, suit in hand:
+        result[suit] += 1
+    return dict(result)
+
+suit_counts(hand)
+{'C': 2, 'H': 2, 'D': 1}
+
+
+def hand_has_all_suits(suit_counts):
+    return len(suit_counts) == 4
+```
+
+```python
+from itertools import repeat
+
+random.seed(0)
+hands = [
+    hand
+    for hand in [random.choices(deck, k=5) for _ in range(10)]
+]
+hands
+
+[[('6', 'C'), ('2', 'C'), ('10', 'H'), ('2', 'H'), ('2', 'D')],
+ [('10', 'H'), ('3', 'C'), ('4', 'H'), ('K', 'H'), ('6', 'D')],
+ [('10', 'C'), ('2', 'D'), ('3', 'H'), ('2', 'C'), ('8', 'D')],
+ [('2', 'H'), ('10', 'C'), ('A', 'C'), ('5', 'C'), ('9', 'C')],
+ [('5', 'H'), ('K', 'D'), ('9', 'C'), ('J', 'D'), ('K', 'H')],
+ [('7', 'S'), ('J', 'H'), ('7', 'D'), ('10', 'C'), ('K', 'C')],
+ [('K', 'H'), ('7', 'C'), ('2', 'H'), ('4', 'C'), ('4', 'D')],
+ [('2', 'S'), ('K', 'D'), ('9', 'H'), ('5', 'C'), ('10', 'D')],
+ [('2', 'S'), ('A', 'H'), ('8', 'C'), ('A', 'S'), ('5', 'H')],
+ [('8', 'C'), ('J', 'S'), ('5', 'D'), ('A', 'S'), ('K', 'C')]]
+```
+
+turn to the walrus operator to avoid calculating *suit_counts* twice, and simplify the comprehension:
+
+```python
+random.seed(0)
+hands = [
+    (hand, counts)
+    for _ in range(10)
+    if hand_has_all_suits(counts := suit_counts(hand := random.choices(deck, k=5)))
+] 
+
+for hand in hands:
+    print(suit_counts(hand[0]))
+    print(hand[1])
+    print('-' * 20)
+
+{'S': 1, 'H': 1, 'D': 1, 'C': 2}
+{'S': 1, 'H': 1, 'D': 1, 'C': 2}
+--------------------
+{'S': 1, 'D': 2, 'H': 1, 'C': 1}
+{'S': 1, 'D': 2, 'H': 1, 'C': 1}
+--------------------
+```
+
+### while loop
+
+without walrus
+
+```python
+def validate_flag(x):
+    return x.casefold() in {'y', 'n'}
+        
+is_valid = False
+while not is_valid:
+    response = input("Do you want to abort: (Y/n): ")
+    is_valid = validate_flag(response)
+    if not is_valid:
+        print("Please enter Y/y or N/n")
+
+print(f"You decided: {response.upper()}")
+Do you want to abort (Y/n): n
+You decided: N
+```
+
+with walrus
+```python
+while not validate_flag(response := input("Do you want to abort (Y/n): ")):
+    print("Please enter Y/y or N/n")
+
+print(f"You decided: {response.upper()}")
+
+Do you want to abort (Y/n): n
+You decided: N
+```
+
+### any or all
+
+```python
+is_ok = True
+example = None
+for s in l:
+    if len(s) <= 1:
+        is_ok = False
+        example = s
+        break
+
+if not is_ok:
+    print(f"Invalid string found: {example}")
+
+Invalid string found: c
+```
+```python
+But look at how we can leverage the walrus operator:
+
+is_ok = all(len(example := s) > 1 for s in l)
+
+if not is_ok:
+    print(f"Invalid string found: {example}")
+
+Invalid string found: c
+```
+
+### accumulations
+
+```python
+data = [1, 2, 3, 4, 5, 6]
+sums = []
+sum_ = 0
+for num in data:
+    sum_ = sum_ + num ** 2 
+    sums.append(sum_)
+```
+becomes
+```python
+sum_ = 0
+[(sum_ := sum_ + num ** 2) for num in data]
+```
+calculate consecutive factorials without using recursion
+
+```python
+prod = 1
+[(prod := prod * num) for num in range(1, 6)]
+
+[1, 2, 6, 24, 120]
+```
+### limitations
+
+- you cannot use it in iterable unpacking
+- annot use it in augmented assignments such as `+=`, `*=`, etc. See the example we just did with factorials and sums, we had to use the something like `sum_ := sum_ + x`
+- you cannot use it to create an attribute on a class
+
+```python
+class Person:
+    pass
+
+p = Person()
+p.name = 'Fred'
+p.name
+
+'Fred'
+
+p = Person()
+p.name := 'Fred'
+
+  Cell In [49], line 2
+    p.name := 'Fred'
+    ^
+SyntaxError: cannot use assignment expressions with attribute
 ```
 
 ## OOP

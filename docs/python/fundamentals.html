@@ -18,7 +18,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="pandas" href="pandas.html" />
+    <link rel="next" title="logging" href="logging.html" />
     <link rel="prev" title="functional programming" href="functional.html" /><link rel="stylesheet" href="../_static/pydoctheme_dark.css" media="(prefers-color-scheme: dark)" id="pydoctheme_dark_css">
     <link rel="shortcut icon" type="image/png" href="../_static/py.svg" />
             <script type="text/javascript" src="../_static/copybutton.js"></script>
@@ -61,8 +61,9 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -74,8 +75,9 @@
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -85,7 +87,7 @@
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -120,19 +122,10 @@
 <li><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#iterables">iterables</a><ul>
-<li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#sets">sets</a><ul>
-<li><a class="reference internal" href="#set-ops">set ops</a></li>
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#comprehensions">comprehensions</a><ul>
 <li><a class="reference internal" href="#list">list</a></li>
 <li><a class="reference internal" href="#dictionary">dictionary</a></li>
-<li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
 <li><a class="reference internal" href="#nested">nested</a></li>
 </ul>
@@ -144,6 +137,14 @@
 </li>
 <li><a class="reference internal" href="#error-handling">error handling</a><ul>
 <li><a class="reference internal" href="#finally">finally</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#walrus-operator">walrus operator</a><ul>
+<li><a class="reference internal" href="#deck-of-cards">deck of cards</a></li>
+<li><a class="reference internal" href="#while-loop">while loop</a></li>
+<li><a class="reference internal" href="#any-or-all">any or all</a></li>
+<li><a class="reference internal" href="#accumulations">accumulations</a></li>
+<li><a class="reference internal" href="#limitations">limitations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
@@ -218,7 +219,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="pandas.html" title="pandas"
+          <a href="logging.html" title="logging"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="functional.html" title="functional programming"
@@ -827,68 +828,8 @@ if there are no surplus items it receives an empty list</p>
 </div>
 </section>
 </section>
-<section id="iterables">
-<h2>iterables<a class="headerlink" href="#iterables" title="Link to this heading">¶</a></h2>
-<section id="combining-iterables">
-<h3>combining iterables<a class="headerlink" href="#combining-iterables" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]</span>
-<span class="n">z</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">z</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="sets">
-<h2>sets<a class="headerlink" href="#sets" title="Link to this heading">¶</a></h2>
-<section id="set-ops">
-<h3>set ops<a class="headerlink" href="#set-ops" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="mi">65536</span><span class="p">,</span> <span class="mi">262144</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">{4096, 64, 2, 65536, 4, 262144, 16}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span> <span class="c1"># order is arbitrary</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="gp">... </span>
-<span class="go">4096</span>
-<span class="go">64</span>
-<span class="go">2</span>
-<span class="go">65536</span>
-<span class="go">4</span>
-<span class="go">262144</span>
-<span class="go">16</span>
-
-<span class="go"># duplicates are discarded!</span>
-<span class="go"># so often used to remove duplicates - not order preserving</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">{4096, 64, 2, 65536, 4, 262144, 3, 16}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">{4096, 64, 2, 65536, 4, 262144, 3, 16}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">555</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">{4096, 64, 2, 65536, 4, 262144, 3, 5, 555, 16, 55}</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>
-<span class="go">{4096, 64, 65536, 4, 262144, 3, 5, 555, 16, 55}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="gt">Traceback (most recent call last):</span>
-  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
-<span class="gr">KeyError</span>: <span class="n">2</span>
-
-<span class="x"># discard doesn&#39;t throw an error if item not present and so always succeeds</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">k</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 <section id="set-algebra">
-<h3>set algebra<a class="headerlink" href="#set-algebra" title="Link to this heading">¶</a></h3>
+<h2>set algebra<a class="headerlink" href="#set-algebra" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set algebra showcase</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">blue_eyes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Olivia&#39;</span><span class="p">,</span> <span class="s1">&#39;Harry&#39;</span><span class="p">,</span> <span class="s1">&#39;Lily&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Amelia&#39;</span><span class="p">}</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">blond_hair</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Harry&#39;</span><span class="p">,</span> <span class="s1">&#39;Jack&#39;</span><span class="p">,</span> <span class="s1">&#39;Amelia&#39;</span><span class="p">,</span> <span class="s1">&#39;Mia&#39;</span><span class="p">,</span> <span class="s1">&#39;Joshua&#39;</span><span class="p">}</span>
@@ -940,7 +881,6 @@ if there are no surplus items it receives an empty list</p>
 <span class="kc">True</span>
 </pre></div>
 </div>
-</section>
 </section>
 <section id="comprehensions">
 <h2>comprehensions<a class="headerlink" href="#comprehensions" title="Link to this heading">¶</a></h2>
@@ -1001,29 +941,6 @@ if there are no surplus items it receives an empty list</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">newTeam</span><span class="p">)</span>
 <span class="sd">&quot;&quot;&quot;{&#39;Jones&#39;: 24, &#39;Jameson&#39;: 18, &#39;Smith&#39;: 58, &#39;Burns&#39;: 7,</span>
 <span class="sd">    &#39;White&#39;: 12, &#39;Macke&#39;: 88, &#39;Perce&#39;: 4}&quot;&quot;&quot;</span>
-</pre></div>
-</div>
-</section>
-<section id="set">
-<h3>set<a class="headerlink" href="#set" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ctemps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
-
-<span class="c1"># build set of unique fahrenheit temperatures</span>
-<span class="n">ftemps1</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ctemps</span><span class="p">]</span>
-<span class="n">ftemps2</span> <span class="o">=</span> <span class="p">{(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">32</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ctemps</span><span class="p">}</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">ftemps1</span><span class="p">)</span>
-<span class="c1"># [41.0, 50.0, 53.6, 57.2, 50.0, 73.4, 105.8, 86.0, 53.6, 75.2, 53.6, 64.4, 84.2]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ftemps2</span><span class="p">)</span>
-<span class="c1"># {64.4, 73.4, 41.0, 105.8, 75.2, 50.0, 84.2, 53.6, 86.0, 57.2}</span>
-
-<span class="c1"># build a set from an input source</span>
-<span class="n">sTemp</span> <span class="o">=</span> <span class="s2">&quot;The quick brown fox jumped over the lazy dog&quot;</span>
-<span class="n">chars</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sTemp</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">isspace</span><span class="p">()}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">{&#39;P&#39;, &#39;R&#39;, &#39;L&#39;, &#39;N&#39;, &#39;U&#39;, &#39;W&#39;, &#39;Y&#39;, &#39;M&#39;, &#39;Z&#39;, &#39;I&#39;, &#39;T&#39;, &#39;G&#39;, &#39;O&#39;, &#39;D&#39;, &#39;Q&#39;, &#39;J&#39;, &#39;F&#39;, &#39;A&#39;, &#39;K&#39;, &#39;X&#39;, &#39;H&#39;, &#39;B&#39;, &#39;E&#39;, &#39;C&#39;, &#39;V&#39;}</span>
-<span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -1168,6 +1085,250 @@ if there are no surplus items it receives an empty list</p>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run this before returning&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="walrus-operator">
+<h2>walrus operator<a class="headerlink" href="#walrus-operator" title="Link to this heading">¶</a></h2>
+<p>aka <em>assignment expressions</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">:=</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">%</span> <span class="mi">5</span>
+<span class="n">a</span>
+<span class="mi">1</span>
+
+<span class="n">b</span>
+<span class="mi">6</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="s2">&quot;aaa&quot;</span><span class="p">,</span> <span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s2">&quot;aab&quot;</span><span class="p">,</span> <span class="s2">&quot;aabb&quot;</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">l</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">result</span>
+<span class="p">[{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}]</span>
+</pre></div>
+</div>
+<p>becomes</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">chars</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">l</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">el</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">result</span>
+
+<span class="p">[{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">sign</span> <span class="o">*</span>  <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l</span> <span class="k">if</span> <span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;elapsed: </span><span class="si">{</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">elapsed</span><span class="p">:</span> <span class="mf">2.9</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+<p>becomes</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">l</span> <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">:=</span> <span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;elapsed: </span><span class="si">{</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="n">elapsed</span><span class="p">:</span> <span class="mf">1.8</span> <span class="n">seconds</span>
+</pre></div>
+</div>
+<p>building lists, dicts:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># lists</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">start</span> <span class="o">:=</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">intermediate</span> <span class="o">:=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">start</span> <span class="o">+</span> <span class="n">intermediate</span>
+<span class="p">]</span>
+<span class="n">l</span>
+
+<span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+
+<span class="c1"># dictionaries</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">start</span> <span class="o">:=</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;intermediate&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">intermediate</span> <span class="o">:=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s2">&quot;last&quot;</span><span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="n">intermediate</span>
+<span class="p">}</span>
+<span class="n">d</span>
+
+<span class="p">{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;intermediate&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;last&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+</pre></div>
+</div>
+<section id="deck-of-cards">
+<h3>deck of cards<a class="headerlink" href="#deck-of-cards" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">def</span> <span class="nf">suit_counts</span><span class="p">(</span><span class="n">hand</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">face</span><span class="p">,</span> <span class="n">suit</span> <span class="ow">in</span> <span class="n">hand</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">suit</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="n">suit_counts</span><span class="p">(</span><span class="n">hand</span><span class="p">)</span>
+<span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">hand_has_all_suits</span><span class="p">(</span><span class="n">suit_counts</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">suit_counts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span>
+
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">hands</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">hand</span>
+    <span class="k">for</span> <span class="n">hand</span> <span class="ow">in</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">deck</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="p">]</span>
+<span class="n">hands</span>
+
+<span class="p">[[(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)]]</span>
+</pre></div>
+</div>
+<p>turn to the walrus operator to avoid calculating <em>suit_counts</em> twice, and simplify the comprehension:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">hands</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">hand</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hand_has_all_suits</span><span class="p">(</span><span class="n">counts</span> <span class="o">:=</span> <span class="n">suit_counts</span><span class="p">(</span><span class="n">hand</span> <span class="o">:=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">deck</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)))</span>
+<span class="p">]</span> 
+
+<span class="k">for</span> <span class="n">hand</span> <span class="ow">in</span> <span class="n">hands</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">suit_counts</span><span class="p">(</span><span class="n">hand</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">hand</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="o">--------------------</span>
+<span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="o">--------------------</span>
+</pre></div>
+</div>
+</section>
+<section id="while-loop">
+<h3>while loop<a class="headerlink" href="#while-loop" title="Link to this heading">¶</a></h3>
+<p>without walrus</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validate_flag</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">}</span>
+        
+<span class="n">is_valid</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Do you want to abort: (Y/n): &quot;</span><span class="p">)</span>
+    <span class="n">is_valid</span> <span class="o">=</span> <span class="n">validate_flag</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter Y/y or N/n&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You decided: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">Do</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">abort</span> <span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">):</span> <span class="n">n</span>
+<span class="n">You</span> <span class="n">decided</span><span class="p">:</span> <span class="n">N</span>
+</pre></div>
+</div>
+<p>with walrus</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="ow">not</span> <span class="n">validate_flag</span><span class="p">(</span><span class="n">response</span> <span class="o">:=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Do you want to abort (Y/n): &quot;</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please enter Y/y or N/n&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You decided: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Do</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">abort</span> <span class="p">(</span><span class="n">Y</span><span class="o">/</span><span class="n">n</span><span class="p">):</span> <span class="n">n</span>
+<span class="n">You</span> <span class="n">decided</span><span class="p">:</span> <span class="n">N</span>
+</pre></div>
+</div>
+</section>
+<section id="any-or-all">
+<h3>any or all<a class="headerlink" href="#any-or-all" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">is_ok</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">example</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">is_ok</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="k">break</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid string found: </span><span class="si">{</span><span class="n">example</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Invalid</span> <span class="n">string</span> <span class="n">found</span><span class="p">:</span> <span class="n">c</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">But</span> <span class="n">look</span> <span class="n">at</span> <span class="n">how</span> <span class="n">we</span> <span class="n">can</span> <span class="n">leverage</span> <span class="n">the</span> <span class="n">walrus</span> <span class="n">operator</span><span class="p">:</span>
+
+<span class="n">is_ok</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">example</span> <span class="o">:=</span> <span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">is_ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid string found: </span><span class="si">{</span><span class="n">example</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Invalid</span> <span class="n">string</span> <span class="n">found</span><span class="p">:</span> <span class="n">c</span>
+</pre></div>
+</div>
+</section>
+<section id="accumulations">
+<h3>accumulations<a class="headerlink" href="#accumulations" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="n">sums</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sum_</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">sum_</span> <span class="o">=</span> <span class="n">sum_</span> <span class="o">+</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span> 
+    <span class="n">sums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sum_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>becomes</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sum_</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[(</span><span class="n">sum_</span> <span class="o">:=</span> <span class="n">sum_</span> <span class="o">+</span> <span class="n">num</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>calculate consecutive factorials without using recursion</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prod</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">[(</span><span class="n">prod</span> <span class="o">:=</span> <span class="n">prod</span> <span class="o">*</span> <span class="n">num</span><span class="p">)</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="limitations">
+<h3>limitations<a class="headerlink" href="#limitations" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>you cannot use it in iterable unpacking</p></li>
+<li><p>annot use it in augmented assignments such as <code class="docutils literal notranslate"><span class="pre">+=</span></code>, <code class="docutils literal notranslate"><span class="pre">*=</span></code>, etc. See the example we just did with factorials and sums, we had to use the something like <code class="docutils literal notranslate"><span class="pre">sum_</span> <span class="pre">:=</span> <span class="pre">sum_</span> <span class="pre">+</span> <span class="pre">x</span></code></p></li>
+<li><p>you cannot use it to create an attribute on a class</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Fred&#39;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">name</span>
+
+<span class="s1">&#39;Fred&#39;</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">:=</span> <span class="s1">&#39;Fred&#39;</span>
+
+  <span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">49</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="o">:=</span> <span class="s1">&#39;Fred&#39;</span>
+    <span class="o">^</span>
+<span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">use</span> <span class="n">assignment</span> <span class="n">expressions</span> <span class="k">with</span> <span class="n">attribute</span>
 </pre></div>
 </div>
 </section>
@@ -2642,8 +2803,9 @@ You can define your own dialect using register_dialect method</p>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -2655,8 +2817,9 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
@@ -2666,7 +2829,7 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -2701,19 +2864,10 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#dict-as-cache">dict as cache</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#iterables">iterables</a><ul>
-<li><a class="reference internal" href="#combining-iterables">combining iterables</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#sets">sets</a><ul>
-<li><a class="reference internal" href="#set-ops">set ops</a></li>
 <li><a class="reference internal" href="#set-algebra">set algebra</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#comprehensions">comprehensions</a><ul>
 <li><a class="reference internal" href="#list">list</a></li>
 <li><a class="reference internal" href="#dictionary">dictionary</a></li>
-<li><a class="reference internal" href="#set">set</a></li>
 <li><a class="reference internal" href="#generator-comprehensions">generator comprehensions</a></li>
 <li><a class="reference internal" href="#nested">nested</a></li>
 </ul>
@@ -2725,6 +2879,14 @@ You can define your own dialect using register_dialect method</p>
 </li>
 <li><a class="reference internal" href="#error-handling">error handling</a><ul>
 <li><a class="reference internal" href="#finally">finally</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#walrus-operator">walrus operator</a><ul>
+<li><a class="reference internal" href="#deck-of-cards">deck of cards</a></li>
+<li><a class="reference internal" href="#while-loop">while loop</a></li>
+<li><a class="reference internal" href="#any-or-all">any or all</a></li>
+<li><a class="reference internal" href="#accumulations">accumulations</a></li>
+<li><a class="reference internal" href="#limitations">limitations</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#oop">OOP</a><ul>
@@ -2799,7 +2961,7 @@ You can define your own dialect using register_dialect method</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="pandas.html" title="pandas"
+          <a href="logging.html" title="logging"
              >next</a> |</li>
         <li class="right" >
           <a href="functional.html" title="functional programming"
@@ -2855,7 +3017,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-02-02.
     
     <br />
 
