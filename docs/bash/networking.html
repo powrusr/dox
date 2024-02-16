@@ -61,8 +61,9 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">bash</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="awk.html">awk</a></li>
@@ -73,13 +74,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">networking</a><ul>
+<li><a class="reference internal" href="#iperf3">iperf3</a></li>
 <li><a class="reference internal" href="#netcat">netcat</a><ul>
 <li><a class="reference internal" href="#test-port-is-open">test port is open</a></li>
 </ul>
@@ -170,6 +172,50 @@
             
   <section id="networking">
 <h1>networking<a class="headerlink" href="#networking" title="Link to this heading">¶</a></h1>
+<section id="iperf3">
+<h2>iperf3<a class="headerlink" href="#iperf3" title="Link to this heading">¶</a></h2>
+<p>do a speed test with one of the publically available remote iperf3 servers from the comfort of you terminal</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://iperf3serverlist.net/">public iperf3 servers</a></p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>iperf3
+
+<span class="c1"># pick one of the public server urls</span>
+iperf3<span class="w"> </span>-R<span class="w"> </span>-c<span class="w"> </span>lg.vie.alwyzon.net<span class="w"> </span>-p<span class="w"> </span><span class="m">5202</span>-5203<span class="w">         </span>
+Connecting<span class="w"> </span>to<span class="w"> </span>host<span class="w"> </span>lg.vie.alwyzon.net,<span class="w"> </span>port<span class="w"> </span><span class="m">5202</span>
+Reverse<span class="w"> </span>mode,<span class="w"> </span>remote<span class="w"> </span>host<span class="w"> </span>lg.vie.alwyzon.net<span class="w"> </span>is<span class="w"> </span>sending
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w"> </span><span class="nb">local</span><span class="w"> </span>2a02:aaaa:bbbb:cccc:49dd:brbb:fake:loll<span class="w"> </span>port<span class="w"> </span><span class="m">48898</span><span class="w"> </span>connected<span class="w"> </span>to<span class="w"> </span>2a0d:aaaa:bbbb::6<span class="w"> </span>port<span class="w"> </span><span class="m">5202</span>
+<span class="o">[</span><span class="w"> </span>ID<span class="o">]</span><span class="w"> </span>Interval<span class="w">           </span>Transfer<span class="w">     </span>Bitrate
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-1.14<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">917</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">1</span>.14-2.30<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">903</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">2</span>.30-3.46<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">908</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">3</span>.46-4.61<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">907</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">4</span>.61-5.78<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">896</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">5</span>.78-6.86<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">979</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">6</span>.86-7.91<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">993</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">7</span>.91-9.01<span class="w">   </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">952</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">9</span>.01-10.14<span class="w">  </span>sec<span class="w">   </span><span class="m">128</span><span class="w"> </span>KBytes<span class="w">   </span><span class="m">929</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>
+-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-<span class="w"> </span>-
+<span class="o">[</span><span class="w"> </span>ID<span class="o">]</span><span class="w"> </span>Interval<span class="w">           </span>Transfer<span class="w">     </span>Bitrate<span class="w">         </span>Retr
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-10.18<span class="w">  </span>sec<span class="w">  </span><span class="m">1</span>.37<span class="w"> </span>MBytes<span class="w">  </span><span class="m">1</span>.13<span class="w"> </span>Mbits/sec<span class="w">   </span><span class="m">87</span><span class="w">             </span>sender
+<span class="o">[</span><span class="w">  </span><span class="m">5</span><span class="o">]</span><span class="w">   </span><span class="m">0</span>.00-10.14<span class="w">  </span>sec<span class="w">  </span><span class="m">1</span>.12<span class="w"> </span>MBytes<span class="w">   </span><span class="m">930</span><span class="w"> </span>Kbits/sec<span class="w">                  </span>receiver
+</pre></div>
+</div>
+<p>without iperf3</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-s<span class="w"> </span>https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-
+Retrieving<span class="w"> </span>speedtest.net<span class="w"> </span>configuration...
+&lt;stdin&gt;:960:<span class="w"> </span>DeprecationWarning:<span class="w"> </span>datetime.datetime.utcnow<span class="o">()</span><span class="w"> </span>is<span class="w"> </span>deprecated<span class="w"> </span>and<span class="w"> </span>scheduled<span class="w"> </span><span class="k">for</span><span class="w"> </span>removal<span class="w"> </span><span class="k">in</span><span class="w"> </span>a<span class="w"> </span>future<span class="w"> </span>version.<span class="w"> </span>Use<span class="w"> </span>timezone-aware<span class="w"> </span>objects<span class="w"> </span>to<span class="w"> </span>represent<span class="w"> </span>datetimes<span class="w"> </span><span class="k">in</span><span class="w"> </span>UTC:<span class="w"> </span>datetime.datetime.now<span class="o">(</span>datetime.UTC<span class="o">)</span>.
+Testing<span class="w"> </span>from<span class="w"> </span>Telenet<span class="w"> </span><span class="o">(</span><span class="m">141</span>.111.111.111<span class="o">)</span>...
+Retrieving<span class="w"> </span>speedtest.net<span class="w"> </span>server<span class="w"> </span>list...
+Selecting<span class="w"> </span>best<span class="w"> </span>server<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>ping...
+Hosted<span class="w"> </span>by<span class="w"> </span>Orange<span class="w"> </span>Belgium<span class="w"> </span><span class="o">(</span>Antwerp<span class="o">)</span><span class="w"> </span><span class="o">[</span><span class="m">82</span>.18<span class="w"> </span>km<span class="o">]</span>:<span class="w"> </span><span class="m">37</span>.074<span class="w"> </span>ms
+Testing<span class="w"> </span>download<span class="w"> </span>speed................................................................................
+Download:<span class="w"> </span><span class="m">0</span>.66<span class="w"> </span>Mbit/s
+Testing<span class="w"> </span>upload<span class="w"> </span>speed......................................................................................................
+Upload:<span class="w"> </span><span class="m">0</span>.30<span class="w"> </span>Mbit/s
+</pre></div>
+</div>
+</section>
 <section id="netcat">
 <h2>netcat<a class="headerlink" href="#netcat" title="Link to this heading">¶</a></h2>
 <section id="test-port-is-open">
@@ -252,8 +298,9 @@ net.sniff<span class="w"> </span>on
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">bash</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="awk.html">awk</a></li>
@@ -264,13 +311,14 @@ net.sniff<span class="w"> </span>on
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../python/index.html">python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">networking</a><ul>
+<li><a class="reference internal" href="#iperf3">iperf3</a></li>
 <li><a class="reference internal" href="#netcat">netcat</a><ul>
 <li><a class="reference internal" href="#test-port-is-open">test port is open</a></li>
 </ul>
@@ -368,7 +416,7 @@ net.sniff<span class="w"> </span>on
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-02-03.
     
     <br />
 

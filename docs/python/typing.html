@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -83,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -94,6 +95,7 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#use-abcs-for-typing">use ABCs for typing</a></li>
 <li><a class="reference internal" href="#enums">enums</a><ul>
 <li><a class="reference internal" href="#auto">auto</a><ul>
 <li><a class="reference internal" href="#overriding-auto">overriding auto</a></li>
@@ -123,7 +125,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
-<li><a class="reference internal" href="#pedantic">pedantic</a><ul>
+<li><a class="reference internal" href="#pydantic">pydantic</a><ul>
 <li><a class="reference internal" href="#types">types</a><ul>
 <li><a class="reference internal" href="#annotated">annotated</a></li>
 </ul>
@@ -231,6 +233,194 @@
 <p><a class="reference external" href="https://docs.python.org/3/library/typing.html">official docs</a>
 <a class="reference external" href="https://typing.readthedocs.io/en/latest/">community docs</a>
 <a class="reference external" href="https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html">cheatsheet</a></p>
+<section id="use-abcs-for-typing">
+<h2>use ABCs for typing<a class="headerlink" href="#use-abcs-for-typing" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes">all ABCs</a></p>
+<p>using ABC’s allow for more generic typing
+see above link with table to see wich ABC you need</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Collection</span>
+
+
+<span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">numbers</span><span class="p">:</span> <span class="n">Collection</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># credit to mCoding</span>
+<span class="c1"># https://github.com/mCodingLLC/VideosSampleCode/blob/master/videos/124_abc_collections/main.py</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Mapping</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
+
+<span class="n">KT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;KT&#39;</span><span class="p">)</span>
+<span class="n">VT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;VT&#39;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">InvertibleDict</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A invertible (one-to-one) mapping.</span>
+
+<span class="sd">    Attempting to set multiple keys to the same value will raise a ValueError.</span>
+
+<span class="sd">    invariant: _forward and _backward are mathematical inverses</span>
+<span class="sd">        i.e. _forward[a] == b if and only if _backward[b] == a</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_forward&#39;</span><span class="p">,</span> <span class="s1">&#39;_backward&#39;</span><span class="p">)</span>
+
+    <span class="n">_forward</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">]</span>
+    <span class="n">_backward</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">VT</span><span class="p">,</span> <span class="n">KT</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">forward</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+            <span class="n">_backward</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">VT</span><span class="p">,</span> <span class="n">KT</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">forward</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># empty init</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="n">_backward</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># inverse init (private)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span> <span class="o">=</span> <span class="n">forward</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span> <span class="o">=</span> <span class="n">_backward</span>  <span class="c1"># private param, assume correct</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># user-provided forward init</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span> <span class="o">=</span> <span class="n">forward</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span> <span class="o">=</span> <span class="p">{</span><span class="n">value</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_non_invertible</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_check_non_invertible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">other_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">other_key</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_raise_non_invertible</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">other_key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_raise_non_invertible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key1</span><span class="p">:</span> <span class="n">KT</span><span class="p">,</span> <span class="n">key2</span><span class="p">:</span> <span class="n">KT</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">VT</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;non-invertible: </span><span class="si">{</span><span class="n">key1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">key2</span><span class="si">}</span><span class="s2"> both map to: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InvertibleDict</span><span class="p">[</span><span class="n">VT</span><span class="p">,</span> <span class="n">KT</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A mutable view of the inverse dict.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">,</span> <span class="n">_backward</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">KT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VT</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KT</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">VT</span><span class="p">):</span>
+        <span class="n">missing</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+        <span class="n">old_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">missing</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">old_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">missing</span> <span class="ow">and</span> <span class="n">old_key</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>  <span class="c1"># {1: &quot;a&quot;} -&gt; {1: &quot;a&quot;, 2: &quot;a&quot;}</span>
+            <span class="c1"># value is already mapped to a different key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_raise_non_invertible</span><span class="p">(</span><span class="n">old_key</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+        <span class="n">old_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">missing</span><span class="p">)</span>  <span class="c1"># {1: &quot;a&quot;}/{&quot;a&quot;: 1} -&gt; {1: &quot;b&quot;}/{&quot;b&quot;: 1}</span>
+        <span class="k">if</span> <span class="n">old_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">missing</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">[</span><span class="n">old_value</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+
+    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KT</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_forward</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_backward</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">basic_usage_example</span><span class="p">():</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">InvertibleDict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">fn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;a&quot;</span>
+    <span class="k">assert</span> <span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">assert</span> <span class="n">fn</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span>
+    <span class="k">assert</span> <span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">)</span>
+
+    <span class="c1"># fn[4] = &quot;a&quot; # ValueError</span>
+    <span class="c1"># InvertibleDict({1: &quot;a&quot;, 2: &quot;a&quot;}) # ValueError</span>
+    <span class="c1"># fn = InvertibleDict({1: []}) # TypeError, need hashable values</span>
+
+
+<span class="k">def</span> <span class="nf">delete_min_key</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">delete_min_example</span><span class="p">():</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">InvertibleDict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+    <span class="n">delete_min_key</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+    <span class="n">delete_min_key</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">inv</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">isinstance_example</span><span class="p">():</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">InvertibleDict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">})</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">InvertibleDict</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">FakeMutableMapping</span><span class="p">(),</span> <span class="n">MutableMapping</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">FakeMutableMapping</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">deep_min</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">deep_min</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">deep_min</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+
+<span class="k">class</span> <span class="nc">MyMapping</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<span class="n">Mapping</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">MyMapping</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">deep_min_example</span><span class="p">():</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">InvertibleDict</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}),</span>
+                         <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}),</span>
+                         <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">({</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">})})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">deep_min</span><span class="p">(</span><span class="n">fn</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">deep_min</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">basic_usage_example</span><span class="p">()</span>
+    <span class="n">isinstance_example</span><span class="p">()</span>
+    <span class="n">delete_min_example</span><span class="p">()</span>
+    <span class="n">deep_min_example</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 <section id="enums">
 <h2>enums<a class="headerlink" href="#enums" title="Link to this heading">¶</a></h2>
 <section id="auto">
@@ -947,9 +1137,9 @@ For more fine-grain control, you can also use <a class="reference external" href
 <h1>annotated typing<a class="headerlink" href="#annotated-typing" title="Link to this heading">¶</a></h1>
 <p><a class="reference external" href="https://github.com/annotated-types/annotated-types">annotated-types</a></p>
 </section>
-<section id="pedantic">
-<h1>pedantic<a class="headerlink" href="#pedantic" title="Link to this heading">¶</a></h1>
-<p>use pedantic for extra validation &amp; (de)serialization power</p>
+<section id="pydantic">
+<h1>pydantic<a class="headerlink" href="#pydantic" title="Link to this heading">¶</a></h1>
+<p>use pydantic for extra validation &amp; (de)serialization power</p>
 <p><a class="reference external" href="https://docs.pydantic.dev/latest/">pydantic docs</a></p>
 <section id="types">
 <h2>types<a class="headerlink" href="#types" title="Link to this heading">¶</a></h2>
@@ -1584,6 +1774,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -1596,7 +1787,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -1607,6 +1798,7 @@ There are a few other errors you can raise that will result in a ValidationError
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">typing</a><ul>
+<li><a class="reference internal" href="#use-abcs-for-typing">use ABCs for typing</a></li>
 <li><a class="reference internal" href="#enums">enums</a><ul>
 <li><a class="reference internal" href="#auto">auto</a><ul>
 <li><a class="reference internal" href="#overriding-auto">overriding auto</a></li>
@@ -1636,7 +1828,7 @@ There are a few other errors you can raise that will result in a ValidationError
 </ul>
 </li>
 <li><a class="reference internal" href="#annotated-typing">annotated typing</a></li>
-<li><a class="reference internal" href="#pedantic">pedantic</a><ul>
+<li><a class="reference internal" href="#pydantic">pydantic</a><ul>
 <li><a class="reference internal" href="#types">types</a><ul>
 <li><a class="reference internal" href="#annotated">annotated</a></li>
 </ul>
@@ -1748,7 +1940,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <br />
     <br />
 
-    Last updated on 2024-01-30.
+    Last updated on 2024-02-15.
     
     <br />
 

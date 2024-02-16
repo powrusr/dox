@@ -71,10 +71,12 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -82,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -94,8 +96,13 @@
     <ul>
 <li><a class="reference internal" href="#">performance</a><ul>
 <li><a class="reference internal" href="#timeit">timeit</a></li>
+<li><a class="reference internal" href="#caching">caching</a><ul>
+<li><a class="reference internal" href="#manual-cache">manual cache</a></li>
 <li><a class="reference internal" href="#least-recently-used">Least Recently Used</a><ul>
+<li><a class="reference internal" href="#limited">limited</a></li>
 <li><a class="reference internal" href="#unbounded-cache">unbounded cache</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#cached-property">cached property</a><ul>
 <li><a class="reference internal" href="#make-property-mutable">make property mutable</a></li>
 </ul>
@@ -104,6 +111,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#cachetools">cachetools</a></li>
+<li><a class="reference internal" href="#requests-cache">requests-cache</a></li>
 </ul>
 </li>
 </ul>
@@ -249,8 +257,77 @@
 </pre></div>
 </div>
 </section>
+<section id="caching">
+<h2>caching<a class="headerlink" href="#caching" title="Link to this heading">¶</a></h2>
+<section id="manual-cache">
+<h3>manual cache<a class="headerlink" href="#manual-cache" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">icecream</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="k">def</span> <span class="nf">fetch_data</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">json_cache</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>  <span class="c1"># * = named arguments only</span>
+    <span class="k">if</span> <span class="n">update</span><span class="p">:</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_cache</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;data loaded from cache&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No local cache found: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">json_data</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fetching new json data.. (creating local cache)&quot;</span><span class="p">)</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">json_cache</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">json_data</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">url_comments</span> <span class="o">=</span> <span class="s2">&quot;http://dummyjson.com/comments&quot;</span>
+    <span class="n">cache_file</span> <span class="o">=</span> <span class="s2">&quot;comments.json&quot;</span>
+    <span class="c1"># fetch_data(update=True)</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">fetch_data</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">json_cache</span><span class="o">=</span><span class="n">cache_file</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url_comments</span><span class="p">)</span>
+    <span class="n">icecream</span><span class="o">.</span><span class="n">ic</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">No local cache found: [Errno 2] No such file or directory: &#39;comments.json&#39;</span>
+<span class="sd">Fetching new json data.. (creating local cache)</span>
+<span class="sd">ic| data: {&#39;comments&#39;: [{&#39;body&#39;: &#39;This is some awesome thinking!&#39;,</span>
+<span class="sd">                         &#39;id&#39;: 1,</span>
+<span class="sd">                         &#39;postId&#39;: 100,</span>
+<span class="sd">                         &#39;user&#39;: {&#39;id&#39;: 63, &#39;username&#39;: &#39;eburras1q&#39;}},</span>
+<span class="sd">                        {&#39;body&#39;: &#39;What terrific math skills you’re showing!&#39;,</span>
+<span class="sd">                         &#39;id&#39;: 2,</span>
+<span class="sd">                         &#39;postId&#39;: 27,</span>
+<span class="sd">                         &#39;user&#39;: {&#39;id&#39;: 71, &#39;username&#39;: &#39;omarsland1y&#39;}},</span>
+<span class="sd">                        {&#39;body&#39;: &#39;You are an amazing writer!&#39;,</span>
+<span class="sd">                         &#39;id&#39;: 3,</span>
+<span class="sd">                         &#39;postId&#39;: 61,</span>
+<span class="sd">                         &#39;user&#39;: {&#39;id&#39;: 29, &#39;username&#39;: &#39;jissetts&#39;}},</span>
+<span class="sd">                         ...</span>
+<span class="sd">                        {&#39;body&#39;: &#39;This is very perceptive!&#39;,</span>
+<span class="sd">                         &#39;id&#39;: 29,</span>
+<span class="sd">                         &#39;postId&#39;: 13,</span>
+<span class="sd">                         &#39;user&#39;: {&#39;id&#39;: 30, &#39;username&#39;: &#39;kdulyt&#39;}},</span>
+<span class="sd">                        {&#39;body&#39;: &#39;What an accomplishment!&#39;,</span>
+<span class="sd">                         &#39;id&#39;: 30,</span>
+<span class="sd">                         &#39;postId&#39;: 23,</span>
+<span class="sd">                         &#39;user&#39;: {&#39;id&#39;: 36, &#39;username&#39;: &#39;dalmondz&#39;}}],</span>
+<span class="sd">           &#39;limit&#39;: 30,</span>
+<span class="sd">           &#39;skip&#39;: 0,</span>
+<span class="sd">           &#39;total&#39;: 340}</span>
+
+<span class="sd">Process finished with exit code 0</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
 <section id="least-recently-used">
-<h2>Least Recently Used<a class="headerlink" href="#least-recently-used" title="Link to this heading">¶</a></h2>
+<h3>Least Recently Used<a class="headerlink" href="#least-recently-used" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
 
 <span class="nd">@lru_cache</span>
@@ -289,7 +366,8 @@
     <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>limited</p>
+<section id="limited">
+<h4>limited<a class="headerlink" href="#limited" title="Link to this heading">¶</a></h4>
 <p>if you look at the code closely, and the trace outputs we had earlier, you’ll realize that in fact we only need to ever cache the last 2 calls - so we could limit our LRU cache to just two elements, without losing the speedup benefits:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
@@ -318,8 +396,9 @@
 <span class="mi">39</span> <span class="o">-</span> <span class="mf">0.018959375040140003</span> <span class="n">s</span>
 </pre></div>
 </div>
+</section>
 <section id="unbounded-cache">
-<h3>unbounded cache<a class="headerlink" href="#unbounded-cache" title="Link to this heading">¶</a></h3>
+<h4>unbounded cache<a class="headerlink" href="#unbounded-cache" title="Link to this heading">¶</a></h4>
 <p>instead of using <code class="docutils literal notranslate"><span class="pre">&#64;lru_cache(maxsize=None)</span></code> you can use <code class="docutils literal notranslate"><span class="pre">&#64;cache</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cache</span>
 
@@ -330,6 +409,7 @@
     <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 <section id="cached-property">
 <h3>cached property<a class="headerlink" href="#cached-property" title="Link to this heading">¶</a></h3>
@@ -458,6 +538,63 @@
 </pre></div>
 </div>
 </section>
+<section id="requests-cache">
+<h2>requests-cache<a class="headerlink" href="#requests-cache" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://requests-cache.readthedocs.io/en/stable/">request cache library docs</a></p></li>
+</ul>
+<p>takes one minute</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://httpbin.org/delay/1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>takes one second</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests_cache</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">requests_cache</span><span class="o">.</span><span class="n">CachedSession</span><span class="p">(</span><span class="s1">&#39;demo_cache&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://httpbin.org/delay/1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Define exactly how long to keep responses:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">requests_cache</span> <span class="kn">import</span> <span class="n">CachedSession</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+
+<span class="c1"># Keep responses for 360 seconds</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">CachedSession</span><span class="p">(</span><span class="s1">&#39;demo_cache&#39;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="mi">360</span><span class="p">)</span>
+
+<span class="c1"># Or use timedelta objects to specify other units of time</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">CachedSession</span><span class="p">(</span><span class="s1">&#39;demo_cache&#39;</span><span class="p">,</span> <span class="n">expire_after</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Use Cache-Control headers:</p>
+<p>Use the cache_control parameter to enable automatic expiration based on Cache-Control and other standard HTTP headers sent by the server:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">requests_cache</span> <span class="kn">import</span> <span class="n">CachedSession</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">CachedSession</span><span class="p">(</span><span class="s1">&#39;demo_cache&#39;</span><span class="p">,</span> <span class="n">cache_control</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Settings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">requests_cache</span> <span class="kn">import</span> <span class="n">CachedSession</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">CachedSession</span><span class="p">(</span>
+    <span class="s1">&#39;demo_cache&#39;</span><span class="p">,</span>
+    <span class="n">use_cache_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                <span class="c1"># Save files in the default user cache dir</span>
+    <span class="n">cache_control</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                <span class="c1"># Use Cache-Control response headers for expiration, if available</span>
+    <span class="n">expire_after</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>    <span class="c1"># Otherwise expire responses after one day</span>
+    <span class="n">allowable_codes</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">400</span><span class="p">],</span>        <span class="c1"># Cache 400 responses as a solemn reminder of your failures</span>
+    <span class="n">allowable_methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">],</span> <span class="c1"># Cache whatever HTTP methods you want</span>
+    <span class="n">ignored_parameters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;api_key&#39;</span><span class="p">],</span>    <span class="c1"># Don&#39;t match this request param, and redact if from the cache</span>
+    <span class="n">match_headers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">],</span> <span class="c1"># Cache a different response per language</span>
+    <span class="n">stale_if_error</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>               <span class="c1"># In case of request errors, use stale cache data if possible</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -478,10 +615,12 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -489,7 +628,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -501,8 +640,13 @@
     <ul>
 <li><a class="reference internal" href="#">performance</a><ul>
 <li><a class="reference internal" href="#timeit">timeit</a></li>
+<li><a class="reference internal" href="#caching">caching</a><ul>
+<li><a class="reference internal" href="#manual-cache">manual cache</a></li>
 <li><a class="reference internal" href="#least-recently-used">Least Recently Used</a><ul>
+<li><a class="reference internal" href="#limited">limited</a></li>
 <li><a class="reference internal" href="#unbounded-cache">unbounded cache</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#cached-property">cached property</a><ul>
 <li><a class="reference internal" href="#make-property-mutable">make property mutable</a></li>
 </ul>
@@ -511,6 +655,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#cachetools">cachetools</a></li>
+<li><a class="reference internal" href="#requests-cache">requests-cache</a></li>
 </ul>
 </li>
 </ul>
@@ -593,7 +738,7 @@
 <br />
     <br />
 
-    Last updated on 2024-01-23.
+    Last updated on 2024-02-16.
     
     <br />
 

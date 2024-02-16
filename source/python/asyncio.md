@@ -1,5 +1,41 @@
 # asyncio
 
+## terminology
+
+good explenataion on tasks: [tasks docs](https://docs.python.org/3/library/asyncio-task.html)
+
+- if you put async in front of def it becomes a *coroutine*
+- tasks iare used to *shedule* coroutines **concurrently**, you have to *await* a task to run it
+- use `asyncio.gather(*list_of_tasks) to run all tasks
+- a **Future** is a special low-level awaitable object that represents an eventual result of an asynchronous operation
+```python
+# awaiting futures
+async def main():
+    await function_that_returns_a_future_object()
+
+    # this is also valid:
+    await asyncio.gather(
+        function_that_returns_a_future_object(),
+        some_python_coroutine()
+    )
+```
+- **Task groups** combine a task creation API with a convenient and reliable way to wait for all tasks in the group to finish  
+All tasks are awaited when the context manager exits
+```python
+# TaskGroup
+async def main():
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(some_coro(...))
+        task2 = tg.create_task(another_coro(...))
+    print(f"Both tasks have completed now: {task1.result()}, {task2.result()}")
+```
+- `asyncio.run(coro, debug=False)`:
+  - runs the passed coroutine, taking care of managing the asyncio event loop and finalizing asynchronous generators  
+  - cannot be called when another asyncio event loop is running in the same thread  
+  - always creates a new event loop and closes it at the end  
+  - should be used as a main entry point for asyncio programs, and should ideally only be called once  
+
+
 ## async but not concurrent
 
 ```python
@@ -96,7 +132,104 @@ mewtwo
 
 ```
 
+## gather vs wait vs TaskGroup
+
+
+### asyncio.gather()
+Returns a Future instance, allowing high level grouping of tasks:
+
+```python
+import asyncio
+from pprint import pprint
+
+import random
+
+
+async def coro(tag):
+    print(">", tag)
+    await asyncio.sleep(random.uniform(1, 3))
+    print("<", tag)
+    return tag
+
+
+loop = asyncio.get_event_loop()
+
+# The single asterisk form ( *args ) is used to pass a non-keyworded, variable-length argument list
+group1 = asyncio.gather(*[coro("group 1.{}".format(i)) for i in range(1, 6)])
+group2 = asyncio.gather(*[coro("group 2.{}".format(i)) for i in range(1, 4)])
+group3 = asyncio.gather(*[coro("group 3.{}".format(i)) for i in range(1, 10)])
+
+all_groups = asyncio.gather(group1, group2, group3)
+
+results = loop.run_until_complete(all_groups)
+
+loop.close()
+
+pprint(results)
+```
+
+All tasks in a group can be cancelled by calling group2.cancel() or even all_groups.cancel(). See also .gather(..., return_exceptions=True),
+
+### asyncio.wait()
+
+Supports waiting to be stopped after the first task is done, or after a specified timeout, allowing lower level precision of operations:
+
+```python
+import asyncio
+import random
+
+
+async def coro(tag):
+    print(">", tag)
+    await asyncio.sleep(random.uniform(0.5, 5))
+    print("<", tag)
+    return tag
+
+
+loop = asyncio.get_event_loop()
+
+tasks = [coro(i) for i in range(1, 11)]
+
+print("Get first result:")
+finished, unfinished = loop.run_until_complete(
+    asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED))
+
+for task in finished:
+    print(task.result())
+print("unfinished:", len(unfinished))
+
+print("Get more results in 2 seconds:")
+finished2, unfinished2 = loop.run_until_complete(
+    asyncio.wait(unfinished, timeout=2))
+
+for task in finished2:
+    print(task.result())
+print("unfinished2:", len(unfinished2))
+
+print("Get all other results:")
+finished3, unfinished3 = loop.run_until_complete(asyncio.wait(unfinished2))
+
+for task in finished3:
+    print(task.result())
+
+loop.close()
+```
+
+### TaskGroup (Python 3.11+)
+
+Update: Python 3.11 introduces TaskGroups which can "automatically" await more than one task without gather() or await():
+
+```python
+async def main():
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(some_coro(...))
+        task2 = tg.create_task(another_coro(...))
+    print("Both tasks have completed now.")
+```
+
 ## producer-consumer
+
+- [wikipedia on producer-consumer pattern](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem)
 
 ### consumer.py
 

@@ -71,6 +71,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -83,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -94,10 +95,17 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">asyncio</a><ul>
+<li><a class="reference internal" href="#terminology">terminology</a></li>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
 <li><a class="reference internal" href="#aiohttp">aiohttp</a></li>
 <li><a class="reference internal" href="#websockets">websockets</a></li>
+<li><a class="reference internal" href="#gather-vs-wait-vs-taskgroup">gather vs wait vs TaskGroup</a><ul>
+<li><a class="reference internal" href="#asyncio-gather">asyncio.gather()</a></li>
+<li><a class="reference internal" href="#asyncio-wait">asyncio.wait()</a></li>
+<li><a class="reference internal" href="#taskgroup-python-3-11">TaskGroup (Python 3.11+)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#producer-consumer">producer-consumer</a><ul>
 <li><a class="reference internal" href="#consumer-py">consumer.py</a></li>
 <li><a class="reference internal" href="#producer-py">producer.py</a></li>
@@ -181,6 +189,49 @@
             
   <section id="asyncio">
 <h1>asyncio<a class="headerlink" href="#asyncio" title="Link to this heading">¶</a></h1>
+<section id="terminology">
+<h2>terminology<a class="headerlink" href="#terminology" title="Link to this heading">¶</a></h2>
+<p>good explenataion on tasks: <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html">tasks docs</a></p>
+<ul class="simple">
+<li><p>if you put async in front of def it becomes a <em>coroutine</em></p></li>
+<li><p>tasks iare used to <em>shedule</em> coroutines <strong>concurrently</strong>, you have to <em>await</em> a task to run it</p></li>
+<li><p>use `asyncio.gather(*list_of_tasks) to run all tasks</p></li>
+<li><p>a <strong>Future</strong> is a special low-level awaitable object that represents an eventual result of an asynchronous operation</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># awaiting futures</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">await</span> <span class="n">function_that_returns_a_future_object</span><span class="p">()</span>
+
+    <span class="c1"># this is also valid:</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+        <span class="n">function_that_returns_a_future_object</span><span class="p">(),</span>
+        <span class="n">some_python_coroutine</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Task groups</strong> combine a task creation API with a convenient and reliable way to wait for all tasks in the group to finish<br />
+All tasks are awaited when the context manager exits</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TaskGroup</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
+        <span class="n">task1</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">some_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+        <span class="n">task2</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">another_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Both tasks have completed now: </span><span class="si">{</span><span class="n">task1</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">task2</span><span class="o">.</span><span class="n">result</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">asyncio.run(coro,</span> <span class="pre">debug=False)</span></code>:</p>
+<ul>
+<li><p>runs the passed coroutine, taking care of managing the asyncio event loop and finalizing asynchronous generators</p></li>
+<li><p>cannot be called when another asyncio event loop is running in the same thread</p></li>
+<li><p>always creates a new event loop and closes it at the end</p></li>
+<li><p>should be used as a main entry point for asyncio programs, and should ideally only be called once</p></li>
+</ul>
+</li>
+</ul>
+</section>
 <section id="async-but-not-concurrent">
 <h2>async but not concurrent<a class="headerlink" href="#async-but-not-concurrent" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">aiohttp</span>
@@ -275,8 +326,103 @@
 </pre></div>
 </div>
 </section>
+<section id="gather-vs-wait-vs-taskgroup">
+<h2>gather vs wait vs TaskGroup<a class="headerlink" href="#gather-vs-wait-vs-taskgroup" title="Link to this heading">¶</a></h2>
+<section id="asyncio-gather">
+<h3>asyncio.gather()<a class="headerlink" href="#asyncio-gather" title="Link to this heading">¶</a></h3>
+<p>Returns a Future instance, allowing high level grouping of tasks:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tag</span>
+
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="c1"># The single asterisk form ( *args ) is used to pass a non-keyworded, variable-length argument list</span>
+<span class="n">group1</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">coro</span><span class="p">(</span><span class="s2">&quot;group 1.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)])</span>
+<span class="n">group2</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">coro</span><span class="p">(</span><span class="s2">&quot;group 2.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="n">group3</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">coro</span><span class="p">(</span><span class="s2">&quot;group 3.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)])</span>
+
+<span class="n">all_groups</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">group3</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">all_groups</span><span class="p">)</span>
+
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">pprint</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>All tasks in a group can be cancelled by calling group2.cancel() or even all_groups.cancel(). See also .gather(…, return_exceptions=True),</p>
+</section>
+<section id="asyncio-wait">
+<h3>asyncio.wait()<a class="headerlink" href="#asyncio-wait" title="Link to this heading">¶</a></h3>
+<p>Supports waiting to be stopped after the first task is done, or after a specified timeout, allowing lower level precision of operations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">coro</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tag</span>
+
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">coro</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Get first result:&quot;</span><span class="p">)</span>
+<span class="n">finished</span><span class="p">,</span> <span class="n">unfinished</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">tasks</span><span class="p">,</span> <span class="n">return_when</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">FIRST_COMPLETED</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">finished</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unfinished:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unfinished</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Get more results in 2 seconds:&quot;</span><span class="p">)</span>
+<span class="n">finished2</span><span class="p">,</span> <span class="n">unfinished2</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">unfinished</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">finished2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;unfinished2:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">unfinished2</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Get all other results:&quot;</span><span class="p">)</span>
+<span class="n">finished3</span><span class="p">,</span> <span class="n">unfinished3</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">unfinished2</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">finished3</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="taskgroup-python-3-11">
+<h3>TaskGroup (Python 3.11+)<a class="headerlink" href="#taskgroup-python-3-11" title="Link to this heading">¶</a></h3>
+<p>Update: Python 3.11 introduces TaskGroups which can “automatically” await more than one task without gather() or await():</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
+        <span class="n">task1</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">some_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+        <span class="n">task2</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">another_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Both tasks have completed now.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="producer-consumer">
 <h2>producer-consumer<a class="headerlink" href="#producer-consumer" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem">wikipedia on producer-consumer pattern</a></p></li>
+</ul>
 <section id="consumer-py">
 <h3>consumer.py<a class="headerlink" href="#consumer-py" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;The actual task &#39;worker&#39; or &#39;processor&#39; - the work queue consumer&quot;&quot;&quot;</span>
@@ -559,6 +705,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -571,7 +718,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -582,10 +729,17 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">asyncio</a><ul>
+<li><a class="reference internal" href="#terminology">terminology</a></li>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
 <li><a class="reference internal" href="#aiohttp">aiohttp</a></li>
 <li><a class="reference internal" href="#websockets">websockets</a></li>
+<li><a class="reference internal" href="#gather-vs-wait-vs-taskgroup">gather vs wait vs TaskGroup</a><ul>
+<li><a class="reference internal" href="#asyncio-gather">asyncio.gather()</a></li>
+<li><a class="reference internal" href="#asyncio-wait">asyncio.wait()</a></li>
+<li><a class="reference internal" href="#taskgroup-python-3-11">TaskGroup (Python 3.11+)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#producer-consumer">producer-consumer</a><ul>
 <li><a class="reference internal" href="#consumer-py">consumer.py</a></li>
 <li><a class="reference internal" href="#producer-py">producer.py</a></li>
@@ -676,7 +830,7 @@
 <br />
     <br />
 
-    Last updated on 2024-02-02.
+    Last updated on 2024-02-16.
     
     <br />
 

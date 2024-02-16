@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -83,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -174,10 +175,12 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="asyncio.html">asyncio</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html#terminology">terminology</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html#async-but-not-concurrent">async but not concurrent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html#async-concurrent">async &amp; concurrent</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html#aiohttp">aiohttp</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html#websockets">websockets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asyncio.html#gather-vs-wait-vs-taskgroup">gather vs wait vs TaskGroup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html#producer-consumer">producer-consumer</a></li>
 </ul>
 </li>
@@ -197,6 +200,7 @@
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html#examples">examples</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="designpatterns.html">design patterns</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html#guard-clauses">guard clauses</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html#interfaces">interfaces</a></li>
@@ -296,8 +300,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">performance</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="performance.html#timeit">timeit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#least-recently-used">Least Recently Used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#caching">caching</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html#cachetools">cachetools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#requests-cache">requests-cache</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyenv.html">pyenv</a><ul>
@@ -331,6 +336,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="typing.html">typing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#use-abcs-for-typing">use ABCs for typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#enums">enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#functions">functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#classes">classes</a></li>
@@ -346,7 +352,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="typing.html#pedantic">pedantic</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="typing.html#pydantic">pydantic</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#types">types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#deserialize">deserialize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#serialize">serialize</a></li>
@@ -384,6 +390,7 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -396,7 +403,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -479,7 +486,7 @@
 <br />
     <br />
 
-    Last updated on 2024-02-02.
+    Last updated on 2024-02-16.
     
     <br />
 

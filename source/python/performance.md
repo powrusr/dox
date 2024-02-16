@@ -69,8 +69,76 @@ plain(repeated_numbers)
 square(repeated_numbers)
 filtered(repeated_numbers)
 ```
+## caching
 
-## Least Recently Used
+### manual cache
+
+```python
+import icecream
+import json
+import requests
+
+
+def fetch_data(*, update: bool = False, json_cache: str, url: str):  # * = named arguments only
+    if update:
+        json_data = None
+    else:
+        try:
+            with open(json_cache, 'r') as f:
+                json_data = json.load(f)
+                print("data loaded from cache")
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"No local cache found: {e}")
+            json_data = None
+
+    if not json_data:
+        print("Fetching new json data.. (creating local cache)")
+        json_data = requests.get(url).json()
+        with open(json_cache, "w") as f:
+            json.dump(json_data, f)
+
+    return json_data
+
+
+if __name__ == "__main__":
+    url_comments = "http://dummyjson.com/comments"
+    cache_file = "comments.json"
+    # fetch_data(update=True)
+    data: dict = fetch_data(update=False, json_cache=cache_file, url=url_comments)
+    icecream.ic(data)
+"""
+No local cache found: [Errno 2] No such file or directory: 'comments.json'
+Fetching new json data.. (creating local cache)
+ic| data: {'comments': [{'body': 'This is some awesome thinking!',
+                         'id': 1,
+                         'postId': 100,
+                         'user': {'id': 63, 'username': 'eburras1q'}},
+                        {'body': 'What terrific math skills you’re showing!',
+                         'id': 2,
+                         'postId': 27,
+                         'user': {'id': 71, 'username': 'omarsland1y'}},
+                        {'body': 'You are an amazing writer!',
+                         'id': 3,
+                         'postId': 61,
+                         'user': {'id': 29, 'username': 'jissetts'}},
+                         ...
+                        {'body': 'This is very perceptive!',
+                         'id': 29,
+                         'postId': 13,
+                         'user': {'id': 30, 'username': 'kdulyt'}},
+                        {'body': 'What an accomplishment!',
+                         'id': 30,
+                         'postId': 23,
+                         'user': {'id': 36, 'username': 'dalmondz'}}],
+           'limit': 30,
+           'skip': 0,
+           'total': 340}
+
+Process finished with exit code 0
+"""
+```
+
+### Least Recently Used
 
 ```python
 from functools import lru_cache
@@ -112,7 +180,7 @@ def fib(n):
     return fib(n-1) + fib(n-2)
 ```
 
-limited
+#### limited
 
 if you look at the code closely, and the trace outputs we had earlier, you'll realize that in fact we only need to ever cache the last 2 calls - so we could limit our LRU cache to just two elements, without losing the speedup benefits:
 
@@ -144,7 +212,7 @@ for i in range(25, 40):
 39 - 0.018959375040140003 s
 ```
 
-### unbounded cache
+#### unbounded cache
 instead of using `@lru_cache(maxsize=None)` you can use `@cache`
 
 ```python 
@@ -282,5 +350,70 @@ def get_pep(num):
 @cached(cache=TTLCache(maxsize=1024, ttl=600))
 def get_weather(place):
     return owm.weather_at_place(place).get_weather()
+```
+
+## requests-cache
+
+- [request cache library docs](https://requests-cache.readthedocs.io/en/stable/)
+
+takes one minute
+```python
+import requests
+
+session = requests.Session()
+for i in range(60):
+    session.get('https://httpbin.org/delay/1')
+```
+
+takes one second
+
+```python
+import requests_cache
+
+session = requests_cache.CachedSession('demo_cache')
+for i in range(60):
+    session.get('https://httpbin.org/delay/1')
+```
+
+Define exactly how long to keep responses:
+
+```python
+from requests_cache import CachedSession
+from datetime import timedelta
+
+# Keep responses for 360 seconds
+session = CachedSession('demo_cache', expire_after=360)
+
+# Or use timedelta objects to specify other units of time
+session = CachedSession('demo_cache', expire_after=timedelta(hours=1))
+```
+
+Use Cache-Control headers:
+
+Use the cache_control parameter to enable automatic expiration based on Cache-Control and other standard HTTP headers sent by the server:
+
+```python
+from requests_cache import CachedSession
+
+session = CachedSession('demo_cache', cache_control=True)
+```
+
+Settings:
+
+```python
+from datetime import timedelta
+from requests_cache import CachedSession
+
+session = CachedSession(
+    'demo_cache',
+    use_cache_dir=True,                # Save files in the default user cache dir
+    cache_control=True,                # Use Cache-Control response headers for expiration, if available
+    expire_after=timedelta(days=1),    # Otherwise expire responses after one day
+    allowable_codes=[200, 400],        # Cache 400 responses as a solemn reminder of your failures
+    allowable_methods=['GET', 'POST'], # Cache whatever HTTP methods you want
+    ignored_parameters=['api_key'],    # Don't match this request param, and redact if from the cache
+    match_headers=['Accept-Language'], # Cache a different response per language
+    stale_if_error=True,               # In case of request errors, use stale cache data if possible
+)
 ```
 

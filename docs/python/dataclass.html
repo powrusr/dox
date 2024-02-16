@@ -61,8 +61,9 @@
     </select>
 </label>
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -70,22 +71,24 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -100,6 +103,7 @@
 <li><a class="reference internal" href="#examples">examples</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#attrs">Attrs</a></li>
 </ul>
 
   </div>
@@ -427,6 +431,53 @@ setting this to True will put resp w you of hash checking</p></li>
 </div>
 </section>
 </section>
+<section id="attrs">
+<h1>Attrs<a class="headerlink" href="#attrs" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://www.attrs.org/en/stable/index.html">attrs docs</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># credits to mCoding</span>
+<span class="c1"># https://github.com/mCodingLLC/VideosSampleCode/blob/master/videos/126_attrs_revolution/main.py</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">validators</span><span class="p">,</span> <span class="n">setters</span>
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">frozen</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">Factory</span>
+<span class="c1"># frozen makes class immutable</span>
+
+<span class="nd">@define</span>
+<span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">validator</span><span class="o">=</span><span class="n">validators</span><span class="o">.</span><span class="n">instance_of</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">email</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@email</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">def</span> <span class="nf">_email_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">@example.com&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">slots_is_the_default</span><span class="p">():</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;james@example.com&quot;</span><span class="p">)</span>
+    <span class="n">user</span><span class="o">.</span><span class="n">nmae</span> <span class="o">=</span> <span class="s2">&quot;JAMES&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">show_sources</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="fm">__init__</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">slots_is_the_default</span><span class="p">()</span>
+    <span class="n">show_sources</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -436,8 +487,9 @@ setting this to True will put resp w you of hash checking</p></li>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <h3><a href="../index.html">Table of Contents</a></h3>
-<p class="caption" role="heading"><span class="caption-text">test</span></p>
+<p class="caption" role="heading"><span class="caption-text">main</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ai/index.html">ai</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../sphinx.html">sphinx</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bash/index.html">bash</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">python</a><ul class="current">
@@ -445,22 +497,24 @@ setting this to True will put resp w you of hash checking</p></li>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html">performance testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="regex.html">regex</a></li>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../vim/vim.html">vim</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vim/index.html">vim</a></li>
 </ul>
 
   <div>
@@ -475,6 +529,7 @@ setting this to True will put resp w you of hash checking</p></li>
 <li><a class="reference internal" href="#examples">examples</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#attrs">Attrs</a></li>
 </ul>
 
   </div>
@@ -555,7 +610,7 @@ setting this to True will put resp w you of hash checking</p></li>
 <br />
     <br />
 
-    Last updated on 2024-01-21.
+    Last updated on 2024-02-15.
     
     <br />
 

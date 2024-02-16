@@ -76,6 +76,8 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#links">links</a></li>
+<li><a class="reference internal" href="#repeatable-actions">repeatable actions</a></li>
 <li><a class="reference internal" href="#plugins">plugins</a><ul>
 <li><a class="reference internal" href="#surround">surround</a></li>
 </ul>
@@ -159,7 +161,59 @@
             
   <section id="vim">
 <h1>vim<a class="headerlink" href="#vim" title="Link to this heading">¶</a></h1>
+<section id="links">
+<h2>links<a class="headerlink" href="#links" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="https://vimdoc.sourceforge.net/">vim docs</a></p>
+</section>
+<section id="repeatable-actions">
+<h2>repeatable actions<a class="headerlink" href="#repeatable-actions" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Intent</p></th>
+<th class="head"><p>Act</p></th>
+<th class="head"><p>Repeat</p></th>
+<th class="head"><p>Reverse</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Make a change</p></td>
+<td><p>{edit}</p></td>
+<td><p>.</p></td>
+<td><p>u</p></td>
+</tr>
+<tr class="row-odd"><td><p>Scan line for next character</p></td>
+<td><p>f{char} / t{char}</p></td>
+<td><p>;</p></td>
+<td><p>,</p></td>
+</tr>
+<tr class="row-even"><td><p>Scan line for previous character</p></td>
+<td><p>F{char} / T{char}</p></td>
+<td><p>;</p></td>
+<td><p>,</p></td>
+</tr>
+<tr class="row-odd"><td><p>Scan document for next match</p></td>
+<td><p>/pattern <CR></p></td>
+<td><p>n</p></td>
+<td><p>N</p></td>
+</tr>
+<tr class="row-even"><td><p>Scan document for previous match</p></td>
+<td><p>?pattern <CR></p></td>
+<td><p>n</p></td>
+<td><p>N</p></td>
+</tr>
+<tr class="row-odd"><td><p>Substitute</p></td>
+<td><p>:s/target/replacement</p></td>
+<td><p>&amp;</p></td>
+<td><p>u</p></td>
+</tr>
+<tr class="row-even"><td><p>Execute sequence of changes</p></td>
+<td><p>qx{changes}q</p></td>
+<td><p>&#64;x</p></td>
+<td><p>u</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="plugins">
 <h2>plugins<a class="headerlink" href="#plugins" title="Link to this heading">¶</a></h2>
 <p>since version 8 you can install packages inside <code class="docutils literal notranslate"><span class="pre">~/.vim/pack</span></code></p>
@@ -342,6 +396,8 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">vim</a><ul>
+<li><a class="reference internal" href="#links">links</a></li>
+<li><a class="reference internal" href="#repeatable-actions">repeatable actions</a></li>
 <li><a class="reference internal" href="#plugins">plugins</a><ul>
 <li><a class="reference internal" href="#surround">surround</a></li>
 </ul>
@@ -432,7 +488,7 @@ conservative quantifiers        \{<span class="p">-</span><span class="k">n</spa
 <br />
     <br />
 
-    Last updated on 2024-01-23.
+    Last updated on 2024-02-13.
     
     <br />
 
