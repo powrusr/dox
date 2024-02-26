@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -83,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -107,6 +108,12 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#factory">factory</a></li>
+<li><a class="reference internal" href="#strategy">strategy</a><ul>
+<li><a class="reference internal" href="#before">before</a></li>
+<li><a class="reference internal" href="#after">after</a></li>
+<li><a class="reference internal" href="#functional">functional</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -705,6 +712,270 @@ a class instance</p>
 </pre></div>
 </div>
 </section>
+<section id="strategy">
+<h2>strategy<a class="headerlink" href="#strategy" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>code example from <a class="reference external" href="https://github.com/ArjanCodes">Arjan Code</a></p></li>
+</ul>
+<section id="before">
+<h3>before<a class="headerlink" href="#before" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+
+<span class="k">def</span> <span class="nf">generate_id</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="c1"># helper function for generating an id</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">length</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">SupportTicket</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">generate_id</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">customer</span> <span class="o">=</span> <span class="n">customer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="o">=</span> <span class="n">issue</span>
+
+
+<span class="k">class</span> <span class="nc">CustomerSupport</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processing_strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;fifo&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span> <span class="o">=</span> <span class="n">processing_strategy</span>
+
+    <span class="k">def</span> <span class="nf">create_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SupportTicket</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">process_tickets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># if it&#39;s empty, don&#39;t do anything</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are no tickets to process. Well done!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span> <span class="o">==</span> <span class="s2">&quot;fifo&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ticket</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span> <span class="o">==</span> <span class="s2">&quot;filo&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ticket</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span> <span class="o">==</span> <span class="s2">&quot;random&quot;</span><span class="p">:</span>
+            <span class="n">list_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">list_copy</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ticket</span> <span class="ow">in</span> <span class="n">list_copy</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">process_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="n">SupportTicket</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing ticket id: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Customer: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">customer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Issue: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">issue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># create the application</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">CustomerSupport</span><span class="p">(</span><span class="s2">&quot;filo&quot;</span><span class="p">)</span>
+
+<span class="c1"># register a few tickets</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;John Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;My computer makes strange sounds!&quot;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;Linus Sebastian&quot;</span><span class="p">,</span> <span class="s2">&quot;I can&#39;t upload any videos, please help.&quot;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;Arjan Egges&quot;</span><span class="p">,</span> <span class="s2">&quot;VSCode doesn&#39;t automatically solve my bugs.&quot;</span><span class="p">)</span>
+
+<span class="c1"># process the tickets</span>
+<span class="n">app</span><span class="o">.</span><span class="n">process_tickets</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="after">
+<h3>after<a class="headerlink" href="#after" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+
+<span class="k">def</span> <span class="nf">generate_id</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="c1"># helper function for generating an id</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">length</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">SupportTicket</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">generate_id</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">customer</span> <span class="o">=</span> <span class="n">customer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">issue</span> <span class="o">=</span> <span class="n">issue</span>
+
+
+<span class="k">class</span> <span class="nc">TicketOrderingStrategy</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]:</span>
+        <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">FIFOOrderingStrategy</span><span class="p">(</span><span class="n">TicketOrderingStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">FILOOrderingStrategy</span><span class="p">(</span><span class="n">TicketOrderingStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]:</span>
+        <span class="n">list_copy</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">list_copy</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">list_copy</span>
+
+
+<span class="k">class</span> <span class="nc">RandomOrderingStrategy</span><span class="p">(</span><span class="n">TicketOrderingStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]:</span>
+        <span class="n">list_copy</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">list_copy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">list_copy</span>
+
+
+<span class="k">class</span> <span class="nc">BlackHoleStrategy</span><span class="p">(</span><span class="n">TicketOrderingStrategy</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+
+<span class="k">class</span> <span class="nc">CustomerSupport</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processing_strategy</span><span class="p">:</span> <span class="n">TicketOrderingStrategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span> <span class="o">=</span> <span class="n">processing_strategy</span>
+
+    <span class="k">def</span> <span class="nf">create_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SupportTicket</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">process_tickets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># create the ordered list</span>
+        <span class="n">ticket_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_strategy</span><span class="o">.</span><span class="n">create_ordering</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">)</span>
+
+        <span class="c1"># if it&#39;s empty, don&#39;t do anything</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ticket_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are no tickets to process. Well done!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># go through the tickets in the list</span>
+        <span class="k">for</span> <span class="n">ticket</span> <span class="ow">in</span> <span class="n">ticket_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="n">SupportTicket</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing ticket id: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Customer: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">customer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Issue: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">issue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># create the application</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">CustomerSupport</span><span class="p">(</span><span class="n">RandomOrderingStrategy</span><span class="p">())</span>
+
+<span class="c1"># register a few tickets</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;John Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;My computer makes strange sounds!&quot;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;Linus Sebastian&quot;</span><span class="p">,</span> <span class="s2">&quot;I can&#39;t upload any videos, please help.&quot;</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;Arjan Egges&quot;</span><span class="p">,</span> <span class="s2">&quot;VSCode doesn&#39;t automatically solve my bugs.&quot;</span><span class="p">)</span>
+
+<span class="c1"># process the tickets</span>
+<span class="n">app</span><span class="o">.</span><span class="n">process_tickets</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="functional">
+<h3>functional<a class="headerlink" href="#functional" title="Link to this heading">¶</a></h3>
+<p>loose coupling
+no big amount of new classes popping up</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Callable</span>
+
+
+<span class="k">def</span> <span class="nf">generate_id</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="c1"># helper function for generating an id</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">length</span><span class="p">))</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">SupportTicket</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default_factory</span><span class="o">=</span><span class="n">generate_id</span><span class="p">)</span>
+    <span class="n">customer</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">issue</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="n">SupportTickets</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">SupportTicket</span><span class="p">]</span>
+
+<span class="n">Ordering</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">SupportTickets</span><span class="p">],</span> <span class="n">SupportTickets</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">fifo_ordering</span><span class="p">(</span><span class="nb">list</span><span class="p">:</span> <span class="n">SupportTickets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SupportTickets</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">filo_ordering</span><span class="p">(</span><span class="nb">list</span><span class="p">:</span> <span class="n">SupportTickets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SupportTickets</span><span class="p">:</span>
+    <span class="n">list_copy</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">list_copy</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">list_copy</span>
+
+
+<span class="k">def</span> <span class="nf">random_ordering</span><span class="p">(</span><span class="nb">list</span><span class="p">:</span> <span class="n">SupportTickets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SupportTickets</span><span class="p">:</span>
+    <span class="n">list_copy</span> <span class="o">=</span> <span class="nb">list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">list_copy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">list_copy</span>
+
+
+<span class="k">def</span> <span class="nf">blackhole_ordering</span><span class="p">(</span><span class="n">_</span><span class="p">:</span> <span class="n">SupportTickets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SupportTickets</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">[]</span>
+
+
+<span class="k">class</span> <span class="nc">CustomerSupport</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">:</span> <span class="n">SupportTickets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">create_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SupportTicket</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">issue</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">process_tickets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ordering</span><span class="p">:</span> <span class="n">Ordering</span><span class="p">):</span>
+        <span class="c1"># create the ordered list</span>
+        <span class="n">ticket_list</span> <span class="o">=</span> <span class="n">ordering</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tickets</span><span class="p">)</span>
+
+        <span class="c1"># if it&#39;s empty, don&#39;t do anything</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ticket_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;There are no tickets to process. Well done!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># go through the tickets in the list</span>
+        <span class="k">for</span> <span class="n">ticket</span> <span class="ow">in</span> <span class="n">ticket_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">process_ticket</span><span class="p">(</span><span class="n">ticket</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_ticket</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticket</span><span class="p">:</span> <span class="n">SupportTicket</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing ticket id: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Customer: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">customer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Issue: </span><span class="si">{</span><span class="n">ticket</span><span class="o">.</span><span class="n">issue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==================================&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># create the application</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">CustomerSupport</span><span class="p">()</span>
+
+    <span class="c1"># register a few tickets</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;John Smith&quot;</span><span class="p">,</span> <span class="s2">&quot;My computer makes strange sounds!&quot;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span><span class="s2">&quot;Linus Sebastian&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;I can&#39;t upload any videos, please help.&quot;</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">create_ticket</span><span class="p">(</span>
+        <span class="s2">&quot;Arjan Egges&quot;</span><span class="p">,</span> <span class="s2">&quot;VSCode doesn&#39;t automatically solve my bugs.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># process the tickets</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">process_tickets</span><span class="p">(</span><span class="n">random_ordering</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -725,6 +996,7 @@ a class instance</p>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -737,7 +1009,7 @@ a class instance</p>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -761,6 +1033,12 @@ a class instance</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#factory">factory</a></li>
+<li><a class="reference internal" href="#strategy">strategy</a><ul>
+<li><a class="reference internal" href="#before">before</a></li>
+<li><a class="reference internal" href="#after">after</a></li>
+<li><a class="reference internal" href="#functional">functional</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -843,7 +1121,7 @@ a class instance</p>
 <br />
     <br />
 
-    Last updated on 2024-01-30.
+    Last updated on 2024-02-26.
     
     <br />
 

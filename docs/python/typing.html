@@ -128,6 +128,7 @@
 <li><a class="reference internal" href="#pydantic">pydantic</a><ul>
 <li><a class="reference internal" href="#types">types</a><ul>
 <li><a class="reference internal" href="#annotated">annotated</a></li>
+<li><a class="reference internal" href="#typeadapter">TypeAdapter</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#deserialize">deserialize</a><ul>
@@ -155,6 +156,7 @@
 </li>
 <li><a class="reference internal" href="#nested-models">nested models</a></li>
 <li><a class="reference internal" href="#validate-call">validate call</a></li>
+<li><a class="reference internal" href="#real-world-example">real world example</a></li>
 </ul>
 </li>
 </ul>
@@ -1171,6 +1173,30 @@ For more fine-grain control, you can also use <a class="reference external" href
 </pre></div>
 </div>
 </section>
+<section id="typeadapter">
+<h3>TypeAdapter<a class="headerlink" href="#typeadapter" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">TypeAdapter</span><span class="p">,</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">class</span> <span class="nc">CaseInsensitiveAdapter</span><span class="p">(</span><span class="n">TypeAdapter</span><span class="p">[</span><span class="n">Any</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="nf">validate_python</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">__lower__</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span> <span class="n">__lower__</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="k">return</span> <span class="n">value</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="n">__lower__</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate_python</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">my_property</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">adapter</span> <span class="o">=</span> <span class="n">CaseInsensitiveAdapter</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span>
+<span class="n">my_obj</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">validate_python</span><span class="p">({</span><span class="s2">&quot;MY_PROPERTY&quot;</span><span class="p">:</span> <span class="s2">&quot;hello&quot;</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="deserialize">
 <h2>deserialize<a class="headerlink" href="#deserialize" title="Link to this heading">¶</a></h2>
@@ -1754,6 +1780,113 @@ There are a few other errors you can raise that will result in a ValidationError
 </pre></div>
 </div>
 </section>
+<section id="real-world-example">
+<h2>real world example<a class="headerlink" href="#real-world-example" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span><span class="p">,</span> <span class="n">Flag</span><span class="p">,</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">verify</span><span class="p">,</span> <span class="n">UNIQUE</span><span class="p">,</span> <span class="n">CONTINUOUS</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+
+<span class="c1"># https://docs.python.org/3/library/enum.html#enum.Flag</span>
+<span class="c1"># https://docs.python.org/3/howto/enum.html#enum-cookbook</span>
+<span class="c1"># https://typing.readthedocs.io/en/latest/spec/typeddict.html</span>
+<span class="c1"># https://docs.pydantic.dev/2.0/migration/#required-optional-and-nullable-fields</span>
+
+
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">VoteValue</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Vote value for a proposal&quot;&quot;&quot;</span>
+    <span class="n">VALUE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Default value, always invalid</span>
+    <span class="n">VALUE_NO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># A vote against the proposal</span>
+    <span class="n">VALUE_YES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># A vote in favour of the proposal</span>
+
+
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ProposalState</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Proposal states&quot;&quot;&quot;</span>
+    <span class="n">STATE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Default value, always invalid</span>
+    <span class="n">STATE_FAILED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal enactment has failed - even though proposal has passed, its execution could not be performed</span>
+    <span class="n">STATE_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal is open for voting</span>
+    <span class="n">STATE_PASSED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal has gained enough support to be executed</span>
+    <span class="n">STATE_REJECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal wasn&#39;t accepted (proposal terms failed validation due to wrong configuration or failing to meet network requirements)</span>
+    <span class="n">STATE_DECLINED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal didn&#39;t get enough votes (either failing to gain required participation or majority level)</span>
+    <span class="n">STATE_ENACTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal enacted</span>
+    <span class="n">STATE_WAITING_FOR_NODE_VOTE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Waiting for node validation of the proposal</span>
+
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ProposalType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Proposal types&quot;&quot;&quot;</span>
+    <span class="n">TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Default value, always invalid</span>
+    <span class="n">TYPE_ALL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List all proposals</span>
+    <span class="n">TYPE_NEW_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List new market proposals</span>
+    <span class="n">TYPE_UPDATE_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List update market proposals</span>
+    <span class="n">TYPE_NETWORK_PARAMETERS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List change network parameter proposals</span>
+    <span class="n">TYPE_NEW_ASSET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New asset proposals</span>
+    <span class="n">TYPE_NEW_FREE_FORM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># for creating n ew free form proposal</span>
+    <span class="n">TYPE_UPDATE_ASSET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update asset proposals</span>
+    <span class="n">TYPE_NEW_SPOT_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New spot market proposals</span>
+    <span class="n">TYPE_UPDATE_SPOT_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update existing spot market</span>
+    <span class="n">TYPE_NEW_TRANSFER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New transfer proposal</span>
+    <span class="n">TYPE_CANCEL_TRANSFER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Cancel transfer</span>
+    <span class="n">TYPE_UPDATE_MARKET_STATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update market state</span>
+    <span class="n">TYPE_UPDATE_REFERRAL_PROGRAM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update referral program</span>
+    <span class="n">TYPE_UPDATE_VOLUME_DISCOUNT_PROGRAM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update volume discount program</span>
+
+<span class="k">class</span> <span class="nc">Pagination</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">first</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int32</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Number of records to be returned that sort greater than row identified by cursor supplied in &#39;after&#39;</span>
+    <span class="n">after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If paging forwards, the cursor string for the last row of the previous page</span>
+    <span class="n">last</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int32</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Number of records to be returned that sort less than row identified by cursor supplied in &#39;before&#39;</span>
+    <span class="n">before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># If paging forwards, the cursor string for the first row of the previous page</span>
+    <span class="n">newestFirst</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Whether to order the results with the newest records first</span>
+
+
+<span class="c1"># PartyId = Annotated[str, StringConstraints(min_length=64, max_length=64)]</span>
+<span class="c1"># PartyId = Annotated[str, Field(pattern=r&#39;[a-fA-F0-9]{64}&#39;]</span>
+<span class="c1"># PartyId = Annotated[str, StringConstraints(pattern=r&#39;[a-fA-F0-9]{64}&#39;]</span>
+<span class="c1"># PartyId = Annotated[str, Field(min_length=64, max_length=64, pattern=r&#39;[a-fA-F0-9]{64}&#39;, validate_default=True)]</span>
+
+
+<span class="k">class</span> <span class="nc">QueryAllProposals</span><span class="p">(</span><span class="n">Pagination</span><span class="p">):</span>  <span class="c1"># list of proposals doesn&#39;t need pagination, just testing inheritance</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Query a list of all proposals&quot;&quot;&quot;</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">proposalState</span><span class="p">:</span> <span class="n">ProposalState</span> <span class="o">=</span> <span class="n">ProposalState</span><span class="o">.</span><span class="n">STATE_UNSPECIFIED</span>
+    <span class="n">proposalType</span><span class="p">:</span> <span class="n">ProposalType</span> <span class="o">=</span> <span class="n">ProposalType</span><span class="o">.</span><span class="n">TYPE_UNSPECIFIED</span>
+    <span class="n">proposerPartyId</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;[a-fA-F0-9]</span><span class="si">{64}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># restrict proposal to those proposed by the given party ID</span>
+    <span class="n">proposalReference</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Restrict proposals to those with the given reference</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ConditionOperator</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ConditionOperator</span><span class="o">.</span><span class="n">OPERATOR_EQUALS</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">OrderTimeInForce</span><span class="o">.</span><span class="n">TIME_IN_FORCE_GFA</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">OrderTimeInForce</span><span class="o">.</span><span class="n">TIME_IN_FORCE_GFA</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">VoteValue</span><span class="o">.</span><span class="n">VALUE_NO</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">params_allProposals</span> <span class="o">=</span> <span class="n">QueryAllProposals</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">params_allProposals</span><span class="o">.</span><span class="n">proposerPartyId</span> <span class="o">=</span> <span class="s2">&quot;000000000not00000640000in0000length0000000000000000000000&quot;</span>  <span class="c1"># 57 chars</span>
+    <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">pprint</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
+    <span class="n">params_allProposals</span><span class="o">.</span><span class="n">proposerPartyId</span> <span class="o">=</span> <span class="s2">&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;</span>  <span class="c1"># 64 chars</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">params_allProposals</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ConditionOperator.OPERATOR_GREATER_THAN</span>
+<span class="sd">    2</span>
+<span class="sd">    time_in_force_gfa</span>
+<span class="sd">    time_in_force_gfa</span>
+<span class="sd">    2</span>
+<span class="sd">    [{&#39;ctx&#39;: {&#39;pattern&#39;: &#39;[a-fA-F0-9]{64}&#39;},</span>
+<span class="sd">      &#39;input&#39;: &#39;000000000not00000640000in0000length0000000000000000000000&#39;,</span>
+<span class="sd">      &#39;loc&#39;: (&#39;proposerPartyId&#39;,),</span>
+<span class="sd">      &#39;msg&#39;: &quot;String should match pattern &#39;[a-fA-F0-9]{64}&#39;&quot;,</span>
+<span class="sd">      &#39;type&#39;: &#39;string_pattern_mismatch&#39;,</span>
+<span class="sd">      &#39;url&#39;: &#39;https://errors.pydantic.dev/2.6/v/string_pattern_mismatch&#39;}]</span>
+<span class="sd">    QueryAllProposals(proposalState=&lt;ProposalState.STATE_UNSPECIFIED: &#39;state_unspecified&#39;&gt;, proposalType=&lt;ProposalType.TYPE_UNSPECIFIED: &#39;type_unspecified&#39;&gt;, proposerPartyId=&#39;0000000000000000000000000000000000000000000000000000000000000000&#39;, proposalReference=None)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -1831,6 +1964,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <li><a class="reference internal" href="#pydantic">pydantic</a><ul>
 <li><a class="reference internal" href="#types">types</a><ul>
 <li><a class="reference internal" href="#annotated">annotated</a></li>
+<li><a class="reference internal" href="#typeadapter">TypeAdapter</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#deserialize">deserialize</a><ul>
@@ -1858,6 +1992,7 @@ There are a few other errors you can raise that will result in a ValidationError
 </li>
 <li><a class="reference internal" href="#nested-models">nested models</a></li>
 <li><a class="reference internal" href="#validate-call">validate call</a></li>
+<li><a class="reference internal" href="#real-world-example">real world example</a></li>
 </ul>
 </li>
 </ul>
@@ -1940,7 +2075,7 @@ There are a few other errors you can raise that will result in a ValidationError
 <br />
     <br />
 
-    Last updated on 2024-02-15.
+    Last updated on 2024-02-26.
     
     <br />
 

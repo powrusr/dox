@@ -71,6 +71,7 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -83,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -162,6 +163,11 @@
 <li><a class="reference internal" href="#static-methods">static methods</a></li>
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
+<li><a class="reference internal" href="#callable-instances">callable instances</a><ul>
+<li><a class="reference internal" href="#class-based-decorators">class based decorators</a></li>
+<li><a class="reference internal" href="#strategy-design-pattern">strategy design pattern</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
@@ -2341,6 +2347,199 @@ All these classes can be directly accessed:</p>
 </pre></div>
 </div>
 </section>
+<section id="callable-instances">
+<h3>callable instances<a class="headerlink" href="#callable-instances" title="Link to this heading">¶</a></h3>
+<p>instead of a closure</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_average</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">new_value</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">average</span>
+</pre></div>
+</div>
+<p>you can make a class instance that is callable and <strong>retains state</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CumulativeAverager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cumulative_average</span> <span class="kn">import</span> <span class="n">CumulativeAverager</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span> <span class="o">=</span> <span class="n">CumulativeAverager</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="go">12.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="go">12.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="go">12.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">11.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_average</span><span class="o">.</span><span class="n">data</span>
+<span class="go">[12, 13, 11, 10]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># logger.py</span>
+
+<span class="k">class</span> <span class="nc">Logger</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">log_file</span><span class="p">:</span>
+            <span class="n">log_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="class-based-decorators">
+<h4>class based decorators<a class="headerlink" href="#class-based-decorators" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># timing.py</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">ExecutionTimer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">() took </span><span class="si">{</span><span class="p">(</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">timing</span> <span class="kn">import</span> <span class="n">ExecutionTimer</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@ExecutionTimer</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">square_numbers</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">[</span><span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">square_numbers</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)))</span>
+<span class="go">square_numbers() took 0.0069 ms</span>
+<span class="go">[</span>
+<span class="go">    0,</span>
+<span class="go">    1,</span>
+<span class="go">    4,</span>
+<span class="go">    9,</span>
+<span class="go">    16,</span>
+<span class="go">    25,</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>say that you want to add a repetitions argument to your decorator.
+This argument will allow you to run the input function several times and compute the average execution time</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># timing.py</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">ExecutionTimer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span> <span class="o">=</span> <span class="n">repetitions</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">() </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span><span class="si">}</span><span class="s2"> times&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span><span class="p">):</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+                <span class="n">total_time</span> <span class="o">+=</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="n">average_time</span> <span class="o">=</span> <span class="n">total_time</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">() takes &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">average_time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> ms on average&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">timer</span>
+</pre></div>
+</div>
+<p>The class initializer takes repetitions an argument that you need to provide as part of the decorator call</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">timing</span> <span class="kn">import</span> <span class="n">ExecutionTimer</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@ExecutionTimer</span><span class="p">(</span><span class="n">repetitions</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">square_numbers</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">[</span><span class="n">number</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">square_numbers</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)))</span>
+<span class="go">Running square_numbers() 100 times</span>
+<span class="go">square_numbers() takes 0.0073 ms on average</span>
+<span class="go">[</span>
+<span class="go">    0,</span>
+<span class="go">    1,</span>
+<span class="go">    4,</span>
+<span class="go">    9,</span>
+<span class="go">    16,</span>
+<span class="go">    25,</span>
+<span class="go">    ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+</section>
+<section id="strategy-design-pattern">
+<h4>strategy design pattern<a class="headerlink" href="#strategy-design-pattern" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># serializing.py</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="k">class</span> <span class="nc">JsonSerializer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">YamlSerializer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">DataSerializer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serializing_strategy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serializing_strategy</span> <span class="o">=</span> <span class="n">serializing_strategy</span>
+
+    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">serializing_strategy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">serializing</span> <span class="kn">import</span> <span class="n">DataSerializer</span><span class="p">,</span> <span class="n">JsonSerializer</span><span class="p">,</span> <span class="n">YamlSerializer</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Rambo&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">36</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;California&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;job&quot;</span><span class="p">:</span> <span class="s2">&quot;Python Developer&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serializer</span> <span class="o">=</span> <span class="n">DataSerializer</span><span class="p">(</span><span class="n">JsonSerializer</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JSON:</span><span class="se">\n</span><span class="si">{</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">JSON:</span>
+<span class="go">{</span>
+<span class="go">    &quot;name&quot;: &quot;John Rambo&quot;,</span>
+<span class="go">    &quot;age&quot;: 36,</span>
+<span class="go">    &quot;city&quot;: &quot;California&quot;,</span>
+<span class="go">    &quot;job&quot;: &quot;Python Developer&quot;</span>
+<span class="go">}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Switch strategy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serializer</span><span class="o">.</span><span class="n">serializing_strategy</span> <span class="o">=</span> <span class="n">YamlSerializer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;YAML:</span><span class="se">\n</span><span class="si">{</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">YAML:</span>
+<span class="go">age: 30</span>
+<span class="go">city: California</span>
+<span class="go">job: Python Developer</span>
+<span class="go">name: John Rambo</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 <section id="files-and-resource-management">
 <h2>files and resource management<a class="headerlink" href="#files-and-resource-management" title="Link to this heading">¶</a></h2>
@@ -2813,6 +3012,7 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functional.html">functional programming</a></li>
@@ -2825,7 +3025,7 @@ You can define your own dialect using register_dialect method</p>
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -2904,6 +3104,11 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#static-methods">static methods</a></li>
 <li><a class="reference internal" href="#inheritance">inheritance</a></li>
 <li><a class="reference internal" href="#oop-summary-example">OOP summary example</a></li>
+<li><a class="reference internal" href="#callable-instances">callable instances</a><ul>
+<li><a class="reference internal" href="#class-based-decorators">class based decorators</a></li>
+<li><a class="reference internal" href="#strategy-design-pattern">strategy design pattern</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#files-and-resource-management">files and resource management</a><ul>
@@ -3017,7 +3222,7 @@ You can define your own dialect using register_dialect method</p>
 <br />
     <br />
 
-    Last updated on 2024-02-02.
+    Last updated on 2024-02-26.
     
     <br />
 

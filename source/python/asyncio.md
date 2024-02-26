@@ -1,8 +1,41 @@
 # asyncio
 
+- [real python guide](https://realpython.com/async-io-python/)
+- [python.org docs](https://docs.python.org/3/library/asyncio.html)
+- [new in 3.12](https://docs.python.org/3.12/whatsnew/3.12.html#asyncio)
+
+## asyncio vs threading
+
+Summary of Differences
+It may help to summarize the differences between Asyncio and Threading.
+
+### Asyncio
+
+1. Asynchronous programming
+2. Software coroutine-based concurrency
+3. Lightweight
+4. No GIL
+5. Many coroutines in one thread
+6. Non-blocking I/O with subprocesses and streams
+7. 100,000+ tasks
+
+### Threading
+
+1. Procedural and Object-oriented programming.
+2. Native thread-based concurrency
+3. Medium weight, heavier than coroutines, lighter than processes.
+4. Limited by the GIL
+5. Many threads in one process
+6. Blocking I/O, generally
+7. 100s to 1,000s tasks
+
 ## terminology
 
-good explenataion on tasks: [tasks docs](https://docs.python.org/3/library/asyncio-task.html)
+Asynchronous IO, or asyncio, facilitates concurrent I/O operations without multi-threading or multi-processing. It shines in scenarios with high I/O wait times, such as network communication and data fetching
+
+- don't use when app is CPU-bound
+- don't use in scripts where most ops are blocking
+
 
 - if you put async in front of def it becomes a *coroutine*
 - tasks iare used to *shedule* coroutines **concurrently**, you have to *await* a task to run it
@@ -19,8 +52,9 @@ async def main():
         some_python_coroutine()
     )
 ```
-- **Task groups** combine a task creation API with a convenient and reliable way to wait for all tasks in the group to finish  
+- **Task groups** combine a task creation API with a convenient and reliable way to wait for all tasks in the group to finish   
 All tasks are awaited when the context manager exits
+- use TaskGroup instead of gather
 ```python
 # TaskGroup
 async def main():
@@ -226,6 +260,148 @@ async def main():
         task2 = tg.create_task(another_coro(...))
     print("Both tasks have completed now.")
 ```
+
+## class with async constructor
+
+- initialize attributes with result of an async operation, eg fetching data from api, file or db
+- perform validation/computation on input of arguments requiring awaiting a coroutine
+- register instance of class as an event listener or callback handler for an async event loop
+
+### using factory method
+
+```python
+# SlingAcademy.com
+# This code uses Python 3.11.4
+
+import asyncio
+
+
+# A class that represents a timer
+class Timer:
+    # A simple constructor that takes the duration
+    def __init__(self, duration):
+        self.duration = duration
+        self.start_time = None
+        self.end_time = None
+
+    # A factory method that creates and initializes an instance asynchronously
+    @classmethod
+    async def create(cls, duration):
+        # Create an instance using the constructor
+        self = Timer(duration)
+
+        # Simulate getting the current time
+        self.start_time = (
+            asyncio.get_running_loop().time()
+        )  
+
+        # Simulate waiting for the duration
+        await asyncio.sleep(duration)  
+
+        # Simulate getting the current time
+        self.end_time = (
+            asyncio.get_running_loop().time()
+        )  
+        return self
+
+
+# To create an instance of the class, use await with the factory method
+async def main():
+    timer = await Timer.create(5)
+    print(f"The timer ran for {timer.end_time - timer.start_time} seconds")
+
+
+asyncio.run(main())
+```
+
+### using coroutine function
+
+```python
+# SlingAcademy.com
+# This code uses Python 3.11.4
+
+import asyncio
+import random
+
+
+# A class that represents a dice
+class Dice:
+    # A simple constructor that takes the number of sides
+    def __init__(self, sides):
+        self.sides = sides
+        self.value = None
+
+
+# A coroutine function that creates and initializes an instance asynchronously
+async def roll_dice(sides):
+    # Create an instance using the constructor
+    dice = Dice(sides)
+    # Perform any asynchronous initialization tasks using await
+    dice.value = await asyncio.sleep(
+        1, random.randint(1, sides)
+    )  # Simulate rolling the dice
+    return dice
+
+
+# To create an instance of the class, use await with the coroutine function
+async def main():
+    dice = await roll_dice(6)
+    print(f"The dice rolled {dice.value}")
+
+
+asyncio.run(main())
+```
+
+### using __await__()
+
+- make the class itself awaitable
+
+```python
+# SlingAcademy.com
+# This code uses Python 3.11.4
+
+import asyncio
+
+
+class AsyncClass:
+    # The constructor of the class
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    # Use the __await__ method to make the class awaitable
+    def __await__(self):
+        # Call ls the constructor and returns the instance
+        return self.create().__await__()
+
+    # A method that creates an instance of the class asynchronously
+    async def create(self):
+        # Perform some asynchronous initialization tasks
+        await asyncio.sleep(1)
+        print(
+            f"Creating an instance of {self.__class__.__name__} with name {self.name} and age {self.age}"
+        )
+        # Perform some other asynchronous initialization tasks
+        await asyncio.sleep(2)
+        # Return the instance
+        return self
+
+
+async def main():
+    # Create an instance of AsyncClass with "await"
+    alice = await AsyncClass("Mr. Wolf", 99)
+    # Print the instance attributes
+    print(f"name: {alice.name}, age: {alice.age}")
+
+
+# Run the main function
+asyncio.run(main())
+```
+```output
+Creating an instance of AsyncClass with name Mr. Wolf and age 99
+name: Mr. Wolf, age: 99
+```
+
 
 ## producer-consumer
 
@@ -490,4 +666,34 @@ def job_completed_callback_handler(job_id: str, callback_message: dict) -> None:
 if __name__ == '__main__':
     seed(0)  # just to get repeatability in various sleeps we use to simulate long-running processes
     main(str(uuid4()))
+```
+
+## overriding TaskGroup for results
+
+```python
+class GatheringTaskGroup(asyncio.TaskGroup):
+    def __init__(self):
+        super().__init__()
+        self.__tasks = []
+
+    def create_task(self, coro, *, name=None, context=None):
+        task = super().create_task(coro, name=name, context=context)
+        self.__tasks.append(task)
+        return task
+
+    def results(self):
+        return [task.result() for task in self.__tasks]
+
+
+async def foo(): return 1
+async def bar(): return 2
+
+
+async with GatheringTaskGroup() as tg:
+    task1 = tg.create_task(foo())
+    task2 = tg.create_task(bar())
+
+
+print(tg.results())
+[1, 2]
 ```

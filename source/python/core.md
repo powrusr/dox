@@ -42,6 +42,25 @@ nums = list(accumulate(range(8)))
 """[0,  1,   3,   6,  10,   15,   21, 28]"""
 ```
 
+### cycle
+
+The cycle() function creates an infinite iterator that loops over an input sequence indefinitely. In data science, this can be useful for tasks that require periodic or cyclical patterns
+
+```python
+from itertools import cycle, islice
+
+# Create a cycle of days of the week
+days_of_week = cycle(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
+
+# Simulated temperature data for 7 days
+temperatures = [23, 25, 22, 21, 20, 19, 24]
+
+# Pair each temperature with a day of the week for the next two weeks
+next_two_weeks_temp = list(zip(islice(days_of_week, 14), temperatures * 2))
+
+print(next_two_weeks_temp)
+```
+
 ### count
 
 ```python
@@ -54,6 +73,24 @@ for i in count(3): # counts up starting from 3
 
 """ 3  4  5  6  7  8  9  10  11 """
 ```
+```python
+from itertools import count
+
+# Start counting from 1
+counter = count(start=1)
+
+# Simulated data points for weight measurements
+weight_data = [70, 71, 69, 68, 70]
+
+# Create a dictionary with indexes for each weight
+indexed_data = {}
+for index, weight in zip(counter, weight_data):
+    indexed_data[index] = weight
+
+print(indexed_data)
+{1: 70, 2: 71, 3: 69, 4:68, 5:70}
+```
+
 
 ### islice
 
@@ -352,6 +389,68 @@ def batched(iterable, n):
     while batch := tuple(islice(it, n)):
         yield batch
 ```
+
+### repeat
+
+- [docs repeat](https://docs.python.org/3/library/itertools.html#itertools.repeat)
+
+The primary purpose of itertools.repeat is to supply a stream of constant values to be used with map or zip:
+
+```python
+>>> list(map(pow, range(10), repeat(2)))     # list of squares
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+```
+The secondary purpose is that it gives a very fast way to loop a fixed number of times like this:
+
+```python
+for _ in itertools.repeat(None, 10000):
+    do_something()
+```
+This is faster than:
+```python
+for i in range(10000):
+    do_something().
+```
+
+itertools.repeat(object[, times]) Make an iterator that returns object over and over again. Runs indefinitely unless the times argument is specified
+
+An example of `foo * 5` looks superficially similar to `itertools.repeat(foo, 5)`, but it is actually quite different.
+
+If you write `foo * 100000`, the interpreter must create 100,000 copies of foo before it can give you an answer. It is thus a very expensive and memory-unfriendly operation.
+
+But if you write `itertools.repeat(foo, 100000)`, the interpreter can return an iterator that serves the same function, and doesn't need to compute a result until you need it -- say, by using it in a function that wants to know each result in the sequence.
+
+That's the major advantage of iterators: they can defer the computation of a part (or all) of a list until you really need the answer.
+```
+```python
+from itertools import repeat
+
+fruits = ['apples', 'oranges', 'bananas']
+
+# Initialize inventory to zero for each fruit type.
+inventory = dict( zip(fruits, repeat(0)) )
+# {'apples': 0, 'oranges': 0, 'bananas': 0}
+# To do this without repeat, you'd have to involve len(fruits)
+
+```
+```python
+from itertools import chain,repeat,cycle
+
+fruits = ['apples', 'oranges', 'bananas', 'pineapples','grapes',"berries"]
+
+inventory = list(zip(fruits, chain(repeat(10,2),cycle(range(1,3)))))
+
+icecream.ic(inventory)
+"""
+ic| inventory: [('apples', 10),
+                ('oranges', 10),
+                ('bananas', 1),
+                ('pineapples', 2),
+                ('grapes', 1),
+                ('berries', 2)]
+"""
+```
+
 
 ## collections
 

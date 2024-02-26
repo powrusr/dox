@@ -857,6 +857,30 @@ except ValidationError as exc:
 
 
 ```
+### TypeAdapter
+
+```python
+from pydantic import TypeAdapter, BaseModel
+from typing import Any
+
+class CaseInsensitiveAdapter(TypeAdapter[Any]):
+    def validate_python(self, value: Any) -> Any:
+        def __lower__(value: Any) -> Any:
+            if isinstance(value, dict):
+                return {k.lower(): __lower__(v) for k, v in value.items()}
+            return value
+
+        value = __lower__(value)
+        return super().validate_python(value)
+
+class MyClass(BaseModel):
+    my_property: str
+
+adapter = CaseInsensitiveAdapter(MyClass)
+my_obj = adapter.validate_python({"MY_PROPERTY": "hello"})
+print(my_obj)
+```
+
 
 ## deserialize
 
@@ -1462,4 +1486,111 @@ pandas example
 def some_function(params: pd.DataFrame, var_name: str) -> dict:
     # do something
     return my_dict
+```
+
+## real world example
+
+```python
+import ctypes
+from pprint import pprint
+from pydantic import BaseModel, Field, ConfigDict, ValidationError
+from enum import Enum, auto, Flag, StrEnum, verify, UNIQUE, CONTINUOUS
+from typing import Optional
+from typing_extensions import Annotated
+
+# https://docs.python.org/3/library/enum.html#enum.Flag
+# https://docs.python.org/3/howto/enum.html#enum-cookbook
+# https://typing.readthedocs.io/en/latest/spec/typeddict.html
+# https://docs.pydantic.dev/2.0/migration/#required-optional-and-nullable-fields
+
+
+@verify(UNIQUE)
+class VoteValue(Enum):
+    """Vote value for a proposal"""
+    VALUE_UNSPECIFIED = auto()  # Default value, always invalid
+    VALUE_NO = auto()  # A vote against the proposal
+    VALUE_YES = auto()  # A vote in favour of the proposal
+
+
+@verify(UNIQUE)
+class ProposalState(StrEnum):
+    """Proposal states"""
+    STATE_UNSPECIFIED = auto()  # Default value, always invalid
+    STATE_FAILED = auto()  # Proposal enactment has failed - even though proposal has passed, its execution could not be performed
+    STATE_OPEN = auto()  # Proposal is open for voting
+    STATE_PASSED = auto()  # Proposal has gained enough support to be executed
+    STATE_REJECTED = auto()  # Proposal wasn't accepted (proposal terms failed validation due to wrong configuration or failing to meet network requirements)
+    STATE_DECLINED = auto()  # Proposal didn't get enough votes (either failing to gain required participation or majority level)
+    STATE_ENACTED = auto()  # Proposal enacted
+    STATE_WAITING_FOR_NODE_VOTE = auto()  # Waiting for node validation of the proposal
+
+@verify(UNIQUE)
+class ProposalType(StrEnum):
+    """Proposal types"""
+    TYPE_UNSPECIFIED = auto()  # Default value, always invalid
+    TYPE_ALL = auto()  # List all proposals
+    TYPE_NEW_MARKET = auto()  # List new market proposals
+    TYPE_UPDATE_MARKET = auto()  # List update market proposals
+    TYPE_NETWORK_PARAMETERS = auto()  # List change network parameter proposals
+    TYPE_NEW_ASSET = auto()  # New asset proposals
+    TYPE_NEW_FREE_FORM = auto()  # for creating n ew free form proposal
+    TYPE_UPDATE_ASSET = auto()  # Update asset proposals
+    TYPE_NEW_SPOT_MARKET = auto()  # New spot market proposals
+    TYPE_UPDATE_SPOT_MARKET = auto()  # Update existing spot market
+    TYPE_NEW_TRANSFER = auto()  # New transfer proposal
+    TYPE_CANCEL_TRANSFER = auto()  # Cancel transfer
+    TYPE_UPDATE_MARKET_STATE = auto()  # Update market state
+    TYPE_UPDATE_REFERRAL_PROGRAM = auto()  # Update referral program
+    TYPE_UPDATE_VOLUME_DISCOUNT_PROGRAM = auto()  # Update volume discount program
+
+class Pagination(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
+    first: Optional[ctypes.c_int32] = None  # Number of records to be returned that sort greater than row identified by cursor supplied in 'after'
+    after: Optional[str] = None  # If paging forwards, the cursor string for the last row of the previous page
+    last: Optional[ctypes.c_int32] = None  # Number of records to be returned that sort less than row identified by cursor supplied in 'before'
+    before: Optional[str] = None  # If paging forwards, the cursor string for the first row of the previous page
+    newestFirst: bool = True  # Whether to order the results with the newest records first
+
+
+# PartyId = Annotated[str, StringConstraints(min_length=64, max_length=64)]
+# PartyId = Annotated[str, Field(pattern=r'[a-fA-F0-9]{64}']
+# PartyId = Annotated[str, StringConstraints(pattern=r'[a-fA-F0-9]{64}']
+# PartyId = Annotated[str, Field(min_length=64, max_length=64, pattern=r'[a-fA-F0-9]{64}', validate_default=True)]
+
+
+class QueryAllProposals(Pagination):  # list of proposals doesn't need pagination, just testing inheritance
+    """Query a list of all proposals"""
+    model_config = ConfigDict(validate_assignment=True)
+    proposalState: ProposalState = ProposalState.STATE_UNSPECIFIED
+    proposalType: ProposalType = ProposalType.TYPE_UNSPECIFIED
+    proposerPartyId: str = Field(pattern=r'[a-fA-F0-9]{64}', default=None)  # restrict proposal to those proposed by the given party ID
+    proposalReference: str = None  # Restrict proposals to those with the given reference
+
+if __name__ == '__main__':
+    print(ConditionOperator(3))
+    print(ConditionOperator.OPERATOR_EQUALS.value)
+    print(OrderTimeInForce.TIME_IN_FORCE_GFA)
+    print(OrderTimeInForce.TIME_IN_FORCE_GFA.value)
+    print(VoteValue.VALUE_NO.value)
+    params_allProposals = QueryAllProposals()
+    try:
+        params_allProposals.proposerPartyId = "000000000not00000640000in0000length0000000000000000000000"  # 57 chars
+    except ValidationError as e:
+        pprint(e.errors())
+    params_allProposals.proposerPartyId = "0000000000000000000000000000000000000000000000000000000000000000"  # 64 chars
+    pprint(params_allProposals, indent=2, width=120, compact=True)
+    """
+    ConditionOperator.OPERATOR_GREATER_THAN
+    2
+    time_in_force_gfa
+    time_in_force_gfa
+    2
+    [{'ctx': {'pattern': '[a-fA-F0-9]{64}'},
+      'input': '000000000not00000640000in0000length0000000000000000000000',
+      'loc': ('proposerPartyId',),
+      'msg': "String should match pattern '[a-fA-F0-9]{64}'",
+      'type': 'string_pattern_mismatch',
+      'url': 'https://errors.pydantic.dev/2.6/v/string_pattern_mismatch'}]
+    QueryAllProposals(proposalState=<ProposalState.STATE_UNSPECIFIED: 'state_unspecified'>, proposalType=<ProposalType.TYPE_UNSPECIFIED: 'type_unspecified'>, proposerPartyId='0000000000000000000000000000000000000000000000000000000000000000', proposalReference=None)
+    """
 ```

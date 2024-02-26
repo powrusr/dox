@@ -2541,6 +2541,17 @@ def by_factor(factor):
 9
 ```
 
+```python
+def cumulative_average():
+    data = []
+
+    def average(new_value):
+        data.append(new_value)
+        return sum(data) / len(data)
+
+    return average
+```
+
 ### invoke outside scope
 
 ```python

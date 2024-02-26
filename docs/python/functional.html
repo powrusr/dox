@@ -71,10 +71,12 @@
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -82,7 +84,7 @@
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -2811,6 +2813,16 @@ This can occur with any number of functions</p>
 <span class="go">9</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cumulative_average</span><span class="p">():</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">new_value</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">average</span>
+</pre></div>
+</div>
 <section id="invoke-outside-scope">
 <h3>invoke outside scope<a class="headerlink" href="#invoke-outside-scope" title="Link to this heading">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span> 
@@ -3962,10 +3974,12 @@ register another version for lists, assuming they contain tuples, to serialize t
 <li class="toctree-l2"><a class="reference internal" href="asyncio.html">asyncio</a></li>
 <li class="toctree-l2"><a class="reference internal" href="core.html">core</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataclass.html">dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclass.html#attrs">Attrs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="designpatterns.html">design patterns</a></li>
 <li class="toctree-l2"><a class="reference internal" href="file_ops.html">glob</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">functional programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fundamentals.html">fundamentals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pandas.html">pandas</a></li>
 <li class="toctree-l2"><a class="reference internal" href="performance.html">performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyenv.html">pyenv</a></li>
@@ -3973,7 +3987,7 @@ register another version for lists, assuming they contain tuples, to serialize t
 <li class="toctree-l2"><a class="reference internal" href="testing.html">pytest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html">typing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="typing.html#annotated-typing">annotated typing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="typing.html#pedantic">pedantic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="typing.html#pydantic">pydantic</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">code library</a></li>
 </ul>
 </li>
@@ -4167,7 +4181,7 @@ register another version for lists, assuming they contain tuples, to serialize t
 <br />
     <br />
 
-    Last updated on 2024-01-23.
+    Last updated on 2024-02-26.
     
     <br />
 

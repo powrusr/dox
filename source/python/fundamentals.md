@@ -1904,40 +1904,6 @@ class Circle:
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### inheritance
 
 ```python
@@ -2129,6 +2095,204 @@ def hit(noun):
         msg ="There is no {} here.".format(noun) 
     return msg
 ```
+
+### callable instances
+
+instead of a closure
+```python
+def cumulative_average():
+    data = []
+
+    def average(new_value):
+        data.append(new_value)
+        return sum(data) / len(data)
+
+    return average
+```
+you can make a class instance that is callable and **retains state**
+
+```python
+class CumulativeAverager:
+    def __init__(self):
+        self.data = []
+
+    def __call__(self, new_value):
+        self.data.append(new_value)
+        return sum(self.data) / len(self.data)
+```
+```python
+>>> from cumulative_average import CumulativeAverager
+
+>>> stream_average = CumulativeAverager()
+>>> stream_average(12)
+12.0
+>>> stream_average(13)
+12.5
+>>> stream_average(11)
+12.0
+>>> stream_average(10)
+11.5
+>>> stream_average.data
+[12, 13, 11, 10]
+```
+
+```python
+# logger.py
+
+class Logger:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def __call__(self, message):
+        with open(self.filename, mode="a", encoding="utf-8") as log_file:
+            log_file.write(message + "\n")
+```
+#### class based decorators
+
+```python
+# timing.py
+
+import time
+
+class ExecutionTimer:
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        start = time.perf_counter()
+        result = self.func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"{self.func.__name__}() took {(end - start) * 1000:.4f} ms")
+        return result
+```
+```python
+>>> from timing import ExecutionTimer
+
+>>> @ExecutionTimer
+... def square_numbers(numbers):
+...     return [number ** 2 for number in numbers]
+...
+
+>>> square_numbers(list(range(100)))
+square_numbers() took 0.0069 ms
+[
+    0,
+    1,
+    4,
+    9,
+    16,
+    25,
+    ...
+]
+```
+say that you want to add a repetitions argument to your decorator.
+This argument will allow you to run the input function several times and compute the average execution time
+
+```python
+# timing.py
+
+import time
+
+class ExecutionTimer:
+    def __init__(self, repetitions=1):
+        self.repetitions = repetitions
+
+    def __call__(self, func):
+        def timer(*args, **kwargs):
+            result = None
+            total_time = 0
+            print(f"Running {func.__name__}() {self.repetitions} times")
+            for _ in range(self.repetitions):
+                start = time.perf_counter()
+                result = func(*args, **kwargs)
+                end = time.perf_counter()
+                total_time += end - start
+            average_time = total_time / self.repetitions
+            print(
+                f"{func.__name__}() takes "
+                f"{average_time * 1000:.4f} ms on average"
+            )
+            return result
+
+        return timer
+```
+The class initializer takes repetitions an argument that you need to provide as part of the decorator call
+
+```python
+>>> from timing import ExecutionTimer
+
+>>> @ExecutionTimer(repetitions=100)
+... def square_numbers(numbers):
+...     return [number ** 2 for number in numbers]
+...
+
+>>> square_numbers(list(range(100)))
+Running square_numbers() 100 times
+square_numbers() takes 0.0073 ms on average
+[
+    0,
+    1,
+    4,
+    9,
+    16,
+    25,
+    ...
+]
+```
+#### strategy design pattern
+
+```python
+# serializing.py
+import json
+import yaml
+
+class JsonSerializer:
+    def __call__(self, data):
+        return json.dumps(data, indent=4)
+
+class YamlSerializer:
+    def __call__(self, data):
+        return yaml.dump(data)
+
+class DataSerializer:
+    def __init__(self, serializing_strategy):
+        self.serializing_strategy = serializing_strategy
+
+    def serialize(self, data):
+        return self.serializing_strategy(data)
+```
+```python
+>>> from serializing import DataSerializer, JsonSerializer, YamlSerializer
+
+>>> data = {
+...     "name": "John Rambo",
+...     "age": 36,
+...     "city": "California",
+...     "job": "Python Developer",
+... }
+
+>>> serializer = DataSerializer(JsonSerializer())
+>>> print(f"JSON:\n{serializer.serialize(data)}")
+JSON:
+{
+    "name": "John Rambo",
+    "age": 36,
+    "city": "California",
+    "job": "Python Developer"
+}
+
+>>> # Switch strategy
+>>> serializer.serializing_strategy = YamlSerializer()
+>>> print(f"YAML:\n{serializer.serialize(data)}")
+YAML:
+age: 30
+city: California
+job: Python Developer
+name: John Rambo
+```
+
+
+
 
 ## files and resource management
 

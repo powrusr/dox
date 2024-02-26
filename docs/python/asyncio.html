@@ -95,6 +95,11 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">asyncio</a><ul>
+<li><a class="reference internal" href="#asyncio-vs-threading">asyncio vs threading</a><ul>
+<li><a class="reference internal" href="#id1">Asyncio</a></li>
+<li><a class="reference internal" href="#threading">Threading</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#terminology">terminology</a></li>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
@@ -106,6 +111,12 @@
 <li><a class="reference internal" href="#taskgroup-python-3-11">TaskGroup (Python 3.11+)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#class-with-async-constructor">class with async constructor</a><ul>
+<li><a class="reference internal" href="#using-factory-method">using factory method</a></li>
+<li><a class="reference internal" href="#using-coroutine-function">using coroutine function</a></li>
+<li><a class="reference internal" href="#using-await">using <strong>await</strong>()</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#producer-consumer">producer-consumer</a><ul>
 <li><a class="reference internal" href="#consumer-py">consumer.py</a></li>
 <li><a class="reference internal" href="#producer-py">producer.py</a></li>
@@ -114,6 +125,7 @@
 <li><a class="reference internal" href="#main-py">main.py</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#overriding-taskgroup-for-results">overriding TaskGroup for results</a></li>
 </ul>
 </li>
 </ul>
@@ -189,10 +201,46 @@
             
   <section id="asyncio">
 <h1>asyncio<a class="headerlink" href="#asyncio" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://realpython.com/async-io-python/">real python guide</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/asyncio.html">python.org docs</a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3.12/whatsnew/3.12.html#asyncio">new in 3.12</a></p></li>
+</ul>
+<section id="asyncio-vs-threading">
+<h2>asyncio vs threading<a class="headerlink" href="#asyncio-vs-threading" title="Link to this heading">¶</a></h2>
+<p>Summary of Differences
+It may help to summarize the differences between Asyncio and Threading.</p>
+<section id="id1">
+<h3>Asyncio<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Asynchronous programming</p></li>
+<li><p>Software coroutine-based concurrency</p></li>
+<li><p>Lightweight</p></li>
+<li><p>No GIL</p></li>
+<li><p>Many coroutines in one thread</p></li>
+<li><p>Non-blocking I/O with subprocesses and streams</p></li>
+<li><p>100,000+ tasks</p></li>
+</ol>
+</section>
+<section id="threading">
+<h3>Threading<a class="headerlink" href="#threading" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Procedural and Object-oriented programming.</p></li>
+<li><p>Native thread-based concurrency</p></li>
+<li><p>Medium weight, heavier than coroutines, lighter than processes.</p></li>
+<li><p>Limited by the GIL</p></li>
+<li><p>Many threads in one process</p></li>
+<li><p>Blocking I/O, generally</p></li>
+<li><p>100s to 1,000s tasks</p></li>
+</ol>
+</section>
+</section>
 <section id="terminology">
 <h2>terminology<a class="headerlink" href="#terminology" title="Link to this heading">¶</a></h2>
-<p>good explenataion on tasks: <a class="reference external" href="https://docs.python.org/3/library/asyncio-task.html">tasks docs</a></p>
+<p>Asynchronous IO, or asyncio, facilitates concurrent I/O operations without multi-threading or multi-processing. It shines in scenarios with high I/O wait times, such as network communication and data fetching</p>
 <ul class="simple">
+<li><p>don’t use when app is CPU-bound</p></li>
+<li><p>don’t use in scripts where most ops are blocking</p></li>
 <li><p>if you put async in front of def it becomes a <em>coroutine</em></p></li>
 <li><p>tasks iare used to <em>shedule</em> coroutines <strong>concurrently</strong>, you have to <em>await</em> a task to run it</p></li>
 <li><p>use `asyncio.gather(*list_of_tasks) to run all tasks</p></li>
@@ -212,6 +260,7 @@
 <ul class="simple">
 <li><p><strong>Task groups</strong> combine a task creation API with a convenient and reliable way to wait for all tasks in the group to finish<br />
 All tasks are awaited when the context manager exits</p></li>
+<li><p>use TaskGroup instead of gather</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># TaskGroup</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -414,6 +463,150 @@ All tasks are awaited when the context manager exits</p></li>
         <span class="n">task1</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">some_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
         <span class="n">task2</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">another_coro</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Both tasks have completed now.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="class-with-async-constructor">
+<h2>class with async constructor<a class="headerlink" href="#class-with-async-constructor" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>initialize attributes with result of an async operation, eg fetching data from api, file or db</p></li>
+<li><p>perform validation/computation on input of arguments requiring awaiting a coroutine</p></li>
+<li><p>register instance of class as an event listener or callback handler for an async event loop</p></li>
+</ul>
+<section id="using-factory-method">
+<h3>using factory method<a class="headerlink" href="#using-factory-method" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># SlingAcademy.com</span>
+<span class="c1"># This code uses Python 3.11.4</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="c1"># A class that represents a timer</span>
+<span class="k">class</span> <span class="nc">Timer</span><span class="p">:</span>
+    <span class="c1"># A simple constructor that takes the duration</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># A factory method that creates and initializes an instance asynchronously</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+        <span class="c1"># Create an instance using the constructor</span>
+        <span class="bp">self</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+        <span class="c1"># Simulate getting the current time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="p">)</span>  
+
+        <span class="c1"># Simulate waiting for the duration</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>  
+
+        <span class="c1"># Simulate getting the current time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_time</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">get_running_loop</span><span class="p">()</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="p">)</span>  
+        <span class="k">return</span> <span class="bp">self</span>
+
+
+<span class="c1"># To create an instance of the class, use await with the factory method</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">timer</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Timer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The timer ran for </span><span class="si">{</span><span class="n">timer</span><span class="o">.</span><span class="n">end_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">timer</span><span class="o">.</span><span class="n">start_time</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="using-coroutine-function">
+<h3>using coroutine function<a class="headerlink" href="#using-coroutine-function" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># SlingAcademy.com</span>
+<span class="c1"># This code uses Python 3.11.4</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="c1"># A class that represents a dice</span>
+<span class="k">class</span> <span class="nc">Dice</span><span class="p">:</span>
+    <span class="c1"># A simple constructor that takes the number of sides</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sides</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sides</span> <span class="o">=</span> <span class="n">sides</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="c1"># A coroutine function that creates and initializes an instance asynchronously</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">roll_dice</span><span class="p">(</span><span class="n">sides</span><span class="p">):</span>
+    <span class="c1"># Create an instance using the constructor</span>
+    <span class="n">dice</span> <span class="o">=</span> <span class="n">Dice</span><span class="p">(</span><span class="n">sides</span><span class="p">)</span>
+    <span class="c1"># Perform any asynchronous initialization tasks using await</span>
+    <span class="n">dice</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">sides</span><span class="p">)</span>
+    <span class="p">)</span>  <span class="c1"># Simulate rolling the dice</span>
+    <span class="k">return</span> <span class="n">dice</span>
+
+
+<span class="c1"># To create an instance of the class, use await with the coroutine function</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">dice</span> <span class="o">=</span> <span class="k">await</span> <span class="n">roll_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The dice rolled </span><span class="si">{</span><span class="n">dice</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="using-await">
+<h3>using <strong>await</strong>()<a class="headerlink" href="#using-await" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>make the class itself awaitable</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># SlingAcademy.com</span>
+<span class="c1"># This code uses Python 3.11.4</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+
+<span class="k">class</span> <span class="nc">AsyncClass</span><span class="p">:</span>
+    <span class="c1"># The constructor of the class</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="c1"># Use the __await__ method to make the class awaitable</span>
+    <span class="k">def</span> <span class="fm">__await__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Call ls the constructor and returns the instance</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span><span class="o">.</span><span class="fm">__await__</span><span class="p">()</span>
+
+    <span class="c1"># A method that creates an instance of the class asynchronously</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Perform some asynchronous initialization tasks</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Creating an instance of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> with name </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> and age </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># Perform some other asynchronous initialization tasks</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># Return the instance</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Create an instance of AsyncClass with &quot;await&quot;</span>
+    <span class="n">alice</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AsyncClass</span><span class="p">(</span><span class="s2">&quot;Mr. Wolf&quot;</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+    <span class="c1"># Print the instance attributes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;name: </span><span class="si">{</span><span class="n">alice</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, age: </span><span class="si">{</span><span class="n">alice</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># Run the main function</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-output notranslate"><div class="highlight"><pre><span></span><span class="go">Creating an instance of AsyncClass with name Mr. Wolf and age 99</span>
+<span class="go">name: Mr. Wolf, age: 99</span>
 </pre></div>
 </div>
 </section>
@@ -685,6 +878,36 @@ All tasks are awaited when the context manager exits</p></li>
 </div>
 </section>
 </section>
+<section id="overriding-taskgroup-for-results">
+<h2>overriding TaskGroup for results<a class="headerlink" href="#overriding-taskgroup-for-results" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GatheringTaskGroup</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">create_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coro</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">coro</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">task</span>
+
+    <span class="k">def</span> <span class="nf">results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">task</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span><span class="p">]</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">foo</span><span class="p">():</span> <span class="k">return</span> <span class="mi">1</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">bar</span><span class="p">():</span> <span class="k">return</span> <span class="mi">2</span>
+
+
+<span class="k">async</span> <span class="k">with</span> <span class="n">GatheringTaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>
+    <span class="n">task1</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">foo</span><span class="p">())</span>
+    <span class="n">task2</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">bar</span><span class="p">())</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tg</span><span class="o">.</span><span class="n">results</span><span class="p">())</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -729,6 +952,11 @@ All tasks are awaited when the context manager exits</p></li>
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">asyncio</a><ul>
+<li><a class="reference internal" href="#asyncio-vs-threading">asyncio vs threading</a><ul>
+<li><a class="reference internal" href="#id1">Asyncio</a></li>
+<li><a class="reference internal" href="#threading">Threading</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#terminology">terminology</a></li>
 <li><a class="reference internal" href="#async-but-not-concurrent">async but not concurrent</a></li>
 <li><a class="reference internal" href="#async-concurrent">async &amp; concurrent</a></li>
@@ -740,6 +968,12 @@ All tasks are awaited when the context manager exits</p></li>
 <li><a class="reference internal" href="#taskgroup-python-3-11">TaskGroup (Python 3.11+)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#class-with-async-constructor">class with async constructor</a><ul>
+<li><a class="reference internal" href="#using-factory-method">using factory method</a></li>
+<li><a class="reference internal" href="#using-coroutine-function">using coroutine function</a></li>
+<li><a class="reference internal" href="#using-await">using <strong>await</strong>()</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#producer-consumer">producer-consumer</a><ul>
 <li><a class="reference internal" href="#consumer-py">consumer.py</a></li>
 <li><a class="reference internal" href="#producer-py">producer.py</a></li>
@@ -748,6 +982,7 @@ All tasks are awaited when the context manager exits</p></li>
 <li><a class="reference internal" href="#main-py">main.py</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#overriding-taskgroup-for-results">overriding TaskGroup for results</a></li>
 </ul>
 </li>
 </ul>
@@ -830,7 +1065,7 @@ All tasks are awaited when the context manager exits</p></li>
 <br />
     <br />
 
-    Last updated on 2024-02-16.
+    Last updated on 2024-02-26.
     
     <br />
 
