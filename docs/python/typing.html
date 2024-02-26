@@ -1870,20 +1870,20 @@ There are a few other errors you can raise that will result in a ValidationError
         <span class="n">pprint</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">())</span>
     <span class="n">params_allProposals</span><span class="o">.</span><span class="n">proposerPartyId</span> <span class="o">=</span> <span class="s2">&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;</span>  <span class="c1"># 64 chars</span>
     <span class="n">pprint</span><span class="p">(</span><span class="n">params_allProposals</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    ConditionOperator.OPERATOR_GREATER_THAN</span>
-<span class="sd">    2</span>
-<span class="sd">    time_in_force_gfa</span>
-<span class="sd">    time_in_force_gfa</span>
-<span class="sd">    2</span>
-<span class="sd">    [{&#39;ctx&#39;: {&#39;pattern&#39;: &#39;[a-fA-F0-9]{64}&#39;},</span>
-<span class="sd">      &#39;input&#39;: &#39;000000000not00000640000in0000length0000000000000000000000&#39;,</span>
-<span class="sd">      &#39;loc&#39;: (&#39;proposerPartyId&#39;,),</span>
-<span class="sd">      &#39;msg&#39;: &quot;String should match pattern &#39;[a-fA-F0-9]{64}&#39;&quot;,</span>
-<span class="sd">      &#39;type&#39;: &#39;string_pattern_mismatch&#39;,</span>
-<span class="sd">      &#39;url&#39;: &#39;https://errors.pydantic.dev/2.6/v/string_pattern_mismatch&#39;}]</span>
-<span class="sd">    QueryAllProposals(proposalState=&lt;ProposalState.STATE_UNSPECIFIED: &#39;state_unspecified&#39;&gt;, proposalType=&lt;ProposalType.TYPE_UNSPECIFIED: &#39;type_unspecified&#39;&gt;, proposerPartyId=&#39;0000000000000000000000000000000000000000000000000000000000000000&#39;, proposalReference=None)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">    ConditionOperator.OPERATOR_GREATER_THAN</span>
+<span class="go">    2</span>
+<span class="go">    time_in_force_gfa</span>
+<span class="go">    time_in_force_gfa</span>
+<span class="go">    2</span>
+<span class="go">    [{&#39;ctx&#39;: {&#39;pattern&#39;: &#39;[a-fA-F0-9]{64}&#39;},</span>
+<span class="go">      &#39;input&#39;: &#39;000000000not00000640000in0000length0000000000000000000000&#39;,</span>
+<span class="go">      &#39;loc&#39;: (&#39;proposerPartyId&#39;,),</span>
+<span class="go">      &#39;msg&#39;: &quot;String should match pattern &#39;[a-fA-F0-9]{64}&#39;&quot;,</span>
+<span class="go">      &#39;type&#39;: &#39;string_pattern_mismatch&#39;,</span>
+<span class="go">      &#39;url&#39;: &#39;https://errors.pydantic.dev/2.6/v/string_pattern_mismatch&#39;}]</span>
+<span class="go">    QueryAllProposals(proposalState=&lt;ProposalState.STATE_UNSPECIFIED: &#39;state_unspecified&#39;&gt;, proposalType=&lt;ProposalType.TYPE_UNSPECIFIED: &#39;type_unspecified&#39;&gt;, proposerPartyId=&#39;0000000000000000000000000000000000000000000000000000000000000000&#39;, proposalReference=None)</span>
 </pre></div>
 </div>
 </section>

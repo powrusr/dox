@@ -48,6 +48,145 @@ setup(
 )
 
 ```
+## f-strings
+
+examples from https://realpython.com/python-f-strings/
+
+```python
+>>> balance = 5425.9292
+
+>>> f"Balance: ${balance:.2f}"
+'Balance: $5425.93'
+
+>>> heading = "Centered string"
+>>> f"{heading:=^30}"
+'=======Centered string========'
+```
+```python
+>>> integer = -1234567
+>>> f"Comma as thousand separators: {integer:,}"
+'Comma as thousand separators: -1,234,567'
+
+>>> sep = "_"
+>>> f"User's thousand separators: {integer:{sep}}"
+'User's thousand separators: -1_234_567'
+
+>>> floating_point = 1234567.9876
+>>> f"Comma as thousand separators and two decimals: {floating_point:,.2f}"
+'Comma as thousand separators and two decimals: 1,234,567.99'
+
+>>> date = (9, 6, 2023)
+>>> f"Date: {date[0]:02}-{date[1]:02}-{date[2]}"
+'Date: 09-06-2023'
+
+>>> from datetime import datetime
+>>> date = datetime(2023, 9, 26)
+>>> f"Date: {date:%m/%d/%Y}"
+'Date: 09/26/2023'
+```
+### __str__ and __repr__
+
+```python
+# person.py
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"I'm {self.name}, and I'm {self.age} years old."
+
+    def __repr__(self):
+        return f"{type(self).__name__}(name='{self.name}', age={self.age})"
+```
+```python
+>>> from person import Person
+
+>>> jane = Person("Jane Doe", 25)
+
+>>> f"{jane!s}"
+"I'm Jane Doe, and I'm 25 years old."
+
+>>> f"{jane!r}"
+"Person(name='Jane Doe', age=25)"
+```
+### self documenting with =
+
+```python
+>>> print(f"{variable=}")
+variable='Some mysterious value'
+
+>>> print(f"{variable= }")
+variable= 'Some mysterious value'
+
+>>> print(f"{variable =}")
+variable ='Some mysterious value'
+```
+
+
+### improved features in 3.12
+
+#### reuse quotes
+
+```python
+>>> employee = {
+...     "name": "John Doe",
+...     "age": 35,
+...     "job": "Python Developer",
+... }
+
+>>> f"Employee: {employee["name"]}"
+'Employee: John Doe'
+```
+
+#### backslashed allowed
+
+```python
+>>> words = ["Hello", "World!", "I", "am", "a", "Pythonista!"]
+
+>>> f"{'\n'.join(words)}"
+'Hello\nWorld!\nI\nam\na\nPythonista!'
+
+>>> print(f"{'\n'.join(words)}")
+Hello
+World!
+I
+am
+a
+Pythonista!
+```
+#### comments accepted
+
+```python
+>>> employee = {
+...     "name": "John Doe",
+...     "age": 35,
+...     "job": "Python Developer",
+... }
+
+>>> f"""Storing employee's data: {
+...     employee['name'].upper()  # Always uppercase name before storing
+... }"""
+"Storing employee's data: JOHN DOE"
+```
+
+#### f-string nesting
+
+```python
+>>> f"{
+...     f"{
+...         f"{
+...             f"{
+...                 f"{
+...                     f"Deeply nested f-string!"
+...                 }"
+...             }"
+...         }"
+...     }"
+... }"
+'Deeply nested f-string!'
+```
 
 ## enums
 

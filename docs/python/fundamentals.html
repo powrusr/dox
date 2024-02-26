@@ -100,6 +100,18 @@
 <li><a class="reference internal" href="#setup-py">setup.py</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#f-strings">f-strings</a><ul>
+<li><a class="reference internal" href="#str-and-repr"><strong>str</strong> and <strong>repr</strong></a></li>
+<li><a class="reference internal" href="#self-documenting-with">self documenting with =</a></li>
+<li><a class="reference internal" href="#improved-features-in-3-12">improved features in 3.12</a><ul>
+<li><a class="reference internal" href="#reuse-quotes">reuse quotes</a></li>
+<li><a class="reference internal" href="#backslashed-allowed">backslashed allowed</a></li>
+<li><a class="reference internal" href="#comments-accepted">comments accepted</a></li>
+<li><a class="reference internal" href="#f-string-nesting">f-string nesting</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#enums">enums</a></li>
 <li><a class="reference internal" href="#ternary-operator">Ternary operator</a></li>
 <li><a class="reference internal" href="#more-on-else">more on else</a></li>
@@ -329,6 +341,148 @@
 
 </pre></div>
 </div>
+</section>
+</section>
+<section id="f-strings">
+<h2>f-strings<a class="headerlink" href="#f-strings" title="Link to this heading">¶</a></h2>
+<p>examples from https://realpython.com/python-f-strings/</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">balance</span> <span class="o">=</span> <span class="mf">5425.9292</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Balance: $</span><span class="si">{</span><span class="n">balance</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Balance: $5425.93&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">heading</span> <span class="o">=</span> <span class="s2">&quot;Centered string&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">heading</span><span class="si">:</span><span class="s2">=^30</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;=======Centered string========&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1234567</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Comma as thousand separators: </span><span class="si">{</span><span class="n">integer</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Comma as thousand separators: -1,234,567&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;User&#39;s thousand separators: </span><span class="si">{</span><span class="n">integer</span><span class="si">:{</span><span class="n">sep</span><span class="si">}}</span><span class="s2">&quot;</span>
+<span class="go">&#39;User&#39;s thousand separators: -1_234_567&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">floating_point</span> <span class="o">=</span> <span class="mf">1234567.9876</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Comma as thousand separators and two decimals: </span><span class="si">{</span><span class="n">floating_point</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Comma as thousand separators and two decimals: 1,234,567.99&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">date</span> <span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2023</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">date</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">date</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">02</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">date</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Date: 09-06-2023&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Date: </span><span class="si">{</span><span class="n">date</span><span class="si">:</span><span class="s2">%m/%d/%Y</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Date: 09/26/2023&#39;</span>
+</pre></div>
+</div>
+<section id="str-and-repr">
+<h3><strong>str</strong> and <strong>repr</strong><a class="headerlink" href="#str-and-repr" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># person.py</span>
+
+<span class="k">class</span> <span class="nc">Person</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">age</span> <span class="o">=</span> <span class="n">age</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;I&#39;m </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, and I&#39;m </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2"> years old.&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;, age=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">age</span><span class="si">}</span><span class="s2">)&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">person</span> <span class="kn">import</span> <span class="n">Person</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jane</span> <span class="o">=</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;Jane Doe&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">jane</span><span class="si">!s}</span><span class="s2">&quot;</span>
+<span class="go">&quot;I&#39;m Jane Doe, and I&#39;m 25 years old.&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">jane</span><span class="si">!r}</span><span class="s2">&quot;</span>
+<span class="go">&quot;Person(name=&#39;Jane Doe&#39;, age=25)&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="self-documenting-with">
+<h3>self documenting with =<a class="headerlink" href="#self-documenting-with" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">variable</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">variable=&#39;Some mysterious value&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">variable</span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">variable= &#39;Some mysterious value&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">variable</span><span class="w"> </span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">variable =&#39;Some mysterious value&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="improved-features-in-3-12">
+<h3>improved features in 3.12<a class="headerlink" href="#improved-features-in-3-12" title="Link to this heading">¶</a></h3>
+<section id="reuse-quotes">
+<h4>reuse quotes<a class="headerlink" href="#reuse-quotes" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;job&quot;</span><span class="p">:</span> <span class="s2">&quot;Python Developer&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;Employee: </span><span class="si">{</span><span class="n">employee</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Employee: John Doe&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="backslashed-allowed">
+<h4>backslashed allowed<a class="headerlink" href="#backslashed-allowed" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;World!&quot;</span><span class="p">,</span> <span class="s2">&quot;I&quot;</span><span class="p">,</span> <span class="s2">&quot;am&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;Pythonista!&quot;</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Hello\nWorld!\nI\nam\na\nPythonista!&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">Hello</span>
+<span class="go">World!</span>
+<span class="go">I</span>
+<span class="go">am</span>
+<span class="go">a</span>
+<span class="go">Pythonista!</span>
+</pre></div>
+</div>
+</section>
+<section id="comments-accepted">
+<h4>comments accepted<a class="headerlink" href="#comments-accepted" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;job&quot;</span><span class="p">:</span> <span class="s2">&quot;Python Developer&quot;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;Storing employee&#39;s data: </span><span class="si">{</span>
+<span class="gp">... </span><span class="w">    </span><span class="n">employee</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Always</span><span class="w"> </span><span class="n">uppercase</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">storing</span>
+<span class="gp">... </span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="go">&quot;Storing employee&#39;s data: JOHN DOE&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="f-string-nesting">
+<h4>f-string nesting<a class="headerlink" href="#f-string-nesting" title="Link to this heading">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="gp">... </span><span class="w">    </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="gp">... </span><span class="w">        </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="gp">... </span><span class="w">            </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="gp">... </span><span class="w">                </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span>
+<span class="gp">... </span><span class="w">                    </span><span class="sa">f</span><span class="s2">&quot;Deeply nested f-string!&quot;</span>
+<span class="gp">... </span><span class="w">                </span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">... </span><span class="w">            </span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">... </span><span class="w">        </span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">... </span><span class="w">    </span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="gp">... </span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="go">&#39;Deeply nested f-string!&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="enums">
@@ -3039,6 +3193,18 @@ You can define your own dialect using register_dialect method</p>
 <li><a class="reference internal" href="#main"><code class="docutils literal notranslate"><span class="pre">__main__</span></code></a></li>
 <li><a class="reference internal" href="#packaging">packaging</a><ul>
 <li><a class="reference internal" href="#setup-py">setup.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#f-strings">f-strings</a><ul>
+<li><a class="reference internal" href="#str-and-repr"><strong>str</strong> and <strong>repr</strong></a></li>
+<li><a class="reference internal" href="#self-documenting-with">self documenting with =</a></li>
+<li><a class="reference internal" href="#improved-features-in-3-12">improved features in 3.12</a><ul>
+<li><a class="reference internal" href="#reuse-quotes">reuse quotes</a></li>
+<li><a class="reference internal" href="#backslashed-allowed">backslashed allowed</a></li>
+<li><a class="reference internal" href="#comments-accepted">comments accepted</a></li>
+<li><a class="reference internal" href="#f-string-nesting">f-string nesting</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#enums">enums</a></li>

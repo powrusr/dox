@@ -1579,7 +1579,8 @@ if __name__ == '__main__':
         pprint(e.errors())
     params_allProposals.proposerPartyId = "0000000000000000000000000000000000000000000000000000000000000000"  # 64 chars
     pprint(params_allProposals, indent=2, width=120, compact=True)
-    """
+```
+```console
     ConditionOperator.OPERATOR_GREATER_THAN
     2
     time_in_force_gfa
@@ -1592,5 +1593,4 @@ if __name__ == '__main__':
       'type': 'string_pattern_mismatch',
       'url': 'https://errors.pydantic.dev/2.6/v/string_pattern_mismatch'}]
     QueryAllProposals(proposalState=<ProposalState.STATE_UNSPECIFIED: 'state_unspecified'>, proposalType=<ProposalType.TYPE_UNSPECIFIED: 'type_unspecified'>, proposerPartyId='0000000000000000000000000000000000000000000000000000000000000000', proposalReference=None)
-    """
 ```
