@@ -417,3 +417,69 @@ session = CachedSession(
 )
 ```
 
+## profiling
+
+### built-in profile
+
+- [profile docs](https://docs.python.org/3/library/profile.html)
+
+module profilehooks provides a simple decorator for our functions
+
+```bash
+pip install profilehooks
+```
+```python
+from profilehooks import profile
+
+# stdout=False -> don't print anything in the terminal
+# filname -> path to the output file with profiling results
+@profile(stdout=False, filename='baseline.prof')
+def baseline():
+    ...
+```
+
+### profile visualizer
+
+#### snakeviz graphs
+
+```bash
+pip install snakeviz
+```
+
+#### gprof2dot flowchart
+
+- [gh](https://github.com/jrfonseca/gprof2dot)
+
+shows % of total execution time spent inside function
+
+```bash
+pip install gprof2dot
+python -m gprof2dot -f pstats <profiling-results-file> | dot -Tpng -o output.png
+```
+
+
+#### threading aware
+
+eg for non-Python libs like numpy, pytorch, scipy
+
+- [yappi](https://github.com/sumerc/yappi) Yet Another Python Profiler, but this time multithreading, asyncio and gevent aware
+- [viztracer](https://github.com/gaogaotiantian/viztracer) VizTracer is a low-overhead logging/debugging/profiling tool that can trace and visualize your python code execution
+The front-end UI is powered by Perfetto. Use "AWSD" to zoom/navigate
+
+#### gpu
+
+- [pytorch profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html)
+
+```python
+def compute_big_sum(tensor: torch.Tensor):
+    a = tensor.sum()
+    b = tensor.pow(2).sum()
+    c = tensor.sqrt().sum()
+    
+    sum_all = a + b + c
+    torch.cuda.synchronize()  # add this after all your GPU operations
+                              # to ensure correct time measurements
+    sum_all_cpu = sum_all.cpu()
+    
+    return sum_all_cpu
+```

@@ -112,6 +112,17 @@
 </li>
 <li><a class="reference internal" href="#cachetools">cachetools</a></li>
 <li><a class="reference internal" href="#requests-cache">requests-cache</a></li>
+<li><a class="reference internal" href="#profiling">profiling</a><ul>
+<li><a class="reference internal" href="#built-in-profile">built-in profile</a></li>
+<li><a class="reference internal" href="#profile-visualizer">profile visualizer</a><ul>
+<li><a class="reference internal" href="#snakeviz-graphs">snakeviz graphs</a></li>
+<li><a class="reference internal" href="#gprof2dot-flowchart">gprof2dot flowchart</a></li>
+<li><a class="reference internal" href="#threading-aware">threading aware</a></li>
+<li><a class="reference internal" href="#gpu">gpu</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -595,6 +606,76 @@
 </pre></div>
 </div>
 </section>
+<section id="profiling">
+<h2>profiling<a class="headerlink" href="#profiling" title="Link to this heading">¶</a></h2>
+<section id="built-in-profile">
+<h3>built-in profile<a class="headerlink" href="#built-in-profile" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/profile.html">profile docs</a></p></li>
+</ul>
+<p>module profilehooks provides a simple decorator for our functions</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>profilehooks
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profilehooks</span> <span class="kn">import</span> <span class="n">profile</span>
+
+<span class="c1"># stdout=False -&gt; don&#39;t print anything in the terminal</span>
+<span class="c1"># filname -&gt; path to the output file with profiling results</span>
+<span class="nd">@profile</span><span class="p">(</span><span class="n">stdout</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;baseline.prof&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">baseline</span><span class="p">():</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</section>
+<section id="profile-visualizer">
+<h3>profile visualizer<a class="headerlink" href="#profile-visualizer" title="Link to this heading">¶</a></h3>
+<section id="snakeviz-graphs">
+<h4>snakeviz graphs<a class="headerlink" href="#snakeviz-graphs" title="Link to this heading">¶</a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>snakeviz
+</pre></div>
+</div>
+</section>
+<section id="gprof2dot-flowchart">
+<h4>gprof2dot flowchart<a class="headerlink" href="#gprof2dot-flowchart" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/jrfonseca/gprof2dot">gh</a></p></li>
+</ul>
+<p>shows % of total execution time spent inside function</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>gprof2dot
+python<span class="w"> </span>-m<span class="w"> </span>gprof2dot<span class="w"> </span>-f<span class="w"> </span>pstats<span class="w"> </span>&lt;profiling-results-file&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>dot<span class="w"> </span>-Tpng<span class="w"> </span>-o<span class="w"> </span>output.png
+</pre></div>
+</div>
+</section>
+<section id="threading-aware">
+<h4>threading aware<a class="headerlink" href="#threading-aware" title="Link to this heading">¶</a></h4>
+<p>eg for non-Python libs like numpy, pytorch, scipy</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/sumerc/yappi">yappi</a> Yet Another Python Profiler, but this time multithreading, asyncio and gevent aware</p></li>
+<li><p><a class="reference external" href="https://github.com/gaogaotiantian/viztracer">viztracer</a> VizTracer is a low-overhead logging/debugging/profiling tool that can trace and visualize your python code execution
+The front-end UI is powered by Perfetto. Use “AWSD” to zoom/navigate</p></li>
+</ul>
+</section>
+<section id="gpu">
+<h4>gpu<a class="headerlink" href="#gpu" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html">pytorch profiler</a></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_big_sum</span><span class="p">(</span><span class="n">tensor</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    
+    <span class="n">sum_all</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">synchronize</span><span class="p">()</span>  <span class="c1"># add this after all your GPU operations</span>
+                              <span class="c1"># to ensure correct time measurements</span>
+    <span class="n">sum_all_cpu</span> <span class="o">=</span> <span class="n">sum_all</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">sum_all_cpu</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
 </section>
 
 
@@ -656,6 +737,17 @@
 </li>
 <li><a class="reference internal" href="#cachetools">cachetools</a></li>
 <li><a class="reference internal" href="#requests-cache">requests-cache</a></li>
+<li><a class="reference internal" href="#profiling">profiling</a><ul>
+<li><a class="reference internal" href="#built-in-profile">built-in profile</a></li>
+<li><a class="reference internal" href="#profile-visualizer">profile visualizer</a><ul>
+<li><a class="reference internal" href="#snakeviz-graphs">snakeviz graphs</a></li>
+<li><a class="reference internal" href="#gprof2dot-flowchart">gprof2dot flowchart</a></li>
+<li><a class="reference internal" href="#threading-aware">threading aware</a></li>
+<li><a class="reference internal" href="#gpu">gpu</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -738,7 +830,7 @@
 <br />
     <br />
 
-    Last updated on 2024-02-26.
+    Last updated on 2024-03-03.
     
     <br />
 

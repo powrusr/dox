@@ -95,10 +95,10 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">code library</a><ul>
-<li><a class="reference internal" href="#card-game">card game</a></li>
-<li><a class="reference internal" href="#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
-<li><a class="reference internal" href="#logging">logging</a><ul>
-<li><a class="reference internal" href="#fn-logger">fn logger</a></li>
+<li><a class="reference internal" href="#parametrize">parametrize</a><ul>
+<li><a class="reference internal" href="#pydantic">pydantic</a></li>
+<li><a class="reference internal" href="#custom-parametrization">custom parametrization</a></li>
+<li><a class="reference internal" href="#main-test">main test</a></li>
 </ul>
 </li>
 </ul>
@@ -176,180 +176,401 @@
             
   <section id="code-library">
 <h1>code library<a class="headerlink" href="#code-library" title="Link to this heading">¶</a></h1>
-<section id="card-game">
-<h2>card game<a class="headerlink" href="#card-game" title="Link to this heading">¶</a></h2>
-<p>utils/card.py</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Card</span><span class="p">:</span>
+<section id="parametrize">
+<h2>parametrize<a class="headerlink" href="#parametrize" title="Link to this heading">¶</a></h2>
+<section id="pydantic">
+<h3>pydantic<a class="headerlink" href="#pydantic" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># rest.py</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span><span class="p">,</span> <span class="n">Flag</span><span class="p">,</span> <span class="n">StrEnum</span><span class="p">,</span> <span class="n">verify</span><span class="p">,</span> <span class="n">UNIQUE</span><span class="p">,</span> <span class="n">CONTINUOUS</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing_extensions</span> <span class="kn">import</span> <span class="n">Annotated</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">composition</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_color</span> <span class="o">=</span> <span class="n">color</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_composition</span> <span class="o">=</span> <span class="n">composition</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_points</span> <span class="o">=</span> <span class="n">points</span>
+<span class="n">Endpoint</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^\/api\/v2\/\w+\/\w+$&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="c1"># PartyId = Annotated[str, StringConstraints(min_length=64, max_length=64)]</span>
+<span class="n">PartyId</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;[a-fA-F0-9]</span><span class="si">{64}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+<span class="n">AssetId</span> <span class="o">=</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;[a-fA-F0-9]</span><span class="si">{64}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)]</span>
+<span class="c1"># PartyId = Annotated[str, StringConstraints(pattern=r&#39;[a-fA-F0-9]{64}&#39;]</span>
+<span class="c1"># PartyId = Annotated[str, Field(min_length=64, max_length=64, pattern=r&#39;[a-fA-F0-9]{64}&#39;, validate_default=True)]</span>
+<span class="n">BaseModel</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># from abc import ABC</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;new card: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_composition</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="si">}</span><span class="s2"> was created&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_composition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="si">}</span><span class="s1">]&#39;</span>
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AccountType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+    <span class="n">ACCOUNT_TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># default value</span>
+    <span class="n">ACCOUNT_TYPE_INSURANCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># contain insurance pool funds for a market</span>
+    <span class="n">ACCOUNT_TYPE_SETTLEMENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># exist only during settlement or mark-to-market</span>
+    <span class="n">ACCOUNT_TYPE_MARGIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># required initial margin is allocated to each market from user&#39;s general account. Collateral in the margin account can&#39;t be withdrawn or used as margin on another market until it is released back to the general account</span>
+    <span class="n">ACCOUNT_TYPE_GENERAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># contain the collateral for a party that is not otherwise allocated. A party will have multiple general accounts, one for each asset they want to trade with. General accounts are where funds are initially deposited or withdrawn from, it is also the account where funds are taken to fulfil fees and initial margin requirements</span>
+    <span class="n">ACCOUNT_TYPE_FEES_INFRASTRUCTURE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># contain fees earned by providing infrastructure on Vega</span>
+    <span class="n">ACCOUNT_TYPE_FEES_LIQUIDITY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># contain fees earned by providing liquidity on Vega markets</span>
+    <span class="n">ACCOUNT_TYPE_FEES_MAKER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># hold fees earned by placing orders that sit on the book and are then matched with an incoming order to create a trade - These fees reward parties who provide the best priced liquidity that actually allows trading to take place</span>
+    <span class="n">ACCOUNT_TYPE_BOND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># created to maintain liquidity providers funds commitments</span>
+    <span class="n">ACCOUNT_TYPE_EXTERNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># represents an external source (deposit/withdrawal)</span>
+    <span class="n">ACCOUNT_TYPE_GLOBAL_INSURANCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># global insurance account for the asset</span>
+    <span class="n">ACCOUNT_TYPE_GLOBAL_REWARD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># global reward account for the asset</span>
+    <span class="n">ACCOUNT_TYPE_PENDING_TRANSFERS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset account used to store pending transfers (if any)</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_MAKER_PAID_FEES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset reward account for fees paid to makers</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_MAKER_RECEIVED_FEES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset reward account for fees received by makers</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_LP_RECEIVED_FEES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset reward account for fees received by liquidity providers</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_MARKET_PROPOSERS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset reward account for market proposers when the market goes above some trading threshold</span>
+    <span class="n">ACCOUNT_TYPE_HOLDING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset account for holding in-flight unfilled orders&#39; funds</span>
+    <span class="n">ACCOUNT_TYPE_LP_LIQUIDITY_FEES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># network controlled liquidity provider&#39;s account, per market, to hold accrued liquidity fees</span>
+    <span class="n">ACCOUNT_TYPE_LIQUIDITY_FEES_BONUS_DISTRIBUTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># network controlled liquidity fees bonus distribution account, per market</span>
+    <span class="n">ACCOUNT_TYPE_NETWORK_TREASURY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># network controlled treasury</span>
+    <span class="n">ACCOUNT_TYPE_VESTING_REWARDS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># account holding user&#39;s rewards for the vesting period</span>
+    <span class="n">ACCOUNT_TYPE_VESTED_REWARDS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># account holding user&#39;s rewards after the vesting period</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_AVERAGE_POSITION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset market reward account given for average position</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_RELATIVE_RETURN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset market reward account given for relative return</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_RETURN_VOLATILITY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset market reward account given for return volatility</span>
+    <span class="n">ACCOUNT_TYPE_REWARD_VALIDATOR_RANKING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset market reward account given to validators by their ranking</span>
+    <span class="n">ACCOUNT_TYPE_PENDING_FEE_REFERRAL_REWARD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset account for pending fee referral reward payouts</span>
+    <span class="n">ACCOUNT_TYPE_ORDER_MARGIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># per asset market account for party in isolated margin mode</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_composition</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_points</span><span class="si">}</span><span class="s1">]&#39;</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">get_card_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_composition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_points</span>
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ProposalState</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Proposal states&quot;&quot;&quot;</span>
+    <span class="n">STATE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Default value, always invalid</span>
+    <span class="n">STATE_FAILED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal enactment has failed - even though proposal has passed, its execution could not be performed</span>
+    <span class="n">STATE_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal is open for voting</span>
+    <span class="n">STATE_PASSED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal has gained enough support to be executed</span>
+    <span class="n">STATE_REJECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal wasn&#39;t accepted (proposal terms failed validation due to wrong configuration or failing to meet network requirements)</span>
+    <span class="n">STATE_DECLINED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal didn&#39;t get enough votes (either failing to gain required participation or majority level)</span>
+    <span class="n">STATE_ENACTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Proposal enacted</span>
+    <span class="n">STATE_WAITING_FOR_NODE_VOTE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Waiting for node validation of the proposal</span>
+
+
+<span class="nd">@verify</span><span class="p">(</span><span class="n">UNIQUE</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ProposalType</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Proposal typings&quot;&quot;&quot;</span>
+    <span class="n">TYPE_UNSPECIFIED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Default value, always invalid</span>
+    <span class="n">TYPE_ALL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List all proposals</span>
+    <span class="n">TYPE_NEW_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List new market proposals</span>
+    <span class="n">TYPE_UPDATE_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List update market proposals</span>
+    <span class="n">TYPE_NETWORK_PARAMETERS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># List change network parameter proposals</span>
+    <span class="n">TYPE_NEW_ASSET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New asset proposals</span>
+    <span class="n">TYPE_NEW_FREE_FORM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># for creating n ew free form proposal</span>
+    <span class="n">TYPE_UPDATE_ASSET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update asset proposals</span>
+    <span class="n">TYPE_NEW_SPOT_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New spot market proposals</span>
+    <span class="n">TYPE_UPDATE_SPOT_MARKET</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update existing spot market</span>
+    <span class="n">TYPE_NEW_TRANSFER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># New transfer proposal</span>
+    <span class="n">TYPE_CANCEL_TRANSFER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Cancel transfer</span>
+    <span class="n">TYPE_UPDATE_MARKET_STATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update market state</span>
+    <span class="n">TYPE_UPDATE_REFERRAL_PROGRAM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update referral program</span>
+    <span class="n">TYPE_UPDATE_VOLUME_DISCOUNT_PROGRAM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>  <span class="c1"># Update volume discount program</span>
+
+
+<span class="k">class</span> <span class="nc">Pagination</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Number of records to be returned that sort greater than row identified by cursor supplied in &#39;after&#39;</span>
+    <span class="n">after</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># If paging forwards, the cursor string for the last row of the previous page</span>
+    <span class="n">last</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Number of records to be returned that sort less than row identified by cursor supplied in &#39;before&#39;</span>
+    <span class="n">before</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># If paging forwards, the cursor string for the first row of the previous page</span>
+    <span class="n">newestFirst</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Whether to order the results with the newest records first</span>
+
+
+<span class="k">class</span> <span class="nc">AccountFilter</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="c1"># pydantic makes a deepcopy of default value []</span>
+    <span class="n">assetId</span><span class="p">:</span> <span class="n">AssetId</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># Restrict accounts to those holding balances in this asset ID</span>
+    <span class="n">partyIds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">PartyId</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Restrict accounts to those with the given party IDs</span>
+    <span class="n">marketIds</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Restrict accounts to those connected to the markets in this list. Pass an empty list for no filter.</span>
+    <span class="n">accountTypes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AccountType</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Restrict accounts to those connected to any of the types in this list. Pass an empty list for no filter.</span>
+
+
+<span class="k">class</span> <span class="nc">ParamsAccountBalanceChanges</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">revalidate_instances</span><span class="o">=</span><span class="s1">&#39;never&#39;</span><span class="p">)</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">Endpoint</span> <span class="o">=</span> <span class="s2">&quot;/api/v2/balance/changes&quot;</span>
+    <span class="nb">filter</span><span class="p">:</span> <span class="n">AccountFilter</span> <span class="o">=</span> <span class="n">AccountFilter</span><span class="p">()</span>
+    <span class="n">pagination</span><span class="p">:</span> <span class="n">Pagination</span> <span class="o">=</span> <span class="n">Pagination</span><span class="p">()</span>  <span class="c1"># returns configurable pagination dict</span>
+
+
+<span class="k">class</span> <span class="nc">ParamsGovernanceAllProposals</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Query a list of all proposals&quot;&quot;&quot;</span>
+    <span class="n">proposalState</span><span class="p">:</span> <span class="n">ProposalState</span> <span class="o">=</span> <span class="n">ProposalState</span><span class="o">.</span><span class="n">STATE_UNSPECIFIED</span>
+    <span class="n">proposalType</span><span class="p">:</span> <span class="n">ProposalType</span> <span class="o">=</span> <span class="n">ProposalType</span><span class="o">.</span><span class="n">TYPE_UNSPECIFIED</span>
+    <span class="n">proposerPartyId</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;[a-fA-F0-9]</span><span class="si">{64}</span><span class="s1">&#39;</span><span class="p">,</span>
+                                 <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># restrict proposal to those proposed by the given party ID</span>
+    <span class="n">proposalReference</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Restrict proposals to those with the given reference</span>
+
+
+<span class="k">class</span> <span class="nc">RestCall</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">target</span><span class="p">:</span> <span class="n">Endpoint</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">dict</span><span class="p">]</span>  <span class="c1"># https://docs.python.org/3/library/typing.html#annotating-callables</span>
+    <span class="n">usePagination</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># use pagination in rest api</span>
+
 </pre></div>
 </div>
-<p>game.py</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pprint</span> <span class="k">as</span> <span class="nn">pp</span>
+</section>
+<section id="custom-parametrization">
+<h3>custom parametrization<a class="headerlink" href="#custom-parametrization" title="Link to this heading">¶</a></h3>
+<p>parametrization of dictionary values after doing <code class="docutils literal notranslate"><span class="pre">pydantic.dump_model</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">vegavote.typings.custom</span> <span class="kn">import</span> <span class="n">DictSimple</span><span class="p">,</span> <span class="n">DictSimpleList</span><span class="p">,</span> <span class="n">BasicTypes</span><span class="p">,</span> <span class="n">DictItems</span>
+
+
+<span class="k">def</span> <span class="nf">parametrize_basic</span><span class="p">(</span><span class="n">parent_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">DictSimple</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; {&#39;first&#39;: 5} converts to &#39;parent_key.first=5&amp;&#39; &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>  <span class="c1"># tuple comma is needed!</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parent_key</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">value</span><span class="si">}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">parametrize_list</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">vals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BasicTypes</span><span class="p">],</span> <span class="n">glue</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">glue</span><span class="p">:</span>  <span class="c1"># nums=1,2,3&amp;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">,&quot;</span> <span class="k">if</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">vals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># foreach n in list separate eg: nums=1&amp;nums=2&amp;nums=3&amp;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">parametrize_dict</span><span class="p">(</span><span class="n">parent_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">built_url</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># if value inside the dictionary is another mapping</span>
+    <span class="n">dict_inner_value</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># dict values obj is not subscriptable so conversion to tuple</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dict_inner_value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="c1"># eg: &quot;filter&quot;: {&#39;partyIds&#39;: [&#39;d30dd1cffe&#39;, &#39;5cb1faaac866&#39;]}</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">dict</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># splitting because parent_key needs to be added to both list elements, throw away last split</span>
+        <span class="n">parametrized_elements</span> <span class="o">=</span> <span class="n">parametrize_list</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">vals</span><span class="o">=</span><span class="n">dict_inner_value</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">built_url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">parent_key</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">x</span><span class="si">}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parametrized_elements</span><span class="p">))</span>
+        <span class="c1"># built_url.append(parametrize_dict_inner_list(parent_key, dictionary, sep=sep))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dict_inner_value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="c1"># add parent key with dot notation and recursively call this function</span>
+        <span class="p">(</span><span class="n">inner_key</span><span class="p">,</span> <span class="n">inner_value</span><span class="p">),</span> <span class="o">=</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="n">built_url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parametrize_dict</span><span class="p">(</span><span class="n">parent_key</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">inner_key</span><span class="p">,</span> <span class="n">inner_value</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dict_inner_value</span><span class="p">,</span> <span class="n">BasicTypes</span><span class="p">):</span>
+        <span class="n">built_url</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parametrize_basic</span><span class="p">(</span><span class="n">parent_key</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unhandled datastructure value inside dictionary: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">dict_inner_value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">built_url</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">parametrize_on_type</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">DictItems</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">d</span>  <span class="c1"># tuple comma is needed!</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># validate record is a dictionary</span>
+        <span class="k">return</span> <span class="n">parametrize_dict</span><span class="p">(</span><span class="n">parent_key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">dictionary</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">BasicTypes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">val</span><span class="si">}{</span><span class="n">sep</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">parametrize_list</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;investigate unsupported type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">build_params</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parametrize_on_type</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
+</pre></div>
+</div>
+<p>testing it</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>  <span class="c1"># https://docs.pytest.org/en/7.1.x/getting-started.html</span>
+<span class="kn">from</span> <span class="nn">vegavote.typings.custom</span> <span class="kn">import</span> <span class="n">DictSimple</span><span class="p">,</span> <span class="n">DictSimpleList</span>
+<span class="kn">from</span> <span class="nn">vegavote</span> <span class="kn">import</span> <span class="n">parametrize</span> <span class="k">as</span> <span class="n">par</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;parent_key, d, sep, expected&quot;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;first&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;filter.first=5&amp;&#39;</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_parametrize_basic</span><span class="p">(</span><span class="n">parent_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">DictSimple</span><span class="p">,</span> <span class="n">sep</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">parametrize_basic</span><span class="p">(</span><span class="n">parent_key</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+
+
+<span class="k">def</span> <span class="nf">test_parametrize_list</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">parametrize_list</span><span class="p">(</span><span class="s1">&#39;some_numbers&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">glue</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;some_numbers=1,2,3&amp;&#39;</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">parametrize_list</span><span class="p">(</span><span class="s1">&#39;nums&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">glue</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;nums=1&amp;nums=2&amp;nums=3&amp;&#39;</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;parent_key, d_row, sep, expected&quot;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;partyIds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;d30dd1cffe&#39;</span><span class="p">,</span> <span class="s1">&#39;5cb1faaac866&#39;</span><span class="p">]},</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;filter.partyIds=d30dd1cffe&amp;filter.partyIds=5cb1faaac866&amp;&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;recursive&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;partyIds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;lol&#39;</span><span class="p">,</span> <span class="s1">&#39;mao&#39;</span><span class="p">]}},</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;recursive.filter.partyIds=lol&amp;recursive.filter.partyIds=mao&amp;&#39;</span><span class="p">),</span>
+<span class="p">])</span>
+<span class="k">def</span> <span class="nf">test_parametrize_dict</span><span class="p">(</span><span class="n">parent_key</span><span class="p">,</span> <span class="n">d_row</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">parametrize_dict</span><span class="p">(</span><span class="n">parent_key</span><span class="p">,</span> <span class="n">d_row</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">data_sample_given</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[{</span><span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;partyIds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;d30dd1cffe&#39;</span><span class="p">,</span> <span class="s1">&#39;5cb1faaac866&#39;</span><span class="p">]},</span>
+             <span class="s1">&#39;pagination&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;first&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+             <span class="s2">&quot;lol&quot;</span><span class="p">:</span> <span class="s2">&quot;mao&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;nums&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+             <span class="s1">&#39;a_string&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;a_dictionary&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;lol&#39;</span><span class="p">:</span> <span class="s1">&#39;mao&#39;</span><span class="p">},</span>
+             <span class="s1">&#39;recursive&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;filter&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;partyIds&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;d40fe&#39;</span><span class="p">,</span> <span class="s1">&#39;lolmao&#39;</span><span class="p">]}}</span>
+             <span class="p">}]</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">data_sample_expected</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="s1">&#39;filter.partyIds=d30dd1cffe&amp;filter.partyIds=5cb1faaac866&amp;pagination.first=5&amp;lol=mao&amp;&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;nums=1&amp;nums=2&amp;nums=3&amp;a_string=hello&amp;a_dictionary.lol=mao&amp;recursive.filter.partyIds=d40fe&amp;recursive.filter.partyIds=lolmao&amp;&#39;</span>
+    <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">test_build_params</span><span class="p">(</span><span class="n">data_sample_given</span><span class="p">,</span> <span class="n">data_sample_expected</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">build_params</span><span class="p">(</span><span class="n">data_sample_given</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="n">data_sample_expected</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">par</span><span class="o">.</span><span class="n">build_params</span><span class="p">(</span><span class="n">data_sample_given</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">data_sample_expected</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+</pre></div>
+</div>
+</section>
+<section id="main-test">
+<h3>main test<a class="headerlink" href="#main-test" title="Link to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">aiohttp</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">typing</span>
-<span class="kn">from</span> <span class="nn">utils.card</span> <span class="kn">import</span> <span class="n">Card</span>
+<span class="kn">import</span> <span class="nn">pydantic</span>
+<span class="kn">import</span> <span class="nn">websockets</span> <span class="k">as</span> <span class="nn">ws</span>  <span class="c1"># websocket refers to another lib called websocket-client</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="c1"># import grpc</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">vegavote.exceptions</span> <span class="kn">import</span> <span class="n">RestAPIRequestError</span>
+<span class="kn">from</span> <span class="nn">vegavote.store</span> <span class="kn">import</span> <span class="n">vegastore</span> <span class="k">as</span> <span class="n">vs</span>
+<span class="kn">from</span> <span class="nn">vegavote.typings</span> <span class="kn">import</span> <span class="n">rest</span>  <span class="c1"># custom Vega typing</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">vegavote.parametrize</span> <span class="kn">import</span> <span class="n">build_params</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="c1"># async with asyncio.timeout(10):  # python ≥ 3.11</span>
+
+<span class="n">mainnet</span><span class="p">:</span> <span class="n">Final</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># False -&gt; use testnet</span>
 
 
-<span class="k">def</span> <span class="nf">shuffle_cards</span><span class="p">(</span><span class="n">deck_of_cards</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">deck_of_cards</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_headers</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span>
 
 
-<span class="k">def</span> <span class="nf">generate_card_instances</span><span class="p">():</span>
-    <span class="n">card_properties</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;club&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;diamond&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;heart&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
-                       <span class="s2">&quot;spade&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">}</span>
-    <span class="n">cards</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># how to initialize this as a list of Card without creating an instance?</span>
-    <span class="n">cards_in_game</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;ace&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;two&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;four&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-        <span class="s2">&quot;five&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;six&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;seven&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;eight&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-        <span class="s2">&quot;nine&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;ten&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;jack&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;queen&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="s2">&quot;king&quot;</span><span class="p">:</span> <span class="mi">10</span>
+<span class="c1"># Get governance data (proposals and votes) for all proposals</span>
+<span class="c1"># doing rest api first, switching to grpc afterwards</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">async def get_grpc_data():</span>
+<span class="sd">    #  GetProposals(GetProposalsRequest) returns (GetProposalsResponse);</span>
+<span class="sd">    async with grpc.aio.insecure_channel(&quot;localhost:50051&quot;) as channel:</span>
+<span class="sd">        stub = helloworld_pb2_grpc.GreeterStub(channel)</span>
+<span class="sd">        response = await stub.SayHello(helloworld_pb2.HelloRequest(name=&quot;you&quot;))</span>
+<span class="sd">    print(&quot;Greeter client received: &quot; + response.message)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">build_rest_url</span><span class="p">(</span><span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">vs</span><span class="o">.</span><span class="n">rest_node</span><span class="p">[</span><span class="n">network</span><span class="p">])</span> <span class="o">+</span> <span class="n">endpoint</span>
+    <span class="n">parametrized</span> <span class="o">=</span> <span class="n">build_params</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">parametrized</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">get_rest_data</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">HttpUrl</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="c1"># todo: check ratelimit headers</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="n">card_number</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">card_deck</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">card_number</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>          <span class="c1"># &quot;black&quot; &quot;spade&quot; &quot;jack&quot; 10</span>
-                      <span class="s2">&quot;composition&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                      <span class="s2">&quot;points&quot;</span><span class="p">:</span> <span class="mi">0</span>
-                      <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="n">card</span><span class="p">,</span> <span class="n">points</span> <span class="ow">in</span> <span class="n">cards_in_game</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>    <span class="c1"># for every card: &quot;ace&quot; with points: 1 you have ----</span>
-        <span class="k">for</span> <span class="n">composition</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">card_properties</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1"># ----&gt; 4 compositions of which 2 are black &amp; 2 are red</span>
-            <span class="n">card_deck</span><span class="p">[</span><span class="n">card_number</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">color</span><span class="p">,</span>
-                                      <span class="s2">&quot;composition&quot;</span><span class="p">:</span> <span class="n">composition</span><span class="p">,</span>  <span class="c1"># filling this card_deck list with dictionaries</span>
-                                      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">card</span><span class="p">,</span>
-                                      <span class="s2">&quot;points&quot;</span><span class="p">:</span> <span class="n">points</span><span class="p">}</span>
-            <span class="n">cards</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Card</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">composition</span><span class="p">,</span> <span class="n">card</span><span class="p">,</span> <span class="n">points</span><span class="p">))</span>
-            <span class="n">card_number</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">cards</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; rate limit parts returned in headers response</span>
+<span class="sd">    &quot;ratelimit-limit&quot;: &quot;1200&quot;,</span>
+<span class="sd">    &quot;ratelimit-remaining&quot;: &quot;3999&quot;,</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">api_used</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession</span><span class="p">(</span><span class="n">headers</span><span class="o">=</span><span class="n">header</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+        <span class="c1"># deal with eg 400 error</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># await asyncio.wait_for(session.get(base_url + endpoint), 10)</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>  <span class="c1"># might not work yet</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;X-Vega-Node-Id: &quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;X-Vega-Node-Id&quot;</span><span class="p">])</span>
+                <span class="k">return</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">RestAPIRequestError</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">api_used</span><span class="p">,</span> <span class="n">network</span><span class="o">=</span><span class="n">network</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ContentTypeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;using a Rest API </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2"> that is unable to return content </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># todo: store as feather, store to db</span>
+<span class="c1"># doing rest data first, then comes websockets</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">receive_from_websocket</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">responses_store</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">ws</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">websocket</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">websocket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">ws</span><span class="o">.</span><span class="n">ConnectionClosedOK</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="n">ws</span><span class="o">.</span><span class="n">ConnectionClosedError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;url is probably invalid: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">. Got error: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">responses_store</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">rest_api_calls</span><span class="p">(</span><span class="n">rest_calls</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">pydantic</span><span class="o">.</span><span class="n">HttpUrl</span><span class="p">]):</span>
+    <span class="n">endpoint_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;api/v2/(\w+)/(\w+)\?&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">tg</span><span class="p">:</span>  <span class="c1"># automatic cancellation and exception propagation</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">call</span> <span class="ow">in</span> <span class="n">rest_calls</span><span class="p">:</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">endpoint_pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">call</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">name_of_task</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no match for your regex on this url: &quot;</span><span class="p">,</span> <span class="n">call</span><span class="p">)</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                <span class="n">task</span> <span class="o">=</span> <span class="n">tg</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+                    <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span>
+                        <span class="n">get_rest_data</span><span class="p">(</span><span class="n">call</span><span class="p">),</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">task</span><span class="o">.</span><span class="n">add_done_callback</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name_of_task</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">t</span><span class="o">.</span><span class="n">result</span><span class="p">()}))</span>
+    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;timeout&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pprint</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span> <span class="n">compact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;time taken: &quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tasks finished&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RestQueryBuild</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">pagination</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pagination</span> <span class="o">=</span> <span class="n">pagination</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># await receive_from_websocket(url_vega_gov)</span>
+    <span class="c1"># running app for mainnet or testnet?</span>
+    <span class="c1"># todo: make function doing rest api calls with this task group</span>
+    <span class="n">accounts_to_check</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;d60d85b145967f53f5714184049a057759a73b0a5757015174a5a652f9715f55&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;5990f199811f234c99259b9c48b52a0bf9198107ab01364ff0c151329aaac899&quot;</span><span class="p">]</span>
+    <span class="n">balance_changes</span> <span class="o">=</span> <span class="n">rest</span><span class="o">.</span><span class="n">ParamsAccountBalanceChanges</span><span class="p">()</span>
+    <span class="n">balance_changes</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">partyIds</span> <span class="o">=</span> <span class="n">accounts_to_check</span>
+    <span class="n">balance_changes</span><span class="o">.</span><span class="n">pagination</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># retrieve first 5 results</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">balance_changes</span><span class="o">.</span><span class="n">model_dump</span><span class="p">(</span><span class="n">exclude_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">balance_changes_url</span> <span class="o">=</span> <span class="n">build_rest_url</span><span class="p">(</span><span class="n">endpoint</span><span class="o">=</span><span class="n">balance_changes</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">list_of_calls_to_make</span> <span class="o">=</span> <span class="p">[</span><span class="n">balance_changes_url</span><span class="p">]</span>  <span class="c1"># set url on model?</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    response headers: </span>
+<span class="sd">    &lt;CIMultiDictProxy(&#39;Alt-Svc&#39;: &#39;h3=&quot;:443&quot;; ma=2592000&#39;, &#39;Content-Encoding&#39;: &#39;gzip&#39;, &#39;Content-Length&#39;: &#39;119&#39;,</span>
+<span class="sd">    &#39;Content-Type&#39;: &#39;application/json&#39;, &#39;Date&#39;: &#39;Sat, 02 Mar 2024 17:43:20 GMT&#39;,</span>
+<span class="sd">    &#39;Ratelimit-Limit&#39;: &#39;1200&#39;,</span>
+<span class="sd">    &#39;Ratelimit-Remaining&#39;: &#39;3999&#39;,</span>
+<span class="sd">    &#39;Ratelimit-Request-Remote-Addr&#39;: &#39;127.0.0.1&#39;,</span>
+<span class="sd">    &#39;Ratelimit-Reset&#39;: &#39;1&#39;,</span>
+<span class="sd">    &#39;Server&#39;: &#39;Caddy&#39;, &#39;Vary&#39;: &#39;Origin&#39;, &#39;X-Block-Height&#39;: &#39;23919336&#39;, &#39;X-Block-Timestamp&#39;: &#39;1709401363657948000&#39;,</span>
+<span class="sd">    &#39;X-Vega-Node-Id&#39;: &#39;n06.test.vega.node&#39;)&gt;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rest_api_calls</span><span class="p">(</span><span class="n">list_of_calls_to_make</span><span class="p">))</span>
+
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">all_cards</span> <span class="o">=</span> <span class="n">generate_card_instances</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">all_cards</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; [[black club ace: 1], [red diamond ace: 1], [red heart ace: 1], [black spade ace: 1], ... &quot;&quot;&quot;</span>
-    <span class="n">shuffle_cards</span><span class="p">(</span><span class="n">all_cards</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">all_cards</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; [[red heart three: 3], [black club ten: 10], [black spade queen: 10], [red heart ten: 10], &quot;&quot;&quot;</span>
-    <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">([</span><span class="n">card</span><span class="o">.</span><span class="n">get_card_properties</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">all_cards</span><span class="p">])</span>
-</pre></div>
-</div>
-</section>
-<section id="adding-files-to-a-list-compression">
-<h2>adding files to a list &amp; compression<a class="headerlink" href="#adding-files-to-a-list-compression" title="Link to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">contextlib</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-
-<span class="k">def</span> <span class="nf">file_exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-
-
-<span class="k">def</span> <span class="nf">compress_to_bz2_file</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">compression_lvl</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">bz2</span>
-    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">compression_lvl</span> <span class="o">&lt;=</span> <span class="mi">9</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">tar_bz2_contents</span> <span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">compresslevel</span><span class="o">=</span><span class="n">compression_lvl</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;compression level has to be between 1 and 9&quot;</span><span class="p">)</span>
-
-
-<span class="c1"># concatenate_files_in_list(text_files_list, final_file, &#39;latin-1&#39;, True)</span>
-<span class="k">def</span> <span class="nf">concatenate_files_in_list</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">encode_in</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">is_small</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_shutil</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="c1"># don&#39;t forget to specify target folder when opening files!</span>
-    <span class="c1"># todo: check if file was created already</span>
-    <span class="n">encoding_format</span> <span class="o">=</span> <span class="n">encode_in</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;target file -&gt; </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">readmode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">writemode</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;wb&#39;</span> <span class="k">if</span> <span class="n">use_shutil</span> <span class="k">else</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">writemode</span><span class="p">)</span> <span class="k">as</span> <span class="n">finaltext</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;currently appending file: </span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">readmode</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding_format</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_currently_opened</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">use_shutil</span><span class="p">:</span>
-                    <span class="kn">import</span> <span class="nn">shutil</span>
-                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfileobj</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">finaltext</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">is_small</span><span class="p">:</span>
-                    <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_currently_opened</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-                <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_small</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_currently_opened</span><span class="p">:</span>
-                        <span class="n">finaltext</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">add_files_from_folder_to_list</span><span class="p">(</span><span class="n">filetype</span><span class="p">,</span> <span class="n">folder_target</span><span class="o">=</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
-    <span class="n">folder</span> <span class="o">=</span> <span class="n">set_folder</span><span class="p">(</span><span class="n">folder_target</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;getting files from </span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2"> of type </span><span class="si">{</span><span class="n">filetype</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
-    <span class="n">all_files</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">):</span>
-                <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
-                <span class="n">all_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;something went wrong&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">all_files</span>
-
-
-<span class="k">def</span> <span class="nf">set_folder</span><span class="p">(</span><span class="n">folder_dir</span><span class="p">):</span>
-    <span class="n">isdir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">folder_dir</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;folder you&#39;re trying to set is invalid -&gt; </span><span class="si">{</span><span class="n">folder_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">absolute_path</span> <span class="o">=</span> <span class="n">isdir</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">absolute_path</span>
-
-
-<span class="k">def</span> <span class="nf">test_files_in_list</span><span class="p">(</span><span class="n">file_list</span><span class="p">:</span> <span class="p">[]):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;testing files in list... &quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;oops: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> doesn&#39;t seem to exist&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="logging">
-<h2>logging<a class="headerlink" href="#logging" title="Link to this heading">¶</a></h2>
-<section id="fn-logger">
-<h3>fn logger<a class="headerlink" href="#fn-logger" title="Link to this heading">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FunctionLogger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> :: </span><span class="si">%(levelname)s</span><span class="s1"> :: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
-
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formatter</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fh</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">original_function</span> <span class="o">=</span> <span class="n">function</span>
-
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;this code adds functionality before </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">original_function</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> with arguments </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">kwargs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># execute</span>
+    <span class="n">network</span> <span class="o">=</span> <span class="s2">&quot;mainnet&quot;</span> <span class="k">if</span> <span class="n">mainnet</span> <span class="k">else</span> <span class="s2">&quot;testnet&quot;</span>
+    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
@@ -398,10 +619,10 @@
     <h3><a href="../index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">code library</a><ul>
-<li><a class="reference internal" href="#card-game">card game</a></li>
-<li><a class="reference internal" href="#adding-files-to-a-list-compression">adding files to a list &amp; compression</a></li>
-<li><a class="reference internal" href="#logging">logging</a><ul>
-<li><a class="reference internal" href="#fn-logger">fn logger</a></li>
+<li><a class="reference internal" href="#parametrize">parametrize</a><ul>
+<li><a class="reference internal" href="#pydantic">pydantic</a></li>
+<li><a class="reference internal" href="#custom-parametrization">custom parametrization</a></li>
+<li><a class="reference internal" href="#main-test">main test</a></li>
 </ul>
 </li>
 </ul>
@@ -486,7 +707,7 @@
 <br />
     <br />
 
-    Last updated on 2024-02-26.
+    Last updated on 2024-03-03.
     
     <br />
 
